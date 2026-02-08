@@ -16,13 +16,11 @@ export default function PlateCapture() {
   }
 
   function handleCapture() {
-    // Placeholder: later send image to backend ML model
     navigate("/analysis");
   }
 
   return (
     <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      
       <div
         style={{
           backgroundColor: "green",
@@ -36,11 +34,9 @@ export default function PlateCapture() {
       </div>
 
       <div style={{ padding: "16px" }}>
-        
         <div
           style={{
             height: "260px",
-            width: "100%",
             backgroundColor: "#ddd",
             borderRadius: "12px",
             display: "flex",
@@ -74,15 +70,15 @@ export default function PlateCapture() {
             backgroundColor: "green",
             color: "white",
             border: "none",
-            padding: "14px 40px",
+            padding: "14px",
             borderRadius: "10px",
-            cursor: "pointer",
             fontSize: "16px",
             width: "100%",
+            cursor: selectedFile ? "pointer" : "not-allowed",
             opacity: selectedFile ? 1 : 0.6,
           }}
         >
-          Capture Photo (Placeholder)
+          Capture Photo
         </button>
       </div>
     </div>

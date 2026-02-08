@@ -1,49 +1,3 @@
-export default function Analysis() {
-  return (
-    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      
-      {/* AppBar */}
-      <div
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "15px 20px",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        Portion Analysis
-      </div>
-
-      {/* Body */}
-      <div style={{ padding: "16px" }}>
-
-        {/* Recommended Portion */}
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
-            Recommended Portion Placeholder
-          </div>
-        </div>
-
-        {/* Captured Image */}
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
-            Captured Plate Image Placeholder
-          </div>
-        </div>
-
-        {/* Comparison */}
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
-            Portion Comparison Result Placeholder
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-
 const cardStyle = {
   backgroundColor: "white",
   borderRadius: "12px",
@@ -61,3 +15,41 @@ const cardInnerStyle = {
   borderRadius: "10px",
   fontSize: "16px",
 };
+
+export default function Analysis() {
+  return (
+    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+      <div
+        style={{
+          backgroundColor: "green",
+          color: "white",
+          padding: "15px 20px",
+          fontSize: "20px",
+          fontWeight: "bold",
+        }}
+      >
+        Portion Analysis
+      </div>
+
+      <div style={{ padding: "16px" }}>
+        <div style={cardStyle}>
+          <div style={cardInnerStyle}>
+            Recommended Portion Placeholder
+          </div>
+        </div>
+
+        <div style={cardStyle}>
+          <div style={cardInnerStyle}>
+            Captured Plate Image Placeholder
+          </div>
+        </div>
+
+        <div style={cardStyle}>
+          <div style={cardInnerStyle}>
+            Portion Comparison Result Placeholder
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

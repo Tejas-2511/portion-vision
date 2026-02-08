@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Preferences() {
   const [name, setName] = useState("");
@@ -15,27 +15,79 @@ export default function Preferences() {
   const [calories, setCalories] = useState("To be calculated...");
   const [protein, setProtein] = useState("To be calculated...");
 
-  function calculateBMI(heightCm, weightKg) {
-    const heightM = heightCm / 100;
-    return weightKg / (heightM * heightM);
-  }
+  // Load saved profile on page load
+  useEffect(() => {
+    const saved = localStorage.getItem("userProfile");
+    if (saved) {
+      const data = JSON.parse(saved);
+      setName(data.name || "");
+      setAge(data.age || "");
+      setHeight(data.height || "");
+      setWeight(data.weight || "");
+      setGender(data.gender || "Male");
+      setActivityLevel(data.activityLevel || "Sedentary");
+      setGoalType(data.goalType || "Maintain Weight");
+      setDietPreference(data.dietPreference || "Vegetarian");
+      setBmi(data.bmi || "To be calculated...");
+      setCalories(data.calories ? `${data.calories} kcal/day` : "To be calculated...");
+      setProtein(data.protein ? `${data.protein} g/day` : "To be calculated...");
+    }
+  }, []);
 
   function handleCalculateSave() {
     const h = parseFloat(height);
     const w = parseFloat(weight);
+    const a = parseInt(age);
 
-    if (!h || !w) {
-      alert("Enter valid height and weight!");
+    if (!h || !w || !a) {
+      alert("Please enter valid age, height and weight");
       return;
     }
 
-    const bmiVal = calculateBMI(h, w);
+    // BMI
+    const heightM = h / 100;
+    const bmiVal = w / (heightM * heightM);
 
+    // BMR (Mifflin–St Jeor)
+    let bmr = 0;
+    if (gender === "Male") {
+      bmr = 10 * w + 6.25 * h - 5 * a + 5;
+    } else {
+      bmr = 10 * w + 6.25 * h - 5 * a - 161;
+    }
+
+    // Activity multiplier
+    const activityMap = {
+      "Sedentary": 1.2,
+      "Lightly Active": 1.375,
+      "Moderately Active": 1.55,
+      "Very Active": 1.725,
+    };
+
+    let calorieReq = bmr * activityMap[activityLevel];
+
+    // Goal adjustment
+    if (goalType === "Lose Weight" || goalType === "Fat Loss") {
+      calorieReq -= 500;
+    } else if (goalType === "Gain Weight" || goalType === "Muscle Gain") {
+      calorieReq += 400;
+    }
+
+    calorieReq = Math.max(calorieReq, 1200); // safety
+
+    // Protein requirement
+    let proteinFactor = 1.0;
+    if (goalType === "Fat Loss") proteinFactor = 1.6;
+    if (goalType === "Muscle Gain") proteinFactor = 2.0;
+
+    const proteinReq = w * proteinFactor;
+
+    // Update UI
     setBmi(bmiVal.toFixed(2));
-    setCalories("Calculated value here...");
-    setProtein("Calculated value here...");
+    setCalories(`${Math.round(calorieReq)} kcal/day`);
+    setProtein(`${Math.round(proteinReq)} g/day`);
 
-    // Save locally in browser
+    // Save locally
     const userData = {
       name,
       age,
@@ -46,108 +98,79 @@ export default function Preferences() {
       goalType,
       dietPreference,
       bmi: bmiVal.toFixed(2),
+      calories: Math.round(calorieReq),
+      protein: Math.round(proteinReq),
     };
 
     localStorage.setItem("userProfile", JSON.stringify(userData));
-    alert("Profile saved locally!");
+    alert("Profile saved!");
   }
 
   return (
-    <div style={{ fontFamily: "Arial", padding: "20px" }}>
-      <h2 style={{ color: "green" }}>User Profile</h2>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f5f5f5",
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: "40px",
+      }}
+    >
+      <div
+        style={{
+          padding: "20px",
+          fontFamily: "Arial",
+          maxWidth: "500px",
+          width: "100%",
+          backgroundColor: "white",
+          borderRadius: "12px",
+          boxShadow: "0px 2px 8px rgba(0,0,0,0.2)",
+        }}
+      >
+        <h2 style={{ color: "green", textAlign: "center" }}>
+          User Profile
+        </h2>
 
-      <div style={{ maxWidth: "400px" }}>
-        <label>Name</label>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={inputStyle}
-        />
+        <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} style={inputStyle} />
+        <input placeholder="Age" type="number" value={age} onChange={e => setAge(e.target.value)} style={inputStyle} />
+        <input placeholder="Height (cm)" type="number" value={height} onChange={e => setHeight(e.target.value)} style={inputStyle} />
+        <input placeholder="Weight (kg)" type="number" value={weight} onChange={e => setWeight(e.target.value)} style={inputStyle} />
 
-        <label>Age</label>
-        <input
-          value={age}
-          type="number"
-          onChange={(e) => setAge(e.target.value)}
-          style={inputStyle}
-        />
-
-        <label>Height (cm)</label>
-        <input
-          value={height}
-          type="number"
-          onChange={(e) => setHeight(e.target.value)}
-          style={inputStyle}
-        />
-
-        <label>Weight (kg)</label>
-        <input
-          value={weight}
-          type="number"
-          onChange={(e) => setWeight(e.target.value)}
-          style={inputStyle}
-        />
-
-        <br />
-
-        <label>Gender</label>
-        <select value={gender} onChange={(e) => setGender(e.target.value)} style={inputStyle}>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
+        <select value={gender} onChange={e => setGender(e.target.value)} style={inputStyle}>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
         </select>
 
-        <label>Activity Level</label>
-        <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)} style={inputStyle}>
-          <option value="Sedentary">Sedentary</option>
-          <option value="Lightly Active">Lightly Active</option>
-          <option value="Moderately Active">Moderately Active</option>
-          <option value="Very Active">Very Active</option>
+        <select value={activityLevel} onChange={e => setActivityLevel(e.target.value)} style={inputStyle}>
+          <option>Sedentary</option>
+          <option>Lightly Active</option>
+          <option>Moderately Active</option>
+          <option>Very Active</option>
         </select>
 
-        <label>Goal Type</label>
-        <select value={goalType} onChange={(e) => setGoalType(e.target.value)} style={inputStyle}>
-          <option value="Maintain Weight">Maintain Weight</option>
-          <option value="Lose Weight">Lose Weight</option>
-          <option value="Gain Weight">Gain Weight</option>
-          <option value="Muscle Gain">Muscle Gain</option>
-          <option value="Fat Loss">Fat Loss</option>
+        <select value={goalType} onChange={e => setGoalType(e.target.value)} style={inputStyle}>
+          <option>Maintain Weight</option>
+          <option>Lose Weight</option>
+          <option>Gain Weight</option>
+          <option>Muscle Gain</option>
+          <option>Fat Loss</option>
         </select>
 
-        <label>Dietary Preference</label>
-        <select value={dietPreference} onChange={(e) => setDietPreference(e.target.value)} style={inputStyle}>
-          <option value="Jain">Jain (No onion, garlic, root vegetables)</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Lacto-Vegetarian">Lacto-Vegetarian (Veg + Dairy)</option>
-          <option value="Ovo-Vegetarian">Ovo-Vegetarian (Veg + Eggs)</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
-          <option value="Vegan">Vegan</option>
+        <select value={dietPreference} onChange={e => setDietPreference(e.target.value)} style={inputStyle}>
+          <option>Vegetarian</option>
+          <option>Jain</option>
+          <option>Lacto-Vegetarian</option>
+          <option>Ovo-Vegetarian</option>
+          <option>Non-Vegetarian</option>
+          <option>Vegan</option>
         </select>
 
-        <br />
+        <p><b>BMI:</b> {bmi}</p>
+        <p><b>Calories:</b> {calories}</p>
+        <p><b>Protein:</b> {protein}</p>
 
-        <h3>Calculated BMI:</h3>
-        <p>{bmi}</p>
-
-        <h3>Estimated Daily Calorie Requirement:</h3>
-        <p>{calories}</p>
-
-        <h3>Estimated Daily Protein Requirement:</h3>
-        <p>{protein}</p>
-
-        <button
-          onClick={handleCalculateSave}
-          style={{
-            backgroundColor: "green",
-            color: "white",
-            border: "none",
-            padding: "12px 20px",
-            borderRadius: "10px",
-            cursor: "pointer",
-            marginTop: "15px",
-            width: "100%",
-          }}
-        >
+        <button onClick={handleCalculateSave} style={buttonStyle}>
           Calculate & Save
         </button>
       </div>
@@ -158,8 +181,17 @@ export default function Preferences() {
 const inputStyle = {
   width: "100%",
   padding: "10px",
-  marginTop: "6px",
-  marginBottom: "14px",
+  marginBottom: "12px",
   borderRadius: "8px",
   border: "1px solid #ccc",
+};
+
+const buttonStyle = {
+  backgroundColor: "green",
+  color: "white",
+  border: "none",
+  padding: "12px",
+  width: "100%",
+  borderRadius: "10px",
+  cursor: "pointer",
 };

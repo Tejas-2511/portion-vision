@@ -27,11 +27,11 @@ export default function Home() {
             background: "transparent",
             border: "none",
             color: "white",
-            fontSize: "18px",
+            fontSize: "16px",
             cursor: "pointer",
           }}
         >
-          👤
+          Profile
         </button>
       </div>
 
@@ -61,8 +61,24 @@ export default function Home() {
               alignItems: "center",
             }}
           >
-            Menu Image Placeholder
+            Menu Preview
           </div>
+
+          <button
+            onClick={() => navigate("/menu-upload")}
+            style={{
+              marginTop: "12px",
+              width: "100%",
+              padding: "12px",
+              borderRadius: "10px",
+              border: "none",
+              backgroundColor: "green",
+              color: "white",
+              cursor: "pointer",
+            }}
+          >
+            Upload Mess Menu
+          </button>
         </div>
 
         {/* Recommended Portions Card */}
@@ -88,11 +104,11 @@ export default function Home() {
               alignItems: "center",
             }}
           >
-            Recommended Portion Placeholder
+            Recommendations will appear here
           </div>
         </div>
 
-        {/* Button */}
+        {/* Plate Photo Button */}
         <div style={{ textAlign: "center" }}>
           <button
             onClick={() => navigate("/upload")}

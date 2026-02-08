@@ -17,6 +17,7 @@ export default function App() {
         <Route path="/menu-upload" element={<MenuUpload />} />
         <Route path="/plate" element={<PlateCapture />} />
         <Route path="/analysis" element={<Analysis />} />
+        <Route path="/upload" element={<PlateCapture />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Splash({ onFinish }) {
-  const [show, setShow] = useState(false);
+export default function Splash() {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setShow(true);
-
     const timer = setTimeout(() => {
-      onFinish();
-    }, 4000);
+      navigate("/home");
+    }, 3000);
 
     return () => clearTimeout(timer);
-  }, [onFinish]);
+  }, [navigate]);
 
   return (
     <div
       style={{
+        width: "100vw",
         height: "100vh",
         backgroundColor: "#2e7d32",
         display: "flex",
@@ -27,12 +27,9 @@ export default function Splash({ onFinish }) {
       <h1
         style={{
           color: "white",
-          fontSize: "50px",
+          fontSize: "48px",
           fontWeight: "bold",
           letterSpacing: "2px",
-          opacity: show ? 1 : 0,
-          transform: show ? "scale(1)" : "scale(0.8)",
-          transition: "all 1.8s ease",
         }}
       >
         Portion Vision
