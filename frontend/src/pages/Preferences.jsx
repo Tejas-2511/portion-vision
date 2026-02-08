@@ -113,9 +113,10 @@ export default function Preferences() {
         backgroundColor: "#f5f5f5",
         display: "flex",
         justifyContent: "center",
-        paddingTop: "40px",
+        alignItems: "center",
       }}
     >
+
       <div
         style={{
           padding: "20px",
@@ -166,13 +167,16 @@ export default function Preferences() {
           <option>Vegan</option>
         </select>
 
-        <p><b>BMI:</b> {bmi}</p>
-        <p><b>Calories:</b> {calories}</p>
-        <p><b>Protein:</b> {protein}</p>
+        <div style={resultContainer}>
+          <p><b>BMI:</b> {bmi}</p>
+          <p><b>Calories:</b> {calories}</p>
+          <p><b>Protein:</b> {protein}</p>
+        </div>
 
         <button onClick={handleCalculateSave} style={buttonStyle}>
           Calculate & Save
         </button>
+
       </div>
     </div>
   );
@@ -194,4 +198,12 @@ const buttonStyle = {
   width: "100%",
   borderRadius: "10px",
   cursor: "pointer",
+};
+
+const resultContainer = {
+  marginTop: "12px",
+  marginBottom: "20px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
 };
