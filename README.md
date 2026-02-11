@@ -1,0 +1,1 @@
+This project proposes an system that generates personalized portion recommendations using a student’s nutritional profile (age, height, weight, gender, activity level, dietary preference, and goal). It then estimates the actual portion served from a single RGB image using depth estimation, segmentation, and geometric volume analysis.
