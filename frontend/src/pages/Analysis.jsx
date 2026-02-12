@@ -1,54 +1,33 @@
-const cardStyle = {
-  backgroundColor: "white",
-  borderRadius: "12px",
-  padding: "12px",
-  boxShadow: "0px 2px 6px rgba(0,0,0,0.2)",
-  marginBottom: "20px",
-};
-
-const cardInnerStyle = {
-  height: "120px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "#e0e0e0",
-  borderRadius: "10px",
-  fontSize: "16px",
-};
-
 export default function Analysis() {
   return (
-    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      <div
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "15px 20px",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        Portion Analysis
+    <div className="min-h-screen bg-slate-50 pb-10">
+      <div className="bg-emerald-600 px-6 py-4 text-white shadow-md">
+        <h1 className="text-xl font-bold">Portion Analysis</h1>
       </div>
 
-      <div style={{ padding: "16px" }}>
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
+      <div className="mx-auto max-w-lg space-y-6 p-6">
+
+        {/* Card 1 */}
+        <div className="rounded-2xl bg-white p-4 shadow-md">
+          <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-slate-500 font-medium">
             Recommended Portion Placeholder
           </div>
         </div>
 
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
+        {/* Card 2 */}
+        <div className="rounded-2xl bg-white p-4 shadow-md">
+          <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-slate-500 font-medium">
             Captured Plate Image Placeholder
           </div>
         </div>
 
-        <div style={cardStyle}>
-          <div style={cardInnerStyle}>
+        {/* Card 3 */}
+        <div className="rounded-2xl bg-white p-4 shadow-md">
+          <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-slate-500 font-medium">
             Portion Comparison Result Placeholder
           </div>
         </div>
+
       </div>
     </div>
   );

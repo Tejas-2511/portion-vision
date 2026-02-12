@@ -20,63 +20,43 @@ export default function PlateCapture() {
   }
 
   return (
-    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      <div
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "15px 20px",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        Plate Photo
+    <div className="min-h-screen bg-slate-50">
+      <div className="bg-emerald-600 px-6 py-4 text-white shadow-md">
+        <h1 className="text-xl font-bold">Plate Photo</h1>
       </div>
 
-      <div style={{ padding: "16px" }}>
-        <div
-          style={{
-            height: "260px",
-            backgroundColor: "#ddd",
-            borderRadius: "12px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            overflow: "hidden",
-          }}
-        >
+      <div className="mx-auto max-w-lg p-6">
+        <div className="relative mb-6 flex h-80 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-inner">
           {preview ? (
             <img
               src={preview}
               alt="plate preview"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              className="h-full w-full object-cover"
             />
           ) : (
-            <p>Camera Preview Placeholder</p>
+            <div className="flex flex-col items-center text-slate-400">
+              <span className="text-4xl mb-2">📷</span>
+              <p>Camera Preview Placeholder</p>
+            </div>
           )}
         </div>
 
-        <br />
-
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-
-        <br />
-        <br />
+        <div className="mb-8 flex justify-center">
+          <label className="flex cursor-pointer items-center justify-center rounded-full bg-emerald-100 px-6 py-3 font-semibold text-emerald-700 transition hover:bg-emerald-200">
+            <span>Select Image</span>
+            <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+          </label>
+        </div>
 
         <button
           onClick={handleCapture}
           disabled={!selectedFile}
-          style={{
-            backgroundColor: "green",
-            color: "white",
-            border: "none",
-            padding: "14px",
-            borderRadius: "10px",
-            fontSize: "16px",
-            width: "100%",
-            cursor: selectedFile ? "pointer" : "not-allowed",
-            opacity: selectedFile ? 1 : 0.6,
-          }}
+          className={`w-full rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all 
+            ${!selectedFile
+              ? "bg-slate-400 opacity-50 cursor-not-allowed"
+              : "bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98]"
+            }
+          `}
         >
           Capture Photo
         </button>

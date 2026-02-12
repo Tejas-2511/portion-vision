@@ -4,124 +4,54 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      
-      {/* AppBar */}
-      <div
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "15px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        <span>Portion Vision</span>
+    <div className="min-h-screen bg-slate-50 pb-20">
 
+      {/* AppBar */}
+      <div className="sticky top-0 z-50 flex items-center justify-between bg-emerald-600 px-6 py-4 shadow-md text-white">
+        <span className="text-xl font-bold tracking-wide">Portion Vision</span>
         <button
           onClick={() => navigate("/preferences")}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "white",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
+          className="rounded-full bg-white/20 px-4 py-2 text-sm font-medium transition hover:bg-white/30"
         >
           Profile
         </button>
       </div>
 
       {/* Body */}
-      <div style={{ padding: "16px" }}>
+      <div className="mx-auto max-w-lg px-4 pt-6">
 
         {/* Today's Menu Card */}
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "14px",
-            padding: "16px",
-            boxShadow: "0px 2px 6px rgba(0,0,0,0.2)",
-            marginBottom: "20px",
-          }}
-        >
-          <h2 style={{ margin: 0 }}>Today's Mess Menu</h2>
+        <div className="mb-6 rounded-2xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
+          <h2 className="mb-4 text-lg font-bold text-slate-800">Today's Mess Menu</h2>
 
-          <div
-            style={{
-              height: "150px",
-              backgroundColor: "#ddd",
-              borderRadius: "12px",
-              marginTop: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Menu Preview
+          <div className="flex h-40 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+            <span className="text-sm font-medium">Menu Preview</span>
           </div>
 
           <button
             onClick={() => navigate("/menu-upload")}
-            style={{
-              marginTop: "12px",
-              width: "100%",
-              padding: "12px",
-              borderRadius: "10px",
-              border: "none",
-              backgroundColor: "green",
-              color: "white",
-              cursor: "pointer",
-            }}
+            className="mt-4 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white shadow-sm transition active:scale-[0.98] hover:bg-emerald-700"
           >
             Upload Mess Menu
           </button>
         </div>
 
         {/* Recommended Portions Card */}
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "14px",
-            padding: "16px",
-            boxShadow: "0px 2px 6px rgba(0,0,0,0.2)",
-            marginBottom: "30px",
-          }}
-        >
-          <h2 style={{ margin: 0 }}>Recommended Portions</h2>
+        <div className="mb-8 rounded-2xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
+          <h2 className="mb-4 text-lg font-bold text-slate-800">Recommended Portions</h2>
 
-          <div
-            style={{
-              height: "120px",
-              backgroundColor: "#ddd",
-              borderRadius: "12px",
-              marginTop: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Recommendations will appear here
+          <div className="flex h-32 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+            <span className="text-sm font-medium">Recommendations will appear here</span>
           </div>
         </div>
 
-        {/* Plate Photo Button */}
-        <div style={{ textAlign: "center" }}>
+        {/* FAB / Action Button */}
+        <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center px-4">
           <button
             onClick={() => navigate("/upload")}
-            style={{
-              backgroundColor: "green",
-              color: "white",
-              border: "none",
-              padding: "16px 40px",
-              borderRadius: "12px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
+            className="flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-bold text-white shadow-xl transition-transform hover:scale-105 active:scale-95"
           >
+            <span>📸</span>
             Take Plate Photo
           </button>
         </div>

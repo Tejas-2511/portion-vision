@@ -107,103 +107,109 @@ export default function Preferences() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-
-      <div
-        style={{
-          padding: "20px",
-          fontFamily: "Arial",
-          maxWidth: "500px",
-          width: "100%",
-          backgroundColor: "white",
-          borderRadius: "12px",
-          boxShadow: "0px 2px 8px rgba(0,0,0,0.2)",
-        }}
-      >
-        <h2 style={{ color: "green", textAlign: "center" }}>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-8">
+      <div className="w-full max-w-lg rounded-2xl bg-white p-8 shadow-xl">
+        <h2 className="mb-6 text-center text-2xl font-bold text-emerald-600">
           User Profile
         </h2>
 
-        <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} style={inputStyle} />
-        <input placeholder="Age" type="number" value={age} onChange={e => setAge(e.target.value)} style={inputStyle} />
-        <input placeholder="Height (cm)" type="number" value={height} onChange={e => setHeight(e.target.value)} style={inputStyle} />
-        <input placeholder="Weight (kg)" type="number" value={weight} onChange={e => setWeight(e.target.value)} style={inputStyle} />
+        <div className="space-y-4">
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 px-4 py-3 placeholder-gray-400 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+          />
+          <div className="grid grid-cols-3 gap-4">
+            <input
+              placeholder="Age"
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+            />
+            <input
+              placeholder="Height (cm)"
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+            />
+            <input
+              placeholder="Weight (kg)"
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+            />
+          </div>
 
-        <select value={gender} onChange={e => setGender(e.target.value)} style={inputStyle}>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+          >
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
 
-        <select value={activityLevel} onChange={e => setActivityLevel(e.target.value)} style={inputStyle}>
-          <option>Sedentary</option>
-          <option>Lightly Active</option>
-          <option>Moderately Active</option>
-          <option>Very Active</option>
-        </select>
+          <select
+            value={activityLevel}
+            onChange={(e) => setActivityLevel(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+          >
+            <option>Sedentary</option>
+            <option>Lightly Active</option>
+            <option>Moderately Active</option>
+            <option>Very Active</option>
+          </select>
 
-        <select value={goalType} onChange={e => setGoalType(e.target.value)} style={inputStyle}>
-          <option>Maintain Weight</option>
-          <option>Lose Weight</option>
-          <option>Gain Weight</option>
-          <option>Muscle Gain</option>
-          <option>Fat Loss</option>
-        </select>
+          <select
+            value={goalType}
+            onChange={(e) => setGoalType(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+          >
+            <option>Maintain Weight</option>
+            <option>Lose Weight</option>
+            <option>Gain Weight</option>
+            <option>Muscle Gain</option>
+            <option>Fat Loss</option>
+          </select>
 
-        <select value={dietPreference} onChange={e => setDietPreference(e.target.value)} style={inputStyle}>
-          <option>Vegetarian</option>
-          <option>Jain</option>
-          <option>Lacto-Vegetarian</option>
-          <option>Ovo-Vegetarian</option>
-          <option>Non-Vegetarian</option>
-          <option>Vegan</option>
-        </select>
+          <select
+            value={dietPreference}
+            onChange={(e) => setDietPreference(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+          >
+            <option>Vegetarian</option>
+            <option>Jain</option>
+            <option>Lacto-Vegetarian</option>
+            <option>Ovo-Vegetarian</option>
+            <option>Non-Vegetarian</option>
+            <option>Vegan</option>
+          </select>
 
-        <div style={resultContainer}>
-          <p><b>BMI:</b> {bmi}</p>
-          <p><b>Calories:</b> {calories}</p>
-          <p><b>Protein:</b> {protein}</p>
+          <div className="mt-4 flex flex-col gap-3 rounded-lg bg-emerald-50 p-4 text-emerald-900">
+            <p className="flex justify-between">
+              <span className="font-semibold">BMI:</span> {bmi}
+            </p>
+            <p className="flex justify-between">
+              <span className="font-semibold">Calories:</span> {calories}
+            </p>
+            <p className="flex justify-between">
+              <span className="font-semibold">Protein:</span> {protein}
+            </p>
+          </div>
+
+          <button
+            onClick={handleCalculateSave}
+            className="mt-6 w-full rounded-xl bg-emerald-600 py-3 text-lg font-bold text-white shadow-md transition-all hover:bg-emerald-700 hover:shadow-lg active:scale-[0.98]"
+          >
+            Calculate & Save
+          </button>
         </div>
-
-        <button onClick={handleCalculateSave} style={buttonStyle}>
-          Calculate & Save
-        </button>
-
       </div>
     </div>
   );
 }
-
-const inputStyle = {
-  width: "100%",
-  padding: "10px",
-  marginBottom: "12px",
-  borderRadius: "8px",
-  border: "1px solid #ccc",
-};
-
-const buttonStyle = {
-  backgroundColor: "green",
-  color: "white",
-  border: "none",
-  padding: "12px",
-  width: "100%",
-  borderRadius: "10px",
-  cursor: "pointer",
-};
-
-const resultContainer = {
-  marginTop: "12px",
-  marginBottom: "20px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-};
