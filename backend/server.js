@@ -138,16 +138,11 @@ function cleanMenuItems(rawText) {
       return parts;
     })
     .flat()
-    .map(line =>
-      line
-        .toLowerCase()
-        .split(" ")
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ")
-    )
+    .map(line => line.toLowerCase()) // Normalize to lowercase
     .filter(line => line.length > 1)
-    .filter(line => !blacklist.some(word => line.toLowerCase().includes(word)))
-    .filter((item, index, self) => self.indexOf(item) === index);
+    .filter(line => !blacklist.some(word => line.includes(word)))
+    .filter((item, index, self) => self.indexOf(item) === index)
+    .sort(); // Sort alphabetically
 }
 
 app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
@@ -197,6 +192,74 @@ app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
     }
 
     fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
+
+    // Update foodDatabase.json with new items
+    const foodDbPath = './data/foodDatabase.json';
+    let foodDatabase = [];
+
+    console.log('📊 Updating food database...');
+
+    // Load existing database
+    if (fs.existsSync(foodDbPath)) {
+      try {
+        const existingData = fs.readFileSync(foodDbPath, 'utf8');
+        foodDatabase = JSON.parse(existingData);
+        // Handle if it's an object instead of array
+        if (!Array.isArray(foodDatabase)) {
+          console.log('⚠️ Database was not an array, resetting...');
+          foodDatabase = [];
+        } else {
+          console.log(`✅ Loaded ${foodDatabase.length} existing items`);
+        }
+      } catch (e) {
+        console.error("❌ Error reading foodDatabase.json, creating new:", e);
+        foodDatabase = [];
+      }
+    } else {
+      console.log('📝 No existing database found, creating new one');
+    }
+
+    // Get existing food names (lowercase for comparison)
+    const existingNames = new Set(
+      foodDatabase
+        .filter(item => item && item.name) // Filter out invalid items
+        .map(item => item.name.toLowerCase())
+    );
+
+    console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);
+
+    // Add new items that don't exist yet
+    let addedCount = 0;
+    menuItems.forEach(itemName => {
+      if (!existingNames.has(itemName)) {
+        console.log(`➕ Adding new item: ${itemName}`);
+        foodDatabase.push({
+          name: itemName,
+          category: "",
+          serving_size: 0,
+          serving_unit: "g/ml",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fat: 0,
+          fiber: 0,
+          veg: true
+        });
+        existingNames.add(itemName);
+        addedCount++;
+      } else {
+        console.log(`⏭️ Skipping existing item: ${itemName}`);
+      }
+    });
+
+    console.log(`✨ Added ${addedCount} new items to database`);
+
+    // Sort database alphabetically by name
+    foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Save updated database
+    fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
+    console.log(`💾 Saved database with ${foodDatabase.length} total items`);
 
     res.json({ menuItems });
   } catch (err) {
