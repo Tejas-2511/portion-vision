@@ -4,12 +4,116 @@ const multer = require("multer");
 const Tesseract = require("tesseract.js");
 const fs = require("fs");
 const sharp = require("sharp");
+const path = require("path");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-const upload = multer({ dest: "uploads/" });
+// Security: CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://10.174.6.237:5173",
+  "http://169.254.83.107:5173",
+  "http://169.254.50.217:5173"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.warn(`Blocked request from origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  maxAge: 86400 // 24 hours
+}));
+
+app.use(express.json({ limit: '10mb' })); // Limit JSON payload size
+
+// Security: File upload configuration with validation
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = 'uploads/';
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'upload-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB max file size
+    files: 1 // Only 1 file per request
+  },
+  fileFilter: function (req, file, cb) {
+    // Accept only image files
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPEG, PNG, and WEBP images are allowed.'));
+    }
+  }
+});
+
+// Security: Simple rate limiting (in-memory, for production use Redis)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const MAX_REQUESTS = 10; // 10 requests per minute
+
+function rateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress;
+  const now = Date.now();
+
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return next();
+  }
+
+  const record = rateLimitMap.get(ip);
+
+  if (now > record.resetTime) {
+    // Reset the counter
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return next();
+  }
+
+  if (record.count >= MAX_REQUESTS) {
+    return res.status(429).json({
+      error: 'Too many requests. Please try again later.',
+      retryAfter: Math.ceil((record.resetTime - now) / 1000)
+    });
+  }
+
+  record.count++;
+  next();
+}
+
+// Security: Basic security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
 
 function cleanMenuItems(rawText) {
   const blacklist = ["menu", "breakfast", "lunch", "dinner"];
@@ -46,15 +150,19 @@ function cleanMenuItems(rawText) {
     .filter((item, index, self) => self.indexOf(item) === index);
 }
 
-app.post("/ocr", upload.single("image"), async (req, res) => {
+app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
+  let originalPath = null;
+  let processedPath = null;
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No image uploaded" });
     }
 
-    const originalPath = req.file.path;
-    const processedPath = `uploads/processed-${Date.now()}.png`;
+    originalPath = req.file.path;
+    processedPath = `uploads/processed-${Date.now()}.png`;
 
+    // Image processing with security considerations
     await sharp(originalPath)
       .extend({
         top: 40,
@@ -75,7 +183,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     });
 
     const rawText = result.data.text;
-
     const menuItems = cleanMenuItems(rawText);
 
     const data = {
@@ -83,18 +190,68 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
       menuItems,
     };
 
-    fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
+    // Ensure data directory exists
+    const dataDir = './data';
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
 
-    fs.unlinkSync(originalPath);
-    fs.unlinkSync(processedPath);
+    fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
 
     res.json({ menuItems });
   } catch (err) {
     console.error("OCR ERROR:", err);
-    res.status(500).json({ error: "OCR failed" });
+    res.status(500).json({
+      error: "OCR processing failed",
+      message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  } finally {
+    // Always cleanup temp files
+    if (originalPath && fs.existsSync(originalPath)) {
+      try {
+        fs.unlinkSync(originalPath);
+      } catch (e) {
+        console.error("Failed to delete original file:", e);
+      }
+    }
+    if (processedPath && fs.existsSync(processedPath)) {
+      try {
+        fs.unlinkSync(processedPath);
+      } catch (e) {
+        console.error("Failed to delete processed file:", e);
+      }
+    }
   }
 });
 
-app.listen(5000, () => {
-  console.log("Backend running on http://localhost:5000");
+// Error handling middleware
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'File too large. Maximum size is 10MB.' });
+    }
+    if (err.code === 'LIMIT_FILE_COUNT') {
+      return res.status(400).json({ error: 'Too many files. Only 1 file allowed.' });
+    }
+    return res.status(400).json({ error: err.message });
+  }
+
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({ error: 'CORS policy: Origin not allowed' });
+  }
+
+  if (err.message && err.message.includes('Invalid file type')) {
+    return res.status(400).json({ error: err.message });
+  }
+
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
+  console.log(`Backend running on http://${HOST}:${PORT}`);
+  console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
 });

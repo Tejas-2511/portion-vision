@@ -1,7 +1,21 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [menu, setMenu] = useState(null);
+
+  useEffect(() => {
+    // Load menu from localStorage on component mount
+    const savedMenu = localStorage.getItem("todaysMenu");
+    if (savedMenu) {
+      try {
+        setMenu(JSON.parse(savedMenu));
+      } catch (e) {
+        console.error("Error parsing saved menu:", e);
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -24,15 +38,33 @@ export default function Home() {
         <div className="mb-6 rounded-2xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
           <h2 className="mb-4 text-lg font-bold text-slate-800">Today's Mess Menu</h2>
 
-          <div className="flex h-40 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400">
-            <span className="text-sm font-medium">Menu Preview</span>
-          </div>
+          {menu ? (
+            <div className="space-y-3">
+              <div className="rounded-xl bg-emerald-50 p-4 border border-emerald-200">
+                <div className="space-y-2">
+                  {menu.items.map((item, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <span className="text-emerald-600 font-bold mt-0.5">•</span>
+                      <span className="text-slate-700 text-sm">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 text-right">
+                Uploaded: {new Date(menu.date).toLocaleDateString()} at {new Date(menu.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
+          ) : (
+            <div className="flex h-40 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+              <span className="text-sm font-medium">No menu uploaded yet</span>
+            </div>
+          )}
 
           <button
             onClick={() => navigate("/menu-upload")}
             className="mt-4 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white shadow-sm transition active:scale-[0.98] hover:bg-emerald-700"
           >
-            Upload Mess Menu
+            {menu ? "Update Menu" : "Upload Mess Menu"}
           </button>
         </div>
 
@@ -48,7 +80,7 @@ export default function Home() {
         {/* FAB / Action Button */}
         <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center px-4">
           <button
-            onClick={() => navigate("/upload")}
+            onClick={() => navigate("/plate")}
             className="flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-bold text-white shadow-xl transition-transform hover:scale-105 active:scale-95"
           >
             <span>📸</span>
