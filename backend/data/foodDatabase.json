@@ -1,5 +1,17 @@
 [
   {
+    "name": "black masoor dal",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "boiled egg",
     "category": "",
     "serving_size": 0,
