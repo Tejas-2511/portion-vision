@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
+import { useApp } from "../contexts/AppContext";
+import { validateProfileData } from "../utils/validation";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Preferences() {
+  const { userProfile, setUserProfile } = useApp();
+
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
@@ -15,34 +20,42 @@ export default function Preferences() {
   const [calories, setCalories] = useState("To be calculated...");
   const [protein, setProtein] = useState("To be calculated...");
 
+  const [validationError, setValidationError] = useState(null);
+
   // Load saved profile on page load
   useEffect(() => {
-    const saved = localStorage.getItem("userProfile");
-    if (saved) {
-      const data = JSON.parse(saved);
-      setName(data.name || "");
-      setAge(data.age || "");
-      setHeight(data.height || "");
-      setWeight(data.weight || "");
-      setGender(data.gender || "Male");
-      setActivityLevel(data.activityLevel || "Sedentary");
-      setGoalType(data.goalType || "Maintain Weight");
-      setDietPreference(data.dietPreference || "Vegetarian");
-      setBmi(data.bmi || "To be calculated...");
-      setCalories(data.calories ? `${data.calories} kcal/day` : "To be calculated...");
-      setProtein(data.protein ? `${data.protein} g/day` : "To be calculated...");
+    if (userProfile) {
+      setName(userProfile.name || "");
+      setAge(userProfile.age || "");
+      setHeight(userProfile.height || "");
+      setWeight(userProfile.weight || "");
+      setGender(userProfile.gender || "Male");
+      setActivityLevel(userProfile.activityLevel || "Sedentary");
+      setGoalType(userProfile.goalType || "Maintain Weight");
+      setDietPreference(userProfile.dietPreference || "Vegetarian");
+      setBmi(userProfile.bmi || "To be calculated...");
+      setCalories(userProfile.calories ? `${userProfile.calories} kcal/day` : "To be calculated...");
+      setProtein(userProfile.protein ? `${userProfile.protein} g/day` : "To be calculated...");
     }
-  }, []);
+  }, [userProfile]);
 
   function handleCalculateSave() {
+    // Clear previous validation errors
+    setValidationError(null);
+
+    // Validate input data
+    const inputData = { name, age, height, weight };
+    const validation = validateProfileData(inputData);
+
+    if (!validation.isValid) {
+      const errorMessages = Object.values(validation.errors).join('. ');
+      setValidationError(errorMessages);
+      return;
+    }
+
     const h = parseFloat(height);
     const w = parseFloat(weight);
     const a = parseInt(age);
-
-    if (!h || !w || !a) {
-      alert("Please enter valid age, height and weight");
-      return;
-    }
 
     // BMI
     const heightM = h / 100;
@@ -87,7 +100,7 @@ export default function Preferences() {
     setCalories(`${Math.round(calorieReq)} kcal/day`);
     setProtein(`${Math.round(proteinReq)} g/day`);
 
-    // Save locally
+    // Save to context (which auto-syncs to localStorage)
     const userData = {
       name,
       age,
@@ -102,7 +115,7 @@ export default function Preferences() {
       protein: Math.round(proteinReq),
     };
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
+    setUserProfile(userData);
     alert("Profile saved!");
   }
 
@@ -112,6 +125,12 @@ export default function Preferences() {
         <h2 className="mb-6 text-center text-2xl font-bold text-emerald-600">
           User Profile
         </h2>
+
+        {validationError && (
+          <div className="mb-4">
+            <ErrorMessage error={validationError} />
+          </div>
+        )}
 
         <div className="space-y-4">
           <input

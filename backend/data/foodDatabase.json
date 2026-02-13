@@ -168,6 +168,18 @@
     "veg": true
   },
   {
+    "name": "dum aloo kashmiri",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "egg methi keema masala",
     "category": "",
     "serving_size": 0,
@@ -193,6 +205,18 @@
   },
   {
     "name": "fryum papad",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "gobhi masala",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -300,6 +324,42 @@
     "veg": true
   },
   {
+    "name": "jeera pulao",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "langarwali dal",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "lemon water",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "masoor dal tadka",
     "category": "",
     "serving_size": 0,
@@ -336,6 +396,30 @@
     "veg": true
   },
   {
+    "name": "mix veg",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "moti chur ke laddu",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "ne sq colaie brownie",
     "category": "",
     "serving_size": 0,
@@ -361,6 +445,18 @@
   },
   {
     "name": "pickle",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "rajma masala",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -409,6 +505,18 @@
   },
   {
     "name": "semiya upma",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "sindhi dal",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",

@@ -1,21 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useApp } from "../contexts/AppContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [menu, setMenu] = useState(null);
-
-  useEffect(() => {
-    // Load menu from localStorage on component mount
-    const savedMenu = localStorage.getItem("todaysMenu");
-    if (savedMenu) {
-      try {
-        setMenu(JSON.parse(savedMenu));
-      } catch (e) {
-        console.error("Error parsing saved menu:", e);
-      }
-    }
-  }, []);
+  const { todaysMenu } = useApp();
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -38,11 +26,11 @@ export default function Home() {
         <div className="mb-6 rounded-2xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
           <h2 className="mb-4 text-lg font-bold text-slate-800">Today's Mess Menu</h2>
 
-          {menu ? (
+          {todaysMenu ? (
             <div className="space-y-3">
               <div className="rounded-xl bg-emerald-50 p-4 border border-emerald-200">
                 <div className="space-y-2">
-                  {menu.items.map((item, index) => (
+                  {todaysMenu.items.map((item, index) => (
                     <div key={index} className="flex items-start gap-2">
                       <span className="text-emerald-600 font-bold mt-0.5">•</span>
                       <span className="text-slate-700 text-sm">{item}</span>
@@ -51,7 +39,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-xs text-slate-400 text-right">
-                Uploaded: {new Date(menu.date).toLocaleDateString()} at {new Date(menu.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                Uploaded: {new Date(todaysMenu.date).toLocaleDateString()} at {new Date(todaysMenu.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
           ) : (
@@ -64,7 +52,7 @@ export default function Home() {
             onClick={() => navigate("/menu-upload")}
             className="mt-4 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white shadow-sm transition active:scale-[0.98] hover:bg-emerald-700"
           >
-            {menu ? "Update Menu" : "Upload Mess Menu"}
+            {todaysMenu ? "Update Menu" : "Upload Mess Menu"}
           </button>
         </div>
 

@@ -1,53 +1,61 @@
 import { useState } from "react";
+import { useApp } from "../contexts/AppContext";
+import { useErrorHandler } from "../hooks/useErrorHandler";
+import { validateImageFile } from "../utils/validation";
+import api from "../services/api";
+import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function MenuUpload() {
+  const { setTodaysMenu } = useApp();
+  const { error, handleError, clearError, retry, canRetry } = useErrorHandler();
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [useCamera, setUseCamera] = useState(false);
 
   function handleFileChange(e) {
     const file = e.target.files[0];
     if (!file) return;
 
-    setSelectedFile(file);
-    setPreview(URL.createObjectURL(file));
-    setExtractedText("");
+    clearError();
+
+    try {
+      validateImageFile(file);
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+      setExtractedText("");
+    } catch (err) {
+      handleError(err);
+    }
   }
 
   function handleCameraCapture(e) {
     const file = e.target.files[0];
     if (!file) return;
 
-    setSelectedFile(file);
-    setPreview(URL.createObjectURL(file));
-    setExtractedText("");
+    clearError();
+
+    try {
+      validateImageFile(file);
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+      setExtractedText("");
+    } catch (err) {
+      handleError(err);
+    }
   }
 
   async function handleOCR() {
     if (!selectedFile) return;
 
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-
     setLoading(true);
     setExtractedText("");
+    clearError();
 
     try {
-      // Use environment variable for API URL, fallback to localhost
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-      const res = await fetch(`${apiUrl}/ocr`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error("OCR request failed");
-      }
-
-      const data = await res.json();
+      const data = await api.uploadMenuImage(selectedFile);
 
       if (!data.menuItems) {
         throw new Error("Invalid response from backend");
@@ -56,18 +64,17 @@ export default function MenuUpload() {
       const menuText = data.menuItems.join("\n");
       setExtractedText(menuText);
 
-      // Save menu to localStorage with timestamp
-      localStorage.setItem("todaysMenu", JSON.stringify({
+      // Save menu to context (which auto-syncs to localStorage)
+      setTodaysMenu({
         items: data.menuItems,
         text: menuText,
         date: new Date().toISOString()
-      }));
+      });
     } catch (err) {
-      console.error(err);
-      alert("OCR failed. Check backend.");
+      handleError(err);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   return (
@@ -75,6 +82,16 @@ export default function MenuUpload() {
       <h2 className="mb-8 text-3xl font-bold text-emerald-600">
         Upload Mess Menu
       </h2>
+
+      {error && (
+        <div className="mb-6 w-full">
+          <ErrorMessage
+            error={error}
+            onRetry={() => retry(handleOCR)}
+            canRetry={canRetry}
+          />
+        </div>
+      )}
 
       <div className="mb-6 w-full space-y-4">
         {/* Camera Capture Button */}
@@ -118,18 +135,14 @@ export default function MenuUpload() {
         </div>
       )}
 
-      <button
+      <Button
         onClick={handleOCR}
-        disabled={loading || !selectedFile}
-        className={`mb-8 w-full rounded-xl py-3 text-lg font-bold text-white shadow-md transition-all 
-          ${loading || !selectedFile
-            ? "bg-slate-400 cursor-not-allowed"
-            : "bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98]"
-          }
-        `}
+        disabled={!selectedFile}
+        loading={loading}
+        className="mb-8 w-full"
       >
-        {loading ? "Extracting..." : "Extract Text (OCR)"}
-      </button>
+        Extract Text (OCR)
+      </Button>
 
       {extractedText && (
         <div className="w-full rounded-xl bg-white p-6 shadow-lg border border-slate-100">

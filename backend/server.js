@@ -145,6 +145,84 @@ function cleanMenuItems(rawText) {
     .sort(); // Sort alphabetically
 }
 
+// ============================================
+// Food Database API Endpoints
+// ============================================
+
+// GET /api/foods - Retrieve all foods from database
+app.get('/api/foods', (req, res) => {
+  try {
+    const foodDbPath = './data/foodDatabase.json';
+
+    if (!fs.existsSync(foodDbPath)) {
+      console.log('📂 Food database not found, returning empty array');
+      return res.json([]);
+    }
+
+    const data = fs.readFileSync(foodDbPath, 'utf8');
+    const foods = JSON.parse(data);
+
+    if (!Array.isArray(foods)) {
+      console.error('⚠️ Food database is not an array');
+      return res.json([]);
+    }
+
+    console.log(`✅ Retrieved ${foods.length} foods from database`);
+    res.json(foods);
+  } catch (err) {
+    console.error('❌ Error reading food database:', err);
+    res.status(500).json({
+      error: 'Failed to load food database',
+      message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  }
+});
+
+// GET /api/foods/search?q=query - Search foods by name
+app.get('/api/foods/search', (req, res) => {
+  try {
+    const query = req.query.q?.toLowerCase().trim();
+
+    if (!query) {
+      return res.status(400).json({
+        error: 'Search query required',
+        message: 'Please provide a search query using ?q=yourquery'
+      });
+    }
+
+    const foodDbPath = './data/foodDatabase.json';
+
+    if (!fs.existsSync(foodDbPath)) {
+      return res.json([]);
+    }
+
+    const data = fs.readFileSync(foodDbPath, 'utf8');
+    const foods = JSON.parse(data);
+
+    if (!Array.isArray(foods)) {
+      return res.json([]);
+    }
+
+    // Search by name (case-insensitive, partial match)
+    const results = foods.filter(food =>
+      food.name && food.name.toLowerCase().includes(query)
+    );
+
+    console.log(`🔍 Search for "${query}" returned ${results.length} results`);
+    res.json(results);
+  } catch (err) {
+    console.error('❌ Search failed:', err);
+    res.status(500).json({
+      error: 'Search failed',
+      message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  }
+});
+
+// ============================================
+// OCR Endpoint
+// ============================================
+
 app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
   let originalPath = null;
   let processedPath = null;
