@@ -73,6 +73,7 @@ const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_REQUESTS = 10; // 10 requests per minute
 
+// Rate limiting middleware to prevent API abuse
 function rateLimit(req, res, next) {
   const ip = req.ip || req.connection.remoteAddress;
   const now = Date.now();
@@ -115,6 +116,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
+// Clean and parse OCR text to extract individual menu items
 function cleanMenuItems(rawText) {
   const blacklist = ["menu", "breakfast", "lunch", "dinner"];
 
@@ -365,7 +367,7 @@ app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
   }
 });
 
-// Error handling middleware
+// Global error handling middleware
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {

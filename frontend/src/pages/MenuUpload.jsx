@@ -6,6 +6,7 @@ import api from "../services/api";
 import Button from "../components/Button";
 import ErrorMessage from "../components/ErrorMessage";
 
+// MenuUpload page - Handles mess menu image upload and OCR processing
 export default function MenuUpload() {
   const { setTodaysMenu } = useApp();
   const { error, handleError, clearError, retry, canRetry } = useErrorHandler();
@@ -15,6 +16,7 @@ export default function MenuUpload() {
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Handle file selection from gallery/file picker
   function handleFileChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -31,6 +33,7 @@ export default function MenuUpload() {
     }
   }
 
+  // Handle camera capture from device camera
   function handleCameraCapture(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -47,6 +50,7 @@ export default function MenuUpload() {
     }
   }
 
+  // Process menu image with OCR to extract text
   async function handleOCR() {
     if (!selectedFile) return;
 

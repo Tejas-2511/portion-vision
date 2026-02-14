@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 
+// Analysis page - Displays portion analysis results
 export default function Analysis() {
   const location = useLocation();
   const { imageFile, imagePreview } = location.state || {};

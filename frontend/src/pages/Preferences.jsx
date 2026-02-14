@@ -3,6 +3,7 @@ import { useApp } from "../contexts/AppContext";
 import { validateProfileData } from "../utils/validation";
 import ErrorMessage from "../components/ErrorMessage";
 
+// Preferences page - User profile and health metrics management
 export default function Preferences() {
   const { userProfile, setUserProfile } = useApp();
 
@@ -39,6 +40,7 @@ export default function Preferences() {
     }
   }, [userProfile]);
 
+  // Calculate BMI, calorie requirements, and protein needs using Mifflin-St Jeor equation
   function handleCalculateSave() {
     // Clear previous validation errors
     setValidationError(null);

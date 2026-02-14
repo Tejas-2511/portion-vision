@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../contexts/AppContext";
 
+// Home page - Main dashboard displaying today's mess menu
 export default function Home() {
   const navigate = useNavigate();
   const { todaysMenu } = useApp();

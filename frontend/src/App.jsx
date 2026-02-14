@@ -10,6 +10,7 @@ import MenuUpload from "./pages/MenuUpload";
 import PlateCapture from "./pages/PlateCapture";
 import Analysis from "./pages/Analysis";
 
+// Main App component with routing configuration
 export default function App() {
   return (
     <ErrorBoundary>

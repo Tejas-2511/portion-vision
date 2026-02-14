@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// PlateCapture page - Handles plate image capture for portion analysis
 export default function PlateCapture() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const navigate = useNavigate();
 
+  // Handle file selection from gallery/file picker
   function handleFileChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -15,6 +17,7 @@ export default function PlateCapture() {
     setPreview(URL.createObjectURL(file));
   }
 
+  // Handle camera capture from device camera
   function handleCameraCapture(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -23,6 +26,7 @@ export default function PlateCapture() {
     setPreview(URL.createObjectURL(file));
   }
 
+  // Navigate to analysis page with captured image data
   function handleCapture() {
     if (selectedFile && preview) {
       navigate("/analysis", {
