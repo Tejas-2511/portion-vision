@@ -1,5 +1,17 @@
 [
   {
+    "name": "bhaji",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "black masoor dal",
     "category": "",
     "serving_size": 0,
@@ -49,6 +61,18 @@
   },
   {
     "name": "chaap masala",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "chana dal burfi",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -180,6 +204,18 @@
     "veg": true
   },
   {
+    "name": "egg bhuriji",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "egg methi keema masala",
     "category": "",
     "serving_size": 0,
@@ -205,6 +241,18 @@
   },
   {
     "name": "fryum papad",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "garlic khichdi",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -336,6 +384,18 @@
     "veg": true
   },
   {
+    "name": "kulcha",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "langarwali dal",
     "category": "",
     "serving_size": 0,
@@ -349,6 +409,18 @@
   },
   {
     "name": "lemon water",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "mangoda",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -432,7 +504,43 @@
     "veg": true
   },
   {
+    "name": "orange",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "paneer do payza",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "papad mangodi",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "pav",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -564,6 +672,18 @@
     "veg": true
   },
   {
+    "name": "sweet daliya",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "tea",
     "category": "",
     "serving_size": 0,
@@ -588,6 +708,18 @@
     "veg": true
   },
   {
+    "name": "tomato pappu",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "uivialq chul",
     "category": "",
     "serving_size": 0,
@@ -601,6 +733,18 @@
   },
   {
     "name": "veg kofta curry",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "vegetable kolhapuri",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",

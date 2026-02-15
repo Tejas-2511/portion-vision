@@ -8,30 +8,8 @@ const path = require("path");
 
 const app = express();
 
-// Security: CORS configuration
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://10.174.6.237:5173",
-  "http://169.254.83.107:5173",
-  "http://169.254.50.217:5173"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.warn(`Blocked request from origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  maxAge: 86400 // 24 hours
-}));
+// Security: CORS configuration - Allow all origins for development
+app.use(cors());
 
 app.use(express.json({ limit: '10mb' })); // Limit JSON payload size
 
@@ -68,39 +46,8 @@ const upload = multer({
   }
 });
 
-// Security: Simple rate limiting (in-memory, for production use Redis)
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_REQUESTS = 10; // 10 requests per minute
-
-// Rate limiting middleware to prevent API abuse
-function rateLimit(req, res, next) {
-  const ip = req.ip || req.connection.remoteAddress;
-  const now = Date.now();
-
-  if (!rateLimitMap.has(ip)) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return next();
-  }
-
-  const record = rateLimitMap.get(ip);
-
-  if (now > record.resetTime) {
-    // Reset the counter
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return next();
-  }
-
-  if (record.count >= MAX_REQUESTS) {
-    return res.status(429).json({
-      error: 'Too many requests. Please try again later.',
-      retryAfter: Math.ceil((record.resetTime - now) / 1000)
-    });
-  }
-
-  record.count++;
-  next();
-}
+// Security: Simple rate limiting (Removed for development)
+// Rate limiting logic was here
 
 // Security: Basic security headers
 app.use((req, res, next) => {
@@ -225,7 +172,7 @@ app.get('/api/foods/search', (req, res) => {
 // OCR Endpoint
 // ============================================
 
-app.post("/ocr", rateLimit, upload.single("image"), async (req, res) => {
+app.post("/ocr", upload.single("image"), async (req, res) => {
   let originalPath = null;
   let processedPath = null;
 
@@ -396,5 +343,5 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`Backend running on http://${HOST}:${PORT}`);
-  console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
+  console.log('CORS: All origins allowed');
 });
