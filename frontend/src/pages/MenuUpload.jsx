@@ -16,25 +16,8 @@ export default function MenuUpload() {
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Handle file selection from gallery/file picker
-  function handleFileChange(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    clearError();
-
-    try {
-      validateImageFile(file);
-      setSelectedFile(file);
-      setPreview(URL.createObjectURL(file));
-      setExtractedText("");
-    } catch (err) {
-      handleError(err);
-    }
-  }
-
-  // Handle camera capture from device camera
-  function handleCameraCapture(e) {
+  // Handle file selection from gallery or camera
+  function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -109,7 +92,7 @@ export default function MenuUpload() {
             type="file"
             accept="image/*"
             capture="environment"
-            onChange={handleCameraCapture}
+            onChange={handleFileSelect}
             className="hidden"
           />
         </label>
@@ -123,7 +106,7 @@ export default function MenuUpload() {
           <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleFileSelect}
             className="hidden"
           />
         </label>

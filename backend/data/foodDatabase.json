@@ -120,6 +120,30 @@
     "veg": true
   },
   {
+    "name": "chilli chicken",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "chilli paneer",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
     "name": "chocolate brownie",
     "category": "",
     "serving_size": 0,
@@ -229,6 +253,18 @@
   },
   {
     "name": "flavored milk",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "fried rice",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",
@@ -421,6 +457,18 @@
   },
   {
     "name": "mangoda",
+    "category": "",
+    "serving_size": 0,
+    "serving_unit": "g/ml",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": true
+  },
+  {
+    "name": "masoor dal",
     "category": "",
     "serving_size": 0,
     "serving_unit": "g/ml",

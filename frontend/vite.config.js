@@ -74,5 +74,15 @@ export default defineConfig({
   server: {
     host: true, // Listen on all network interfaces
     port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      },
+      '/ocr': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      }
+    }
   },
 })

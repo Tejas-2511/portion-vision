@@ -8,17 +8,8 @@ export default function PlateCapture() {
 
   const navigate = useNavigate();
 
-  // Handle file selection from gallery/file picker
-  function handleFileChange(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setSelectedFile(file);
-    setPreview(URL.createObjectURL(file));
-  }
-
-  // Handle camera capture from device camera
-  function handleCameraCapture(e) {
+  // Handle file selection
+  function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -72,7 +63,7 @@ export default function PlateCapture() {
               type="file"
               accept="image/*"
               capture="environment"
-              onChange={handleCameraCapture}
+              onChange={handleFileSelect}
               className="hidden"
             />
           </label>
@@ -86,7 +77,7 @@ export default function PlateCapture() {
             <input
               type="file"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={handleFileSelect}
               className="hidden"
             />
           </label>
