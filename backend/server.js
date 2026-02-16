@@ -220,6 +220,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
 
+    /*
     // Update foodDatabase.json with new items
     const foodDbPath = './data/foodDatabase.json';
     let foodDatabase = [];
@@ -287,6 +288,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     // Save updated database
     fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
+    */
 
     res.json({ menuItems });
   } catch (err) {
