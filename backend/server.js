@@ -64,6 +64,8 @@ app.get('/health', (req, res) => {
 });
 
 // Clean and parse OCR text to extract individual menu items
+// Removes common headers, noise, and short strings
+// Uses regex to split lines by commas, slashes, and ampersands
 function cleanMenuItems(rawText) {
   const blacklist = ["menu", "breakfast", "lunch", "dinner"];
 
@@ -185,6 +187,11 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     processedPath = `uploads/processed-${Date.now()}.png`;
 
     // Image processing with security considerations
+    // 1. Extend canvas to add white border (helps OCR with edge text)
+    // 2. Resize to width 1200px (optimal for Tesseract)
+    // 3. Convert to grayscale (removes color noise)
+    // 4. Normalize and threshold (binarization for high contrast)
+    // 5. Sharpen (enhances text edges)
     await sharp(originalPath)
       .extend({
         top: 40,

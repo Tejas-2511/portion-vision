@@ -17,6 +17,7 @@ export default function MenuUpload() {
   const [loading, setLoading] = useState(false);
 
   // Handle file selection from gallery or camera
+  // Validates file type and size before setting state
   function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -34,6 +35,9 @@ export default function MenuUpload() {
   }
 
   // Process menu image with OCR to extract text
+  // 1. Uploads image to backend via API
+  // 2. Receives extracted menu items
+  // 3. Updates global state (AppContext) with new menu
   async function handleOCR() {
     if (!selectedFile) return;
 

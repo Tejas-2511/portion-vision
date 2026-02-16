@@ -14,6 +14,8 @@ try {
   console.error("Error reading food database:", err);
 }
 
+// Returns fallback nutrition values based on keyword matching
+// Used when exact food item is not found in the database
 function defaultNutrition(name) {
   const n = name.toLowerCase();
   if (n.includes("rice")) return { calories: 130, protein: 2.7, carbs: 28, fat: 0.3 };
@@ -29,6 +31,9 @@ function getFood(name) {
   return FOOD_DB.find(f => f.name.toLowerCase() === name.toLowerCase());
 }
 
+// Estimates Total Daily Energy Expenditure (TDEE) using Mifflin-St Jeor Equation
+// BMR = 10*W + 6.25*H - 5*A + S (S=+5 for men, -161 for women)
+// Activity multipliers: Sedentary (1.2) to Active (1.725)
 function estimateDailyCalories(user) {
   const weight = user.weight_kg || 70;
   const height = user.height_cm || 170;
@@ -53,6 +58,10 @@ function estimateDailyCalories(user) {
   return Math.max(1200, Math.min(4500, tdee));
 }
 
+// Calculates recommended grams of a food item for a specific meal
+// Allocates a fraction of daily calories to the meal type (e.g., Lunch = 35%)
+// Target Calories = TDEE * Meal Fraction
+// Grams = (Target / Calories per 100g) * 100
 function recommendPortion({ foodName, user, mealType }) {
   const entry = getFood(foodName);
   let food = null;
