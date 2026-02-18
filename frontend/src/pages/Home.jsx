@@ -20,14 +20,17 @@ export default function Home() {
   async function loadRecommendations() {
     setLoadingRecs(true);
     try {
-      // Determine meal type based on time
-      const hour = new Date().getHours();
-      let mealType = "lunch";
+      // Determine meal type (Manual Override > Time Based)
+      let mealType = todaysMenu?.mealType;
 
-      if (hour >= 6 && hour < 11) mealType = "breakfast";
-      else if (hour >= 11 && hour < 16) mealType = "lunch";
-      else if (hour >= 16 && hour < 19) mealType = "snack";
-      else if (hour >= 19) mealType = "dinner";
+      if (!mealType) {
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour < 11) mealType = "breakfast";
+        else if (hour >= 11 && hour < 16) mealType = "lunch";
+        else if (hour >= 16 && hour < 19) mealType = "snack";
+        else if (hour >= 19) mealType = "dinner";
+        else mealType = "lunch";
+      }
 
       const data = await api.getRecommendations(userProfile, mealType);
 

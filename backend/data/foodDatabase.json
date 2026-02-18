@@ -8,7 +8,7 @@
     "serving_unit": "g",
     "calories": 160,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 8,
     "fiber": 6,
@@ -18,7 +18,8 @@
       "cauliflower",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo jeera",
@@ -38,7 +39,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo matar",
@@ -49,7 +51,7 @@
     "serving_unit": "g",
     "calories": 190,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 28,
     "fat": 7,
     "fiber": 5,
@@ -58,7 +60,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo palak",
@@ -69,7 +72,7 @@
     "serving_unit": "g",
     "calories": 170,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 22,
     "fat": 7,
     "fiber": 6,
@@ -78,7 +81,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo papdi chaat",
@@ -89,7 +93,7 @@
     "serving_unit": "g",
     "calories": 250,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 10,
     "fiber": 3,
@@ -98,7 +102,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo paratha",
@@ -117,7 +122,8 @@
     "tags": [
       "potato",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "aloo sem phali",
@@ -137,15 +143,16 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "apple",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 80,
     "protein": 0.5,
     "protein_level": "low",
@@ -156,7 +163,8 @@
     "tags": [
       "fruit",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "baingan bharta",
@@ -174,15 +182,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "banana",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 105,
     "protein": 1.3,
     "protein_level": "low",
@@ -192,15 +201,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "banana cake",
     "dish_type": "sweet",
     "category": "dessert",
     "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 250,
     "protein": 4,
     "protein_level": "low",
@@ -211,7 +221,8 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "beans poriyal",
@@ -230,7 +241,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "besan laddu",
@@ -250,7 +262,8 @@
       "besan",
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "bhaji",
@@ -269,7 +282,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "bhindi masala",
@@ -289,7 +303,8 @@
       "okra",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "biscuit",
@@ -308,12 +323,13 @@
     "tags": [
       "packaged",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "black chana",
     "dish_type": "sabji",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -326,7 +342,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "black chana masala",
@@ -344,7 +361,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "black masoor dal",
@@ -364,7 +382,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "boiled egg",
@@ -379,18 +398,19 @@
     "carbs": 1,
     "fat": 5,
     "fiber": 0,
-    "veg": true,
+    "veg": false,
     "tags": [
       "egg",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "bread",
     "dish_type": "roti",
     "category": "carb_base",
-    "unit_type": "slice",
+    "unit_type": "piece",
     "serving_size": 30,
     "serving_unit": "g",
     "calories": 70,
@@ -402,13 +422,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "bread omelette",
     "dish_type": "roti",
     "category": "carb_base",
-    "unit_type": "slice",
+    "unit_type": "piece",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 280,
@@ -420,25 +441,27 @@
     "veg": false,
     "tags": [
       "non-veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "butter",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
-    "serving_size": 150,
+    "unit_type": "tbsp",
+    "serving_size": 10,
     "serving_unit": "g",
-    "calories": 102,
+    "calories": 72,
     "protein": 0.1,
     "protein_level": "low",
     "carbs": 0.1,
-    "fat": 11.5,
+    "fat": 8,
     "fiber": 0,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "butter milk",
@@ -456,7 +479,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "butter naan",
@@ -474,7 +498,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "cabbage carrot",
@@ -492,7 +517,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "cabbage matar",
@@ -510,7 +536,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "cabbage poriyal",
@@ -529,7 +556,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "carrot beans poriyal",
@@ -548,7 +576,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "carrot capsicum",
@@ -566,7 +595,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chaap makhani",
@@ -584,7 +614,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chaap masala",
@@ -602,7 +633,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chana dal",
@@ -622,7 +654,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chana dal burfi",
@@ -642,7 +675,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chana masala",
@@ -660,7 +694,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chapati",
@@ -678,12 +713,13 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chicken biryani",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 300,
     "serving_unit": "g",
@@ -693,11 +729,12 @@
     "carbs": 45,
     "fat": 12,
     "fiber": 2,
-    "veg": true,
+    "veg": false,
     "tags": [
       "chicken",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "chicken chettinad",
@@ -712,12 +749,13 @@
     "carbs": 12,
     "fat": 18,
     "fiber": 3,
-    "veg": true,
+    "veg": false,
     "tags": [
       "chicken",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chicken curry",
@@ -737,7 +775,8 @@
       "chicken",
       "gravy",
       "non-veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chilka moong dal",
@@ -748,7 +787,7 @@
     "serving_unit": "g",
     "calories": 180,
     "protein": 11,
-    "protein_level": "low",
+    "protein_level": "medium",
     "carbs": 30,
     "fat": 3,
     "fiber": 7,
@@ -757,7 +796,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chilli chicken",
@@ -772,12 +812,13 @@
     "carbs": 15,
     "fat": 16,
     "fiber": 2,
-    "veg": true,
+    "veg": false,
     "tags": [
       "chicken",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chilli paneer",
@@ -788,7 +829,7 @@
     "serving_unit": "g",
     "calories": 280,
     "protein": 14,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 20,
     "fat": 18,
     "fiber": 2,
@@ -797,13 +838,14 @@
       "paneer",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chitranna",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 250,
@@ -815,13 +857,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chocolate brownie",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "sweet",
+    "category": "dessert",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 280,
@@ -833,7 +876,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "chole masala",
@@ -852,7 +896,8 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "coconut burfi",
@@ -871,11 +916,12 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "coconut chutney",
-    "dish_type": "chutney",
+    "dish_type": "condiment",
     "category": "condiment",
     "unit_type": "tbsp",
     "serving_size": 20,
@@ -889,15 +935,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "coffee",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "cup",
+    "unit_type": "glass",
     "serving_size": 150,
-    "serving_unit": "g",
+    "serving_unit": "ml",
     "calories": 80,
     "protein": 2,
     "protein_level": "low",
@@ -907,13 +954,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "corn capsicum",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 150,
@@ -925,31 +973,33 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "corn pulao",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 220,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 40,
     "fat": 5,
     "fiber": 3,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "cornflakes",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
-    "unit_type": "piece",
+    "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 220,
@@ -961,13 +1011,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "curd",
-    "dish_type": "curd",
-    "category": "side",
-    "unit_type": "bowl",
+    "dish_type": "other",
+    "category": "other",
+    "unit_type": "serving",
     "serving_size": 100,
     "serving_unit": "g",
     "calories": 100,
@@ -979,7 +1030,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "curd rice",
@@ -998,7 +1050,8 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal amritsari",
@@ -1018,7 +1071,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal fry",
@@ -1038,7 +1092,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal makhani",
@@ -1058,7 +1113,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal pakoda",
@@ -1078,7 +1134,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal panchratan",
@@ -1089,7 +1146,7 @@
     "serving_unit": "g",
     "calories": 220,
     "protein": 13,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 32,
     "fat": 6,
     "fiber": 8,
@@ -1098,7 +1155,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dal vada curry",
@@ -1118,7 +1176,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dhokla",
@@ -1137,7 +1196,8 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dum aloo",
@@ -1157,7 +1217,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "dum aloo kashmiri",
@@ -1168,7 +1229,7 @@
     "serving_unit": "g",
     "calories": 250,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 12,
     "fiber": 5,
@@ -1177,7 +1238,8 @@
       "potato",
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "egg bhurji",
@@ -1188,16 +1250,17 @@
     "serving_unit": "g",
     "calories": 220,
     "protein": 14,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 5,
     "fat": 16,
     "fiber": 1,
-    "veg": true,
+    "veg": false,
     "tags": [
       "egg",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "egg curry",
@@ -1208,16 +1271,17 @@
     "serving_unit": "g",
     "calories": 240,
     "protein": 14,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 10,
     "fat": 16,
     "fiber": 1,
-    "veg": true,
+    "veg": false,
     "tags": [
       "egg",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "egg methi keema masala",
@@ -1232,12 +1296,13 @@
     "carbs": 8,
     "fat": 18,
     "fiber": 2,
-    "veg": true,
+    "veg": false,
     "tags": [
       "egg",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "fish curry",
@@ -1257,7 +1322,8 @@
       "fish",
       "gravy",
       "non-veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "flavored milk",
@@ -1275,7 +1341,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "fried rice",
@@ -1294,31 +1361,33 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "fruit custard",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "sweet",
+    "category": "dessert",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 200,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 30,
     "fat": 6,
     "fiber": 2,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "fryum papad",
-    "dish_type": "extra",
-    "category": "side",
-    "unit_type": "piece",
+    "dish_type": "condiment",
+    "category": "condiment",
+    "unit_type": "tbsp",
     "serving_size": 20,
     "serving_unit": "g",
     "calories": 40,
@@ -1330,12 +1399,13 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "garlic khichdi",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -1348,7 +1418,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "garlic naan",
@@ -1366,7 +1437,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "ghee rice",
@@ -1385,7 +1457,8 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "gobhi masala",
@@ -1404,14 +1477,15 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "grapes",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
-    "serving_size": 100,
+    "serving_size": 150,
     "serving_unit": "g",
     "calories": 70,
     "protein": 0.7,
@@ -1423,7 +1497,8 @@
     "tags": [
       "fruit",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "green chilli fry",
@@ -1441,11 +1516,12 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "green chutney",
-    "dish_type": "chutney",
+    "dish_type": "condiment",
     "category": "condiment",
     "unit_type": "tbsp",
     "serving_size": 20,
@@ -1459,7 +1535,29 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
+  },
+  {
+    "name": "green moong dal",
+    "dish_type": "dal",
+    "category": "protein_main",
+    "unit_type": "bowl",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "calories": 180,
+    "protein": 10,
+    "protein_level": "medium",
+    "carbs": 30,
+    "fat": 4,
+    "fiber": 7,
+    "veg": true,
+    "tags": [
+      "dal",
+      "gravy",
+      "veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "green moong dal khichdi",
@@ -1479,7 +1577,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "green moong dal tadka",
@@ -1490,7 +1589,7 @@
     "serving_unit": "g",
     "calories": 190,
     "protein": 11,
-    "protein_level": "low",
+    "protein_level": "medium",
     "carbs": 30,
     "fat": 5,
     "fiber": 7,
@@ -1499,12 +1598,13 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "green peas pulao",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -1517,7 +1617,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "green salad",
@@ -1535,7 +1636,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "gulab jamun",
@@ -1554,7 +1656,8 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "gutta curry",
@@ -1573,7 +1676,8 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "hot milk",
@@ -1591,15 +1695,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "ice tea",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "cup",
+    "unit_type": "glass",
     "serving_size": 150,
-    "serving_unit": "g",
+    "serving_unit": "ml",
     "calories": 100,
     "protein": 0,
     "protein_level": "low",
@@ -1609,11 +1714,12 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "idli",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
     "serving_size": 50,
@@ -1627,13 +1733,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "jalebi",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "sweet",
+    "category": "dessert",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 150,
@@ -1645,13 +1752,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "jam",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "condiment",
+    "category": "condiment",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 50,
@@ -1663,12 +1771,13 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "jeera pulao",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -1681,7 +1790,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "jeera rice",
@@ -1700,14 +1810,15 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kachori",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
-    "serving_size": 150,
+    "serving_size": 50,
     "serving_unit": "g",
     "calories": 190,
     "protein": 3,
@@ -1718,25 +1829,48 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
+  },
+  {
+    "name": "kadhai paneer",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "bowl",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "calories": 280,
+    "protein": 14,
+    "protein_level": "medium",
+    "carbs": 18,
+    "fat": 18,
+    "fiber": 3,
+    "veg": true,
+    "tags": [
+      "paneer",
+      "gravy",
+      "veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kadhai veg",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "sabji",
+    "category": "side",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 190,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 10,
     "fiber": 6,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kadhi pakoda",
@@ -1755,7 +1889,8 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kaju katli",
@@ -1773,7 +1908,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "karela fry",
@@ -1791,23 +1927,27 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kesar phirni",
-    "dish_type": "",
-    "category": "",
-    "unit_type": "plate",
-    "serving_size": 0,
+    "dish_type": "other",
+    "category": "other",
+    "unit_type": "serving",
+    "serving_size": 100,
     "serving_unit": "g",
-    "calories": 0,
+    "calories": 150,
     "protein": 0,
-    "protein_level": "",
+    "protein_level": "low",
     "carbs": 0,
     "fat": 0,
     "fiber": 0,
-    "veg": false,
-    "tags": []
+    "veg": true,
+    "tags": [
+      "veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "kesari bhat",
@@ -1825,12 +1965,13 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "khichdi",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 250,
     "serving_unit": "g",
@@ -1843,7 +1984,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "kulcha",
@@ -1861,7 +2003,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lahsuni dal",
@@ -1881,7 +2024,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "langarwali dal",
@@ -1901,7 +2045,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lassi",
@@ -1919,13 +2064,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lauki chana",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 150,
@@ -1937,7 +2083,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lauki kofta curry",
@@ -1956,7 +2103,8 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lauki sabzi",
@@ -1975,7 +2123,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lehsuni dal",
@@ -1995,7 +2144,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lemon rice",
@@ -2014,7 +2164,8 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lemon water",
@@ -2032,7 +2183,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lobia dal",
@@ -2052,7 +2204,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "lobiya masala",
@@ -2070,7 +2223,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "luchi",
@@ -2088,13 +2242,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "macaroni",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "snack",
+    "category": "snack",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 250,
@@ -2106,13 +2261,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "maggi",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "snack",
+    "category": "snack",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 300,
@@ -2124,15 +2280,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "mango",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 100,
     "protein": 1,
     "protein_level": "low",
@@ -2144,13 +2301,14 @@
       "fruit",
       "veg",
       "sweet"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mangoda",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 220,
@@ -2162,7 +2320,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "masala bhat",
@@ -2173,22 +2332,23 @@
     "serving_unit": "g",
     "calories": 240,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 42,
     "fat": 6,
     "fiber": 3,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "masala chai",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "cup",
+    "unit_type": "glass",
     "serving_size": 150,
-    "serving_unit": "g",
+    "serving_unit": "ml",
     "calories": 80,
     "protein": 2,
     "protein_level": "low",
@@ -2198,25 +2358,27 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "masala dosa",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
     "serving_size": 120,
     "serving_unit": "g",
     "calories": 280,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 45,
     "fat": 10,
     "fiber": 3,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "masoor dal",
@@ -2236,7 +2398,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "masoor dal tadka",
@@ -2256,7 +2419,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "matar paneer",
@@ -2276,7 +2440,8 @@
       "paneer",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "medu vada",
@@ -2295,7 +2460,8 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "methi dal",
@@ -2315,23 +2481,27 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "methi matar chaman",
-    "dish_type": "",
-    "category": "",
-    "unit_type": "plate",
-    "serving_size": 0,
+    "dish_type": "other",
+    "category": "other",
+    "unit_type": "serving",
+    "serving_size": 100,
     "serving_unit": "g",
-    "calories": 0,
+    "calories": 150,
     "protein": 0,
-    "protein_level": "",
+    "protein_level": "low",
     "carbs": 0,
     "fat": 0,
     "fiber": 0,
-    "veg": false,
-    "tags": []
+    "veg": true,
+    "tags": [
+      "veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mix bhajiya",
@@ -2350,7 +2520,8 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mix dal",
@@ -2370,7 +2541,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mix veg",
@@ -2381,7 +2553,7 @@
     "serving_unit": "g",
     "calories": 180,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 22,
     "fat": 9,
     "fiber": 6,
@@ -2389,23 +2561,27 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "moong dal halwa",
-    "dish_type": "",
-    "category": "",
-    "unit_type": "plate",
-    "serving_size": 0,
+    "dish_type": "dal",
+    "category": "protein_main",
+    "unit_type": "bowl",
+    "serving_size": 150,
     "serving_unit": "g",
-    "calories": 0,
+    "calories": 190,
     "protein": 0,
-    "protein_level": "",
+    "protein_level": "low",
     "carbs": 0,
     "fat": 0,
     "fiber": 0,
-    "veg": false,
-    "tags": []
+    "veg": true,
+    "tags": [
+      "veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "moong dal tadka",
@@ -2425,7 +2601,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "moti chur ke laddu",
@@ -2444,13 +2621,36 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
+  },
+  {
+    "name": "murgh hydrabadi",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "bowl",
+    "serving_size": 200,
+    "serving_unit": "g",
+    "calories": 320,
+    "protein": 28,
+    "protein_level": "high",
+    "carbs": 10,
+    "fat": 20,
+    "fiber": 2,
+    "veg": false,
+    "tags": [
+      "chicken",
+      "gravy",
+      "spicy",
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "murgh saag wala",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 280,
@@ -2462,7 +2662,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mutton curry",
@@ -2477,18 +2678,19 @@
     "carbs": 8,
     "fat": 22,
     "fiber": 2,
-    "veg": true,
+    "veg": false,
     "tags": [
       "mutton",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "mysore bonda",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "snack",
+    "category": "snack",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 150,
@@ -2500,7 +2702,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "naan",
@@ -2518,18 +2721,19 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "namkeen",
     "dish_type": "snack",
     "category": "snack",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 50,
     "serving_unit": "g",
     "calories": 250,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 15,
     "fiber": 2,
@@ -2537,12 +2741,13 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "onion pulao",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -2555,15 +2760,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "orange",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 60,
     "protein": 1,
     "protein_level": "low",
@@ -2573,7 +2779,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "palak poori",
@@ -2591,7 +2798,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "paneer chat pata",
@@ -2611,7 +2819,8 @@
       "paneer",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "paneer do payza",
@@ -2622,7 +2831,7 @@
     "serving_unit": "g",
     "calories": 270,
     "protein": 14,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 18,
     "fat": 16,
     "fiber": 3,
@@ -2631,14 +2840,15 @@
       "paneer",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pani poori",
     "dish_type": "roti",
     "category": "carb_base",
     "unit_type": "piece",
-    "serving_size": 40,
+    "serving_size": 15,
     "serving_unit": "g",
     "calories": 120,
     "protein": 2,
@@ -2649,13 +2859,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "papad mangodi",
-    "dish_type": "extra",
-    "category": "side",
-    "unit_type": "piece",
+    "dish_type": "condiment",
+    "category": "condiment",
+    "unit_type": "tbsp",
     "serving_size": 20,
     "serving_unit": "g",
     "calories": 180,
@@ -2667,7 +2878,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "papaya",
@@ -2686,13 +2898,14 @@
     "tags": [
       "fruit",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "patiyala murgh",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 350,
@@ -2704,7 +2917,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pav",
@@ -2715,14 +2929,15 @@
     "serving_unit": "g",
     "calories": 160,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 30,
     "fat": 2,
     "fiber": 1,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pav bhaji",
@@ -2740,11 +2955,12 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "peanut chutney",
-    "dish_type": "chutney",
+    "dish_type": "condiment",
     "category": "condiment",
     "unit_type": "tbsp",
     "serving_size": 20,
@@ -2758,30 +2974,32 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "phirni",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 220,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 32,
     "fat": 8,
     "fiber": 1,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pickle",
-    "dish_type": "extra",
-    "category": "side",
+    "dish_type": "condiment",
+    "category": "condiment",
     "unit_type": "tbsp",
     "serving_size": 10,
     "serving_unit": "g",
@@ -2794,15 +3012,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pineapple halwa",
     "dish_type": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
-    "serving_size": 30,
-    "serving_unit": "g",
+    "unit_type": "piece",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 240,
     "protein": 2,
     "protein_level": "low",
@@ -2813,11 +3032,12 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "plain dosa",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
     "serving_size": 150,
@@ -2831,11 +3051,12 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "poha",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
     "serving_size": 150,
@@ -2849,14 +3070,15 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pomegranate",
     "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
-    "serving_size": 100,
+    "serving_size": 150,
     "serving_unit": "g",
     "calories": 83,
     "protein": 1.7,
@@ -2868,7 +3090,8 @@
     "tags": [
       "fruit",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "poori",
@@ -2886,13 +3109,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "potato chips",
     "dish_type": "snack",
     "category": "snack",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 30,
     "serving_unit": "g",
     "calories": 160,
@@ -2906,7 +3130,8 @@
       "fried",
       "veg",
       "potato"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "pumpkin sabzi",
@@ -2925,13 +3150,14 @@
     "tags": [
       "dry",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rabdi boondi",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 280,
@@ -2943,13 +3169,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "raita",
-    "dish_type": "curd",
-    "category": "side",
-    "unit_type": "bowl",
+    "dish_type": "other",
+    "category": "other",
+    "unit_type": "serving",
     "serving_size": 100,
     "serving_unit": "g",
     "calories": 80,
@@ -2961,13 +3188,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rajasthani kadhi",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 200,
@@ -2979,7 +3207,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rajma masala",
@@ -2998,12 +3227,13 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rasam",
-    "dish_type": "drink",
-    "category": "beverage",
+    "dish_type": "other",
+    "category": "side",
     "unit_type": "glass",
     "serving_size": 150,
     "serving_unit": "ml",
@@ -3016,7 +3246,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rasgulla",
@@ -3035,25 +3266,27 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rava upma",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 220,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 7,
     "fiber": 2,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "rice kheer",
@@ -3072,13 +3305,14 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sakkara pongal",
     "dish_type": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 300,
@@ -3092,7 +3326,8 @@
       "sweet",
       "veg",
       "rice"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sambar",
@@ -3111,12 +3346,13 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sambar rice",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 300,
     "serving_unit": "g",
@@ -3130,7 +3366,8 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "samosa",
@@ -3149,7 +3386,8 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "scrambled egg",
@@ -3160,22 +3398,23 @@
     "serving_unit": "g",
     "calories": 210,
     "protein": 14,
-    "protein_level": "high",
+    "protein_level": "medium",
     "carbs": 4,
     "fat": 15,
     "fiber": 0,
-    "veg": true,
+    "veg": false,
     "tags": [
       "egg",
       "gravy",
-      "veg"
-    ]
+      "non-veg"
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sem fhali",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 140,
@@ -3187,13 +3426,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "semiya payasam",
     "dish_type": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 30,
     "serving_unit": "g",
     "calories": 200,
@@ -3206,29 +3446,31 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "semiya upma",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 200,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 5,
     "fiber": 2,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "set dosa",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "piece",
     "serving_size": 150,
@@ -3242,13 +3484,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sevtamatar",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 250,
@@ -3260,18 +3503,19 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sewai kheer",
     "dish_type": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 30,
     "serving_unit": "g",
     "calories": 220,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 32,
     "fat": 8,
     "fiber": 1,
@@ -3279,13 +3523,14 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "shakar para",
     "dish_type": "snack",
     "category": "snack",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 140,
@@ -3297,13 +3542,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sheera",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 250,
@@ -3315,7 +3561,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sindhi dal",
@@ -3335,7 +3582,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "smoked dal",
@@ -3355,7 +3603,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "soya masala",
@@ -3373,7 +3622,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "soyabean masala",
@@ -3391,7 +3641,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "steam rice",
@@ -3410,25 +3661,27 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "subzi miloni",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "sabji",
+    "category": "side",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 180,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 10,
     "fiber": 5,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sweet bun",
@@ -3439,7 +3692,7 @@
     "serving_unit": "g",
     "calories": 200,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 4,
     "fiber": 1,
@@ -3447,12 +3700,13 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sweet corn soup",
-    "dish_type": "sweet",
-    "category": "dessert",
+    "dish_type": "other",
+    "category": "side",
     "unit_type": "piece",
     "serving_size": 30,
     "serving_unit": "g",
@@ -3466,7 +3720,8 @@
     "tags": [
       "sweet",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "sweet daliya",
@@ -3477,7 +3732,7 @@
     "serving_unit": "g",
     "calories": 180,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 35,
     "fat": 3,
     "fiber": 4,
@@ -3486,7 +3741,8 @@
       "dal",
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tamarind rice",
@@ -3505,7 +3761,8 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tandoori roti",
@@ -3523,15 +3780,16 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tea",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "cup",
+    "unit_type": "glass",
     "serving_size": 150,
-    "serving_unit": "g",
+    "serving_unit": "ml",
     "calories": 60,
     "protein": 2,
     "protein_level": "low",
@@ -3541,7 +3799,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tinda masala",
@@ -3559,11 +3818,12 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tomato chutney",
-    "dish_type": "chutney",
+    "dish_type": "condiment",
     "category": "condiment",
     "unit_type": "tbsp",
     "serving_size": 20,
@@ -3577,13 +3837,14 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tomato pappu",
     "dish_type": "other",
     "category": "other",
-    "unit_type": "bowl",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 160,
@@ -3595,7 +3856,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tomato rice",
@@ -3614,15 +3876,16 @@
     "tags": [
       "rice",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "tomato soup",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "cup",
+    "unit_type": "glass",
     "serving_size": 150,
-    "serving_unit": "g",
+    "serving_unit": "ml",
     "calories": 80,
     "protein": 2,
     "protein_level": "low",
@@ -3632,7 +3895,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "vada pav",
@@ -3650,12 +3914,13 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "veg biryani",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 300,
     "serving_unit": "g",
@@ -3668,25 +3933,27 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "veg hariyali",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 170,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 18,
     "fat": 9,
     "fiber": 6,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "veg kofta curry",
@@ -3705,11 +3972,12 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "veg pongal",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
     "serving_size": 150,
@@ -3723,7 +3991,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "veg puff",
@@ -3742,87 +4011,92 @@
     "tags": [
       "fried",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "veg upma",
-    "dish_type": "breakfast",
+    "dish_type": "snack",
     "category": "snack",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 190,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 30,
     "fat": 6,
     "fiber": 3,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "vegetable chettinad",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 200,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 12,
     "fiber": 6,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "vegetable kolhapuri",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "bowl",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 210,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 20,
     "fat": 13,
     "fiber": 6,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "vegetable pulao",
     "dish_type": "rice",
-    "category": "main",
+    "category": "carb_base",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 250,
     "protein": 5,
-    "protein_level": "medium",
+    "protein_level": "low",
     "carbs": 42,
     "fat": 7,
     "fiber": 4,
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "mixed"
   },
   {
     "name": "watermelon",
     "dish_type": "snack",
     "category": "snack",
-    "unit_type": "bowl",
+    "unit_type": "piece",
     "serving_size": 150,
-    "serving_unit": "ml",
+    "serving_unit": "g",
     "calories": 30,
     "protein": 0.6,
     "protein_level": "low",
@@ -3832,7 +4106,8 @@
     "veg": true,
     "tags": [
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   },
   {
     "name": "white matar curry",
@@ -3851,6 +4126,7 @@
     "tags": [
       "gravy",
       "veg"
-    ]
+    ],
+    "meal_role": "single"
   }
 ]

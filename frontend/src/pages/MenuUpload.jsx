@@ -15,6 +15,7 @@ export default function MenuUpload() {
   const [preview, setPreview] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mealType, setMealType] = useState("lunch"); // Default for testing
 
   // Handle file selection from gallery or camera
   // Validates file type and size before setting state
@@ -59,7 +60,8 @@ export default function MenuUpload() {
       setTodaysMenu({
         items: data.menuItems,
         text: menuText,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        mealType: mealType // Save selected meal type
       });
     } catch (err) {
       handleError(err);
@@ -85,6 +87,26 @@ export default function MenuUpload() {
       )}
 
       <div className="mb-6 w-full space-y-4">
+
+        {/* Meal Type Selector (For Testing) */}
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+          <label className="block text-sm font-medium text-slate-700 mb-2">Select Meal Type</label>
+          <div className="grid grid-cols-4 gap-2">
+            {["breakfast", "lunch", "snack", "dinner"].map((type) => (
+              <button
+                key={type}
+                onClick={() => setMealType(type)}
+                className={`py-2 px-1 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors ${mealType === type
+                    ? "bg-emerald-600 text-white shadow-md"
+                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                  }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Camera Capture Button */}
         <label className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-emerald-400 bg-emerald-50 hover:bg-emerald-100 transition-colors">
           <svg className="w-12 h-12 text-emerald-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
