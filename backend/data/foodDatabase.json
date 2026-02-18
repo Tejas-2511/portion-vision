@@ -1794,6 +1794,22 @@
     ]
   },
   {
+    "name": "kesar phirni",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "kesari bhat",
     "dish_type": "rice",
     "category": "carb_base",
@@ -2302,6 +2318,22 @@
     ]
   },
   {
+    "name": "methi matar chaman",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "mix bhajiya",
     "dish_type": "sabji",
     "category": "side",
@@ -2358,6 +2390,22 @@
       "dry",
       "veg"
     ]
+  },
+  {
+    "name": "moong dal halwa",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "moong dal tadka",
