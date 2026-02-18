@@ -172,6 +172,7 @@ app.get('/api/foods/search', (req, res) => {
 });
 
 // POST /api/recommend - Generate portion recommendations
+// POST /api/recommend - Generate balanced plate recommendation
 app.post('/api/recommend', (req, res) => {
   try {
     const { userProfile, mealType } = req.body;
@@ -182,32 +183,34 @@ app.post('/api/recommend', (req, res) => {
 
     const menuPath = './data/menu.json';
     if (!fs.existsSync(menuPath)) {
-      return res.json({ recommendations: [] }); // No menu to recommend from
+      return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
     }
 
     const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
     const menuItems = menuData.menuItems || [];
 
-    // Map frontend profile to backend recommender format
+    // Reconstruct user object from frontend profile
     const user = {
       weight_kg: parseFloat(userProfile.weight),
       height_cm: parseFloat(userProfile.height),
       age: parseInt(userProfile.age),
       sex: userProfile.gender,
-      activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0], // e.g. "Moderately Active" -> "moderate"
-      goal: (userProfile.goalType || 'maintain').split(' ')[0].toLowerCase() // e.g. "Lose Weight" -> "lose"
+      activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
+      goal: (userProfile.goalType || 'maintain').split(' ')[0].toLowerCase()
     };
 
-    const recommendations = menuItems.map(item => {
-      return recommendPortion({
-        foodName: item,
-        user: user,
-        mealType: mealType || 'lunch' // Default to lunch if not specified
-      });
+    // Import new recommender function
+    // Note: ensure we are importing the new function name
+    const { recommendPlate } = require("./portion_recommender");
+
+    const recommendation = recommendPlate({
+      user,
+      menuItems,
+      mealType: mealType || 'lunch'
     });
 
-    console.log(`🥗 Generated ${recommendations.length} recommendations for ${user.sex}, ${user.goal}`);
-    res.json({ recommendations });
+    console.log(`🥗 Generated plate for ${user.sex}, ${user.goal} (${mealType})`);
+    res.json(recommendation);
 
   } catch (err) {
     console.error('❌ Recommendation failed:', err);
