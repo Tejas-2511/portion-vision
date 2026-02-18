@@ -6,19 +6,32 @@ const path = require("path");
 // ==========================================
 
 // Load food database
+const { normalizeFoodName } = require("./utils/normalize");
+
+// Load food database & Create Index
 let FOOD_DB = [];
+let FOOD_INDEX = new Map(); // O(1) Lookup
+
 try {
   const dbPath = path.join(__dirname, "data", "foodDatabase.json");
   if (fs.existsSync(dbPath)) {
     FOOD_DB = JSON.parse(fs.readFileSync(dbPath, "utf8"));
+
+    // Build Index
+    FOOD_DB.forEach(item => {
+      if (item.name) {
+        FOOD_INDEX.set(normalizeFoodName(item.name), item);
+      }
+    });
+    // console.log(`✅ Indexed ${FOOD_INDEX.size} unique food items.`);
   }
 } catch (err) {
   console.error("Error reading food database:", err);
 }
 
-// Helper to find food in DB (case-insensitive)
+// Helper to find food in DB (Normalized O(1))
 function findFood(name) {
-  return FOOD_DB.find(f => f.name.toLowerCase() === name.toLowerCase());
+  return FOOD_INDEX.get(normalizeFoodName(name));
 }
 
 // Fallback logic if food not in DB

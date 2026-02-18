@@ -6,6 +6,7 @@ const fs = require("fs");
 const sharp = require("sharp");
 const path = require("path");
 const { recommendPortion } = require("./portion_recommender");
+const { normalizeFoodName } = require("./utils/normalize");
 
 const app = express();
 
@@ -72,26 +73,11 @@ function cleanMenuItems(rawText) {
 
   return rawText
     .split("\n")
-    .map(line => line.trim())
-    .filter(line => line.length > 1)
-    .map(line => {
-      line = line.replace(/[^A-Za-z, &/]/g, "");
-      line = line.replace(/\s+/g, " ").trim();
-
-      let parts = [line];
-
-      parts = parts
-        .flatMap(x => x.split(","))
-        .flatMap(x => x.split("/"))
-        .flatMap(x => x.split("&"))
-        .map(x => x.trim())
-        .filter(x => x.length > 1);
-
-      return parts;
-    })
-    .flat()
-    .map(line => line.toLowerCase()) // Normalize to lowercase
-    .filter(line => line.length > 1)
+    .flatMap(line => line.split(","))
+    .flatMap(line => line.split("/"))
+    .flatMap(line => line.split("&"))
+    .map(normalizeFoodName) // Use shared normalization
+    .filter(line => line.length > 2) // Filter very short garbage
     .filter(line => !blacklist.some(word => line.includes(word)))
     .filter((item, index, self) => self.indexOf(item) === index)
     .sort(); // Sort alphabetically
@@ -133,12 +119,12 @@ app.get('/api/foods', (req, res) => {
 // GET /api/foods/search?q=query - Search foods by name
 app.get('/api/foods/search', (req, res) => {
   try {
-    const query = req.query.q?.toLowerCase().trim();
+    const normalizedQuery = normalizeFoodName(req.query.q);
 
-    if (!query) {
+    if (!normalizedQuery) {
       return res.status(400).json({
         error: 'Search query required',
-        message: 'Please provide a search query using ?q=yourquery'
+        message: 'Please provide a valid search query'
       });
     }
 
@@ -155,9 +141,9 @@ app.get('/api/foods/search', (req, res) => {
       return res.json([]);
     }
 
-    // Search by name (case-insensitive, partial match)
+    // Search by name (Normalized partial match)
     const results = foods.filter(food =>
-      food.name && food.name.toLowerCase().includes(query)
+      food.name && normalizeFoodName(food.name).includes(normalizedQuery)
     );
 
     // console.log(`🔍 Search for "${query}" returned ${results.length} results`);
@@ -204,25 +190,25 @@ app.get('/api/profile', (req, res) => {
 });
 
 // POST /api/profile - Save user profile
-app.post('/api/profile', (req, res) => {
-  console.log("POST /api/profile hit from:", req.ip);
-  console.log("Body:", JSON.stringify(req.body));
-  try {
-    const profile = req.body;
-    const profilePath = './data/userProfile.json';
+// app.post('/api/profile', (req, res) => {
+//   console.log("POST /api/profile hit from:", req.ip);
+//   console.log("Body:", JSON.stringify(req.body));
+//   try {
+//     const profile = req.body;
+//     const profilePath = './data/userProfile.json';
 
-    // Ensure data directory exists
-    if (!fs.existsSync('./data')) {
-      fs.mkdirSync('./data');
-    }
+//     // Ensure data directory exists
+//     if (!fs.existsSync('./data')) {
+//       fs.mkdirSync('./data');
+//     }
 
-    fs.writeFileSync(profilePath, JSON.stringify(profile, null, 2));
-    res.json({ success: true, profile });
-  } catch (err) {
-    console.error("Error saving profile:", err);
-    res.status(500).json({ error: "Failed to save profile" });
-  }
-});
+//     fs.writeFileSync(profilePath, JSON.stringify(profile, null, 2));
+//     res.json({ success: true, profile });
+//   } catch (err) {
+//     console.error("Error saving profile:", err);
+//     res.status(500).json({ error: "Failed to save profile" });
+//   }
+// });
 
 // POST /api/recommend - Generate portion recommendations
 // POST /api/recommend - Generate balanced plate recommendation
