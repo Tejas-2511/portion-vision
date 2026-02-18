@@ -107,7 +107,7 @@ app.get('/api/foods', (req, res) => {
     const foodDbPath = './data/foodDatabase.json';
 
     if (!fs.existsSync(foodDbPath)) {
-      console.log('📂 Food database not found, returning empty array');
+      // console.log('📂 Food database not found, returning empty array');
       return res.json([]);
     }
 
@@ -119,7 +119,7 @@ app.get('/api/foods', (req, res) => {
       return res.json([]);
     }
 
-    console.log(`✅ Retrieved ${foods.length} foods from database`);
+    // console.log(`✅ Retrieved ${foods.length} foods from database`);
     res.json(foods);
   } catch (err) {
     console.error('❌ Error reading food database:', err);
@@ -160,7 +160,7 @@ app.get('/api/foods/search', (req, res) => {
       food.name && food.name.toLowerCase().includes(query)
     );
 
-    console.log(`🔍 Search for "${query}" returned ${results.length} results`);
+    // console.log(`🔍 Search for "${query}" returned ${results.length} results`);
     res.json(results);
   } catch (err) {
     console.error('❌ Search failed:', err);
@@ -205,7 +205,7 @@ app.get('/api/profile', (req, res) => {
 
 // POST /api/profile - Save user profile
 app.post('/api/profile', (req, res) => {
-  console.log("POST /api/profile hit. Body:", JSON.stringify(req.body));
+  // console.log("POST /api/profile hit. Body:", JSON.stringify(req.body));
   try {
     const profile = req.body;
     const profilePath = './data/userProfile.json';
@@ -226,7 +226,7 @@ app.post('/api/profile', (req, res) => {
 // POST /api/recommend - Generate portion recommendations
 // POST /api/recommend - Generate balanced plate recommendation
 app.post('/api/recommend', (req, res) => {
-  console.log("Recommend endpoint hit. Body keys:", Object.keys(req.body));
+  // console.log("Recommend endpoint hit. Body keys:", Object.keys(req.body));
   try {
     const { userProfile, mealType, menuItems: clientMenuItems } = req.body;
 
@@ -275,7 +275,7 @@ app.post('/api/recommend', (req, res) => {
       mealType: mealType || 'lunch'
     });
 
-    console.log(`🥗 Generated plate for ${user.sex}, ${user.goal} (${mealType})`);
+    // console.log(`🥗 Generated plate for ${user.sex}, ${user.goal} (${mealType})`);
     res.json(recommendation);
 
   } catch (err) {

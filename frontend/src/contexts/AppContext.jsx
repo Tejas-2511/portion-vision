@@ -30,12 +30,12 @@ export function AppProvider({ children }) {
                 ]);
 
                 if (serverMenu) {
-                    console.log("Synced Menu from Server:", serverMenu);
+                    // console.log("Synced Menu from Server:", serverMenu);
                     setTodaysMenu(serverMenu);
                 }
 
                 if (serverProfile) {
-                    console.log("Synced Profile from Server:", serverProfile);
+                    // console.log("Synced Profile from Server:", serverProfile);
                     setUserProfile(serverProfile);
                 }
 

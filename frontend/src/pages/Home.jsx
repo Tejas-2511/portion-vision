@@ -20,7 +20,7 @@ export default function Home() {
   async function loadRecommendations() {
     setLoadingRecs(true);
     try {
-      console.log("Loading recommendations...", { userProfile: !!userProfile, todaysMenu: !!todaysMenu });
+      // console.log("Loading recommendations...", { userProfile: !!userProfile, todaysMenu: !!todaysMenu });
       // Determine meal type (Manual Override > Time Based)
       let mealType = todaysMenu?.mealType;
 
