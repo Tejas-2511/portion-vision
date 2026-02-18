@@ -62,16 +62,16 @@ export default function RecommendationCard({ recommendation, loading }) {
             <div className="space-y-3 mb-6">
                 {recommendedPlate.map((item, idx) => (
                     <div key={idx} className={`flex justify-between items-start p-3 rounded-xl border ${getRoleColor(item.role)}`}>
-                        <div className="flex gap-3">
-                            <div className="text-2xl pt-1">{getRoleIcon(item.role)}</div>
-                            <div>
-                                <p className="font-bold text-base capitalize">{item.item}</p>
-                                <p className="text-xs opacity-80">{item.reason}</p>
+                        <div className="flex gap-3 min-w-0 pr-2">
+                            <div className="text-2xl pt-1 shrink-0">{getRoleIcon(item.role)}</div>
+                            <div className="min-w-0">
+                                <p className="font-bold text-sm sm:text-base capitalize break-words leading-tight">{item.item}</p>
+                                <p className="text-[10px] sm:text-xs opacity-80 mt-0.5">{item.reason}</p>
                             </div>
                         </div>
-                        <div className="text-right whitespace-nowrap pl-2">
-                            <p className="font-bold text-lg leading-tight">
-                                {item.recommendedQuantity} <span className="text-sm font-normal">{item.unit}</span>
+                        <div className="text-right shrink-0">
+                            <p className="font-bold text-base sm:text-lg leading-tight">
+                                {item.recommendedQuantity} <span className="text-xs sm:text-sm font-normal">{item.unit}</span>
                             </p>
                             <p className="text-[10px] opacity-70">~{item.estimatedCalories} kcal</p>
                         </div>

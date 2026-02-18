@@ -128,6 +128,8 @@ export default function Preferences() {
           User Profile
         </h2>
 
+
+
         {validationError && (
           <div className="mb-4">
             <ErrorMessage error={validationError} />

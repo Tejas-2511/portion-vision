@@ -205,7 +205,8 @@ app.get('/api/profile', (req, res) => {
 
 // POST /api/profile - Save user profile
 app.post('/api/profile', (req, res) => {
-  // console.log("POST /api/profile hit. Body:", JSON.stringify(req.body));
+  console.log("POST /api/profile hit from:", req.ip);
+  console.log("Body:", JSON.stringify(req.body));
   try {
     const profile = req.body;
     const profilePath = './data/userProfile.json';

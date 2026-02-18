@@ -16,6 +16,8 @@ class ApiService {
         const url = `${API_BASE_URL}${endpoint}`;
 
         try {
+            // console.log(`Requesting: ${url}`);
+
             const response = await fetch(url, {
                 ...options,
                 headers: {

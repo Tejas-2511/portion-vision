@@ -23,20 +23,13 @@ export function AppProvider({ children }) {
                 if (localProfile) setUserProfile(JSON.parse(localProfile));
                 if (localMenu) setTodaysMenu(JSON.parse(localMenu));
 
-                // 2. Fetch latest from Server (Sync)
-                const [serverMenu, serverProfile] = await Promise.all([
-                    api.getMenu(),
-                    api.getProfile()
-                ]);
+                // 2. Fetch latest Menu from Server (Sync)
+                // Profile is now LocalStorage only
+                const serverMenu = await api.getMenu();
 
                 if (serverMenu) {
                     // console.log("Synced Menu from Server:", serverMenu);
                     setTodaysMenu(serverMenu);
-                }
-
-                if (serverProfile) {
-                    // console.log("Synced Profile from Server:", serverProfile);
-                    setUserProfile(serverProfile);
                 }
 
             } catch (error) {
@@ -49,13 +42,11 @@ export function AppProvider({ children }) {
         loadDocs();
     }, []);
 
-    // Sync userProfile to Server & LocalStorage
+    // Sync userProfile to LocalStorage (Server sync removed)
     useEffect(() => {
         if (userProfile) {
             try {
                 localStorage.setItem('userProfile', JSON.stringify(userProfile));
-                // Debounce or just save (using fire-and-forget for now)
-                api.saveProfile(userProfile).catch(err => console.error("Failed to save profile to server", err));
             } catch (error) {
                 console.error('Error saving user profile:', error);
             }

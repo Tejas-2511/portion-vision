@@ -10,6 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['vite.svg', 'icon-192.png', 'icon-512.png'],
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
         runtimeCaching: [
           {
@@ -51,13 +53,13 @@ export default defineConfig({
         scope: '/',
         icons: [
           {
-            src: '/icon-192.png',
+            src: 'icon-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable'
           },
           {
-            src: '/icon-512.png',
+            src: 'icon-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
@@ -76,12 +78,14 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true,
+        secure: false,
       },
       '/ocr': {
-        target: 'http://localhost:5000',
-        changeOrigin: true
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true,
+        secure: false,
       }
     }
   },
