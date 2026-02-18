@@ -1,10 +1,33 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useApp } from "../contexts/AppContext";
+import api from "../services/api";
 
 // Home page - Main dashboard displaying today's mess menu
 export default function Home() {
   const navigate = useNavigate();
-  const { todaysMenu } = useApp();
+  const { todaysMenu, userProfile } = useApp();
+  const [recommendations, setRecommendations] = useState([]);
+  const [loadingRecs, setLoadingRecs] = useState(false);
+
+  useEffect(() => {
+    if (todaysMenu && userProfile) {
+      loadRecommendations();
+    }
+  }, [todaysMenu, userProfile]);
+
+  async function loadRecommendations() {
+    setLoadingRecs(true);
+    try {
+      // Default to lunch for now, could be dynamic based on time
+      const data = await api.getRecommendations(userProfile, "lunch");
+      setRecommendations(data.recommendations || []);
+    } catch (err) {
+      console.error("Failed to load recommendations:", err);
+    } finally {
+      setLoadingRecs(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -61,9 +84,36 @@ export default function Home() {
         <div className="mb-8 rounded-2xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
           <h2 className="mb-4 text-lg font-bold text-slate-800">Recommended Portions</h2>
 
-          <div className="flex h-32 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400">
-            <span className="text-sm font-medium">Recommendations will appear here</span>
-          </div>
+          {loadingRecs ? (
+            <div className="flex h-32 items-center justify-center text-emerald-600">
+              <span className="loading-spinner">Loading...</span>
+            </div>
+          ) : recommendations.length > 0 ? (
+            <div className="space-y-3">
+              {recommendations.map((rec, idx) => (
+                <div key={idx} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-100">
+                  <div>
+                    <p className="font-semibold text-slate-700">{rec.food}</p>
+                    <p className="text-xs text-slate-500">{rec.calories_per_100g} kcal/100g</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xl font-bold text-emerald-600">{rec.grams}g</p>
+                    <p className="text-xs text-slate-500">~{rec.estimated_portion_calories} kcal</p>
+                  </div>
+                </div>
+              ))}
+              <div className="mt-2 text-xs text-slate-400 text-center">
+                Based on your profile & daily goal of {recommendations[0]?.user_daily_calories} kcal
+              </div>
+            </div>
+          ) : (
+            <div className="flex h-32 w-full items-center justify-center rounded-xl bg-slate-100 text-slate-400 flex-col gap-2">
+              <span className="text-sm font-medium">
+                {todaysMenu ? "No recommendations found" : "Upload a menu first"}
+              </span>
+              {!userProfile && <span className="text-xs text-emerald-600">Set profile to get recommendations</span>}
+            </div>
+          )}
         </div>
 
         {/* FAB / Action Button */}

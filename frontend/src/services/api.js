@@ -82,6 +82,22 @@ class ApiService {
         return this.request(`/api/foods/search?q=${encodeURIComponent(query)}`);
     }
 
+    /**
+     * Get portion recommendations based on user profile
+     * @param {object} userProfile - User profile data
+     * @param {string} mealType - Breakfast, Lunch, Dinner, etc.
+     * @returns {Promise<{recommendations: Array}>}
+     */
+    async getRecommendations(userProfile, mealType = 'lunch') {
+        return this.request('/api/recommend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userProfile, mealType })
+        });
+    }
+
     // Future endpoints can be added here:
     // - User authentication
     // - Save user profile

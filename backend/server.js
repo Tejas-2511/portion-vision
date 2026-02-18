@@ -5,6 +5,7 @@ const Tesseract = require("tesseract.js");
 const fs = require("fs");
 const sharp = require("sharp");
 const path = require("path");
+const { recommendPortion } = require("./portion_recommender");
 
 const app = express();
 
@@ -170,6 +171,51 @@ app.get('/api/foods/search', (req, res) => {
   }
 });
 
+// POST /api/recommend - Generate portion recommendations
+app.post('/api/recommend', (req, res) => {
+  try {
+    const { userProfile, mealType } = req.body;
+
+    if (!userProfile) {
+      return res.status(400).json({ error: 'User profile is required' });
+    }
+
+    const menuPath = './data/menu.json';
+    if (!fs.existsSync(menuPath)) {
+      return res.json({ recommendations: [] }); // No menu to recommend from
+    }
+
+    const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
+    const menuItems = menuData.menuItems || [];
+
+    // Map frontend profile to backend recommender format
+    const user = {
+      weight_kg: parseFloat(userProfile.weight),
+      height_cm: parseFloat(userProfile.height),
+      age: parseInt(userProfile.age),
+      sex: userProfile.gender,
+      activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0], // e.g. "Moderately Active" -> "moderate"
+      goal: (userProfile.goalType || 'maintain').split(' ')[0].toLowerCase() // e.g. "Lose Weight" -> "lose"
+    };
+
+    const recommendations = menuItems.map(item => {
+      return recommendPortion({
+        foodName: item,
+        user: user,
+        mealType: mealType || 'lunch' // Default to lunch if not specified
+      });
+    });
+
+    console.log(`🥗 Generated ${recommendations.length} recommendations for ${user.sex}, ${user.goal}`);
+    res.json({ recommendations });
+
+  } catch (err) {
+    console.error('❌ Recommendation failed:', err);
+    res.status(500).json({ error: 'Failed to generate recommendations' });
+  }
+});
+
+
 // ============================================
 // OCR Endpoint
 // ============================================
@@ -227,7 +273,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
 
-    /*
     // Update foodDatabase.json with new items
     const foodDbPath = './data/foodDatabase.json';
     let foodDatabase = [];
@@ -270,15 +315,19 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         console.log(`➕ Adding new item: ${itemName}`);
         foodDatabase.push({
           name: itemName,
+          dish_type: "",
           category: "",
+          unit_type: "plate",
           serving_size: 0,
-          serving_unit: "g/ml",
+          serving_unit: "g",
           calories: 0,
           protein: 0,
+          protein_level: "",
           carbs: 0,
           fat: 0,
           fiber: 0,
-          veg: true
+          veg: false,
+          tags: []
         });
         existingNames.add(itemName);
         addedCount++;
@@ -295,7 +344,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     // Save updated database
     fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
-    */
 
     res.json({ menuItems });
   } catch (err) {

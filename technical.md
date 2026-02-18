@@ -6,25 +6,29 @@ PortionVision is a Progressive Web App (PWA) designed to help users track their 
 ## 2. Technology Stack
 
 ### Frontend
-- **Framework**: React (Vite)
-- **Styling**: Tailwind CSS
+- **Framework**: React 19 (Vite 7)
+- **Styling**: Tailwind CSS 3.4
 - **State Management**: React Context API (`AppContext`) + LocalStorage
-- **Routing**: React Router DOM
+- **Routing**: React Router DOM 7
+- **PWA**: `vite-plugin-pwa` for offline capabilities and installability
 
 ### Backend
 - **Runtime**: Node.js
-- **Framework**: Express.js
-- **Image Processing**: Sharp (preprocessing), Tesseract.js (OCR)
-- **File Uploads**: Multer
-- **Data Storage**: JSON files (`data/foodDatabase.json`, `data/menu.json`)
+- **Framework**: Express.js 5
+- **Image Processing**: 
+  - `sharp`: Pre-processing (grayscale, thresholding, resizing, sharpening)
+  - `tesseract.js` v6: Optical Character Recognition (OCR)
+- **File Uploads**: `multer` (with file type and size validation)
+- **Data Storage**: JSON flat files (`data/foodDatabase.json`, `data/menu.json`)
 
 ## 3. Architecture
 
 ```mermaid
 graph TD
     User[User via PWA] -->|Upload Menu Image| Frontend
-    User -->|View Recommendations| Frontend
+    User -->|Input Profile| Frontend
     Frontend -->|POST /ocr| Backend
+    Frontend -->|POST /api/recommend| Backend
     Frontend -->|GET /api/foods| Backend
     
     subgraph Backend [Node.js Server]
@@ -32,45 +36,56 @@ graph TD
         OCR[Tesseract.js]
         ImgProc[Sharp]
         RecEngine[Portion Recommender]
+        Auth[CORS & Security Support]
     end
     
     subgraph Data [JSON Storage]
-        FoodDB[foodDatabase.json]
+        FoodDB[foodDatabase.json <br/> Schema: name, calories, macros, tags, dish_type, etc.]
         MenuData[menu.json]
     end
     
     API -->|Process Image| ImgProc
     ImgProc -->|Extract Text| OCR
-    OCR -->|Save| MenuData
+    OCR -->|Clean & Parse| MenuData
     API -->|Read/Search| FoodDB
-    RecEngine -->|Calculate| API
+    API -- User Stats --> RecEngine
+    RecEngine -- Menu Items --> API
 ```
 
 ## 4. Key Workflows
 
 ### 4.1 Menu Digitization
-1.  **User Action**: Uploads an image of the mess menu via specific page.
+1.  **User Action**: Uploads an image of the mess menu via `MenuUpload` page.
 2.  **Frontend**: Validates image and sends to `POST /ocr`.
 3.  **Backend**:
-    *   **Preprocessing**: `Sharp` converts image to grayscale, normalizes, and thresholds it to improve OCR accuracy.
+    *   **Preprocessing**: `Sharp` converts image to grayscale, normalizes, thresholds (160), and sharpens it.
     *   **OCR**: `Tesseract.js` extracts raw text.
-    *   **Cleanup**: `cleanMenuItems` function filters noise, removes common headers (Breakfast, Lunch), and splits text into individual items using Regex.
+    *   **Cleanup**: `cleanMenuItems` function filters noise, removes common headers (Breakfast, Lunch), splits text by commas/slashes, and dedupes.
     *   **Storage**: Saves result to `data/menu.json`.
+    *   **Database Update**: Automatically adds new unique menu items to `data/foodDatabase.json` with a default schema (initialized to 0/empty values) for future enrichment.
 4.  **Frontend**: Updates `AppContext` and displays the digitized menu.
 
-### 4.2 Portion Recommendation (Logic)
-*   **User Profile**: User's height, weight, age, sex, and activity level are stored in `localStorage`.
-*   **Calorie Estimation**: Uses the Mifflin-St Jeor equation to calculate Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE).
-*   **Portion Calculation**: 
-    - Allocates calories per meal (Breakfast: 25%, Lunch: 35%, Dinner: 30%, Snack: 10%).
-    - Calculates recommended grams for a specific food item to meet that meal's calorie target.
+### 4.2 Portion Recommendation
+1.  **User Profile**: User's height, weight, age, sex, and activity level are collected on `Preferences` page and stored in `localStorage`.
+2.  **Request**: Frontend sends user profile + current menu to `/api/recommend`.
+3.  **Backend Logic**:
+    *   Calculates BMR (Mifflin-St Jeor) and TDEE.
+    *   Allocates calories per meal (Breakfast: 25%, Lunch: 35%, Dinner: 30%, Snack: 10%).
+    *   Matches menu items against `foodDatabase.json` (or generic fallbacks).
+    *   Calculates precise gram/bowl portion sizes to meet the specific meal's caloric target.
 
 ## 5. API Endpoints
 
 ### `POST /ocr`
--   **Description**: Uploads an image for text extraction.
--   **Body**: `FormData` with `image` file.
--   **Response**: JSON with `menuItems` (array of strings).
+-   **Description**: Uploads and processes a menu image.
+-   **Body**: `multipart/form-data` with `image` file.
+-   **Processing**: Resize (width 1200px) -> Grayscale -> Threshold -> OCR -> Regex Clean.
+-   **Response**: `{ "menuItems": ["Item 1", "Item 2", ...] }`
+
+### `POST /api/recommend`
+-   **Description**: Generates portion advice.
+-   **Body**: `{ "userProfile": { weight, height, age, gender, activityLevel, goalType }, "mealType": "lunch" }`
+-   **Response**: JSON object with calculated portions for each menu item.
 
 ### `GET /api/foods`
 -   **Description**: Retrieves the entire food database.
@@ -82,50 +97,36 @@ graph TD
 -   **Response**: JSON array of matching food objects.
 
 ### `GET /health`
--   **Description**: Health check for usage by monitoring tools.
+-   **Description**: Health check.
 -   **Response**: `{ status: 'healthy', timestamp: ... }`
 
 ## 6. Directory Structure
 ```
 portion-vision/
 ├── backend/
-│   ├── data/                 # JSON storage
-│   ├── uploads/              # Temp upload storage
-│   ├── server.js             # Main entry point
-│   └── portion_recommender.js # Calc logic
+│   ├── data/                 # JSON storage (menu.json, foodDatabase.json)
+│   ├── uploads/              # Temp upload storage for OCR
+│   ├── server.js             # Main Express App & API Routes
+│   └── portion_recommender.js # TDEE & Portion Logic
 ├── frontend/
 │   ├── src/
-│   │   ├── components/       # Reusable UI
-│   │   ├── contexts/         # Global state
-│   │   ├── pages/            # Route views
-│   │   └── services/         # API wrapper
-│   └── public/               # Static assets
+│   │   ├── components/       # UI Components (ErrorBoundary, etc.)
+│   │   ├── contexts/         # AppContext (Global State)
+│   │   ├── pages/            # Views (Home, Splash, Upload, Plate, Analysis)
+│   │   ├── services/         # API Service functions
+│   │   └── App.jsx           # Routing & Layout
+│   └── public/               # PWA Manifest & Assets
 ```
 
-## 7. Current Implementation Status & Gaps
+## 7. Current Implementation Status
 
 ### ✅ Implemented & Working
-1.  **Menu Digitization**: Full pipeline from Image -> OCR -> JSON Menu.
-2.  **Food Database**:
-    -   Comprehensive JSON database with nutritional info.
-    -   API endpoints for listing and searching foods.
-3.  **Frontend Core**:
-    -   Routing, AppContext, and basic UI shell.
-    -   Menu Upload and Plate Capture (Camera/Gallery) pages.
+1.  **Full Menu Pipeline**: Image upload -> Server-side processing -> OCR -> UI display.
+2.  **Personalized Engine**: User stats -> Backend Recommender -> Personalized Grams/Bowls.
+3.  **Food Database**: Searchable JSON database integration.
+4.  **Modern UI**: React 19 + Tailwind CSS with responsive PWA design.
+5.  **Security**: Basic CORS, Helmet-style headers, Input validation (Multer).
 
-### 🚧 Pending / In Progress
-1.  **Portion Recommendation Engine**:
-    -   Logic exists in `portion_recommender.js` but is **disconnected** from the API.
-    -   No API endpoint exists to generate meal plans (e.g., `POST /api/recommend`).
-2.  **Analysis Page**:
-    -   Currently a UI placeholder.
-    -   Does not yet receive or display analysis data from the backend.
-3.  **Home Page Integration**:
-    -   "Recommended Portions" card is a static placeholder.
-    -   Needs to fetch data from the recommendation engine.
-
-### Next Steps
-1.  Create `POST /api/recommend` endpoint in `server.js` using `portion_recommender.js`.
-2.  Connect Frontend `Home` and `Analysis` pages to this new endpoint.
-3.  Implement real-time analysis for captured plate photos.
-
+### 🚧 Pending / Future Work
+1.  **Plate Analysis**: `PlateCapture.jsx` exists but needs backend connection for food recognition on the plate.
+2.  **Detailed Analysis**: Post-meal nutrition breakdown on `Analysis.jsx`.
