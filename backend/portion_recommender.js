@@ -205,6 +205,7 @@ function recommendPlate({ user, menuItems, mealType }) {
   const addToPlate = (item, quantity = 1, reason = "") => {
     if (!item) return;
     const estimatedCals = Math.round(item.calories * quantity);
+    const totalGrams = Math.round(item.serving_size * quantity); // Calculate total grams
     plate.push({
       item: item.name,
       dish_type: item.dish_type,
@@ -212,6 +213,7 @@ function recommendPlate({ user, menuItems, mealType }) {
       recommendedQuantity: quantity,
       unit: item.unit_type === "tbsp" ? "serving" : (item.unit_type || "serving"), // Avoid tbsp for main items if possible
       serving_size: item.serving_size, // For reference
+      totalGrams: totalGrams, // Send total grams to frontend
       estimatedCalories: estimatedCals,
       reason: reason,
       icon: getIconForRole(item.role)

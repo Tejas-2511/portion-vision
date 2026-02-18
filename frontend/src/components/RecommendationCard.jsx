@@ -72,6 +72,7 @@ export default function RecommendationCard({ recommendation, loading }) {
                         <div className="text-right shrink-0">
                             <p className="font-bold text-base sm:text-lg leading-tight">
                                 {item.recommendedQuantity} <span className="text-xs sm:text-sm font-normal">{item.unit}</span>
+                                {item.totalGrams > 0 && <span className="text-xs sm:text-sm font-normal text-slate-500 ml-1">({item.totalGrams}g)</span>}
                             </p>
                             <p className="text-[10px] opacity-70">~{item.estimatedCalories} kcal</p>
                         </div>
