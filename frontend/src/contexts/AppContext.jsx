@@ -12,37 +12,57 @@ export function AppProvider({ children }) {
     const [foodDatabase, setFoodDatabase] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Load data from localStorage on mount
+    // Load data from server & localStorage on mount
     useEffect(() => {
-        try {
-            const profile = localStorage.getItem('userProfile');
-            if (profile) {
-                setUserProfile(JSON.parse(profile));
-            }
+        const loadDocs = async () => {
+            try {
+                // 1. Load from LocalStorage first (for instant paint)
+                const localProfile = localStorage.getItem('userProfile');
+                const localMenu = localStorage.getItem('todaysMenu');
 
-            const menu = localStorage.getItem('todaysMenu');
-            if (menu) {
-                setTodaysMenu(JSON.parse(menu));
+                if (localProfile) setUserProfile(JSON.parse(localProfile));
+                if (localMenu) setTodaysMenu(JSON.parse(localMenu));
+
+                // 2. Fetch latest from Server (Sync)
+                const [serverMenu, serverProfile] = await Promise.all([
+                    api.getMenu(),
+                    api.getProfile()
+                ]);
+
+                if (serverMenu) {
+                    console.log("Synced Menu from Server:", serverMenu);
+                    setTodaysMenu(serverMenu);
+                }
+
+                if (serverProfile) {
+                    console.log("Synced Profile from Server:", serverProfile);
+                    setUserProfile(serverProfile);
+                }
+
+            } catch (error) {
+                console.error('Error syncing data:', error);
+            } finally {
+                setLoading(false);
             }
-        } catch (error) {
-            console.error('Error loading data from localStorage:', error);
-        } finally {
-            setLoading(false);
-        }
+        };
+
+        loadDocs();
     }, []);
 
-    // Sync userProfile to localStorage whenever it changes
+    // Sync userProfile to Server & LocalStorage
     useEffect(() => {
         if (userProfile) {
             try {
                 localStorage.setItem('userProfile', JSON.stringify(userProfile));
+                // Debounce or just save (using fire-and-forget for now)
+                api.saveProfile(userProfile).catch(err => console.error("Failed to save profile to server", err));
             } catch (error) {
                 console.error('Error saving user profile:', error);
             }
         }
     }, [userProfile]);
 
-    // Sync todaysMenu to localStorage whenever it changes
+    // Sync todaysMenu to LocalStorage only (Server update happens via Upload)
     useEffect(() => {
         if (todaysMenu) {
             try {

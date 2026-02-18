@@ -88,20 +88,49 @@ class ApiService {
      * @param {string} mealType - Breakfast, Lunch, Dinner, etc.
      * @returns {Promise<{recommendations: Array}>}
      */
-    async getRecommendations(userProfile, mealType = 'lunch') {
+    async getRecommendations(userProfile, mealType = 'lunch', menuItems = []) {
         return this.request('/api/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userProfile, mealType })
+            body: JSON.stringify({ userProfile, mealType, menuItems })
+        });
+    }
+
+    /**
+     * Get the current menu from the server
+     * @returns {Promise<object|null>} Menu object or null
+     */
+    async getMenu() {
+        return this.request('/api/menu');
+    }
+
+    /**
+     * Get the user profile from the server
+     * @returns {Promise<object|null>} Profile object or null
+     */
+    async getProfile() {
+        return this.request('/api/profile');
+    }
+
+    /**
+     * Save the user profile to the server
+     * @param {object} profile - User profile data
+     * @returns {Promise<object>} Response
+     */
+    async saveProfile(profile) {
+        return this.request('/api/profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(profile)
         });
     }
 
     // Future endpoints can be added here:
     // - User authentication
-    // - Save user profile
-    // - Get recommendations
     // - Upload plate image for analysis
 }
 

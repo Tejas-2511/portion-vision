@@ -20,6 +20,7 @@ export default function Home() {
   async function loadRecommendations() {
     setLoadingRecs(true);
     try {
+      console.log("Loading recommendations...", { userProfile: !!userProfile, todaysMenu: !!todaysMenu });
       // Determine meal type (Manual Override > Time Based)
       let mealType = todaysMenu?.mealType;
 
@@ -32,7 +33,7 @@ export default function Home() {
         else mealType = "lunch";
       }
 
-      const data = await api.getRecommendations(userProfile, mealType);
+      const data = await api.getRecommendations(userProfile, mealType, todaysMenu.items || []);
 
       // The backend returns the full object { mealType, recommendedPlate, ... }
       if (data && data.recommendedPlate) {
@@ -100,10 +101,23 @@ export default function Home() {
         </div>
 
         {/* Recommended Portions Card */}
-        <RecommendationCard
-          recommendation={recommendations}
-          loading={loadingRecs}
-        />
+        {!userProfile ? (
+          <div className="mb-6 rounded-2xl bg-orange-50 p-6 shadow-md border border-orange-100 text-center">
+            <h2 className="mb-2 text-lg font-bold text-orange-800">Complete Your Profile</h2>
+            <p className="text-sm text-orange-600 mb-4">We need your details to recommend portion sizes.</p>
+            <button
+              onClick={() => navigate("/preferences")}
+              className="px-6 py-2 bg-orange-600 text-white rounded-lg font-bold shadow-sm hover:bg-orange-700 transition"
+            >
+              Set Profile
+            </button>
+          </div>
+        ) : (
+          <RecommendationCard
+            recommendation={recommendations}
+            loading={loadingRecs}
+          />
+        )}
 
         {/* FAB / Action Button */}
         <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center px-4">

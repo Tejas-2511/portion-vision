@@ -60,7 +60,7 @@ export default function MenuUpload() {
       setTodaysMenu({
         items: data.menuItems,
         text: menuText,
-        date: new Date().toISOString(),
+        date: data.date,
         mealType: mealType // Save selected meal type
       });
     } catch (err) {
@@ -97,8 +97,8 @@ export default function MenuUpload() {
                 key={type}
                 onClick={() => setMealType(type)}
                 className={`py-2 px-1 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors ${mealType === type
-                    ? "bg-emerald-600 text-white shadow-md"
-                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                  ? "bg-emerald-600 text-white shadow-md"
+                  : "bg-slate-100 text-slate-500 hover:bg-slate-200"
                   }`}
               >
                 {type}

@@ -101,6 +101,21 @@ function classifyItem(foodName) {
     }
   }
 
+  // 4. Special Override: Papad/Fryums/Pickle -> Limit/Addon
+  if (foodName.toLowerCase().includes("papad") || foodName.toLowerCase().includes("fryum") || foodName.toLowerCase().includes("pickle")) {
+    role = "addon"; // Or limit, but addon fits plate side logic better
+  }
+
+  // 5. Green Chilli Fry -> Addon (Not Veg Side)
+  if (foodName.toLowerCase().includes("chilli fry")) {
+    role = "addon";
+  }
+
+  // 6. Condiments -> Addon
+  if (details.category === "condiment") {
+    role = "addon";
+  }
+
   // 4. Special Override: Snacks as Mains (fallback handled in main logic)
   // Just ensure we don't treat small additives as snaks
 
@@ -133,8 +148,8 @@ function estimateDailyCalories(user) {
 
   let tdee = bmr * (activityMultipliers[activityLevel.split(" ")[0]] || 1.55);
 
-  if (goal.includes("lose")) tdee -= 400; // Deficit
-  if (goal.includes("gain")) tdee += 300; // Surplus
+  if (goal.includes("lose") || goal.includes("fat")) tdee -= 400; // Deficit
+  if (goal.includes("gain") || goal.includes("muscle")) tdee += 300; // Surplus
 
   return Math.round(Math.max(1200, Math.min(4000, tdee)));
 }
@@ -182,7 +197,7 @@ function recommendPlate({ user, menuItems, mealType }) {
       dish_type: item.dish_type,
       role: item.role, // "mixed", "carb", "protein" etc
       recommendedQuantity: quantity,
-      unit: item.unit_type || "serving",
+      unit: item.unit_type === "tbsp" ? "serving" : (item.unit_type || "serving"), // Avoid tbsp for main items if possible
       serving_size: item.serving_size, // For reference
       estimatedCalories: estimatedCals,
       reason: reason,
@@ -227,7 +242,14 @@ function recommendPlate({ user, menuItems, mealType }) {
 
       let qty = Math.round(carbCals / selectedCarb.calories);
       // Sanity check: Don't suggest 10 rotis. Cap based on unit.
-      if (selectedCarb.unit_type === 'piece') qty = Math.min(4, Math.max(1, qty));
+      if (selectedCarb.unit_type === 'piece') {
+        // Default to 2 for maintenance/dinner, 3 max unless huge deficit
+        let maxP = 3;
+        // If dinner and maintain/lose, limit carb base slightly more
+        if (type === 'dinner' && !user.goal.includes('gain')) maxP = 2;
+
+        qty = Math.min(maxP, Math.max(1, qty));
+      }
       if (selectedCarb.unit_type === 'bowl') qty = Math.min(2, Math.max(1, qty)); // 1-2 bowls of rice
 
       addToPlate(selectedCarb, qty, "Energy Source");
@@ -246,11 +268,17 @@ function recommendPlate({ user, menuItems, mealType }) {
   }
 
   // C. Add Accompaniments (Side/Veg)
-  // Always good to have fiber
-  if (vegs.length > 0) {
-    // Pick one side
-    const side = vegs[0];
-    addToPlate(side, 1, "Fiber & Vitamins");
+  // Fix: Prioritize Sabji > Salad > Fruit > Other
+  let selectedSide = null;
+  const sabjis = vegs.filter(v => (v.dish_type || "").includes("sabji"));
+  const salads = vegs.filter(v => (v.dish_type || "").includes("salad"));
+
+  if (sabjis.length > 0) selectedSide = sabjis[0];
+  else if (salads.length > 0) selectedSide = salads[0];
+  else if (vegs.length > 0) selectedSide = vegs[0];
+
+  if (selectedSide) {
+    addToPlate(selectedSide, 1, "Fiber & Vitamins");
   }
 
   // D. Add Addons (Curd/Beverage)

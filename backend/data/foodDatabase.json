@@ -387,21 +387,18 @@
   },
   {
     "name": "boiled egg",
-    "dish_type": "curry",
+    "dish_type": "egg",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
+    "unit_type": "piece",
+    "serving_size": 1,
+    "serving_unit": "piece",
     "calories": 70,
     "protein": 6,
-    "protein_level": "medium",
-    "carbs": 1,
     "fat": 5,
-    "fiber": 0,
+    "carbs": 1,
     "veg": false,
     "tags": [
       "egg",
-      "gravy",
       "non-veg"
     ],
     "meal_role": "single"
@@ -672,8 +669,8 @@
     "fiber": 1,
     "veg": true,
     "tags": [
-      "dal",
-      "gravy",
+      "sweet",
+      "dessert",
       "veg"
     ],
     "meal_role": "single"
@@ -1016,9 +1013,9 @@
   },
   {
     "name": "curd",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "serving",
+    "dish_type": "curd",
+    "category": "side",
+    "unit_type": "bowl",
     "serving_size": 100,
     "serving_unit": "g",
     "calories": 100,
@@ -1387,10 +1384,10 @@
     "name": "fryum papad",
     "dish_type": "condiment",
     "category": "condiment",
-    "unit_type": "tbsp",
-    "serving_size": 20,
+    "unit_type": "piece",
+    "serving_size": 10,
     "serving_unit": "g",
-    "calories": 40,
+    "calories": 60,
     "protein": 0.5,
     "protein_level": "low",
     "carbs": 8,
@@ -1502,10 +1499,10 @@
   },
   {
     "name": "green chilli fry",
-    "dish_type": "sabji",
-    "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
+    "dish_type": "condiment",
+    "category": "condiment",
+    "unit_type": "tbsp",
+    "serving_size": 20,
     "serving_unit": "g",
     "calories": 30,
     "protein": 0.5,
@@ -1897,17 +1894,16 @@
     "dish_type": "sweet",
     "category": "dessert",
     "unit_type": "piece",
-    "serving_size": 150,
+    "serving_size": 30,
     "serving_unit": "g",
-    "calories": 60,
-    "protein": 1,
-    "protein_level": "low",
-    "carbs": 8,
-    "fat": 3,
-    "fiber": 0.2,
-    "veg": true,
+    "calories": 180,
+    "protein": 4,
+    "carbs": 15,
+    "fat": 10,
+    "fiber": 1,
     "tags": [
-      "veg"
+      "sweet",
+      "dessert"
     ],
     "meal_role": "single"
   },
@@ -1932,8 +1928,8 @@
   },
   {
     "name": "kesar phirni",
-    "dish_type": "other",
-    "category": "other",
+    "dish_type": "sweet",
+    "category": "dessert",
     "unit_type": "serving",
     "serving_size": 100,
     "serving_unit": "g",
@@ -1945,7 +1941,8 @@
     "fiber": 0,
     "veg": true,
     "tags": [
-      "veg"
+      "sweet",
+      "dessert"
     ],
     "meal_role": "single"
   },
@@ -2089,7 +2086,7 @@
   {
     "name": "lauki kofta curry",
     "dish_type": "curry",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -2122,27 +2119,6 @@
     "veg": true,
     "tags": [
       "dry",
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "lehsuni dal",
-    "dish_type": "dal",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 10,
-    "protein_level": "medium",
-    "carbs": 28,
-    "fat": 5,
-    "fiber": 6,
-    "veg": true,
-    "tags": [
-      "dal",
-      "gravy",
       "veg"
     ],
     "meal_role": "single"
@@ -2566,20 +2542,21 @@
   },
   {
     "name": "moong dal halwa",
-    "dish_type": "dal",
-    "category": "protein_main",
+    "dish_type": "sweet",
+    "category": "dessert",
     "unit_type": "bowl",
-    "serving_size": 150,
+    "serving_size": 100,
     "serving_unit": "g",
-    "calories": 190,
-    "protein": 0,
+    "calories": 320,
+    "protein": 6,
     "protein_level": "low",
-    "carbs": 0,
-    "fat": 0,
-    "fiber": 0,
+    "carbs": 40,
+    "fat": 15,
+    "fiber": 2,
     "veg": true,
     "tags": [
-      "veg"
+      "sweet",
+      "dessert"
     ],
     "meal_role": "single"
   },
@@ -2648,9 +2625,9 @@
   },
   {
     "name": "murgh saag wala",
-    "dish_type": "other",
-    "category": "other",
-    "unit_type": "serving",
+    "dish_type": "curry",
+    "category": "protein_main",
+    "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 280,
@@ -2659,9 +2636,11 @@
     "carbs": 10,
     "fat": 14,
     "fiber": 5,
-    "veg": true,
+    "veg": false,
     "tags": [
-      "veg"
+      "chicken",
+      "gravy",
+      "non-veg"
     ],
     "meal_role": "single"
   },
@@ -2845,8 +2824,8 @@
   },
   {
     "name": "pani poori",
-    "dish_type": "roti",
-    "category": "carb_base",
+    "dish_type": "snack",
+    "category": "snack",
     "unit_type": "piece",
     "serving_size": 15,
     "serving_unit": "g",
@@ -2860,7 +2839,7 @@
     "tags": [
       "veg"
     ],
-    "meal_role": "single"
+    "meal_role": "mixed"
   },
   {
     "name": "papad mangodi",
@@ -2914,9 +2893,11 @@
     "carbs": 15,
     "fat": 20,
     "fiber": 3,
-    "veg": true,
+    "veg": false,
     "tags": [
-      "veg"
+      "chicken",
+      "gravy",
+      "non-veg"
     ],
     "meal_role": "single"
   },
@@ -2941,9 +2922,9 @@
   },
   {
     "name": "pav bhaji",
-    "dish_type": "roti",
-    "category": "carb_base",
-    "unit_type": "piece",
+    "dish_type": "snack",
+    "category": "snack",
+    "unit_type": "plate",
     "serving_size": 150,
     "serving_unit": "g",
     "calories": 400,
@@ -2979,8 +2960,8 @@
   },
   {
     "name": "phirni",
-    "dish_type": "other",
-    "category": "other",
+    "dish_type": "sweet",
+    "category": "dessert",
     "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
@@ -2992,7 +2973,8 @@
     "fiber": 1,
     "veg": true,
     "tags": [
-      "veg"
+      "sweet",
+      "dessert"
     ],
     "meal_role": "single"
   },
@@ -3174,8 +3156,8 @@
   },
   {
     "name": "raita",
-    "dish_type": "other",
-    "category": "other",
+    "dish_type": "raita",
+    "category": "side",
     "unit_type": "serving",
     "serving_size": 100,
     "serving_unit": "g",
@@ -3290,8 +3272,8 @@
   },
   {
     "name": "rice kheer",
-    "dish_type": "rice",
-    "category": "carb_base",
+    "dish_type": "sweet",
+    "category": "dessert",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -3707,9 +3689,9 @@
     "name": "sweet corn soup",
     "dish_type": "other",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
+    "unit_type": "bowl",
+    "serving_size": 200,
+    "serving_unit": "ml",
     "calories": 90,
     "protein": 2,
     "protein_level": "low",
@@ -3883,8 +3865,8 @@
     "name": "tomato soup",
     "dish_type": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
+    "unit_type": "bowl",
+    "serving_size": 200,
     "serving_unit": "ml",
     "calories": 80,
     "protein": 2,
@@ -3939,7 +3921,7 @@
   {
     "name": "veg hariyali",
     "dish_type": "curry",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
@@ -3958,7 +3940,7 @@
   {
     "name": "veg kofta curry",
     "dish_type": "curry",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "bowl",
     "serving_size": 150,
     "serving_unit": "g",
@@ -4036,7 +4018,7 @@
   {
     "name": "vegetable chettinad",
     "dish_type": "curry",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
@@ -4055,7 +4037,7 @@
   {
     "name": "vegetable kolhapuri",
     "dish_type": "curry",
-    "category": "protein_main",
+    "category": "side",
     "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",

@@ -171,23 +171,89 @@ app.get('/api/foods/search', (req, res) => {
   }
 });
 
+// GET /api/menu - Get current menu
+app.get('/api/menu', (req, res) => {
+  try {
+    const menuPath = './data/menu.json';
+    if (fs.existsSync(menuPath)) {
+      const menu = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
+      res.json(menu);
+    } else {
+      res.json(null);
+    }
+  } catch (err) {
+    console.error("Error reading menu:", err);
+    res.status(500).json({ error: "Failed to read menu" });
+  }
+});
+
+// GET /api/profile - Get user profile
+app.get('/api/profile', (req, res) => {
+  try {
+    const profilePath = './data/userProfile.json';
+    if (fs.existsSync(profilePath)) {
+      const profile = JSON.parse(fs.readFileSync(profilePath, 'utf8'));
+      res.json(profile);
+    } else {
+      res.json(null);
+    }
+  } catch (err) {
+    console.error("Error reading profile:", err);
+    res.status(500).json({ error: "Failed to read profile" });
+  }
+});
+
+// POST /api/profile - Save user profile
+app.post('/api/profile', (req, res) => {
+  console.log("POST /api/profile hit. Body:", JSON.stringify(req.body));
+  try {
+    const profile = req.body;
+    const profilePath = './data/userProfile.json';
+
+    // Ensure data directory exists
+    if (!fs.existsSync('./data')) {
+      fs.mkdirSync('./data');
+    }
+
+    fs.writeFileSync(profilePath, JSON.stringify(profile, null, 2));
+    res.json({ success: true, profile });
+  } catch (err) {
+    console.error("Error saving profile:", err);
+    res.status(500).json({ error: "Failed to save profile" });
+  }
+});
+
 // POST /api/recommend - Generate portion recommendations
 // POST /api/recommend - Generate balanced plate recommendation
 app.post('/api/recommend', (req, res) => {
+  console.log("Recommend endpoint hit. Body keys:", Object.keys(req.body));
   try {
-    const { userProfile, mealType } = req.body;
+    const { userProfile, mealType, menuItems: clientMenuItems } = req.body;
 
     if (!userProfile) {
       return res.status(400).json({ error: 'User profile is required' });
     }
 
-    const menuPath = './data/menu.json';
-    if (!fs.existsSync(menuPath)) {
-      return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
+    let menuItems = clientMenuItems || [];
+
+    // Fallback if client didn't send items
+    if (!menuItems.length) {
+      const menuPath = './data/menu.json';
+      if (fs.existsSync(menuPath)) {
+        try {
+          const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
+          if (menuData.menuItems && Array.isArray(menuData.menuItems)) {
+            menuItems = menuData.menuItems;
+          }
+        } catch (e) {
+          console.error("Error reading menu.json fallback:", e);
+        }
+      }
     }
 
-    const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-    const menuItems = menuData.menuItems || [];
+    if (!menuItems.length) {
+      return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
+    }
 
     // Reconstruct user object from frontend profile
     const user = {
@@ -196,7 +262,7 @@ app.post('/api/recommend', (req, res) => {
       age: parseInt(userProfile.age),
       sex: userProfile.gender,
       activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
-      goal: (userProfile.goalType || 'maintain').split(' ')[0].toLowerCase()
+      goal: (userProfile.goalType || 'maintain').toLowerCase()
     };
 
     // Import new recommender function
@@ -264,7 +330,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     const menuItems = cleanMenuItems(rawText);
 
     const data = {
-      date: new Date().toISOString().split("T")[0],
+      date: new Date().toISOString(),
       menuItems,
     };
 
@@ -276,6 +342,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
 
+    /*
     // Update foodDatabase.json with new items
     const foodDbPath = './data/foodDatabase.json';
     let foodDatabase = [];
@@ -347,8 +414,9 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     // Save updated database
     fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
+    */
 
-    res.json({ menuItems });
+    res.json(data);
   } catch (err) {
     console.error("OCR ERROR:", err);
     res.status(500).json({
