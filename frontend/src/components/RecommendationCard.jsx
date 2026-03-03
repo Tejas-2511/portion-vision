@@ -74,7 +74,9 @@ export default function RecommendationCard({ recommendation, loading }) {
                                 {item.recommendedQuantity} <span className="text-xs sm:text-sm font-normal">{item.unit}</span>
                                 {item.totalGrams > 0 && <span className="text-xs sm:text-sm font-normal text-slate-500 ml-1">({item.totalGrams}g)</span>}
                             </p>
-                            <p className="text-[10px] opacity-70">~{item.estimatedCalories} kcal</p>
+                            <p className="text-[10px] sm:text-xs font-medium opacity-80 mt-0.5">
+                                ~{item.estimatedCalories} kcal <span className="mx-1">•</span> {item.protein}g protein
+                            </p>
                         </div>
                     </div>
                 ))}
@@ -86,8 +88,9 @@ export default function RecommendationCard({ recommendation, loading }) {
                     <h3 className="text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">Optional Extras</h3>
                     <div className="flex flex-wrap gap-2">
                         {optionalItems.map((opt, idx) => (
-                            <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-600 text-sm rounded-lg border border-slate-200">
-                                {opt.item}
+                            <span key={idx} className="px-3 py-1.5 bg-slate-100 text-slate-600 text-sm rounded-lg border border-slate-200 flex items-center gap-1.5">
+                                <span className="font-medium capitalize">{opt.item}</span>
+                                <span className="text-xs opacity-60">({opt.limit} / {opt.calories} kcal)</span>
                             </span>
                         ))}
                     </div>

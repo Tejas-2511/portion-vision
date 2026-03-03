@@ -1,5 +1,28 @@
 [
   {
+    "name": "aloo bonda",
+    "dish_type": "snack",
+    "category": "side",
+    "unit_type": "piece",
+    "serving_size": 1,
+    "serving_unit": "piece",
+    "calories": 180,
+    "protein": 4,
+    "protein_level": "low",
+    "carbs": 22,
+    "fat": 9,
+    "fiber": 3,
+    "veg": true,
+    "tags": [
+      "potato",
+      "fried",
+      "snack",
+      "veg",
+      "batter"
+    ],
+    "meal_role": "single"
+  },
+  {
     "name": "aloo gobi",
     "dish_type": "sabji",
     "category": "side",
@@ -305,6 +328,26 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "biresra kadhi",
+    "dish_type": "main",
+    "category": "curry",
+    "unit_type": "serving",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "calories": 210,
+    "protein": 7,
+    "protein_level": "medium",
+    "carbs": 18,
+    "fat": 13,
+    "fiber": 1,
+    "veg": true,
+    "tags": [
+      "veg",
+      "gravy"
+    ],
+    "meal_role": "main"
   },
   {
     "name": "biscuit",
@@ -1381,7 +1424,7 @@
     "meal_role": "single"
   },
   {
-    "name": "fryum papad",
+    "name": "fryum",
     "dish_type": "condiment",
     "category": "condiment",
     "unit_type": "piece",
@@ -1637,6 +1680,42 @@
     "meal_role": "single"
   },
   {
+    "name": "guijiya",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
+    "name": "gujiya",
+    "dish_type": "dessert",
+    "category": "sweet",
+    "unit_type": "piece",
+    "serving_size": 40,
+    "serving_unit": "g",
+    "calories": 180,
+    "protein": 3,
+    "protein_level": "low",
+    "carbs": 22,
+    "fat": 9,
+    "fiber": 1,
+    "veg": true,
+    "tags": [
+      "sweet",
+      "fried"
+    ],
+    "meal_role": "dessert"
+  },
+  {
     "name": "gulab jamun",
     "dish_type": "sweet",
     "category": "dessert",
@@ -1871,23 +1950,24 @@
   },
   {
     "name": "kadhi pakoda",
-    "dish_type": "snack",
-    "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 50,
+    "dish_type": "main",
+    "category": "curry",
+    "unit_type": "serving",
+    "serving_size": 180,
     "serving_unit": "g",
-    "calories": 240,
-    "protein": 8,
+    "calories": 320,
+    "protein": 10,
     "protein_level": "medium",
-    "carbs": 20,
-    "fat": 14,
-    "fiber": 2,
+    "carbs": 28,
+    "fat": 18,
+    "fiber": 3,
     "veg": true,
     "tags": [
-      "fried",
-      "veg"
+      "veg",
+      "gravy",
+      "fried"
     ],
-    "meal_role": "single"
+    "meal_role": "main"
   },
   {
     "name": "kaju katli",
@@ -1964,6 +2044,27 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "kesariya thandai",
+    "dish_type": "beverage",
+    "category": "drink",
+    "unit_type": "glass",
+    "serving_size": 250,
+    "serving_unit": "ml",
+    "calories": 220,
+    "protein": 6,
+    "protein_level": "medium",
+    "carbs": 26,
+    "fat": 10,
+    "fiber": 1,
+    "veg": true,
+    "tags": [
+      "sweet",
+      "drink",
+      "festival"
+    ],
+    "meal_role": "beverage"
   },
   {
     "name": "khichdi",
@@ -2258,6 +2359,27 @@
       "veg"
     ],
     "meal_role": "mixed"
+  },
+  {
+    "name": "malai kofta",
+    "dish_type": "main",
+    "category": "curry",
+    "unit_type": "serving",
+    "serving_size": 200,
+    "serving_unit": "g",
+    "calories": 320,
+    "protein": 8,
+    "protein_level": "medium",
+    "carbs": 18,
+    "fat": 24,
+    "fiber": 3,
+    "veg": true,
+    "tags": [
+      "rich",
+      "veg",
+      "gravy"
+    ],
+    "meal_role": "main"
   },
   {
     "name": "mango",
@@ -2842,6 +2964,26 @@
     "meal_role": "mixed"
   },
   {
+    "name": "papad",
+    "dish_type": "side",
+    "category": "side",
+    "unit_type": "piece",
+    "serving_size": 10,
+    "serving_unit": "g",
+    "calories": 40,
+    "protein": 2,
+    "protein_level": "low",
+    "carbs": 6,
+    "fat": 1,
+    "fiber": 1,
+    "veg": true,
+    "tags": [
+      "crispy",
+      "roasted"
+    ],
+    "meal_role": "side"
+  },
+  {
     "name": "papad mangodi",
     "dish_type": "condiment",
     "category": "condiment",
@@ -3175,8 +3317,8 @@
   },
   {
     "name": "rajasthani kadhi",
-    "dish_type": "other",
-    "category": "other",
+    "dish_type": "main",
+    "category": "curry",
     "unit_type": "serving",
     "serving_size": 150,
     "serving_unit": "g",
@@ -3188,9 +3330,10 @@
     "fiber": 1,
     "veg": true,
     "tags": [
-      "veg"
+      "veg",
+      "gravy"
     ],
-    "meal_role": "single"
+    "meal_role": "main"
   },
   {
     "name": "rajma masala",
