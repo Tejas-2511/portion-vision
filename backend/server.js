@@ -5,8 +5,8 @@ const Tesseract = require("tesseract.js");
 const fs = require("fs");
 const sharp = require("sharp");
 const path = require("path");
-const { recommendPortion } = require("./portion_recommender");
 const { normalizeFoodName } = require("./utils/normalize");
+const { getFallbackDetails } = require("./portion_recommender");
 
 const app = express();
 
@@ -271,18 +271,19 @@ app.post('/api/recommend', (req, res) => {
       return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
     }
 
-    // Reconstruct user object from frontend profile
+    // Reconstruct user object from frontend profile, including diet preference
     const user = {
       weight_kg: parseFloat(userProfile.weight),
       height_cm: parseFloat(userProfile.height),
       age: parseInt(userProfile.age),
       sex: userProfile.gender,
       activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
-      goal: (userProfile.goalType || 'maintain').toLowerCase()
+      goal: (userProfile.goalType || 'maintain').toLowerCase(),
+      goalType: userProfile.goalType,
+      dietPreference: userProfile.dietPreference || 'non-veg',
+      avoidTags: userProfile.avoidTags || []
     };
 
-    // Import new recommender function
-    // Note: ensure we are importing the new function name
     const { recommendPlate } = require("./portion_recommender");
 
     const recommendation = recommendPlate({
@@ -398,26 +399,29 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);
 
-    // Add new items that don't exist yet
+    // Add new items that don't exist yet — enrich with fallback details so
+    // they have realistic macro estimates and can be used by the recommender
     let addedCount = 0;
     menuItems.forEach(itemName => {
       if (!existingNames.has(itemName)) {
-        console.log(`➕ Adding new item: ${itemName}`);
+        console.log(`➕ Adding new item with fallback enrichment: ${itemName}`);
+        const fallback = getFallbackDetails(itemName);
         foodDatabase.push({
           name: itemName,
-          dish_type: "",
-          category: "",
-          unit_type: "plate",
-          serving_size: 0,
-          serving_unit: "g",
-          calories: 0,
-          protein: 0,
-          protein_level: "",
-          carbs: 0,
-          fat: 0,
-          fiber: 0,
-          veg: false,
-          tags: []
+          dish_type: fallback.dish_type || "",
+          category: fallback.category || "",
+          unit_type: fallback.unit_type || "serving",
+          serving_size: fallback.serving_size || 100,
+          serving_unit: fallback.serving_unit || "g",
+          calories: fallback.calories || 0,
+          protein: fallback.protein || 0,
+          protein_level: fallback.protein_level || "",
+          carbs: fallback.carbs || 0,
+          fat: fallback.fat || 0,
+          fiber: fallback.fiber || 0,
+          veg: fallback.veg !== undefined ? fallback.veg : true,
+          tags: fallback.tags || [],
+          _enrichedByFallback: true // flag for future manual review
         });
         existingNames.add(itemName);
         addedCount++;
