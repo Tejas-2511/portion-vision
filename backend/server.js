@@ -163,7 +163,18 @@ app.get('/api/menu', (req, res) => {
     const menuPath = './data/menu.json';
     if (fs.existsSync(menuPath)) {
       const menu = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-      res.json(menu);
+      const items = Array.isArray(menu.items)
+        ? menu.items
+        : Array.isArray(menu.menuItems)
+          ? menu.menuItems
+          : [];
+
+      res.json({
+        ...menu,
+        // Frontend expects `items`; keep `menuItems` for backward compatibility
+        items,
+        menuItems: items,
+      });
     } else {
       res.json(null);
     }
@@ -229,7 +240,9 @@ app.post('/api/recommend', (req, res) => {
       if (fs.existsSync(menuPath)) {
         try {
           const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-          if (menuData.menuItems && Array.isArray(menuData.menuItems)) {
+          if (Array.isArray(menuData.items) && menuData.items.length) {
+            menuItems = menuData.items;
+          } else if (Array.isArray(menuData.menuItems) && menuData.menuItems.length) {
             menuItems = menuData.menuItems;
           }
         } catch (e) {
@@ -321,6 +334,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     const data = {
       date: new Date().toISOString(),
+      items: menuItems,
       menuItems,
     };
 
@@ -359,11 +373,11 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
       console.log('📝 No existing database found, creating new one');
     }
 
-    // Get existing food names (lowercase for comparison)
+    // Get existing food names (normalized for consistent comparison)
     const existingNames = new Set(
       foodDatabase
         .filter(item => item && item.name) // Filter out invalid items
-        .map(item => item.name.toLowerCase())
+        .map(item => normalizeFoodName(item.name))
     );
 
     console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);

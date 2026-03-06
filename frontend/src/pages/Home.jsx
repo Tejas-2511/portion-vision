@@ -10,6 +10,7 @@ export default function Home() {
   const { todaysMenu, userProfile } = useApp();
   const [recommendations, setRecommendations] = useState(null);
   const [loadingRecs, setLoadingRecs] = useState(false);
+  const menuItems = Array.isArray(todaysMenu?.items) ? todaysMenu.items : [];
 
   useEffect(() => {
     if (todaysMenu && userProfile) {
@@ -33,7 +34,7 @@ export default function Home() {
         else mealType = "lunch";
       }
 
-      const data = await api.getRecommendations(userProfile, mealType, todaysMenu.items || []);
+      const data = await api.getRecommendations(userProfile, mealType, menuItems);
 
       // The backend returns the full object { mealType, recommendedPlate, ... }
       if (data && data.recommendedPlate) {
@@ -74,7 +75,7 @@ export default function Home() {
             <div className="space-y-3">
               <div className="rounded-xl bg-emerald-50 p-4 border border-emerald-200">
                 <div className="space-y-2">
-                  {todaysMenu.items.map((item, index) => (
+                  {menuItems.map((item, index) => (
                     <div key={index} className="flex items-start gap-2">
                       <span className="text-emerald-600 font-bold mt-0.5">•</span>
                       <span className="text-slate-700 text-sm">{item}</span>

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import api from "../services/api";
 
 const AppContext = createContext();
 
@@ -20,16 +21,46 @@ export function AppProvider({ children }) {
                 const localProfile = localStorage.getItem('userProfile');
                 const localMenu = localStorage.getItem('todaysMenu');
 
-                if (localProfile) setUserProfile(JSON.parse(localProfile));
-                if (localMenu) setTodaysMenu(JSON.parse(localMenu));
+                const localProfileObj = localProfile ? JSON.parse(localProfile) : null;
+                const localMenuObjRaw = localMenu ? JSON.parse(localMenu) : null;
+
+                const localMenuItems = Array.isArray(localMenuObjRaw?.items)
+                    ? localMenuObjRaw.items
+                    : Array.isArray(localMenuObjRaw?.menuItems)
+                        ? localMenuObjRaw.menuItems
+                        : [];
+
+                const localMenuObj = localMenuObjRaw
+                    ? {
+                        ...localMenuObjRaw,
+                        items: localMenuItems,
+                        text: typeof localMenuObjRaw.text === 'string'
+                            ? localMenuObjRaw.text
+                            : localMenuItems.length
+                                ? localMenuItems.join('\n')
+                                : '',
+                    }
+                    : null;
+
+                if (localProfileObj) setUserProfile(localProfileObj);
+                if (localMenuObj) setTodaysMenu(localMenuObj);
 
                 // 2. Fetch latest Menu from Server (Sync)
                 // Profile is now LocalStorage only
                 const serverMenu = await api.getMenu();
 
-                if (serverMenu) {
-                    // console.log("Synced Menu from Server:", serverMenu);
-                    setTodaysMenu(serverMenu);
+                if (serverMenu?.items?.length) {
+                    // Merge server menu into local menu (preserve client-only fields like mealType)
+                    setTodaysMenu((prev) => {
+                        const prevMenu = prev || localMenuObj || null;
+                        if (!prevMenu) return serverMenu;
+
+                        return {
+                            ...prevMenu,
+                            ...serverMenu,
+                            mealType: prevMenu.mealType ?? serverMenu.mealType,
+                        };
+                    });
                 }
 
             } catch (error) {

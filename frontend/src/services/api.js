@@ -6,6 +6,28 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 class ApiService {
+    normalizeMenu(raw) {
+        if (!raw) return null;
+
+        const items = Array.isArray(raw.items)
+            ? raw.items
+            : Array.isArray(raw.menuItems)
+                ? raw.menuItems
+                : [];
+
+        const text = typeof raw.text === 'string'
+            ? raw.text
+            : items.length
+                ? items.join('\n')
+                : '';
+
+        return {
+            ...raw,
+            items,
+            text,
+        };
+    }
+
     /**
      * Make a generic HTTP request
      * @param {string} endpoint - API endpoint (e.g., '/api/foods')
@@ -105,7 +127,8 @@ class ApiService {
      * @returns {Promise<object|null>} Menu object or null
      */
     async getMenu() {
-        return this.request('/api/menu');
+        const menu = await this.request('/api/menu');
+        return this.normalizeMenu(menu);
     }
 
     /**
