@@ -154,9 +154,25 @@ class ApiService {
         });
     }
 
-    // Future endpoints can be added here:
-    // - User authentication
-    // - Upload plate image for analysis
+    /**
+     * Upload captured plate image for CV analysis
+     * @param {File} file - Image file to upload
+     * @param {string} expectedItems - Comma-separated list of expected items
+     * @returns {Promise<{sections: object, confidence: number}>}
+     */
+    async analyzePlate(file, expectedItems = '') {
+        const formData = new FormData();
+        formData.append('image', file);
+        if (expectedItems) {
+            formData.append('expectedItems', expectedItems);
+        }
+
+        return this.request('/api/analyze-plate', {
+            method: 'POST',
+            body: formData,
+            // Don't set Content-Type header - let browser set it for FormData
+        });
+    }
 }
 
 // Export singleton instance

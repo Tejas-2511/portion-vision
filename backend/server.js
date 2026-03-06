@@ -462,6 +462,58 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
   }
 });
 
+// ============================================
+// Plate Analysis Endpoint (Integration w/ CV)
+// ============================================
+
+const axios = require("axios");
+const FormData = require("form-data");
+
+app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No image uploaded" });
+  }
+
+  const { expectedItems } = req.body; // e.g., "rice, dal, roti, sabzi"
+  let originalPath = req.file.path;
+
+  try {
+    // 1. Prepare form data to send to Python microservice
+    const form = new FormData();
+    form.append("image", fs.createReadStream(originalPath));
+    if (expectedItems) {
+      form.append("expected_items", expectedItems);
+    }
+
+    // 2. Call the CV microservice
+    // console.log("Calling CV service with expected items:", expectedItems);
+    const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
+      headers: {
+        ...form.getHeaders()
+      }
+    });
+
+    // 3. Return the portion estimates to frontend
+    res.json(cvResponse.data);
+
+  } catch (err) {
+    console.error("CV Service Interaction Error:", err.message);
+    res.status(500).json({
+      error: "Portion analysis failed",
+      message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  } finally {
+    // Cleanup the uploaded temp file
+    if (originalPath && fs.existsSync(originalPath)) {
+      try {
+        fs.unlinkSync(originalPath);
+      } catch (e) {
+        console.error("Failed to delete original file:", e);
+      }
+    }
+  }
+});
+
 // Global error handling middleware
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
