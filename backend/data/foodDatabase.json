@@ -1,5 +1,21 @@
 [
   {
+    "name": "achari kaddu",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "aloo bonda",
     "dish_type": "snack",
     "category": "side",
@@ -445,6 +461,22 @@
       "non-veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "boondi",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "bread",
@@ -1115,6 +1147,22 @@
     "meal_role": "single"
   },
   {
+    "name": "dal dakshani",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "dal fry",
     "dish_type": "dal",
     "category": "protein_main",
@@ -1324,6 +1372,22 @@
     "meal_role": "single"
   },
   {
+    "name": "egg keema masala",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "egg methi keema masala",
     "dish_type": "curry",
     "category": "protein_main",
@@ -1441,6 +1505,22 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "gajar matar",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "garlic khichdi",
@@ -1811,6 +1891,22 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "jal jeera",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "jalebi",
@@ -2683,6 +2779,22 @@
     "meal_role": "single"
   },
   {
+    "name": "moong dal khichdi",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "moong dal tadka",
     "dish_type": "dal",
     "category": "protein_main",
@@ -2884,6 +2996,22 @@
     "meal_role": "single"
   },
   {
+    "name": "palak chana dal",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "palak poori",
     "dish_type": "roti",
     "category": "carb_base",
@@ -2943,6 +3071,22 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "paneer handi",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "pani poori",
@@ -3632,6 +3776,22 @@
     "meal_role": "single"
   },
   {
+    "name": "sevtomato",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "sewai kheer",
     "dish_type": "sweet",
     "category": "dessert",
@@ -3966,6 +4126,22 @@
     "meal_role": "single"
   },
   {
+    "name": "tomato dal fry",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "tomato pappu",
     "dish_type": "other",
     "category": "other",
@@ -4101,6 +4277,22 @@
     "meal_role": "single"
   },
   {
+    "name": "veg kolhapuri",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
+  },
+  {
     "name": "veg pongal",
     "dish_type": "snack",
     "category": "snack",
@@ -4138,6 +4330,22 @@
       "veg"
     ],
     "meal_role": "single"
+  },
+  {
+    "name": "veg pulao",
+    "dish_type": "",
+    "category": "",
+    "unit_type": "plate",
+    "serving_size": 0,
+    "serving_unit": "g",
+    "calories": 0,
+    "protein": 0,
+    "protein_level": "",
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "veg": false,
+    "tags": []
   },
   {
     "name": "veg upma",

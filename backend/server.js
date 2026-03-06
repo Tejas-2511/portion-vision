@@ -141,12 +141,28 @@ app.get('/api/foods/search', (req, res) => {
       return res.json([]);
     }
 
-    // Search by name (Normalized partial match)
-    const results = foods.filter(food =>
+    // Search by name (Normalized partial match + Fuzzy)
+    const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
+
+    // First, try exact/partial substring match
+    let results = foods.filter(food =>
       food.name && normalizeFoodName(food.name).includes(normalizedQuery)
     );
 
-    // console.log(`🔍 Search for "${query}" returned ${results.length} results`);
+    // If few results, complement with fuzzy search
+    if (results.length < 5) {
+      const fuzzyResults = foods
+        .filter(food => food.name && !results.some(r => r.name === food.name))
+        .map(food => ({
+          food,
+          score: levenshteinDistance(normalizedQuery, normalizeFoodName(food.name))
+        }))
+        .filter(item => item.score <= 3) // threshold
+        .sort((a, b) => a.score - b.score)
+        .map(item => item.food);
+
+      results = [...results, ...fuzzyResults].slice(0, 10);
+    }
     res.json(results);
   } catch (err) {
     console.error('❌ Search failed:', err);

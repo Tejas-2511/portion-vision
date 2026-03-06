@@ -7,6 +7,7 @@ const path = require("path");
 
 // Load food database
 const { normalizeFoodName } = require("./utils/normalize");
+const { fuzzyMatchFood } = require("./utils/fuzzyMatch");
 
 // Load food database & Create Index
 let FOOD_DB = [];
@@ -29,9 +30,14 @@ try {
   console.error("Error reading food database:", err);
 }
 
-// Helper to find food in DB (Normalized O(1))
+// Helper to find food in DB (Normalized O(1) + Fuzzy)
 function findFood(name) {
-  return FOOD_INDEX.get(normalizeFoodName(name));
+  const normalized = normalizeFoodName(name);
+  let match = FOOD_INDEX.get(normalized);
+  if (match) return match;
+
+  // Fallback to fuzzy match
+  return fuzzyMatchFood(normalized, FOOD_DB);
 }
 
 // Fallback logic if food not in DB
@@ -71,7 +77,12 @@ function getFallbackDetails(name) {
 
 function classifyItem(foodName) {
   let dbItem = findFood(foodName);
-  let details = dbItem ? { ...dbItem } : { name: foodName, ...getFallbackDetails(foodName) };
+
+  // dbItem.name might be the matched food (e.g. "roti"), but the menu item was "rotii".
+  // We want to return the database details, but preserve the menu item's original name
+  // so the frontend recommendation displays what was on the menu.
+
+  let details = dbItem ? { ...dbItem, name: foodName } : { name: foodName, ...getFallbackDetails(foodName) };
 
   // Determine Role based on category (TRUST THE DB)
   let role = "other";
@@ -254,8 +265,9 @@ function recommendPlate({ user, menuItems, mealType }) {
   const selectedNames = bestMeal.items.map(i => i.name);
   const addons = availableFoods.filter(f => f.category === "condiment" || (f.tags && (f.tags.includes("pickle") || f.tags.includes("chutney") || f.tags.includes("papad"))));
   const bevs = availableFoods.filter(f => f.category === "beverage" && !selectedNames.includes(f.name));
+  const sweets = availableFoods.filter(f => f.category === "dessert" && !selectedNames.includes(f.name));
 
-  const optionalItems = [...addons.slice(0, 2), ...bevs.slice(0, 1)].map(opt => ({
+  const optionalItems = [...addons.slice(0, 2), ...bevs.slice(0, 1), ...sweets.slice(0, 1)].map(opt => ({
     item: opt.name,
     calories: opt.calories || 0,
     note: "Consume in moderation",
