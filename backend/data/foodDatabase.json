@@ -1,18 +1,24 @@
 [
   {
-    "name": "achari kaddu",
-    "dish_type": "sabji",
+    "id": "achari_kaddu",
+    "name": "Achari Kaddu",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 16.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 3,
+      "carbs": 16,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "pumpkin",
       "sabji",
@@ -22,468 +28,610 @@
     ]
   },
   {
-    "name": "aloo bonda",
-    "dish_type": "snack",
+    "id": "aloo_bonda",
+    "name": "Aloo Bonda",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 22.0,
-    "fat": 9.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 22,
+      "fat": 9,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "potato",
       "fried",
       "snack",
       "veg",
       "batter"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo gobi",
-    "dish_type": "sabji",
+    "id": "aloo_gobi",
+    "name": "Aloo Gobi",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 20.0,
-    "fat": 8.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 5,
+      "carbs": 20,
+      "fat": 8,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "cauliflower",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo jeera",
-    "dish_type": "sabji",
+    "id": "aloo_jeera",
+    "name": "Aloo Jeera",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 25.0,
-    "fat": 8.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 3,
+      "carbs": 25,
+      "fat": 8,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo matar",
-    "dish_type": "sabji",
+    "id": "aloo_matar",
+    "name": "Aloo Matar",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 7.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 5,
+      "carbs": 28,
+      "fat": 7,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo palak",
-    "dish_type": "sabji",
+    "id": "aloo_palak",
+    "name": "Aloo Palak",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 170,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 7.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 170,
+      "protein": 5,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo papdi chaat",
-    "dish_type": "snack",
+    "id": "aloo_papdi_chaat",
+    "name": "Aloo Papdi Chaat",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 10.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 35,
+      "fat": 10,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo paratha",
-    "dish_type": "roti",
+    "id": "aloo_paratha",
+    "name": "Aloo Paratha",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 280,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 12.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 6,
+      "carbs": 35,
+      "fat": 12,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "aloo sem phali",
-    "dish_type": "sabji",
+    "id": "aloo_sem_phali",
+    "name": "Aloo Sem Phali",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 7.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 4,
+      "carbs": 20,
+      "fat": 7,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "apple",
-    "dish_type": "snack",
+    "id": "apple",
+    "name": "Apple",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 1,
-    "serving_unit": "piece",
-    "calories": 80,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 21.0,
-    "fat": 0.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 1,
+      "unit": "piece",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 0,
+      "carbs": 21,
+      "fat": 0,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fruit",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "baingan bharta",
-    "dish_type": "sabji",
+    "id": "baingan_bharta",
+    "name": "Baingan Bharta",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 15.0,
-    "fat": 8.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 3,
+      "carbs": 15,
+      "fat": 8,
+      "fiber": 6
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "banana",
-    "dish_type": "snack",
+    "id": "baingan_ka_bharta",
+    "name": "Baingan Ka Bharta",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 3,
+      "carbs": 18,
+      "fat": 7,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "smoked",
+      "eggplant"
+    ]
+  },
+  {
+    "id": "banana",
+    "name": "Banana",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 1,
-    "serving_unit": "piece",
-    "calories": 105,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 27.0,
-    "fat": 0.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 1,
+      "unit": "piece",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 105,
+      "protein": 1,
+      "carbs": 27,
+      "fat": 0,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "banana cake",
-    "dish_type": "sweet",
+    "id": "banana_cake",
+    "name": "Banana Cake",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 1,
-    "serving_unit": "piece",
-    "calories": 250,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 9.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 1,
+      "unit": "piece",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 4,
+      "carbs": 40,
+      "fat": 9,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "beans poriyal",
-    "dish_type": "sabji",
+    "id": "beans_poriyal",
+    "name": "Beans Poriyal",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 130,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 15.0,
-    "fat": 7.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 130,
+      "protein": 3,
+      "carbs": 15,
+      "fat": 7,
+      "fiber": 6
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "besan laddu",
-    "dish_type": "sweet",
+    "id": "besan_laddu",
+    "name": "Besan Laddu",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 22.0,
-    "fat": 10.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 22,
+      "fat": 10,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "besan",
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "bhaji",
-    "dish_type": "sabji",
+    "id": "bhaji",
+    "name": "Bhaji",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 7.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "bhindi masala",
-    "dish_type": "sabji",
+    "id": "bhindi_masala",
+    "name": "Bhindi Masala",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 4,
+      "carbs": 12,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "okra",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "biresra kadhi",
-    "dish_type": "main",
-    "category": "curry",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 13.0,
-    "fiber": 1.0,
-    "veg": true,
+    "id": "biresra_kadhi",
+    "name": "Biresra Kadhi",
+    "diet": "veg",
+    "dishType": "main",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 7,
+      "carbs": 18,
+      "fat": 13,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg",
       "gravy"
-    ],
-    "meal_role": "main"
+    ]
   },
   {
-    "name": "biscuit",
-    "dish_type": "snack",
+    "id": "biscuit",
+    "name": "Biscuit",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 10,
-    "serving_unit": "g",
-    "calories": 50,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 2.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 10,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 50,
+      "protein": 1,
+      "carbs": 7,
+      "fat": 2,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "packaged",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "black chana",
-    "dish_type": "sabji",
+    "id": "black_chana",
+    "name": "Black Chana",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 3.0,
-    "fiber": 9.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 3,
+      "fiber": 9
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "black chana masala",
-    "dish_type": "curry",
+    "id": "black_chana_masala",
+    "name": "Black Chana Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 7.0,
-    "fiber": 9.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 12,
+      "carbs": 30,
+      "fat": 7,
+      "fiber": 9
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "black masoor dal",
-    "dish_type": "dal",
+    "id": "black_masoor_dal",
+    "name": "Black Masoor Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 11.0,
-    "protein_level": "medium",
-    "carbs": 32.0,
-    "fat": 3.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 32,
+      "fat": 3,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "boiled egg",
-    "dish_type": "egg",
+    "id": "boiled_egg",
+    "name": "Boiled Egg",
+    "diet": "non-veg",
+    "dishType": "egg",
     "category": "protein_main",
-    "unit_type": "piece",
-    "serving_size": 1,
-    "serving_unit": "piece",
-    "calories": 70,
-    "protein": 6.0,
-    "fat": 5.0,
-    "carbs": 1.0,
-    "veg": false,
+    "serving": {
+      "size": 1,
+      "unit": "piece",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 70,
+      "protein": 6,
+      "carbs": 1,
+      "fat": 5,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "egg",
       "non-veg"
-    ],
-    "meal_role": "single",
-    "fiber": 0.0,
-    "protein_level": "medium"
+    ]
   },
   {
-    "name": "boondi",
-    "dish_type": "snack",
+    "id": "boondi",
+    "name": "Boondi",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "plate",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 380,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 50.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 380,
+      "protein": 7,
+      "carbs": 50,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "chickpea",
@@ -492,687 +640,915 @@
     ]
   },
   {
-    "name": "bread",
-    "dish_type": "roti",
+    "id": "bread",
+    "name": "Bread",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 70,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 13.0,
-    "fat": 1.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 70,
+      "protein": 3,
+      "carbs": 13,
+      "fat": 1,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "bread omelette",
-    "dish_type": "egg",
+    "id": "bread_omelette",
+    "name": "Bread Omelette",
+    "diet": "non-veg",
+    "dishType": "egg",
     "category": "protein_main",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 280,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 25.0,
-    "fat": 14.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 12,
+      "carbs": 25,
+      "fat": 14,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "butter",
-    "dish_type": "other",
+    "id": "butter",
+    "name": "Butter",
+    "diet": "veg",
+    "dishType": "other",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 10,
-    "serving_unit": "g",
-    "calories": 72,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 0.0,
-    "fat": 8.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 10,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 72,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 8,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "butter milk",
-    "dish_type": "drink",
+    "id": "butter_milk",
+    "name": "Butter Milk",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 40,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 4.0,
-    "fat": 2.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 40,
+      "protein": 2,
+      "carbs": 4,
+      "fat": 2,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "butter naan",
-    "dish_type": "roti",
+    "id": "butter_naan",
+    "name": "Butter Naan",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 320,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 46.0,
-    "fat": 12.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 320,
+      "protein": 8,
+      "carbs": 46,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "cabbage carrot",
-    "dish_type": "sabji",
+    "id": "cabbage_carrot",
+    "name": "Cabbage Carrot",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 120,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 15.0,
-    "fat": 6.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 2,
+      "carbs": 15,
+      "fat": 6,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "cabbage matar",
-    "dish_type": "sabji",
+    "id": "cabbage_matar",
+    "name": "Cabbage Matar",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 130,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 18.0,
-    "fat": 6.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 130,
+      "protein": 4,
+      "carbs": 18,
+      "fat": 6,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "cabbage poriyal",
-    "dish_type": "sabji",
+    "id": "cabbage_poriyal",
+    "name": "Cabbage Poriyal",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 120,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 14.0,
-    "fat": 7.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 3,
+      "carbs": 14,
+      "fat": 7,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "carrot beans poriyal",
-    "dish_type": "sabji",
+    "id": "carrot_beans_poriyal",
+    "name": "Carrot Beans Poriyal",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 18.0,
-    "fat": 7.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 3,
+      "carbs": 18,
+      "fat": 7,
+      "fiber": 6
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "carrot capsicum",
-    "dish_type": "sabji",
+    "id": "carrot_capsicum",
+    "name": "Carrot Capsicum",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 130,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 16.0,
-    "fat": 7.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 130,
+      "protein": 2,
+      "carbs": 16,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chaap makhani",
-    "dish_type": "curry",
+    "id": "chaap_makhani",
+    "name": "Chaap Makhani",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 280,
-    "protein": 15.0,
-    "protein_level": "high",
-    "carbs": 20.0,
-    "fat": 16.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 15,
+      "carbs": 20,
+      "fat": 16,
+      "fiber": 3
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chaap masala",
-    "dish_type": "curry",
+    "id": "chaap_masala",
+    "name": "Chaap Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 15.0,
-    "protein_level": "high",
-    "carbs": 18.0,
-    "fat": 12.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 15,
+      "carbs": 18,
+      "fat": 12,
+      "fiber": 4
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chana dal",
-    "dish_type": "dal",
+    "id": "chana_dal",
+    "name": "Chana Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 4.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chana dal burfi",
-    "dish_type": "sweet",
+    "id": "chana_dal_burfi",
+    "name": "Chana Dal Burfi",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 40,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 25.0,
-    "fat": 8.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 40,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 25,
+      "fat": 8,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "dessert",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chana masala",
-    "dish_type": "curry",
+    "id": "chana_masala",
+    "name": "Chana Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 32.0,
-    "fat": 8.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 10,
+      "carbs": 32,
+      "fat": 8,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chapati",
-    "dish_type": "roti",
+    "id": "chapati",
+    "name": "Chapati",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 40,
-    "serving_unit": "g",
-    "calories": 104,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 1.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 40,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 104,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 1,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chicken biryani",
-    "dish_type": "rice",
+    "id": "chicken_biryani",
+    "name": "Chicken Biryani",
+    "diet": "non-veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 300,
-    "serving_unit": "g",
-    "calories": 350,
-    "protein": 18.0,
-    "protein_level": "high",
-    "carbs": 42.0,
-    "fat": 10.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 300,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 350,
+      "protein": 18,
+      "carbs": 42,
+      "fat": 10,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "mixed",
     "tags": [
       "chicken",
       "non-veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "chicken chettinad",
-    "dish_type": "curry",
+    "id": "chicken_chettinad",
+    "name": "Chicken Chettinad",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 270,
-    "protein": 22.0,
-    "protein_level": "high",
-    "carbs": 8.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 270,
+      "protein": 22,
+      "carbs": 8,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chicken curry",
-    "dish_type": "curry",
+    "id": "chicken_curry",
+    "name": "Chicken Curry",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 240,
-    "protein": 20.0,
-    "protein_level": "high",
-    "carbs": 8.0,
-    "fat": 15.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 240,
+      "protein": 20,
+      "carbs": 8,
+      "fat": 15,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chilka moong dal",
-    "dish_type": "dal",
+    "id": "chilka_moong_dal",
+    "name": "Chilka Moong Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 27.0,
-    "fat": 3.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 9,
+      "carbs": 27,
+      "fat": 3,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chilli chicken",
-    "dish_type": "curry",
+    "id": "chilli_chicken",
+    "name": "Chilli Chicken",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 18.0,
-    "protein_level": "high",
-    "carbs": 12.0,
-    "fat": 11.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 18,
+      "carbs": 12,
+      "fat": 11,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chilli paneer",
-    "dish_type": "curry",
+    "id": "chilli_paneer",
+    "name": "Chilli Paneer",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 13.0,
-    "protein_level": "medium",
-    "carbs": 15.0,
-    "fat": 16.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 13,
+      "carbs": 15,
+      "fat": 16,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chitranna",
-    "dish_type": "rice",
+    "id": "chitranna",
+    "name": "Chitranna",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 7.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 4,
+      "carbs": 40,
+      "fat": 7,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chocolate brownie",
-    "dish_type": "sweet",
+    "id": "chocolate_brownie",
+    "name": "Chocolate Brownie",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 320,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 42.0,
-    "fat": 16.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 320,
+      "protein": 4,
+      "carbs": 42,
+      "fat": 16,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "chole masala",
-    "dish_type": "curry",
+    "id": "chole_masala",
+    "name": "Chole Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 32.0,
-    "fat": 8.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 10,
+      "carbs": 32,
+      "fat": 8,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "coconut burfi",
-    "dish_type": "sweet",
+    "id": "coconut_burfi",
+    "name": "Coconut Burfi",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 40,
-    "serving_unit": "g",
-    "calories": 370,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 52.0,
-    "fat": 16.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 40,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 370,
+      "protein": 5,
+      "carbs": 52,
+      "fat": 16,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "coconut chutney",
-    "dish_type": "condiment",
+    "id": "coconut_chutney",
+    "name": "Coconut Chutney",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 120,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 6.0,
-    "fat": 10.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 2,
+      "carbs": 6,
+      "fat": 10,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "coffee",
-    "dish_type": "drink",
+    "id": "coffee",
+    "name": "Coffee",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 10,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 2.0,
-    "fat": 0.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 10,
+      "protein": 0,
+      "carbs": 2,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "corn capsicum",
-    "dish_type": "sabji",
+    "id": "corn_capsicum",
+    "name": "Corn Capsicum",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 26.0,
-    "fat": 6.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 4,
+      "carbs": 26,
+      "fat": 6,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "corn pulao",
-    "dish_type": "rice",
+    "id": "corn_palak",
+    "name": "Corn Palak",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 5,
+      "carbs": 20,
+      "fat": 5,
+      "fiber": 6
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "spinach",
+      "corn"
+    ]
+  },
+  {
+    "id": "corn_pulao",
+    "name": "Corn Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 43.0,
-    "fat": 5.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 5,
+      "carbs": 43,
+      "fat": 5,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "cornflakes",
-    "dish_type": "snack",
+    "id": "cornflakes",
+    "name": "Cornflakes",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "bowl",
-    "serving_size": 40,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 33.0,
-    "fat": 1.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 40,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 3,
+      "carbs": 33,
+      "fat": 1,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "curd",
-    "dish_type": "drink",
+    "id": "curd",
+    "name": "Curd",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 60,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 4.0,
-    "fat": 3.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 60,
+      "protein": 4,
+      "carbs": 4,
+      "fat": 3,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "curd rice",
-    "dish_type": "rice",
+    "id": "curd_rice",
+    "name": "Curd Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 33.0,
-    "fat": 4.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 5,
+      "carbs": 33,
+      "fat": 4,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dal amritsari",
-    "dish_type": "dal",
+    "id": "dal_amritsari",
+    "name": "Dal Amritsari",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 6.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 6,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dal dakshani",
-    "dish_type": "dal",
+    "id": "dal_banjara",
+    "name": "Dal Banjara",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 5.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 12,
+      "carbs": 31,
+      "fat": 6,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "dal",
+      "rajasthani"
+    ]
+  },
+  {
+    "id": "dal_dakshani",
+    "name": "Dal Dakshani",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 9,
+      "carbs": 28,
+      "fat": 5,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
@@ -1181,228 +1557,309 @@
     ]
   },
   {
-    "name": "dal fry",
-    "dish_type": "dal",
+    "id": "dal_fry",
+    "name": "Dal Fry",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 6.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 6,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dal makhani",
-    "dish_type": "dal",
+    "id": "dal_makhani",
+    "name": "Dal Makhani",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 8.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 8,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dal pakoda",
-    "dish_type": "snack",
+    "id": "dal_pakoda",
+    "name": "Dal Pakoda",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 20.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 6,
+      "carbs": 20,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dal panchratan",
-    "dish_type": "dal",
+    "id": "dal_panchmail",
+    "name": "Dal Panchmail",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 11.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 13,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
-      "dal",
-      "gravy",
-      "veg"
-    ],
-    "meal_role": "single"
+      "veg",
+      "dal"
+    ]
   },
   {
-    "name": "dal vada curry",
-    "dish_type": "dal",
+    "id": "dal_panchratan",
+    "name": "Dal Panchratan",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dhokla",
-    "dish_type": "snack",
+    "id": "dal_vada_curry",
+    "name": "Dal Vada Curry",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 9,
+      "carbs": 28,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "dal",
+      "gravy",
+      "veg"
+    ]
+  },
+  {
+    "id": "dhokla",
+    "name": "Dhokla",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 23.0,
-    "fat": 3.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 5,
+      "carbs": 23,
+      "fat": 3,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dum aloo",
-    "dish_type": "curry",
-    "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 25.0,
-    "fat": 10.0,
-    "fiber": 4.0,
-    "veg": true,
+    "id": "dum_aloo",
+    "name": "Dum Aloo",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 4,
+      "carbs": 25,
+      "fat": 10,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "dum aloo kashmiri",
-    "dish_type": "curry",
-    "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 11.0,
-    "fiber": 4.0,
-    "veg": true,
+    "id": "dum_aloo_kashmiri",
+    "name": "Dum Aloo Kashmiri",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 5,
+      "carbs": 28,
+      "fat": 11,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "potato",
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "egg bhurji",
-    "dish_type": "egg",
+    "id": "egg_bhurji",
+    "name": "Egg Bhurji",
+    "diet": "non-veg",
+    "dishType": "egg",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 120,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 4.0,
-    "fat": 14.0,
-    "fiber": 1.0,
-    "veg": false,
+    "serving": {
+      "size": 120,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 12,
+      "carbs": 4,
+      "fat": 14,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "egg",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "egg curry",
-    "dish_type": "curry",
+    "id": "egg_curry",
+    "name": "Egg Curry",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 13.0,
-    "protein_level": "medium",
-    "carbs": 8.0,
-    "fat": 14.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 13,
+      "carbs": 8,
+      "fat": 14,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "egg",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "egg keema masala",
-    "dish_type": "curry",
+    "id": "egg_keema_masala",
+    "name": "Egg Keema Masala",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 18.0,
-    "protein_level": "high",
-    "carbs": 8.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 18,
+      "carbs": 8,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "egg",
       "keema",
@@ -1412,138 +1869,199 @@
     ]
   },
   {
-    "name": "egg methi keema masala",
-    "dish_type": "curry",
+    "id": "egg_methi_keema_masala",
+    "name": "Egg Methi Keema Masala",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 240,
-    "protein": 17.0,
-    "protein_level": "high",
-    "carbs": 9.0,
-    "fat": 16.0,
-    "fiber": 3.0,
-    "veg": false,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 240,
+      "protein": 17,
+      "carbs": 9,
+      "fat": 16,
+      "fiber": 3
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "egg",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "fish curry",
-    "dish_type": "curry",
+    "id": "fish_curry",
+    "name": "Fish Curry",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 20.0,
-    "protein_level": "high",
-    "carbs": 7.0,
-    "fat": 14.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 20,
+      "carbs": 7,
+      "fat": 14,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "fish",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "flavored milk",
-    "dish_type": "drink",
+    "id": "flavored_milk",
+    "name": "Flavored Milk",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 120,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 3.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 3,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "fried rice",
-    "dish_type": "rice",
+    "id": "fried_chilli",
+    "name": "Fried Chilli",
+    "diet": "veg",
+    "dishType": "condiment",
+    "category": "other",
+    "serving": {
+      "size": 20,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 35,
+      "protein": 1,
+      "carbs": 4,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "spicy"
+    ]
+  },
+  {
+    "id": "fried_rice",
+    "name": "Fried Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 8.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 42,
+      "fat": 8,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "fruit custard",
-    "dish_type": "sweet",
+    "id": "fruit_custard",
+    "name": "Fruit Custard",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "fryum",
-    "dish_type": "snack",
+    "id": "fryum",
+    "name": "Fryum",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 370,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 65.0,
-    "fat": 10.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 370,
+      "protein": 4,
+      "carbs": 65,
+      "fat": 10,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "gajar matar",
-    "dish_type": "sabji",
+    "id": "gajar_matar",
+    "name": "Gajar Matar",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 6.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 4,
+      "carbs": 20,
+      "fat": 6,
+      "fiber": 5
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "carrot",
       "peas",
@@ -1553,256 +2071,348 @@
     ]
   },
   {
-    "name": "garlic khichdi",
-    "dish_type": "rice",
-    "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 36.0,
-    "fat": 5.0,
-    "fiber": 4.0,
-    "veg": true,
+    "id": "garlic_chutney",
+    "name": "Garlic Chutney",
+    "diet": "veg",
+    "dishType": "condiment",
+    "category": "other",
+    "serving": {
+      "size": 15,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 25,
+      "protein": 1,
+      "carbs": 4,
+      "fat": 1,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
-      "veg"
-    ],
-    "meal_role": "mixed"
+      "veg",
+      "condiment",
+      "garlic"
+    ]
   },
   {
-    "name": "garlic naan",
-    "dish_type": "roti",
+    "id": "garlic_khichdi",
+    "name": "Garlic Khichdi",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 310,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 45.0,
-    "fat": 11.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 7,
+      "carbs": 36,
+      "fat": 5,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "ghee rice",
-    "dish_type": "rice",
+    "id": "garlic_naan",
+    "name": "Garlic Naan",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 270,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 45.0,
-    "fat": 9.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 310,
+      "protein": 8,
+      "carbs": 45,
+      "fat": 11,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "ghee_rice",
+    "name": "Ghee Rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 270,
+      "protein": 4,
+      "carbs": 45,
+      "fat": 9,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "gobhi masala",
-    "dish_type": "sabji",
+    "id": "gobhi_masala",
+    "name": "Gobhi Masala",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 16.0,
-    "fat": 8.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 5,
+      "carbs": 16,
+      "fat": 8,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "grapes",
-    "dish_type": "snack",
+    "id": "grapes",
+    "name": "Grapes",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 60,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 16.0,
-    "fat": 0.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 60,
+      "protein": 1,
+      "carbs": 16,
+      "fat": 0,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fruit",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "green chilli fry",
-    "dish_type": "condiment",
+    "id": "green_chilli_fry",
+    "name": "Green Chilli Fry",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 80,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 8.0,
-    "fat": 5.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 2,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "green chutney",
-    "dish_type": "condiment",
+    "id": "green_chutney",
+    "name": "Green Chutney",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 20,
-    "serving_unit": "g",
-    "calories": 45,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 5.0,
-    "fat": 2.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 20,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 45,
+      "protein": 2,
+      "carbs": 5,
+      "fat": 2,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "green moong dal",
-    "dish_type": "dal",
+    "id": "green_moong_dal",
+    "name": "Green Moong Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 170,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 3.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 170,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 3,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "green moong dal khichdi",
-    "dish_type": "rice",
+    "id": "green_moong_dal_khichdi",
+    "name": "Green Moong Dal Khichdi",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 4.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 9,
+      "carbs": 35,
+      "fat": 4,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "green moong dal tadka",
-    "dish_type": "dal",
+    "id": "green_moong_dal_tadka",
+    "name": "Green Moong Dal Tadka",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 29.0,
-    "fat": 4.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 10,
+      "carbs": 29,
+      "fat": 4,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "green peas pulao",
-    "dish_type": "rice",
+    "id": "green_peas_pulao",
+    "name": "Green Peas Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 6.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 6,
+      "carbs": 40,
+      "fat": 6,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "green salad",
-    "dish_type": "salad",
+    "id": "green_salad",
+    "name": "Green Salad",
+    "diet": "veg",
+    "dishType": "salad",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 40,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 1.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 40,
+      "protein": 2,
+      "carbs": 7,
+      "fat": 1,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "guijiya",
-    "dish_type": "sweet",
+    "id": "guijiya",
+    "name": "Guijiya",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "plate",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 32.0,
-    "fat": 12.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 4,
+      "carbs": 32,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "fried",
@@ -1812,136 +2422,172 @@
     ]
   },
   {
-    "name": "gujiya",
-    "dish_type": "sweet",
+    "id": "gujiya",
+    "name": "Gujiya",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 32.0,
-    "fat": 12.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 4,
+      "carbs": 32,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "fried"
-    ],
-    "meal_role": "dessert"
+    ]
   },
   {
-    "name": "gulab jamun",
-    "dish_type": "sweet",
+    "id": "gulab_jamun",
+    "name": "Gulab Jamun",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 28.0,
-    "fat": 6.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 2,
+      "carbs": 28,
+      "fat": 6,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "gutta curry",
-    "dish_type": "curry",
+    "id": "gutta_curry",
+    "name": "Gutta Curry",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 14.0,
-    "fat": 10.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 5,
+      "carbs": 14,
+      "fat": 10,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "hot milk",
-    "dish_type": "drink",
+    "id": "hot_milk",
+    "name": "Hot Milk",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 120,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 9.0,
-    "fat": 7.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 6,
+      "carbs": 9,
+      "fat": 7,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "ice tea",
-    "dish_type": "drink",
+    "id": "ice_tea",
+    "name": "Ice Tea",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 80,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 0.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 0,
+      "carbs": 20,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "idli",
-    "dish_type": "snack",
+    "id": "idli",
+    "name": "Idli",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 40,
-    "serving_unit": "g",
-    "calories": 65,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 13.0,
-    "fat": 0.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 40,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 65,
+      "protein": 2,
+      "carbs": 13,
+      "fat": 0,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "jal jeera",
-    "dish_type": "drink",
+    "id": "jal_jeera",
+    "name": "Jal Jeera",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "plate",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 20,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 5.0,
-    "fat": 0.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 20,
+      "protein": 0,
+      "carbs": 5,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "drink",
       "spiced water",
@@ -1950,891 +2596,1193 @@
     ]
   },
   {
-    "name": "jalebi",
-    "dish_type": "sweet",
+    "id": "jalebi",
+    "name": "Jalebi",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 278,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 56.0,
-    "fat": 5.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 278,
+      "protein": 1,
+      "carbs": 56,
+      "fat": 5,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "jam",
-    "dish_type": "condiment",
+    "id": "jam",
+    "name": "Jam",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "serving",
-    "serving_size": 15,
-    "serving_unit": "g",
-    "calories": 50,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 13.0,
-    "fat": 0.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 15,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 50,
+      "protein": 0,
+      "carbs": 13,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "jeera pulao",
-    "dish_type": "rice",
+    "id": "jeera_pulao",
+    "name": "Jeera Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 7.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 5,
+      "carbs": 40,
+      "fat": 7,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "jeera rice",
-    "dish_type": "rice",
+    "id": "jeera_rice",
+    "name": "Jeera Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 38.0,
-    "fat": 4.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 4,
+      "carbs": 38,
+      "fat": 4,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kachori",
-    "dish_type": "snack",
+    "id": "kabuli_chana",
+    "name": "Kabuli Chana",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 12,
+      "carbs": 32,
+      "fat": 4,
+      "fiber": 9
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "chana"
+    ]
+  },
+  {
+    "id": "kabuli_chana_chaat",
+    "name": "Kabuli Chana Chaat",
+    "diet": "veg",
+    "dishType": "salad",
+    "category": "protein_main",
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 9
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "chana",
+      "chaat"
+    ]
+  },
+  {
+    "id": "kachori",
+    "name": "Kachori",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 25.0,
-    "fat": 9.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 4,
+      "carbs": 25,
+      "fat": 9,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kadhai paneer",
-    "dish_type": "curry",
+    "id": "kadhai_paneer",
+    "name": "Kadhai Paneer",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 290,
-    "protein": 14.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 19.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 290,
+      "protein": 14,
+      "carbs": 18,
+      "fat": 19,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kadhai veg",
-    "dish_type": "curry",
+    "id": "kadhai_veg",
+    "name": "Kadhai Veg",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 9.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 9,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kadhi pakoda",
-    "dish_type": "main",
-    "category": "curry",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 10.0,
-    "fiber": 3.0,
-    "veg": true,
+    "id": "kadhi_pakoda",
+    "name": "Kadhi Pakoda",
+    "diet": "veg",
+    "dishType": "main",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 7,
+      "carbs": 22,
+      "fat": 10,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg",
       "gravy",
       "fried"
-    ],
-    "meal_role": "main"
+    ]
   },
   {
-    "name": "kaju katli",
-    "dish_type": "sweet",
+    "id": "kaju_katli",
+    "name": "Kaju Katli",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 130,
-    "protein": 4.0,
-    "carbs": 18.0,
-    "fat": 7.0,
-    "fiber": 1.0,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 130,
+      "protein": 4,
+      "carbs": 18,
+      "fat": 7,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "dessert"
-    ],
-    "meal_role": "single",
-    "protein_level": "low",
-    "veg": true
+    ]
   },
   {
-    "name": "karela fry",
-    "dish_type": "sabji",
+    "id": "karela_fry",
+    "name": "Karela Fry",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 100,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 9.0,
-    "fat": 6.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 100,
+      "protein": 3,
+      "carbs": 9,
+      "fat": 6,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kesar phirni",
-    "dish_type": "sweet",
+    "id": "kesar_phirni",
+    "name": "Kesar Phirni",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "dessert"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kesari bhat",
-    "dish_type": "sweet",
+    "id": "kesari_bhat",
+    "name": "Kesari Bhat",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 10.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 3,
+      "carbs": 40,
+      "fat": 10,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "kesariya thandai",
-    "dish_type": "drink",
+    "id": "kesariya_thandai",
+    "name": "Kesariya Thandai",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 180,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 6.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 5,
+      "carbs": 28,
+      "fat": 6,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "drink",
       "festival"
-    ],
-    "meal_role": "beverage"
+    ]
   },
   {
-    "name": "khichdi",
-    "dish_type": "rice",
+    "id": "khichdi",
+    "name": "Khichdi",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 205,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 36.0,
-    "fat": 4.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 205,
+      "protein": 8,
+      "carbs": 36,
+      "fat": 4,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "kulcha",
-    "dish_type": "roti",
+    "id": "kulcha",
+    "name": "Kulcha",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 295,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 44.0,
-    "fat": 10.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 295,
+      "protein": 8,
+      "carbs": 44,
+      "fat": 10,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lahsuni dal",
-    "dish_type": "dal",
+    "id": "lahsuni_dal",
+    "name": "Lahsuni Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "langarwali dal",
-    "dish_type": "dal",
+    "id": "langarwali_dal",
+    "name": "Langarwali Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 6.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 12,
+      "carbs": 30,
+      "fat": 6,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lassi",
-    "dish_type": "drink",
+    "id": "lassi",
+    "name": "Lassi",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 250,
-    "serving_unit": "ml",
-    "calories": 180,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 25.0,
-    "fat": 6.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 250,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 6,
+      "carbs": 25,
+      "fat": 6,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lauki chana",
-    "dish_type": "sabji",
+    "id": "lauki_chana",
+    "name": "Lauki Chana",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 5.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 7,
+      "carbs": 22,
+      "fat": 5,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lauki kofta curry",
-    "dish_type": "curry",
+    "id": "lauki_kofta_curry",
+    "name": "Lauki Kofta Curry",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 20.0,
-    "fat": 11.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 6,
+      "carbs": 20,
+      "fat": 11,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lauki sabzi",
-    "dish_type": "sabji",
+    "id": "lauki_sabzi",
+    "name": "Lauki Sabzi",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 100,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 5.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 100,
+      "protein": 2,
+      "carbs": 12,
+      "fat": 5,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lemon rice",
-    "dish_type": "rice",
+    "id": "lemon_rice",
+    "name": "Lemon Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 215,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 6.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 215,
+      "protein": 4,
+      "carbs": 40,
+      "fat": 6,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lemon water",
-    "dish_type": "drink",
+    "id": "lemon_water",
+    "name": "Lemon Water",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 5,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 1.0,
-    "fat": 0.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 5,
+      "protein": 0,
+      "carbs": 1,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lobia dal",
-    "dish_type": "dal",
+    "id": "lobia_dal",
+    "name": "Lobia Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 3.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 3,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "lobiya masala",
-    "dish_type": "curry",
+    "id": "lobiya_masala",
+    "name": "Lobiya Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "luchi",
-    "dish_type": "roti",
+    "id": "luchi",
+    "name": "Luchi",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 170,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 24.0,
-    "fat": 7.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 170,
+      "protein": 4,
+      "carbs": 24,
+      "fat": 7,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "macaroni",
-    "dish_type": "snack",
+    "id": "macaroni",
+    "name": "Macaroni",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 36.0,
-    "fat": 4.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 6,
+      "carbs": 36,
+      "fat": 4,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "maggi",
-    "dish_type": "snack",
+    "id": "maggi",
+    "name": "Maggi",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "serving",
-    "serving_size": 140,
-    "serving_unit": "g",
-    "calories": 290,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 43.0,
-    "fat": 10.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 140,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 290,
+      "protein": 7,
+      "carbs": 43,
+      "fat": 10,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "malai kofta",
-    "dish_type": "curry",
+    "id": "malai_kofta",
+    "name": "Malai Kofta",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 310,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 24.0,
-    "fat": 20.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 310,
+      "protein": 10,
+      "carbs": 24,
+      "fat": 20,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "rich",
       "veg",
       "gravy"
-    ],
-    "meal_role": "main"
+    ]
   },
   {
-    "name": "mango",
-    "dish_type": "snack",
+    "id": "mango",
+    "name": "Mango",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 80,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 20.0,
-    "fat": 0.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 1,
+      "carbs": 20,
+      "fat": 0,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fruit",
       "veg",
       "sweet"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mangoda",
-    "dish_type": "snack",
+    "id": "mangoda",
+    "name": "Mangoda",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 32.0,
-    "fat": 11.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 7,
+      "carbs": 32,
+      "fat": 11,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "masala bhat",
-    "dish_type": "rice",
+    "id": "masala_bhat",
+    "name": "Masala Bhat",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 245,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 245,
+      "protein": 6,
+      "carbs": 42,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "masala chai",
-    "dish_type": "drink",
+    "id": "masala_chai",
+    "name": "Masala Chai",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 60,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 8.0,
-    "fat": 2.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 60,
+      "protein": 2,
+      "carbs": 8,
+      "fat": 2,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "masala dosa",
-    "dish_type": "snack",
+    "id": "masala_dosa",
+    "name": "Masala Dosa",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 206,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 206,
+      "protein": 5,
+      "carbs": 35,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "masoor dal",
-    "dish_type": "dal",
+    "id": "masoor_dal",
+    "name": "Masoor Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 3.0,
-    "fiber": 8.0,
-    "veg": true,
-    "tags": [
-      "dal",
-      "gravy",
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "masoor dal tadka",
-    "dish_type": "dal",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 4.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 3,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "matar paneer",
-    "dish_type": "curry",
+    "id": "masoor_dal_tadka",
+    "name": "Masoor Dal Tadka",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 260,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 14.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 4,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "dal",
+      "gravy",
+      "veg"
+    ]
+  },
+  {
+    "id": "matar_paneer",
+    "name": "Matar Paneer",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 260,
+      "protein": 12,
+      "carbs": 22,
+      "fat": 14,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "medu vada",
-    "dish_type": "snack",
+    "id": "medu_vada",
+    "name": "Medu Vada",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 10.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 6,
+      "carbs": 22,
+      "fat": 10,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "methi dal",
-    "dish_type": "dal",
+    "id": "methi_dal",
+    "name": "Methi Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "methi matar chaman",
-    "dish_type": "curry",
+    "id": "methi_matar_chaman",
+    "name": "Methi Matar Chaman",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 240,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 15.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 240,
+      "protein": 12,
+      "carbs": 18,
+      "fat": 15,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mix bhajiya",
-    "dish_type": "snack",
+    "id": "mix_bhajiya",
+    "name": "Mix Bhajiya",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 24.0,
-    "fat": 10.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 5,
+      "carbs": 24,
+      "fat": 10,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mix dal",
-    "dish_type": "dal",
+    "id": "mix_dal",
+    "name": "Mix Dal",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 11.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mix veg",
-    "dish_type": "curry",
+    "id": "mix_dal_tadka",
+    "name": "Mix Dal Tadka",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 12,
+      "carbs": 29,
+      "fat": 5,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "dal"
+    ]
+  },
+  {
+    "id": "mix_veg",
+    "name": "Mix Veg",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 9.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 9,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "moong dal halwa",
-    "dish_type": "sweet",
+    "id": "moong_dal_halwa",
+    "name": "Moong Dal Halwa",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 320,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 14.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 320,
+      "protein": 7,
+      "carbs": 42,
+      "fat": 14,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "dessert"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "moong dal khichdi",
-    "dish_type": "rice",
+    "id": "moong_dal_khichdi",
+    "name": "Moong Dal Khichdi",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "plate",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 205,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 4.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 205,
+      "protein": 9,
+      "carbs": 35,
+      "fat": 4,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "rice",
@@ -2844,220 +3792,327 @@
     ]
   },
   {
-    "name": "moong dal tadka",
-    "dish_type": "dal",
+    "id": "moong_dal_tadka",
+    "name": "Moong Dal Tadka",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 4.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 10,
+      "carbs": 28,
+      "fat": 4,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "moti chur ke laddu",
-    "dish_type": "sweet",
+    "id": "moti_chur_ke_laddu",
+    "name": "Moti Chur Ke Laddu",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 22.0,
-    "fat": 6.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 2,
+      "carbs": 22,
+      "fat": 6,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "murgh hydrabadi",
-    "dish_type": "curry",
+    "id": "murgh_hydrabadi",
+    "name": "Murgh Hydrabadi",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 280,
-    "protein": 22.0,
-    "protein_level": "high",
-    "carbs": 12.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 22,
+      "carbs": 12,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "spicy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "murgh saag wala",
-    "dish_type": "curry",
+    "id": "murgh_saag_wala",
+    "name": "Murgh Saag Wala",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 20.0,
-    "protein_level": "high",
-    "carbs": 10.0,
-    "fat": 16.0,
-    "fiber": 3.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 20,
+      "carbs": 10,
+      "fat": 16,
+      "fiber": 3
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mutton curry",
-    "dish_type": "curry",
+    "id": "mutton_curry",
+    "name": "Mutton Curry",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 300,
-    "protein": 22.0,
-    "protein_level": "high",
-    "carbs": 8.0,
-    "fat": 21.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 300,
+      "protein": 22,
+      "carbs": 8,
+      "fat": 21,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "mutton",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "mysore bonda",
-    "dish_type": "snack",
+    "id": "mysore_bonda",
+    "name": "Mysore Bonda",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 24.0,
-    "fat": 9.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 5,
+      "carbs": 24,
+      "fat": 9,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "naan",
-    "dish_type": "roti",
+    "id": "naan",
+    "name": "Naan",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 290,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 44.0,
-    "fat": 10.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 290,
+      "protein": 8,
+      "carbs": 44,
+      "fat": 10,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "namkeen",
-    "dish_type": "snack",
+    "id": "namkeen",
+    "name": "Namkeen",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 450,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 60.0,
-    "fat": 20.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 450,
+      "protein": 8,
+      "carbs": 60,
+      "fat": 20,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "onion pulao",
-    "dish_type": "rice",
+    "id": "onion_pulao",
+    "name": "Onion Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 225,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 38.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 225,
+      "protein": 5,
+      "carbs": 38,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "orange",
-    "dish_type": "snack",
+    "id": "onion_rice",
+    "name": "Onion Rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 4,
+      "carbs": 44,
+      "fat": 3,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "rice"
+    ]
+  },
+  {
+    "id": "orange",
+    "name": "Orange",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 130,
-    "serving_unit": "g",
-    "calories": 62,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 15.0,
-    "fat": 0.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 130,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 62,
+      "protein": 1,
+      "carbs": 15,
+      "fat": 0,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "palak chana dal",
-    "dish_type": "dal",
+    "id": "palak_black_chana",
+    "name": "Palak Black Chana",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 5.0,
-    "fiber": 8.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 28,
+      "fat": 5,
+      "fiber": 9
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "spinach",
+      "chana"
+    ]
+  },
+  {
+    "id": "palak_chana_dal",
+    "name": "Palak Chana Dal",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 12,
+      "carbs": 28,
+      "fat": 5,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "spinach",
       "dal",
@@ -3067,80 +4122,101 @@
     ]
   },
   {
-    "name": "palak poori",
-    "dish_type": "roti",
+    "id": "palak_poori",
+    "name": "Palak Poori",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 60,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 26.0,
-    "fat": 7.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 60,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 5,
+      "carbs": 26,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "paneer chat pata",
-    "dish_type": "snack",
+    "id": "paneer_chat_pata",
+    "name": "Paneer Chat Pata",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 260,
-    "protein": 13.0,
-    "protein_level": "medium",
-    "carbs": 14.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 260,
+      "protein": 13,
+      "carbs": 14,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "paneer do payza",
-    "dish_type": "curry",
+    "id": "paneer_do_payza",
+    "name": "Paneer Do Payza",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 290,
-    "protein": 14.0,
-    "protein_level": "medium",
-    "carbs": 16.0,
-    "fat": 20.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 290,
+      "protein": 14,
+      "carbs": 16,
+      "fat": 20,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "paneer handi",
-    "dish_type": "curry",
+    "id": "paneer_handi",
+    "name": "Paneer Handi",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 285,
-    "protein": 14.0,
-    "protein_level": "medium",
-    "carbs": 17.0,
-    "fat": 19.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 285,
+      "protein": 14,
+      "carbs": 17,
+      "fat": 19,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "paneer",
       "veg",
@@ -3150,1062 +4226,1408 @@
     ]
   },
   {
-    "name": "pani poori",
-    "dish_type": "snack",
-    "category": "side",
-    "unit_type": "piece",
-    "serving_size": 6,
-    "serving_unit": "piece",
-    "calories": 180,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 28.0,
-    "fat": 6.0,
-    "fiber": 3.0,
-    "veg": true,
+    "id": "pani_poori",
+    "name": "Pani Poori",
+    "diet": "veg",
+    "dishType": "snack",
+    "category": "snack",
+    "serving": {
+      "size": 6,
+      "unit": "piece",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 28,
+      "fat": 6,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "papad",
-    "dish_type": "snack",
+    "id": "papad",
+    "name": "Papad",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "other",
-    "unit_type": "piece",
-    "serving_size": 10,
-    "serving_unit": "g",
-    "calories": 40,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 1.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 10,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 40,
+      "protein": 2,
+      "carbs": 7,
+      "fat": 1,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "crispy",
       "roasted"
-    ],
-    "meal_role": "side"
+    ]
   },
   {
-    "name": "papad mangodi",
-    "dish_type": "snack",
+    "id": "papad_mangodi",
+    "name": "Papad Mangodi",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 15,
-    "serving_unit": "g",
-    "calories": 55,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 2.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 15,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 55,
+      "protein": 3,
+      "carbs": 7,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "papaya",
-    "dish_type": "snack",
+    "id": "papaya",
+    "name": "Papaya",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 55,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 14.0,
-    "fat": 0.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 55,
+      "protein": 1,
+      "carbs": 14,
+      "fat": 0,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fruit",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "patiyala murgh",
-    "dish_type": "curry",
+    "id": "patiyala_murgh",
+    "name": "Patiyala Murgh",
+    "diet": "non-veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "serving",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 270,
-    "protein": 20.0,
-    "protein_level": "high",
-    "carbs": 12.0,
-    "fat": 17.0,
-    "fiber": 2.0,
-    "veg": false,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 270,
+      "protein": 20,
+      "carbs": 12,
+      "fat": 17,
+      "fiber": 2
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
     "tags": [
       "chicken",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pav",
-    "dish_type": "roti",
+    "id": "pav",
+    "name": "Pav",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 130,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 24.0,
-    "fat": 2.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 130,
+      "protein": 4,
+      "carbs": 24,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pav bhaji",
-    "dish_type": "snack",
+    "id": "pav_bhaji",
+    "name": "Pav Bhaji",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "plate",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 310,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 46.0,
-    "fat": 12.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 310,
+      "protein": 8,
+      "carbs": 46,
+      "fat": 12,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "peanut chutney",
-    "dish_type": "condiment",
+    "id": "peanut_chutney",
+    "name": "Peanut Chutney",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 8.0,
-    "fat": 12.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 6,
+      "carbs": 8,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "phirni",
-    "dish_type": "sweet",
+    "id": "phirni",
+    "name": "Phirni",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 28.0,
-    "fat": 5.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 4,
+      "carbs": 28,
+      "fat": 5,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "dessert"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pickle",
-    "dish_type": "condiment",
+    "id": "pickle",
+    "name": "Pickle",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 10,
-    "serving_unit": "g",
-    "calories": 30,
-    "protein": 0.0,
-    "protein_level": "low",
-    "carbs": 4.0,
-    "fat": 2.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 10,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 30,
+      "protein": 0,
+      "carbs": 4,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pineapple halwa",
-    "dish_type": "sweet",
+    "id": "pineapple_halwa",
+    "name": "Pineapple Halwa",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 35.0,
-    "fat": 7.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 2,
+      "carbs": 35,
+      "fat": 7,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "plain dosa",
-    "dish_type": "snack",
+    "id": "plain_dosa",
+    "name": "Plain Dosa",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 133,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 26.0,
-    "fat": 3.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 133,
+      "protein": 3,
+      "carbs": 26,
+      "fat": 3,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "poha",
-    "dish_type": "snack",
+    "id": "poha",
+    "name": "Poha",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 158,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 32.0,
-    "fat": 3.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 158,
+      "protein": 3,
+      "carbs": 32,
+      "fat": 3,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pomegranate",
-    "dish_type": "snack",
+    "id": "pomegranate",
+    "name": "Pomegranate",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 83,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 19.0,
-    "fat": 1.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 83,
+      "protein": 2,
+      "carbs": 19,
+      "fat": 1,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fruit",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "poori",
-    "dish_type": "roti",
+    "id": "poori",
+    "name": "Poori",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 170,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 24.0,
-    "fat": 7.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 170,
+      "protein": 4,
+      "carbs": 24,
+      "fat": 7,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "potato chips",
-    "dish_type": "snack",
+    "id": "potato_chips",
+    "name": "Potato Chips",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 16.0,
-    "fat": 9.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 2,
+      "carbs": 16,
+      "fat": 9,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg",
       "potato"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "pumpkin sabzi",
-    "dish_type": "sabji",
+    "id": "pumpkin_sabzi",
+    "name": "Pumpkin Sabzi",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 110,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 14.0,
-    "fat": 5.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 110,
+      "protein": 3,
+      "carbs": 14,
+      "fat": 5,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "dry",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rabdi boondi",
-    "dish_type": "sweet",
+    "id": "rabdi_boondi",
+    "name": "Rabdi Boondi",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 280,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 11.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 6,
+      "carbs": 40,
+      "fat": 11,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "raita",
-    "dish_type": "condiment",
+    "id": "raita",
+    "name": "Raita",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 75,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 3.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 75,
+      "protein": 4,
+      "carbs": 7,
+      "fat": 3,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rajasthani kadhi",
-    "dish_type": "main",
-    "category": "curry",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 205,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 20.0,
-    "fat": 12.0,
-    "fiber": 2.0,
-    "veg": true,
+    "id": "rajasthani_kadhi",
+    "name": "Rajasthani Kadhi",
+    "diet": "veg",
+    "dishType": "main",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 205,
+      "protein": 7,
+      "carbs": 20,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg",
       "gravy"
-    ],
-    "meal_role": "main"
+    ]
   },
   {
-    "name": "rajma masala",
-    "dish_type": "curry",
+    "id": "rajma_masala",
+    "name": "Rajma Masala",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 12.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 5.0,
-    "fiber": 10.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 12,
+      "carbs": 35,
+      "fat": 5,
+      "fiber": 10
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rasam",
-    "dish_type": "drink",
+    "id": "rasam",
+    "name": "Rasam",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 45,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 7.0,
-    "fat": 1.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 45,
+      "protein": 2,
+      "carbs": 7,
+      "fat": 1,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rasgulla",
-    "dish_type": "sweet",
+    "id": "rasgulla",
+    "name": "Rasgulla",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 115,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 22.0,
-    "fat": 3.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 115,
+      "protein": 2,
+      "carbs": 22,
+      "fat": 3,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rava upma",
-    "dish_type": "snack",
+    "id": "rava_upma",
+    "name": "Rava Upma",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 5,
+      "carbs": 30,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "rice kheer",
-    "dish_type": "sweet",
+    "id": "red_masoor_dal_tadka",
+    "name": "Red Masoor Dal Tadka",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "dal"
+    ]
+  },
+  {
+    "id": "rice_kheer",
+    "name": "Rice Kheer",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 205,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 34.0,
-    "fat": 6.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 205,
+      "protein": 5,
+      "carbs": 34,
+      "fat": 6,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sakkara pongal",
-    "dish_type": "sweet",
+    "id": "sakkara_pongal",
+    "name": "Sakkara Pongal",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 36.0,
-    "fat": 7.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 5,
+      "carbs": 36,
+      "fat": 7,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg",
       "rice"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sambar",
-    "dish_type": "main",
-    "category": "curry",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 70,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 2.0,
-    "fiber": 4.0,
-    "veg": true,
+    "id": "sambar",
+    "name": "Sambar",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 70,
+      "protein": 3,
+      "carbs": 12,
+      "fat": 2,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sambar rice",
-    "dish_type": "rice",
+    "id": "sambar_rice",
+    "name": "Sambar Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 220,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 4.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 220,
+      "protein": 7,
+      "carbs": 40,
+      "fat": 4,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "samosa",
-    "dish_type": "snack",
+    "id": "samosa",
+    "name": "Samosa",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 13.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 30,
+      "fat": 13,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "scrambled egg",
-    "dish_type": "egg",
+    "id": "scrambled_egg",
+    "name": "Scrambled Egg",
+    "diet": "non-veg",
+    "dishType": "egg",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 160,
-    "protein": 11.0,
-    "protein_level": "medium",
-    "carbs": 2.0,
-    "fat": 12.0,
-    "fiber": 0.0,
-    "veg": false,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 11,
+      "carbs": 2,
+      "fat": 12,
+      "fiber": 0
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "egg",
       "gravy",
       "non-veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "sem fhali",
-    "dish_type": "sabji",
-    "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 140,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 6.0,
-    "fiber": 6.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "semiya payasam",
-    "dish_type": "sweet",
-    "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 32.0,
-    "fat": 6.0,
-    "fiber": 1.0,
-    "veg": true,
-    "tags": [
-      "sweet",
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "semiya upma",
-    "dish_type": "snack",
-    "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 2.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "set dosa",
-    "dish_type": "snack",
-    "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 150,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 28.0,
-    "fat": 4.0,
-    "fiber": 2.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "sev tamatar",
-    "dish_type": "snack",
-    "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 9.0,
-    "fiber": 3.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "sev tomato",
-    "dish_type": "snack",
-    "category": "side",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 180,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 9.0,
-    "fiber": 3.0,
-    "veg": true,
-    "tags": [
-      "sev",
-      "tomato",
-      "veg",
-      "snack",
-      "street food"
     ]
   },
   {
-    "name": "sewai kheer",
-    "dish_type": "sweet",
+    "id": "sem_fhali",
+    "name": "Sem Fhali",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 6,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "semiya_payasam",
+    "name": "Semiya Payasam",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 32.0,
-    "fat": 6.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 4,
+      "carbs": 32,
+      "fat": 6,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "shakar para",
-    "dish_type": "sweet",
-    "category": "dessert",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 410,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 60.0,
-    "fat": 16.0,
-    "fiber": 2.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "sheera",
-    "dish_type": "sweet",
-    "category": "dessert",
-    "unit_type": "serving",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 240,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 9.0,
-    "fiber": 1.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "sindhi dal",
-    "dish_type": "dal",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
-    "tags": [
-      "dal",
-      "gravy",
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "smoked dal",
-    "dish_type": "dal",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 200,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 6.0,
-    "fiber": 7.0,
-    "veg": true,
-    "tags": [
-      "dal",
-      "gravy",
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "soya masala",
-    "dish_type": "curry",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 18.0,
-    "protein_level": "high",
-    "carbs": 20.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "soyabean masala",
-    "dish_type": "curry",
-    "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 18.0,
-    "protein_level": "high",
-    "carbs": 20.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
-    "tags": [
-      "veg"
-    ],
-    "meal_role": "single"
-  },
-  {
-    "name": "steam rice",
-    "dish_type": "rice",
+    "id": "semiya_upma",
+    "name": "Semiya Upma",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 206,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 45.0,
-    "fat": 0.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 4,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "set_dosa",
+    "name": "Set Dosa",
+    "diet": "veg",
+    "dishType": "snack",
+    "category": "carb_base",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 4,
+      "carbs": 28,
+      "fat": 4,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "sev_tamatar",
+    "name": "Sev Tamatar",
+    "diet": "veg",
+    "dishType": "snack",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 180,
+      "protein": 5,
+      "carbs": 22,
+      "fat": 9,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "sewai_kheer",
+    "name": "Sewai Kheer",
+    "diet": "veg",
+    "dishType": "sweet",
+    "category": "dessert",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 5,
+      "carbs": 32,
+      "fat": 6,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "sweet",
+      "veg"
+    ]
+  },
+  {
+    "id": "shakar_para",
+    "name": "Shakar Para",
+    "diet": "veg",
+    "dishType": "sweet",
+    "category": "dessert",
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 410,
+      "protein": 5,
+      "carbs": 60,
+      "fat": 16,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "sheera",
+    "name": "Sheera",
+    "diet": "veg",
+    "dishType": "sweet",
+    "category": "dessert",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 240,
+      "protein": 3,
+      "carbs": 40,
+      "fat": 9,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "sindhi_dal",
+    "name": "Sindhi Dal",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "dal",
+      "gravy",
+      "veg"
+    ]
+  },
+  {
+    "id": "smoked_dal",
+    "name": "Smoked Dal",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 10,
+      "carbs": 30,
+      "fat": 6,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "dal",
+      "gravy",
+      "veg"
+    ]
+  },
+  {
+    "id": "soya_masala",
+    "name": "Soya Masala",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 18,
+      "carbs": 20,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "soyabean_masala",
+    "name": "Soyabean Masala",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 18,
+      "carbs": 20,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
+    "id": "steam_rice",
+    "name": "Steam Rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 206,
+      "protein": 4,
+      "carbs": 45,
+      "fat": 0,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "subzi miloni",
-    "dish_type": "sabji",
+    "id": "steamed_rice",
+    "name": "Steamed Rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 206,
+      "protein": 4,
+      "carbs": 45,
+      "fat": 0,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "rice",
+      "plain"
+    ]
+  },
+  {
+    "id": "subzi_miloni",
+    "name": "Subzi Miloni",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 155,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 8.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 155,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 8,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sweet bun",
-    "dish_type": "snack",
+    "id": "sweet_bun",
+    "name": "Sweet Bun",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 70,
-    "serving_unit": "g",
-    "calories": 250,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 8.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 70,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 42,
+      "fat": 8,
+      "fiber": 1
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sweet corn soup",
-    "dish_type": "drink",
+    "id": "sweet_corn_soup",
+    "name": "Sweet Corn Soup",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 80,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 14.0,
-    "fat": 2.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 3,
+      "carbs": 14,
+      "fat": 2,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "sweet",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "sweet daliya",
-    "dish_type": "sweet",
+    "id": "sweet_daliya",
+    "name": "Sweet Daliya",
+    "diet": "veg",
+    "dishType": "sweet",
     "category": "dessert",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 195,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 35.0,
-    "fat": 5.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 195,
+      "protein": 5,
+      "carbs": 35,
+      "fat": 5,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tamarind rice",
-    "dish_type": "rice",
+    "id": "sweet_lassi",
+    "name": "Sweet Lassi",
+    "diet": "veg",
+    "dishType": "drink",
+    "category": "beverage",
+    "serving": {
+      "size": 250,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 160,
+      "protein": 5,
+      "carbs": 30,
+      "fat": 3,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "dairy",
+      "drink"
+    ]
+  },
+  {
+    "id": "tamarind_rice",
+    "name": "Tamarind Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 215,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 40.0,
-    "fat": 6.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 215,
+      "protein": 4,
+      "carbs": 40,
+      "fat": 6,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tandoori roti",
-    "dish_type": "roti",
+    "id": "tandoori_roti",
+    "name": "Tandoori Roti",
+    "diet": "veg",
+    "dishType": "roti",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 50,
-    "serving_unit": "g",
-    "calories": 120,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 22.0,
-    "fat": 2.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 120,
+      "protein": 4,
+      "carbs": 22,
+      "fat": 2,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tea",
-    "dish_type": "drink",
+    "id": "tea",
+    "name": "Tea",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "glass",
-    "serving_size": 150,
-    "serving_unit": "ml",
-    "calories": 35,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 4.0,
-    "fat": 2.0,
-    "fiber": 0.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 35,
+      "protein": 1,
+      "carbs": 4,
+      "fat": 2,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tinda masala",
-    "dish_type": "sabji",
+    "id": "tea_coffee",
+    "name": "Tea/Coffee",
+    "diet": "veg",
+    "dishType": "drink",
+    "category": "beverage",
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "glass"
+    },
+    "nutrition": {
+      "calories": 50,
+      "protein": 1,
+      "carbs": 8,
+      "fat": 1,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "drink"
+    ]
+  },
+  {
+    "id": "tinda_masala",
+    "name": "Tinda Masala",
+    "diet": "veg",
+    "dishType": "sabji",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 110,
-    "protein": 3.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 6.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 110,
+      "protein": 3,
+      "carbs": 12,
+      "fat": 6,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tomato chutney",
-    "dish_type": "condiment",
+    "id": "tomato_chutney",
+    "name": "Tomato Chutney",
+    "diet": "veg",
+    "dishType": "condiment",
     "category": "other",
-    "unit_type": "tbsp",
-    "serving_size": 30,
-    "serving_unit": "g",
-    "calories": 50,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 8.0,
-    "fat": 2.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 30,
+      "unit": "g",
+      "unitType": "tbsp"
+    },
+    "nutrition": {
+      "calories": 50,
+      "protein": 1,
+      "carbs": 8,
+      "fat": 2,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tomato dal fry",
-    "dish_type": "dal",
+    "id": "tomato_dal_fry",
+    "name": "Tomato Dal Fry",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 10.0,
-    "protein_level": "medium",
-    "carbs": 27.0,
-    "fat": 5.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 10,
+      "carbs": 27,
+      "fat": 5,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "dal",
       "tomato",
@@ -4215,154 +5637,195 @@
     ]
   },
   {
-    "name": "tomato pappu",
-    "dish_type": "dal",
+    "id": "tomato_pappu",
+    "name": "Tomato Pappu",
+    "diet": "veg",
+    "dishType": "dal",
     "category": "protein_main",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 9.0,
-    "protein_level": "medium",
-    "carbs": 27.0,
-    "fat": 4.0,
-    "fiber": 6.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 9,
+      "carbs": 27,
+      "fat": 4,
+      "fiber": 6
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tomato rice",
-    "dish_type": "rice",
+    "id": "tomato_rice",
+    "name": "Tomato Rice",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 4.0,
-    "protein_level": "low",
-    "carbs": 38.0,
-    "fat": 6.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 4,
+      "carbs": 38,
+      "fat": 6,
+      "fiber": 3
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "tomato soup",
-    "dish_type": "drink",
+    "id": "tomato_soup",
+    "name": "Tomato Soup",
+    "diet": "veg",
+    "dishType": "drink",
     "category": "beverage",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "ml",
-    "calories": 75,
-    "protein": 2.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 2.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "ml",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 75,
+      "protein": 2,
+      "carbs": 12,
+      "fat": 2,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "vada pav",
-    "dish_type": "snack",
+    "id": "vada_pav",
+    "name": "Vada Pav",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "piece",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 300,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 12.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 300,
+      "protein": 7,
+      "carbs": 42,
+      "fat": 12,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "veg biryani",
-    "dish_type": "rice",
+    "id": "veg_biryani",
+    "name": "Veg Biryani",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 300,
-    "serving_unit": "g",
-    "calories": 270,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 42.0,
-    "fat": 9.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 300,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 270,
+      "protein": 7,
+      "carbs": 42,
+      "fat": 9,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "mixed",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "veg hariyali",
-    "dish_type": "curry",
+    "id": "veg_hariyali",
+    "name": "Veg Hariyali",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 7,
+      "carbs": 18,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "veg kofta curry",
-    "dish_type": "curry",
+    "id": "veg_kofta_curry",
+    "name": "Veg Kofta Curry",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 22.0,
-    "fat": 14.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 8,
+      "carbs": 22,
+      "fat": 14,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "veg kolhapuri",
-    "dish_type": "curry",
+    "id": "veg_kolhapuri",
+    "name": "Veg Kolhapuri",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "plate",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 11.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 6,
+      "carbs": 18,
+      "fat": 11,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg",
       "spicy",
@@ -4372,58 +5835,74 @@
     ]
   },
   {
-    "name": "veg pongal",
-    "dish_type": "rice",
+    "id": "veg_pongal",
+    "name": "Veg Pongal",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 210,
-    "protein": 7.0,
-    "protein_level": "medium",
-    "carbs": 36.0,
-    "fat": 6.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 210,
+      "protein": 7,
+      "carbs": 36,
+      "fat": 6,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "veg puff",
-    "dish_type": "snack",
+    "id": "veg_puff",
+    "name": "Veg Puff",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "side",
-    "unit_type": "piece",
-    "serving_size": 80,
-    "serving_unit": "g",
-    "calories": 270,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 34.0,
-    "fat": 13.0,
-    "fiber": 2.0,
-    "veg": true,
+    "serving": {
+      "size": 80,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 270,
+      "protein": 5,
+      "carbs": 34,
+      "fat": 13,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "fried",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "veg pulao",
-    "dish_type": "rice",
+    "id": "veg_pulao",
+    "name": "Veg Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "plate",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 7.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "plate"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 6,
+      "carbs": 40,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "rice",
       "veg",
@@ -4432,118 +5911,148 @@
     ]
   },
   {
-    "name": "veg upma",
-    "dish_type": "snack",
+    "id": "veg_upma",
+    "name": "Veg Upma",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 30.0,
-    "fat": 7.0,
-    "fiber": 3.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 5,
+      "carbs": 30,
+      "fat": 7,
+      "fiber": 3
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "vegetable chettinad",
-    "dish_type": "curry",
+    "id": "vegetable_chettinad",
+    "name": "Vegetable Chettinad",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 175,
-    "protein": 5.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 10.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 175,
+      "protein": 5,
+      "carbs": 18,
+      "fat": 10,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "vegetable kolhapuri",
-    "dish_type": "curry",
+    "id": "vegetable_kolhapuri",
+    "name": "Vegetable Kolhapuri",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "side",
-    "unit_type": "serving",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 185,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 18.0,
-    "fat": 11.0,
-    "fiber": 5.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 185,
+      "protein": 6,
+      "carbs": 18,
+      "fat": 11,
+      "fiber": 5
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "vegetable pulao",
-    "dish_type": "rice",
+    "id": "vegetable_pulao",
+    "name": "Vegetable Pulao",
+    "diet": "veg",
+    "dishType": "rice",
     "category": "carb_base",
-    "unit_type": "bowl",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "calories": 230,
-    "protein": 6.0,
-    "protein_level": "medium",
-    "carbs": 40.0,
-    "fat": 7.0,
-    "fiber": 4.0,
-    "veg": true,
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 230,
+      "protein": 6,
+      "carbs": 40,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "mixed"
+    ]
   },
   {
-    "name": "watermelon",
-    "dish_type": "snack",
+    "id": "watermelon",
+    "name": "Watermelon",
+    "diet": "veg",
+    "dishType": "snack",
     "category": "snack",
-    "unit_type": "piece",
-    "serving_size": 100,
-    "serving_unit": "g",
-    "calories": 46,
-    "protein": 1.0,
-    "protein_level": "low",
-    "carbs": 12.0,
-    "fat": 0.0,
-    "fiber": 1.0,
-    "veg": true,
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 46,
+      "protein": 1,
+      "carbs": 12,
+      "fat": 0,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
     "tags": [
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   },
   {
-    "name": "white matar curry",
-    "dish_type": "curry",
+    "id": "white_matar_curry",
+    "name": "White Matar Curry",
+    "diet": "veg",
+    "dishType": "curry",
     "category": "protein_main",
-    "unit_type": "bowl",
-    "serving_size": 150,
-    "serving_unit": "g",
-    "calories": 190,
-    "protein": 8.0,
-    "protein_level": "medium",
-    "carbs": 28.0,
-    "fat": 7.0,
-    "fiber": 7.0,
-    "veg": true,
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 8,
+      "carbs": 28,
+      "fat": 7,
+      "fiber": 7
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
     "tags": [
       "gravy",
       "veg"
-    ],
-    "meal_role": "single"
+    ]
   }
 ]

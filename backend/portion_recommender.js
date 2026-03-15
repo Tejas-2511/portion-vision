@@ -15,7 +15,27 @@ let FOOD_INDEX = new Map(); // O(1) Lookup
 try {
   const dbPath = path.join(__dirname, "data", "foodDatabase.json");
   if (fs.existsSync(dbPath)) {
-    FOOD_DB = JSON.parse(fs.readFileSync(dbPath, "utf8"));
+    const rawDB = JSON.parse(fs.readFileSync(dbPath, "utf8"));
+    FOOD_DB = rawDB.map(item => {
+      if (item.nutrition) {
+        return {
+          ...item,
+          veg: item.diet === "veg",
+          dish_type: item.dishType,
+          serving_size: item.serving?.size,
+          serving_unit: item.serving?.unit,
+          unit_type: item.serving?.unitType,
+          calories: item.nutrition.calories,
+          protein: item.nutrition.protein,
+          carbs: item.nutrition.carbs,
+          fat: item.nutrition.fat,
+          fiber: item.nutrition.fiber,
+          protein_level: item.proteinLevel,
+          meal_role: item.mealRole
+        };
+      }
+      return item;
+    });
 
     // Build Index
     FOOD_DB.forEach(item => {
@@ -34,8 +54,7 @@ function findFood(name) {
   let match = FOOD_INDEX.get(normalized);
   if (match) return match;
 
-  // Fallback to fuzzy match
-  return fuzzyMatchFood(normalized, FOOD_DB);
+  return fuzzyMatchFood(normalized, FOOD_DB, 2);
 }
 
 // Fallback logic if food not in DB — also used for OCR enrichment
@@ -246,19 +265,27 @@ function computeMacroTargets(user, mealType) {
   };
 }
 
-// ==========================================
-// 4. Macro-First Plate Builder
-// ==========================================
-
 /**
  * Determines how many servings of a food item to recommend,
- * targeting a calorie or protein goal while staying within a cap.
+ * targeting a calorie or protein goal while staying within caps.
  * Returns integer or half-integer quantities depending on unit_type.
+ * @param {object} food - The food item object
+ * @param {number} targetCalPerItem - Max calories allowed for this item
+ * @param {number} maxServings - Hard cap on quantity
+ * @param {number} [maxFatPerItem=Infinity] - Hard cap on fat (g) for this item
  */
-function calcServings(food, targetCalPerItem, maxServings = 4) {
+function calcServings(food, targetCalPerItem, maxServings = 4, maxFatPerItem = Infinity) {
   if (!food.calories || food.calories <= 0) return 1;
   const isDiscrete = ["piece", "roti", "paratha"].includes((food.unit_type || "").toLowerCase());
-  const raw = targetCalPerItem / food.calories;
+
+  // Base raw scale on calories
+  let raw = targetCalPerItem / food.calories;
+
+  // Constrain scale by fat limit if food has fat
+  if (food.fat > 0 && (raw * food.fat) > maxFatPerItem) {
+    raw = maxFatPerItem / food.fat;
+  }
+
   if (isDiscrete) {
     return Math.max(1, Math.min(maxServings, Math.round(raw)));
   }
@@ -318,7 +345,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   if (mixed.length > 0) {
     // Pick the highest-protein mixed item
     const best = mixed.sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
-    const qty = calcServings(best, targetCalories, 3);
+    const qty = calcServings(best, targetCalories, 3); // Allow mixed one-pot meals to scale higher to fulfill the meal
     const item = scaleItem(best, qty);
     caloriesUsed += item.estimatedCalories;
     plate.push({ ...item, role: "mixed", reason: "Complete balanced meal" });
@@ -332,13 +359,27 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     return buildResponse(plate, condiments, beverages, desserts, macros);
   }
 
-  // ── Phase 1: Protein ──
+  // ── Phase 1: High-Fiber Vegetables (Strict Enforcement) ──
+  // Always reserve calories for a vegetable to ensure a balanced diet
+  let reservedVegCalories = 0;
+  let primarySide = null;
+
+  if (sides.length > 0) {
+    // Pick the highest-fiber side
+    primarySide = sides.sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
+
+    // We strictly reserve the exact baseline calories needed for 1 serving (up to 150 kcal limit so it doesn't starve protein)
+    reservedVegCalories = Math.min(primarySide.calories || 100, 150);
+  }
+
+  // ── Phase 2: Protein ──
   // Sort by protein-per-calorie efficiency DESC
   const sortedProteins = proteins
     .filter(f => f.calories > 0)
     .sort((a, b) => (b.protein / b.calories) - (a.protein / a.calories));
 
-  let proteinCalBudget = targetCalories * 0.35; // protein foods own up to 35% of meal calories
+  let proteinCalBudget = (targetCalories - reservedVegCalories) * 0.40; // up to 40% of remaining for protein
+  const fatPerProteinItem = maxFat_g * 0.50; // Don't let a single protein item eat more than 50% of meal's fat
   let proteinAccum = 0;
 
   if (sortedProteins.length > 0) {
@@ -346,7 +387,12 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     // How many servings to hit 50% of meal protein target from this single source
     const servingsForProtein = targetProtein * 0.50 / (primary.protein || 1);
     const servingsForCal = proteinCalBudget / primary.calories;
-    const qty = calcServings(primary, Math.min(servingsForProtein, servingsForCal) * primary.calories, 3);
+    const qty = calcServings(
+      primary,
+      Math.min(servingsForProtein, servingsForCal) * primary.calories,
+      1.5, // Force variety by capping primary protein to 1.5 bowls
+      fatPerProteinItem
+    );
     const item = scaleItem(primary, qty);
     caloriesUsed += item.estimatedCalories;
     proteinAccum += item.protein;
@@ -355,9 +401,9 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     // If still under protein target and second protein source available
     if (proteinAccum < targetProtein * 0.6 && sortedProteins.length > 1) {
       const secondary = sortedProteins[1];
-      const remaining = Math.min(proteinCalBudget - item.estimatedCalories, targetCalories * 0.15);
+      const remaining = Math.min(proteinCalBudget - item.estimatedCalories, (targetCalories - reservedVegCalories) * 0.15);
       if (remaining > 50) {
-        const qty2 = calcServings(secondary, remaining, 2);
+        const qty2 = calcServings(secondary, remaining, 1, fatPerProteinItem); // Cap secondary to 1 bowl
         const item2 = scaleItem(secondary, qty2);
         caloriesUsed += item2.estimatedCalories;
         proteinAccum += item2.protein;
@@ -366,17 +412,25 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     }
   }
 
-  // ── Phase 2: Carbohydrates ──
-  const calRemaining = targetCalories - caloriesUsed;
-  const carbTarget = Math.min(calRemaining * 0.85, targetCalories * 0.50); // Carbs fill most of remaining
+  // ── Phase 3: Carbohydrates ──
+  let calRemaining = targetCalories - caloriesUsed - reservedVegCalories;
+  const carbTarget = Math.max(calRemaining, 0);
+  const fatForCarbs = maxFat_g * 0.30;
 
-  if (allCarbs.length > 0) {
-    // Prefer roti for smaller calorie targets (< 550 kcal), rice otherwise, or follow what's available
+  if (allCarbs.length > 0 && carbTarget > 50) {
     let carbSource = null;
+    let addSecondaryCarb = false;
+    let primaryTarget = carbTarget;
 
     if (carbsRoti.length > 0 && carbsRice.length > 0) {
-      // Both available: pick whichever fits calorie budget closer
-      carbSource = calRemaining < 350 ? carbsRoti[0] : carbsRice[0];
+      if (carbTarget > 300) {
+        // High calorie needs -> split between roti and rice
+        addSecondaryCarb = true;
+        carbSource = carbsRoti[0];
+        primaryTarget = carbTarget * 0.4;
+      } else {
+        carbSource = carbTarget < 350 ? carbsRoti[0] : carbsRice[0];
+      }
     } else if (carbsRoti.length > 0) {
       carbSource = carbsRoti[0];
     } else if (carbsRice.length > 0) {
@@ -385,33 +439,34 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       carbSource = carbsOther[0];
     }
 
-    const qty = calcServings(carbSource, carbTarget, 4);
+    const maxPrimary = carbSource.dish_type === "roti" ? 3 : 1.5; // Cap rotis at 3, rice at 1.5
+    const qty = calcServings(carbSource, primaryTarget, maxPrimary, fatForCarbs);
     const item = scaleItem(carbSource, qty);
     caloriesUsed += item.estimatedCalories;
     plate.push({ ...item, role: "carb", reason: "Sustained energy & fuel" });
 
-    // If both roti & rice are offered and calorie budget allows, add a small rice portion too
-    if (carbsRoti.length > 0 && carbsRice.length > 0 && carbSource.dish_type === "roti") {
-      const remainingAfterRoti = targetCalories - caloriesUsed;
-      if (remainingAfterRoti > 100) {
-        const riceQty = calcServings(carbsRice[0], remainingAfterRoti * 0.5, 1.5);
-        const riceItem = scaleItem(carbsRice[0], riceQty);
-        caloriesUsed += riceItem.estimatedCalories;
-        plate.push({ ...riceItem, role: "carb", reason: "Variety & energy" });
+    if (addSecondaryCarb) {
+      const remainingCarbTarget = carbTarget - item.estimatedCalories;
+      if (remainingCarbTarget > 50) {
+        const qty2 = calcServings(carbsRice[0], remainingCarbTarget, 1.5, fatForCarbs);
+        const item2 = scaleItem(carbsRice[0], qty2);
+        caloriesUsed += item2.estimatedCalories;
+        plate.push({ ...item2, role: "carb", reason: "Variety & energy" });
       }
     }
   }
 
-  // ── Phase 3: Vegetable side ──
-  if (sides.length > 0) {
-    const calLeft = targetCalories - caloriesUsed;
-    // Pick highest-fiber side
-    const bestSide = sides.sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
-    // Only add if there's room; always show at least 1 serving
-    const qty = calLeft > 50 ? calcServings(bestSide, Math.min(calLeft * 0.6, bestSide.calories), 2) : 1;
-    const item = scaleItem(bestSide, qty);
+  // ── Phase 4: Finalize Reserved Vegetable Side ──
+  if (primarySide) {
+    // We already reserved calories, but let's see if there are even MORE calories remaining to allow a larger side portion
+    const actualRemaining = targetCalories - caloriesUsed;
+    const finalVegBudget = Math.max(reservedVegCalories, actualRemaining); // Use whatever is larger
+
+    // Calculate servings without fat bottleneck for vegetables (usually low fat anyway)
+    const qty = calcServings(primarySide, Math.min(finalVegBudget * 0.60, primarySide.calories * 1.5), 2);
+    const item = scaleItem(primarySide, Math.max(1, qty)); // Guarantee at least 1 serving
     caloriesUsed += item.estimatedCalories;
-    plate.push({ ...item, role: "veg", reason: "Fiber, vitamins & minerals" });
+    plate.push({ ...item, role: "veg", reason: "Required fiber, vitamins & minerals" });
   }
 
   // ── Phase 4: Validate & adjust ──

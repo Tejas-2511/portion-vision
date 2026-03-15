@@ -407,19 +407,25 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         console.log(`➕ Adding new item with fallback enrichment: ${itemName}`);
         const fallback = getFallbackDetails(itemName);
         foodDatabase.push({
+          id: itemName.toLowerCase().replace(/\s+/g, '_'),
           name: itemName,
-          dish_type: fallback.dish_type || "",
+          diet: fallback.veg !== undefined ? (fallback.veg ? "veg" : "non-veg") : "veg",
+          dishType: fallback.dish_type || "",
           category: fallback.category || "",
-          unit_type: fallback.unit_type || "serving",
-          serving_size: fallback.serving_size || 100,
-          serving_unit: fallback.serving_unit || "g",
-          calories: fallback.calories || 0,
-          protein: fallback.protein || 0,
-          protein_level: fallback.protein_level || "",
-          carbs: fallback.carbs || 0,
-          fat: fallback.fat || 0,
-          fiber: fallback.fiber || 0,
-          veg: fallback.veg !== undefined ? fallback.veg : true,
+          serving: {
+            size: fallback.serving_size || 100,
+            unit: fallback.serving_unit || "g",
+            unitType: fallback.unit_type || "serving"
+          },
+          nutrition: {
+            calories: fallback.calories || 0,
+            protein: fallback.protein || 0,
+            carbs: fallback.carbs || 0,
+            fat: fallback.fat || 0,
+            fiber: fallback.fiber || 0
+          },
+          proteinLevel: fallback.protein_level || "low",
+          mealRole: fallback.meal_role || "single",
           tags: fallback.tags || [],
           _enrichedByFallback: true // flag for future manual review
         });

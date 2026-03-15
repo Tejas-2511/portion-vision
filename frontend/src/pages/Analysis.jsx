@@ -57,8 +57,8 @@ export default function Analysis() {
     try {
       // Build a comma-separated list of expected items from recommendation
       const expectedItemsArray = [
-        ...recommendation.recommendedPlate.map(item => item.food.name.toLowerCase()),
-        ...(recommendation.optionalItems ? recommendation.optionalItems.map(item => item.food.name.toLowerCase()) : [])
+        ...recommendation.recommendedPlate.map(item => item.item.toLowerCase()),
+        ...(recommendation.optionalItems ? recommendation.optionalItems.map(item => item.item.toLowerCase()) : [])
       ];
       const expectedItemsStr = expectedItemsArray.join(',');
 
@@ -77,16 +77,16 @@ export default function Analysis() {
 
     // Check main plate
     const mainMatch = recommendation.recommendedPlate.find(
-      item => item.food.name.toLowerCase() === sectionName.toLowerCase()
+      item => item.item.toLowerCase() === sectionName.toLowerCase()
     );
-    if (mainMatch) return mainMatch.portion.grams;
+    if (mainMatch) return mainMatch.totalGrams;
 
     // Check optional
     if (recommendation.optionalItems) {
       const optMatch = recommendation.optionalItems.find(
-        item => item.food.name.toLowerCase() === sectionName.toLowerCase()
+        item => item.item.toLowerCase() === sectionName.toLowerCase()
       );
-      if (optMatch) return optMatch.portion.grams;
+      if (optMatch) return optMatch.totalGrams;
     }
 
     return null;
