@@ -10,7 +10,6 @@ const AppContext = createContext();
 export function AppProvider({ children }) {
     const [userProfile, setUserProfile] = useState(null);
     const [todaysMenu, setTodaysMenu] = useState(null);
-    const [foodDatabase, setFoodDatabase] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Load data from server & localStorage on mount
@@ -100,8 +99,6 @@ export function AppProvider({ children }) {
         setUserProfile,
         todaysMenu,
         setTodaysMenu,
-        foodDatabase,
-        setFoodDatabase,
         loading,
     };
 

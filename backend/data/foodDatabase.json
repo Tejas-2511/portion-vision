@@ -5092,8 +5092,8 @@
     "id": "sev_tamatar",
     "name": "Sev Tamatar",
     "diet": "veg",
-    "dishType": "snack",
-    "category": "side",
+    "dishType": "sabji",
+    "category": "main",
     "serving": {
       "size": 150,
       "unit": "g",
@@ -5109,7 +5109,9 @@
     "proteinLevel": "medium",
     "mealRole": "single",
     "tags": [
-      "veg"
+      "veg",
+      "curry",
+      "gravy"
     ]
   },
   {

@@ -52,7 +52,7 @@ export default function RecommendationCard({ recommendation, loading }) {
     }
 
     // No-items-on-plate state (menu uploaded but nothing suitable)
-    const { mealType, recommendedPlate, optionalItems, avoidOrLimit, summary } = recommendation;
+    const { mealType, dietPreference, recommendedPlate, optionalItems, avoidOrLimit, summary } = recommendation;
     if (recommendedPlate.length === 0) {
         return (
             <div className="mb-8 rounded-2xl bg-white p-6 shadow-md">
@@ -99,14 +99,25 @@ export default function RecommendationCard({ recommendation, loading }) {
 
             {/* Header */}
             <div className="flex justify-between items-center mb-1">
-                <h2 className="text-lg font-bold text-slate-800 capitalize">
-                    {mealType} Plate
-                </h2>
+                <div className="flex items-center gap-2">
+                    <h2 className="text-lg font-bold text-slate-800 capitalize">
+                        {mealType} Plate
+                    </h2>
+                    {dietPreference && dietPreference !== "non-veg" && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-100 text-teal-700 uppercase tracking-wide">
+                            {dietPreference}
+                        </span>
+                    )}
+                </div>
                 <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700">
                     {totalCal} kcal
                 </span>
             </div>
-            <p className="text-xs text-slate-400 mb-5">{summary.plateLogic}</p>
+            <p className="text-xs text-slate-400 mb-1">{summary.plateLogic}</p>
+            {summary.dietNote && (
+                <p className="text-[10px] text-teal-600 mb-4 font-medium">🌿 {summary.dietNote}</p>
+            )}
+            {!summary.dietNote && <div className="mb-4" />}
 
             {/* Main Plate Items */}
             <div className="space-y-3 mb-6">
@@ -182,13 +193,13 @@ export default function RecommendationCard({ recommendation, loading }) {
             {/* Optional Items */}
             {optionalItems && optionalItems.length > 0 && (
                 <div className="mb-4">
-                    <h3 className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Optional Extras</h3>
+                    <h3 className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">🧂 Condiments & Extras</h3>
                     <div className="flex flex-wrap gap-2">
                         {optionalItems.map((opt, idx) => (
-                            <div key={idx} className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
-                                <span className="font-semibold text-slate-700 capitalize">{opt.item}</span>
-                                <span className="text-slate-400 ml-1">({opt.limit})</span>
-                                {opt.note && <span className="block text-slate-400 text-[10px]">{opt.note}</span>}
+                            <div key={idx} className="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-xs">
+                                <span className="font-semibold text-amber-800 capitalize">{opt.item}</span>
+                                <span className="text-amber-500 ml-1">({opt.limit})</span>
+                                {opt.note && <span className="block text-amber-400 text-[10px]">{opt.note}</span>}
                             </div>
                         ))}
                     </div>

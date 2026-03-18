@@ -131,28 +131,7 @@ class ApiService {
         return this.normalizeMenu(menu);
     }
 
-    /**
-     * Get the user profile from the server
-     * @returns {Promise<object|null>} Profile object or null
-     */
-    async getProfile() {
-        return this.request('/api/profile');
-    }
 
-    /**
-     * Save the user profile to the server
-     * @param {object} profile - User profile data
-     * @returns {Promise<object>} Response
-     */
-    async saveProfile(profile) {
-        return this.request('/api/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(profile)
-        });
-    }
 
     /**
      * Upload captured plate image for CV analysis

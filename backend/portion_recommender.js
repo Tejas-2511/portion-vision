@@ -61,41 +61,64 @@ function findFood(name) {
 function getFallbackDetails(name) {
   const n = name.toLowerCase();
 
+  // ── One-pot mixed meals ──
   if (n.includes("biryani") || n.includes("pulao") || n.includes("fried rice") || n.includes("khichdi"))
-    return { category: "carb_base", meal_role: "mixed", unit_type: "bowl", serving_size: 250, serving_unit: "g", calories: 300, protein: 10, carbs: 45, fat: 8, fiber: 3, dish_type: "biryani", tags: [], veg: !n.includes("chicken") && !n.includes("mutton") && !n.includes("egg") };
+    return { category: "carb_base", meal_role: "mixed", unit_type: "bowl", serving_size: 250, serving_unit: "g", calories: 300, protein: 10, carbs: 45, fat: 8, fiber: 3, dish_type: "biryani", meal_types: ["lunch", "dinner"], tags: [], veg: !n.includes("chicken") && !n.includes("mutton") && !n.includes("egg") };
 
+  // ── Breakfast-specific items ──
+  if (n.includes("poha") || n.includes("avalakki"))
+    return { category: "carb_base", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 200, protein: 4, carbs: 35, fat: 5, fiber: 2, dish_type: "poha", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+  if (n.includes("upma"))
+    return { category: "carb_base", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 190, protein: 5, carbs: 30, fat: 6, fiber: 2, dish_type: "upma", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+  if (n.includes("idli") || n.includes("dosa"))
+    return { category: "carb_base", meal_role: "single", unit_type: "piece", serving_size: 40, serving_unit: "g", calories: 90, protein: 3, carbs: 18, fat: 1, fiber: 1, dish_type: "idli", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+  if (n.includes("oats") || n.includes("porridge"))
+    return { category: "carb_base", meal_role: "single", unit_type: "bowl", serving_size: 200, serving_unit: "g", calories: 180, protein: 6, carbs: 32, fat: 4, fiber: 4, dish_type: "oats", meal_types: ["breakfast"], tags: ["veg"], veg: true };
+  if (n.includes("sandwich") || n.includes("toast"))
+    return { category: "carb_base", meal_role: "single", unit_type: "piece", serving_size: 80, serving_unit: "g", calories: 150, protein: 6, carbs: 22, fat: 5, fiber: 2, dish_type: "sandwich", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+
+  // ── Carbs ──
   if (n.includes("rice"))
-    return { category: "carb_base", unit_type: "bowl", serving_size: 200, serving_unit: "g", calories: 250, protein: 5, carbs: 50, fat: 2, fiber: 1, dish_type: "rice", tags: [], veg: true };
+    return { category: "carb_base", meal_role: "single", unit_type: "bowl", serving_size: 200, serving_unit: "g", calories: 250, protein: 5, carbs: 50, fat: 2, fiber: 1, dish_type: "rice", meal_types: ["lunch", "dinner"], tags: ["veg"], veg: true };
   if (n.includes("roti") || n.includes("chapati") || n.includes("naan") || n.includes("paratha") || n.includes("bread"))
-    return { category: "carb_base", unit_type: "piece", serving_size: 40, serving_unit: "g", calories: 104, protein: 3, carbs: 20, fat: 1, fiber: 3, dish_type: "roti", tags: [], veg: true };
+    return { category: "carb_base", meal_role: "single", unit_type: "piece", serving_size: 40, serving_unit: "g", calories: 104, protein: 3, carbs: 20, fat: 1, fiber: 3, dish_type: "roti", meal_types: ["breakfast", "lunch", "dinner"], tags: ["veg"], veg: true };
 
+  // ── Proteins ──
   if (n.includes("chicken"))
-    return { category: "protein_main", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 280, protein: 25, carbs: 5, fat: 14, fiber: 1, protein_level: "high", dish_type: "curry", tags: ["chicken", "non-veg"], veg: false };
+    return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 280, protein: 25, carbs: 5, fat: 14, fiber: 1, protein_level: "high", dish_type: "curry", meal_types: ["lunch", "dinner"], tags: ["chicken", "non-veg"], veg: false };
   if (n.includes("egg"))
-    return { category: "protein_main", unit_type: "piece", serving_size: 1, serving_unit: "piece", calories: 70, protein: 6, carbs: 1, fat: 5, fiber: 0, protein_level: "medium", dish_type: "egg", tags: ["egg"], veg: false };
+    return { category: "protein_main", meal_role: "single", unit_type: "piece", serving_size: 1, serving_unit: "piece", calories: 70, protein: 6, carbs: 1, fat: 5, fiber: 0, protein_level: "medium", dish_type: "egg", meal_types: ["breakfast", "lunch", "dinner"], tags: ["egg"], veg: false };
   if (n.includes("fish") || n.includes("prawn") || n.includes("mutton"))
-    return { category: "protein_main", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 250, protein: 22, carbs: 3, fat: 14, fiber: 0, protein_level: "high", dish_type: "curry", tags: ["non-veg"], veg: false };
+    return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 250, protein: 22, carbs: 3, fat: 14, fiber: 0, protein_level: "high", dish_type: "curry", meal_types: ["lunch", "dinner"], tags: ["non-veg"], veg: false };
   if (n.includes("paneer"))
-    return { category: "protein_main", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 280, protein: 18, carbs: 5, fat: 20, fiber: 0, protein_level: "high", dish_type: "curry", tags: ["dairy", "veg"], veg: true };
+    return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 280, protein: 18, carbs: 5, fat: 20, fiber: 0, protein_level: "high", dish_type: "curry", meal_types: ["lunch", "dinner"], tags: ["dairy", "veg"], veg: true };
   if (n.includes("dal") || n.includes("sambar") || n.includes("rajma") || n.includes("chole") || n.includes("chana"))
-    return { category: "protein_main", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 190, protein: 11, carbs: 30, fat: 4, fiber: 8, protein_level: "medium", dish_type: "dal", tags: ["veg"], veg: true };
+    return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 190, protein: 11, carbs: 30, fat: 4, fiber: 8, protein_level: "medium", dish_type: "dal", meal_types: ["lunch", "dinner"], tags: ["veg"], veg: true };
+  if (n.includes("milk") || n.includes("lassi") || n.includes("chaas"))
+    return { category: "beverage", meal_role: "single", unit_type: "glass", serving_size: 250, serving_unit: "ml", calories: 120, protein: 6, carbs: 12, fat: 4, fiber: 0, dish_type: "drink", meal_types: ["breakfast", "snack"], tags: ["dairy", "veg"], veg: true };
 
-  if (n.includes("sabji") || n.includes("fry") || n.includes("poriyal") || n.includes("bhaji") || n.includes("bhurji"))
-    return { category: "side", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 140, protein: 3, carbs: 18, fat: 7, fiber: 5, dish_type: "sabji", tags: ["veg"], veg: true };
-
+  // ── Sides ──
+  if (n.includes("kofta") || n.includes("curry") || n.includes("masala") || n.includes("sabji") || n.includes("sabzi") || n.includes("fry") || n.includes("poriyal") || n.includes("bhaji") || n.includes("bhurji") || n.includes("tamatar") || n.includes("aloo") || n.includes("gobi") || n.includes("sev"))
+    return { category: "side", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 140, protein: 4, carbs: 14, fat: 7, fiber: 4, dish_type: "sabji", meal_types: ["lunch", "dinner"], tags: ["veg"], veg: true };
   if (n.includes("salad"))
-    return { category: "side", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 60, protein: 2, carbs: 8, fat: 2, fiber: 4, dish_type: "salad", tags: ["veg"], veg: true };
+    return { category: "side", meal_role: "single", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 60, protein: 2, carbs: 8, fat: 2, fiber: 4, dish_type: "salad", meal_types: ["breakfast", "lunch", "dinner", "snack"], tags: ["veg"], veg: true };
   if (n.includes("raita") || n.includes("curd") || n.includes("yogurt"))
-    return { category: "side", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 80, protein: 4, carbs: 8, fat: 2, fiber: 0, dish_type: "raita", tags: ["dairy", "veg"], veg: true };
+    return { category: "side", meal_role: "single", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 80, protein: 4, carbs: 8, fat: 2, fiber: 0, dish_type: "raita", meal_types: ["lunch", "dinner"], tags: ["dairy", "veg"], veg: true };
 
-  if (n.includes("sweet") || n.includes("halwa") || n.includes("jamun") || n.includes("laddu") || n.includes("kheer"))
-    return { category: "dessert", unit_type: "piece", serving_size: 50, serving_unit: "g", calories: 200, protein: 2, carbs: 30, fat: 8, fiber: 0, dish_type: "sweet", tags: ["sweet", "veg"], veg: true };
+  // ── Desserts & Snacks ──
+  if (n.includes("sweet") || n.includes("halwa") || n.includes("jamun") || n.includes("laddu") || n.includes("kheer") || n.includes("barfi") || n.includes("mithai"))
+    return { category: "dessert", meal_role: "single", unit_type: "piece", serving_size: 50, serving_unit: "g", calories: 200, protein: 2, carbs: 30, fat: 8, fiber: 0, dish_type: "sweet", meal_types: ["lunch", "dinner", "snack"], tags: ["sweet", "veg"], veg: true };
+  if (n.includes("fruit") || n.includes("banana") || n.includes("apple") || n.includes("orange"))
+    return { category: "side", meal_role: "single", unit_type: "piece", serving_size: 120, serving_unit: "g", calories: 80, protein: 1, carbs: 18, fat: 0, fiber: 3, dish_type: "fruit", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
 
-  if (n.includes("papad") || n.includes("pickle") || n.includes("chutney"))
-    return { category: "condiment", unit_type: "piece", serving_size: 10, serving_unit: "g", calories: 40, protein: 1, carbs: 5, fat: 2, fiber: 1, dish_type: "condiment", tags: ["veg"], veg: true };
+  // ── Condiments — tag garlic/onion items so Jain filter works ──
+  if (n.includes("garlic chutney") || n.includes("lasun"))
+    return { category: "condiment", meal_role: "single", unit_type: "tsp", serving_size: 10, serving_unit: "g", calories: 30, protein: 1, carbs: 4, fat: 1, fiber: 0, dish_type: "condiment", tags: ["garlic", "veg"], veg: true };
+  if (n.includes("papad") || n.includes("pickle") || n.includes("chutney") || n.includes("sauce") || n.includes("achaar"))
+    return { category: "condiment", meal_role: "single", unit_type: "tsp", serving_size: 10, serving_unit: "g", calories: 40, protein: 1, carbs: 5, fat: 2, fiber: 1, dish_type: "condiment", tags: ["veg"], veg: true };
 
-  // Default generic
-  return { category: "side", unit_type: "serving", serving_size: 100, serving_unit: "g", calories: 150, protein: 3, carbs: 20, fat: 5, fiber: 2, dish_type: "generic", tags: [], veg: true };
+  // Default generic side
+  return { category: "side", meal_role: "single", unit_type: "serving", serving_size: 100, serving_unit: "g", calories: 150, protein: 3, carbs: 20, fat: 5, fiber: 2, dish_type: "generic", tags: ["veg"], veg: true };
 }
 
 // Guard: skip foods that have no calorie data (OCR stubs)
@@ -115,6 +138,8 @@ function isZeroCalorie(food) {
 // "vegetarian"  - veg + dairy + egg OK
 // "non-veg"     - all food allowed
 const JAIN_AVOID_TAGS = ["potato", "onion", "garlic", "carrot", "beet", "radish", "turnip", "ginger"];
+// Jain also avoids these name-level keywords (belt-and-suspenders for fallback items)
+const JAIN_AVOID_NAMES = ["garlic", "onion", "potato", "aloo", "lasun", "pyaaz"];
 
 function normalizeDiet(diet) {
   if (!diet) return "non-veg";
@@ -186,6 +211,12 @@ function filterFoods(foods, dietPreference, avoidTags = []) {
     if (allAvoidTags.length > 0) {
       const hasAvoidTag = allAvoidTags.some(tag => tags.includes(tag.toLowerCase()));
       if (hasAvoidTag) return false;
+    }
+
+    // Jain name-level guard: catch fallback items that lack tags
+    if (diet === "jain") {
+      const lowerName = (food.name || "").toLowerCase();
+      if (JAIN_AVOID_NAMES.some(kw => lowerName.includes(kw))) return false;
     }
 
     return true;
@@ -307,6 +338,7 @@ function scaleItem(food, qty) {
 function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   const macros = computeMacroTargets(user, mealType);
   const { targetCalories, targetProtein, targetCarbs_g, maxFat_g } = macros;
+  const mt = (mealType || "lunch").toLowerCase();
 
   // 1. Resolve each menu item to its full food record
   const resolved = (menuItems || []).map(name => {
@@ -327,35 +359,87 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   }
 
   // Partition into roles
+  // mealRole: "mixed" = complete one-pot meal (biryani, khichdi); "single" = individual component
+  const mixed    = filtered.filter(f => f.meal_role === "mixed");
   const proteins = filtered.filter(f => f.category === "protein_main");
-  const carbsRoti = filtered.filter(f => f.category === "carb_base" && f.dish_type === "roti");
-  const carbsRice = filtered.filter(f => f.category === "carb_base" && (f.dish_type === "rice" || f.dish_type === "biryani"));
-  const carbsOther = filtered.filter(f => f.category === "carb_base" && !["roti", "rice", "biryani"].includes(f.dish_type || ""));
-  const allCarbs = [...carbsRoti, ...carbsRice, ...carbsOther];
-  const sides = filtered.filter(f => f.category === "side");
+  const carbsRoti  = filtered.filter(f => f.category === "carb_base" && f.dish_type === "roti");
+  const carbsRice  = filtered.filter(f => f.category === "carb_base" && (f.dish_type === "rice" || f.dish_type === "biryani"));
+  const carbsBreakfast = filtered.filter(f => f.category === "carb_base" && ["poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
+  const carbsOther = filtered.filter(f => f.category === "carb_base" && !["roti", "rice", "biryani", "poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
+  const allCarbs = [...carbsRoti, ...carbsRice, ...carbsBreakfast, ...carbsOther];
+  // Salads always go on the plate — separate them from regular sides
+  const salads   = filtered.filter(f => f.category === "side" && f.dish_type === "salad");
+  const sides    = filtered.filter(f => f.category === "side" && f.dish_type !== "salad");
   const condiments = filtered.filter(f => f.category === "condiment");
-  const beverages = filtered.filter(f => f.category === "beverage");
-  const mixed = filtered.filter(f => f.meal_role === "mixed");
-  const desserts = filtered.filter(f => f.category === "dessert");
+  const beverages  = filtered.filter(f => f.category === "beverage");
+  const desserts   = filtered.filter(f => f.category === "dessert");
 
   const plate = [];
   let caloriesUsed = 0;
 
-  // ── Phase 0: Mixed meal fast-path (biryani, khichdi etc.) ──
+  // ── Phase 0a: Snack fast-path — light, simple, no full meal logic ──
+  if (mt === "snack") {
+    // For snacks just pick 1-2 suitable items within calorie budget
+    const snackCandidates = [...carbsBreakfast, ...carbsRoti, ...carbsOther, ...proteins, ...sides]
+      .filter(f => f.calories && f.calories <= targetCalories);
+    snackCandidates.sort((a, b) => (b.protein || 0) - (a.protein || 0));
+    let snackBudget = targetCalories;
+    for (const candidate of snackCandidates.slice(0, 2)) {
+      if (snackBudget < 40) break;
+      const qty = calcServings(candidate, snackBudget, 2);
+      const item = scaleItem(candidate, qty);
+      plate.push({ ...item, role: candidate.category === "protein_main" ? "protein" : "carb", reason: "Light snack" });
+      snackBudget -= item.estimatedCalories;
+    }
+    if (salads.length > 0) plate.push({ ...scaleItem(salads[0], 1), role: "veg", reason: "Fresh & light" });
+    return buildResponse(plate, condiments, beverages, desserts, macros);
+  }
+
+  // ── Phase 0b: Mixed meal fast-path (biryani, khichdi etc. — mealRole:"mixed") ──
   if (mixed.length > 0) {
     // Pick the highest-protein mixed item
-    const best = mixed.sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
-    const qty = calcServings(best, targetCalories, 3); // Allow mixed one-pot meals to scale higher to fulfill the meal
+    const best = [...mixed].sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
+    const qty = calcServings(best, targetCalories, 3);
     const item = scaleItem(best, qty);
     caloriesUsed += item.estimatedCalories;
     plate.push({ ...item, role: "mixed", reason: "Complete balanced meal" });
 
-    // Optionally add a side
+    // Optionally add a side if calories allow
     if (sides.length > 0 && caloriesUsed < targetCalories * 0.95) {
-      const side = sides.sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
+      const side = [...sides].sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
       plate.push({ ...scaleItem(side, 1), role: "veg", reason: "Fiber & vitamins" });
     }
 
+    // Always add salad(s) if present
+    salads.forEach(salad => {
+      plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens & micronutrients" });
+    });
+
+    return buildResponse(plate, condiments, beverages, desserts, macros);
+  }
+
+  // ── Phase 0c: Breakfast fast-path — lighter carbs first, protein optional ──
+  if (mt === "breakfast") {
+    // Prefer breakfast-specific carbs (poha, upma, idli, oats, sandwich)
+    const bfCarbs = carbsBreakfast.length > 0 ? carbsBreakfast : [...carbsRoti, ...carbsOther];
+    if (bfCarbs.length > 0) {
+      const bfItem = bfCarbs[0];
+      const qty = calcServings(bfItem, targetCalories * 0.55, 2);
+      const item = scaleItem(bfItem, qty);
+      caloriesUsed += item.estimatedCalories;
+      plate.push({ ...item, role: "carb", reason: "Breakfast energy" });
+    }
+    // Add a protein if budget allows and protein source available
+    if (proteins.length > 0 && caloriesUsed < targetCalories * 0.80) {
+      const pfood = [...proteins].sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
+      const pqty = calcServings(pfood, targetCalories * 0.35, 1.5);
+      const pitem = scaleItem(pfood, pqty);
+      caloriesUsed += pitem.estimatedCalories;
+      plate.push({ ...pitem, role: "protein", reason: "Morning protein" });
+    }
+    // Salads & beverages
+    if (beverages.length > 0) plate.push({ ...scaleItem(beverages[0], 1), role: "addon", reason: "Hydration" });
+    salads.forEach(salad => plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens" }));
     return buildResponse(plate, condiments, beverages, desserts, macros);
   }
 
@@ -495,6 +579,11 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     }
   }
 
+  // Always add salads to the plate — they're low calorie and always beneficial
+  salads.forEach(salad => {
+    plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens & micronutrients" });
+  });
+
   return buildResponse(plate, condiments, beverages, desserts, macros);
 }
 
@@ -505,7 +594,7 @@ function buildResponse(plate, condiments, beverages, desserts, macros) {
   const totalFat = Math.round(plate.reduce((sum, i) => sum + (i.fat || 0), 0) * 10) / 10;
 
   const optionals = [
-    ...condiments.slice(0, 2).map(f => ({ item: f.name, calories: f.calories || 0, note: "Flavour accent", limit: `~${f.serving_size || 10}${f.serving_unit || "g"}` })),
+    ...condiments.slice(0, 3).map(f => ({ item: f.name, calories: f.calories || 0, note: "Condiment — small amount", limit: `~${f.serving_size || 10}${f.serving_unit || "g"}` })),
     ...beverages.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Hydration", limit: `1 ${f.unit_type || "glass"}` })),
     ...desserts.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Treat — consume in moderation", limit: `~${f.serving_size || 50}${f.serving_unit || "g"}` }))
   ];
@@ -520,6 +609,7 @@ function buildResponse(plate, condiments, beverages, desserts, macros) {
 function recommendPlate({ user, menuItems, mealType }) {
   const dietPreference = user.dietPreference || user.diet || "non-veg";
   const avoidTags = user.avoidTags || [];
+  const mt = (mealType || "lunch").toLowerCase();
 
   const result = buildPlate({ user, menuItems, mealType, dietPreference, avoidTags });
 
@@ -543,8 +633,29 @@ function recommendPlate({ user, menuItems, mealType }) {
 
   const macros = result.macros;
 
+  // Meal-type contextual notes
+  const mealLogicMap = {
+    breakfast: `Light ${macros.targetCalories} kcal breakfast — gentle start to the day.`,
+    lunch:     `Balanced ${macros.targetCalories} kcal lunch targeting ${macros.targetProtein}g protein.`,
+    dinner:    `Light-to-moderate ${macros.targetCalories} kcal dinner — easy on digestion.`,
+    snack:     `Quick ${macros.targetCalories} kcal snack — keep it light between meals.`,
+  };
+  const plateLogic = mealLogicMap[mt] || `${macros.targetCalories} kcal plate targeting ${macros.targetProtein}g protein.`;
+
+  // Diet-specific guidance note
+  const dietNoteMap = {
+    jain:        "Jain-friendly: root vegetables & garlic excluded.",
+    vegan:       "Vegan: all animal products excluded.",
+    "lacto-veg": "Lacto-vegetarian: dairy included, no eggs or meat.",
+    "ovo-veg":   "Ovo-vegetarian: eggs included, no dairy or meat.",
+    vegetarian:  "Vegetarian: dairy & eggs OK, no meat.",
+  };
+  const normalizedDiet = normalizeDiet(dietPreference);
+  const dietNote = dietNoteMap[normalizedDiet] || "";
+
   return {
-    mealType: (mealType || "lunch").toLowerCase(),
+    mealType: mt,
+    dietPreference: normalizedDiet,
     recommendedPlate,
     optionalItems: result.optionals,
     avoidOrLimit: [],
@@ -556,7 +667,8 @@ function recommendPlate({ user, menuItems, mealType }) {
       totalPlateCarbs: macros.totalCarbs,
       totalPlateFat: macros.totalFat,
       targetProtein: macros.targetProtein,
-      plateLogic: `Macro-first plate targeting ${macros.targetCalories} kcal & ${macros.targetProtein}g protein.`,
+      plateLogic,
+      dietNote,
       notes: result.notes || "Portions are estimates based on standard serving sizes."
     }
   };
@@ -619,79 +731,6 @@ function classifyItem(foodName) {
   return { ...details, role };
 }
 
-// ==========================================
-// 7. Legacy /recommend endpoint (kept for compatibility)
-// ==========================================
-
-const validateRecommendRequest = (req, res, next) => {
-  const { targetCalories, proteinPriority, diet, mealType } = req.body;
-  if (!targetCalories || typeof targetCalories !== "number") {
-    return res.status(400).json({ error: "targetCalories must be a valid number" });
-  }
-  if (!["low", "medium", "high"].includes(proteinPriority)) {
-    return res.status(400).json({ error: 'proteinPriority must be "low", "medium", or "high"' });
-  }
-  if (!["veg", "non-veg", "vegan", "jain", "lacto-veg", "ovo-veg", "vegetarian"].includes(diet)) {
-    return res.status(400).json({ error: 'diet must be a valid diet preference string' });
-  }
-  if (!["breakfast", "lunch", "dinner", "snack"].includes(mealType)) {
-    return res.status(400).json({ error: 'mealType must be "breakfast", "lunch", "dinner", or "snack"' });
-  }
-  next();
-};
-
-const recommendEngineHandler = (req, res) => {
-  const { targetCalories, diet, avoidTags, mealType } = req.body;
-
-  const pseudoUser = {
-    weight_kg: 70,
-    height_cm: 170,
-    age: 25,
-    sex: "male",
-    goal: "maintain",
-    dietPreference: diet
-  };
-
-  // Override computed targets with the caller's explicit value
-  const tagsToAvoid = Array.isArray(avoidTags) ? avoidTags : [];
-  const result = buildPlate({
-    user: pseudoUser,
-    menuItems: null, // use full FOOD_DB
-    mealType,
-    dietPreference: diet,
-    avoidTags: tagsToAvoid
-  });
-
-  if (!result.plate || result.plate.length === 0) {
-    return res.status(404).json({ error: "No valid meal combination found" });
-  }
-
-  res.json({
-    mealName: result.plate.map(i => i.name.charAt(0).toUpperCase() + i.name.slice(1)).join(" + "),
-    totalCalories: result.macros.totalCalories,
-    totalProtein: result.macros.totalProtein,
-    targetCalories: result.macros.targetCalories,
-    items: result.plate.map(i => ({
-      name: i.name,
-      role: i.role,
-      category: i.category,
-      calories: i.estimatedCalories,
-      protein: i.protein,
-      carbs: i.carbs,
-      fat: i.fat,
-      grams: i.grams,
-      quantity: i.quantity,
-      unit_type: i.unit_type,
-      reason: i.reason
-    })),
-    optionalAddons: {
-      sides: result.optionals.filter(o => !o.note.includes("Hydration") && !o.note.includes("Treat")).slice(0, 3),
-      beverages: result.optionals.filter(o => o.note.includes("Hydration")).slice(0, 2),
-      sweets: result.optionals.filter(o => o.note.includes("Treat")).slice(0, 1)
-    }
-  });
-};
-
 module.exports = {
   recommendPlate,
   estimateDailyCalories,
@@ -700,7 +739,5 @@ module.exports = {
   filterFoods,
   buildPlate,
   getFallbackDetails,
-  isZeroCalorie,
-  validateRecommendRequest,
-  recommendEngineHandler
+  isZeroCalorie
 };

@@ -200,42 +200,7 @@ app.get('/api/menu', (req, res) => {
   }
 });
 
-// GET /api/profile - Get user profile
-app.get('/api/profile', (req, res) => {
-  try {
-    const profilePath = './data/userProfile.json';
-    if (fs.existsSync(profilePath)) {
-      const profile = JSON.parse(fs.readFileSync(profilePath, 'utf8'));
-      res.json(profile);
-    } else {
-      res.json(null);
-    }
-  } catch (err) {
-    console.error("Error reading profile:", err);
-    res.status(500).json({ error: "Failed to read profile" });
-  }
-});
 
-// POST /api/profile - Save user profile
-// app.post('/api/profile', (req, res) => {
-//   console.log("POST /api/profile hit from:", req.ip);
-//   console.log("Body:", JSON.stringify(req.body));
-//   try {
-//     const profile = req.body;
-//     const profilePath = './data/userProfile.json';
-
-//     // Ensure data directory exists
-//     if (!fs.existsSync('./data')) {
-//       fs.mkdirSync('./data');
-//     }
-
-//     fs.writeFileSync(profilePath, JSON.stringify(profile, null, 2));
-//     res.json({ success: true, profile });
-//   } catch (err) {
-//     console.error("Error saving profile:", err);
-//     res.status(500).json({ error: "Failed to save profile" });
-//   }
-// });
 
 // POST /api/recommend - Generate portion recommendations
 // POST /api/recommend - Generate balanced plate recommendation
@@ -300,10 +265,6 @@ app.post('/api/recommend', (req, res) => {
     res.status(500).json({ error: 'Failed to generate recommendations' });
   }
 });
-
-// NEW POST /recommend endpoint for complete rule-based meal engine
-const { validateRecommendRequest, recommendEngineHandler } = require("./portion_recommender");
-app.post('/recommend', validateRecommendRequest, recommendEngineHandler);
 
 // ============================================
 // OCR Endpoint
