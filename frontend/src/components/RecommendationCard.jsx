@@ -198,8 +198,6 @@ export default function RecommendationCard({ recommendation, loading }) {
                         {optionalItems.map((opt, idx) => (
                             <div key={idx} className="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-xs">
                                 <span className="font-semibold text-amber-800 capitalize">{opt.item}</span>
-                                <span className="text-amber-500 ml-1">({opt.limit})</span>
-                                {opt.note && <span className="block text-amber-400 text-[10px]">{opt.note}</span>}
                             </div>
                         ))}
                     </div>

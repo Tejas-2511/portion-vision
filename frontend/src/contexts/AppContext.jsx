@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import api from "../services/api";
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
 /**
  * Global state provider for PortionVision
@@ -105,14 +105,4 @@ export function AppProvider({ children }) {
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-/**
- * Hook to access app context
- * @returns {object} App context value
- */
-export function useApp() {
-    const context = useContext(AppContext);
-    if (!context) {
-        throw new Error('useApp must be used within AppProvider');
-    }
-    return context;
-}
+

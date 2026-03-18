@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useApp } from "../contexts/AppContext";
+import { useApp } from "../hooks/useApp";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { validateImageFile } from "../utils/validation";
 import api from "../services/api";

@@ -370,7 +370,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   // Salads always go on the plate — separate them from regular sides
   const salads   = filtered.filter(f => f.category === "side" && f.dish_type === "salad");
   const sides    = filtered.filter(f => f.category === "side" && f.dish_type !== "salad");
-  const condiments = filtered.filter(f => f.category === "condiment");
+  const condiments = filtered.filter(f => f.category === "condiment" || f.dish_type === "condiment" || f.name.toLowerCase().includes("papad") || f.name.toLowerCase().includes("pickle") || f.name.toLowerCase().includes("chutney"));
   const beverages  = filtered.filter(f => f.category === "beverage");
   const desserts   = filtered.filter(f => f.category === "dessert");
 

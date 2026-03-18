@@ -4198,6 +4198,32 @@
     ]
   },
   {
+    "id": "paneer_do_pyaza",
+    "name": "paneer do pyaza",
+    "diet": "veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 18,
+      "carbs": 5,
+      "fat": 20,
+      "fiber": 0
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
+    "tags": [
+      "dairy",
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "paneer_handi",
     "name": "Paneer Handi",
     "diet": "veg",

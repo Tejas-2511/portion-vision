@@ -6,6 +6,7 @@ const fs = require("fs");
 const sharp = require("sharp");
 const path = require("path");
 const { normalizeFoodName } = require("./utils/normalize");
+const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
 const { getFallbackDetails } = require("./portion_recommender");
 
 const app = express();
@@ -48,8 +49,7 @@ const upload = multer({
   }
 });
 
-// Security: Simple rate limiting (Removed for development)
-// Rate limiting logic was here
+
 
 // Security: Basic security headers
 app.use((req, res, next) => {
@@ -141,8 +141,7 @@ app.get('/api/foods/search', (req, res) => {
       return res.json([]);
     }
 
-    // Search by name (Normalized partial match + Fuzzy)
-    const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
+
 
     // First, try exact/partial substring match
     let results = foods.filter(food =>
@@ -459,20 +458,25 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
     // 2. Call the CV microservice
     // console.log("Calling CV service with expected items:", expectedItems);
     const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
-      headers: {
-        ...form.getHeaders()
-      }
+      headers: { ...form.getHeaders() },
+      timeout: 10000 // 10 second timeout
     });
 
     // 3. Return the portion estimates to frontend
     res.json(cvResponse.data);
 
   } catch (err) {
-    console.error("CV Service Interaction Error:", err.message);
-    res.status(500).json({
-      error: "Portion analysis failed",
-      message: process.env.NODE_ENV === 'development' ? err.message : undefined
-    });
+    if (err.code === 'ECONNREFUSED') {
+      res.status(503).json({
+        error: "CV service is currently offline. Please ensure the Python service is running on port 8000.",
+        isOffline: true
+      });
+    } else {
+      res.status(500).json({
+        error: "Portion analysis failed",
+        message: process.env.NODE_ENV === 'development' ? err.message : undefined
+      });
+    }
   } finally {
     // Cleanup the uploaded temp file
     if (originalPath && fs.existsSync(originalPath)) {

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useApp } from "../contexts/AppContext";
+import { useApp } from "../hooks/useApp";
 import api from "../services/api";
 import RecommendationCard from "../components/RecommendationCard";
 

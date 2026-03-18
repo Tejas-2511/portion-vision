@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useApp } from "../contexts/AppContext";
+import { useApp } from "../hooks/useApp";
 import { validateProfileData } from "../utils/validation";
 import ErrorMessage from "../components/ErrorMessage";
 
