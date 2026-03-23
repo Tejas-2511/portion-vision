@@ -1,73 +1,80 @@
+"""
+Image preprocessing — resize, perspective warp to get a top-down plate view.
+"""
+
 import cv2
 import numpy as np
 
-def process_image(image: np.ndarray) -> np.ndarray:
+
+def process_image(image: np.ndarray, target_long_edge: int = 1024) -> np.ndarray:
     """
-    Preprocess image and apply perspective warp to get top-down tray view.
+    Preprocess the input image:
+    1. Resize for consistency (longest edge → target_long_edge px)
+    2. Detect the plate boundary
+    3. Apply perspective transform to get a top-down view
+
+    Returns the warped (or resized-only) image.
     """
-    # 1. Resize to a specific resolution for consistency
-    target_size = 1024
     height, width = image.shape[:2]
-    
-    scale = target_size / max(height, width)
+    scale = target_long_edge / max(height, width)
     resized = cv2.resize(image, (int(width * scale), int(height * scale)))
-    
-    # 2. Gaussian blur to reduce noise
-    blurred = cv2.GaussianBlur(resized, (5, 5), 0)
-    
-    # 3. Detect tray boundaries using Canny edge
-    gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, 50, 150)
-    
-    # Find contours
+
+    # Detect plate boundary via edge detection
+    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    edges = cv2.Canny(blurred, 50, 150)
+
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
+
     if not contours:
-        return resized # Fallback if no contours
-        
-    largest_contour = max(contours, key=cv2.contourArea)
-    
-    # Approximate contour to a polygon
-    epsilon = 0.02 * cv2.arcLength(largest_contour, True)
-    approx = cv2.approxPolyDP(largest_contour, epsilon, True)
-    
-    # If we found a rectangle (4 points), apply perspective transform
+        return resized
+
+    largest = max(contours, key=cv2.contourArea)
+
+    # Approximate to a polygon — if 4 corners found, warp to top-down view
+    epsilon = 0.02 * cv2.arcLength(largest, True)
+    approx = cv2.approxPolyDP(largest, epsilon, True)
+
     if len(approx) == 4:
-        warped = four_point_transform(resized, approx.reshape(4, 2))
-        return warped
-        
-    # Fallback if 4 points not found: just return blurred/resized image
+        return _four_point_transform(resized, approx.reshape(4, 2))
+
     return resized
 
-def order_points(pts):
+
+# ── Internal helpers ─────────────────────────────────────────────────────
+
+def _order_points(pts: np.ndarray) -> np.ndarray:
+    """Order 4 points as: top-left, top-right, bottom-right, bottom-left."""
     rect = np.zeros((4, 2), dtype="float32")
     s = pts.sum(axis=1)
-    rect[0] = pts[np.argmin(s)] # Top-left
-    rect[2] = pts[np.argmax(s)] # Bottom-right
-    
-    diff = np.diff(pts, axis=1)
-    rect[1] = pts[np.argmin(diff)] # Top-right
-    rect[3] = pts[np.argmax(diff)] # Bottom-left
+    rect[0] = pts[np.argmin(s)]   # top-left
+    rect[2] = pts[np.argmax(s)]   # bottom-right
+    d = np.diff(pts, axis=1)
+    rect[1] = pts[np.argmin(d)]   # top-right
+    rect[3] = pts[np.argmax(d)]   # bottom-left
     return rect
 
-def four_point_transform(image, pts):
-    rect = order_points(pts)
+
+def _four_point_transform(image: np.ndarray, pts: np.ndarray) -> np.ndarray:
+    """Perspective-warp image so the 4-point region fills the output rectangle."""
+    rect = _order_points(pts)
     (tl, tr, br, bl) = rect
-    
-    widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
-    widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
-    maxWidth = max(int(widthA), int(widthB))
-    
-    heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
-    heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
-    maxHeight = max(int(heightA), int(heightB))
-    
+
+    w = int(max(
+        np.linalg.norm(br - bl),
+        np.linalg.norm(tr - tl),
+    ))
+    h = int(max(
+        np.linalg.norm(tr - br),
+        np.linalg.norm(tl - bl),
+    ))
+
     dst = np.array([
         [0, 0],
-        [maxWidth - 1, 0],
-        [maxWidth - 1, maxHeight - 1],
-        [0, maxHeight - 1]], dtype="float32")
-        
+        [w - 1, 0],
+        [w - 1, h - 1],
+        [0, h - 1],
+    ], dtype="float32")
+
     M = cv2.getPerspectiveTransform(rect, dst)
-    warped = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
-    return warped
+    return cv2.warpPerspective(image, M, (w, h))

@@ -25,9 +25,7 @@ export function AppProvider({ children }) {
 
                 const localMenuItems = Array.isArray(localMenuObjRaw?.items)
                     ? localMenuObjRaw.items
-                    : Array.isArray(localMenuObjRaw?.menuItems)
-                        ? localMenuObjRaw.menuItems
-                        : [];
+                    : [];
 
                 const localMenuObj = localMenuObjRaw
                     ? {

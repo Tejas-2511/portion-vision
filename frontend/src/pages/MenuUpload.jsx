@@ -49,16 +49,16 @@ export default function MenuUpload() {
     try {
       const data = await api.uploadMenuImage(selectedFile);
 
-      if (!data.menuItems) {
+      if (!data.items) {
         throw new Error("Invalid response from backend");
       }
 
-      const menuText = data.menuItems.join("\n");
+      const menuText = data.items.join("\n");
       setExtractedText(menuText);
 
       // Save menu to context (which auto-syncs to localStorage)
       setTodaysMenu({
-        items: data.menuItems,
+        items: data.items,
         text: menuText,
         date: data.date,
         mealType: mealType // Save selected meal type

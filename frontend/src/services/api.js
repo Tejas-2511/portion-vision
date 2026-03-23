@@ -9,11 +9,7 @@ class ApiService {
     normalizeMenu(raw) {
         if (!raw) return null;
 
-        const items = Array.isArray(raw.items)
-            ? raw.items
-            : Array.isArray(raw.menuItems)
-                ? raw.menuItems
-                : [];
+        const items = Array.isArray(raw.items) ? raw.items : [];
 
         const text = typeof raw.text === 'string'
             ? raw.text
@@ -73,7 +69,7 @@ class ApiService {
     /**
      * Upload menu image for OCR processing
      * @param {File} file - Image file to upload
-     * @returns {Promise<{menuItems: string[]}>}
+     * @returns {Promise<{items: string[], date: string}>}
      */
     async uploadMenuImage(file) {
         const formData = new FormData();
@@ -137,7 +133,7 @@ class ApiService {
      * Upload captured plate image for CV analysis
      * @param {File} file - Image file to upload
      * @param {string} expectedItems - Comma-separated list of expected items
-     * @returns {Promise<{sections: object, confidence: number}>}
+     * @returns {Promise<{food_items: Array<{name: string, volume_ml: number, mass_g: number}>, confidence: number}>}
      */
     async analyzePlate(file, expectedItems = '') {
         const formData = new FormData();

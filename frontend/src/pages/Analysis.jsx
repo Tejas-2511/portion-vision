@@ -71,20 +71,20 @@ export default function Analysis() {
     }
   }
 
-  // Helper to find recommended grams for a detected section
-  const getRecommendedGrams = (sectionName) => {
+  // Helper to find recommended grams for a detected food item
+  const getRecommendedGrams = (foodName) => {
     if (!recommendation) return null;
 
     // Check main plate
     const mainMatch = recommendation.recommendedPlate.find(
-      item => item.item.toLowerCase() === sectionName.toLowerCase()
+      item => item.item.toLowerCase() === foodName.toLowerCase()
     );
     if (mainMatch) return mainMatch.totalGrams;
 
     // Check optional
     if (recommendation.optionalItems) {
       const optMatch = recommendation.optionalItems.find(
-        item => item.item.toLowerCase() === sectionName.toLowerCase()
+        item => item.item.toLowerCase() === foodName.toLowerCase()
       );
       if (optMatch) return optMatch.totalGrams;
     }
@@ -129,7 +129,7 @@ export default function Analysis() {
           )}
         </div>
 
-        {/* Card 3 - Portion Comparison */}
+        {/* Card 3 - Portion Comparison (CV Analysis) */}
         <div className="rounded-2xl bg-white p-4 shadow-md">
           <h2 className="mb-3 text-lg font-bold text-slate-700 mt-2">Computer Vision Analysis</h2>
 
@@ -140,9 +140,9 @@ export default function Analysis() {
           ) : analyzingPlate ? (
             <div className="flex flex-col h-32 items-center justify-center rounded-xl bg-slate-50 text-slate-500 font-medium text-center">
               <div className="mb-3 h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
-              Analyzing sections & estimating grams...
+              Analyzing plate & estimating mass...
             </div>
-          ) : analysisResult && analysisResult.sections ? (
+          ) : analysisResult && analysisResult.food_items && analysisResult.food_items.length > 0 ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm text-slate-500 mb-2 px-1">
                 <span>Confidence: {(analysisResult.confidence * 100).toFixed(0)}%</span>
@@ -150,15 +150,16 @@ export default function Analysis() {
               </div>
 
               <div className="space-y-3">
-                {Object.entries(analysisResult.sections).map(([name, actualGrams]) => {
-                  const recGrams = getRecommendedGrams(name);
+                {analysisResult.food_items.map((food, idx) => {
+                  const recGrams = getRecommendedGrams(food.name);
+                  const actualGrams = Math.round(food.mass_g);
                   const isOver = recGrams && actualGrams > recGrams * 1.1; // 10% tolerance
                   const isUnder = recGrams && actualGrams < recGrams * 0.9;
 
                   return (
-                    <div key={name} className="flex flex-col rounded-xl bg-slate-50 p-3 border border-slate-100">
+                    <div key={idx} className="flex flex-col rounded-xl bg-slate-50 p-3 border border-slate-100">
                       <div className="flex justify-between font-medium text-slate-700 capitalize mb-1">
-                        <span className="truncate">{name.replace(/_/g, ' ')}</span>
+                        <span className="truncate">{food.name.replace(/_/g, ' ')}</span>
                       </div>
 
                       <div className="flex justify-between items-end mt-2">
@@ -166,6 +167,9 @@ export default function Analysis() {
                           <p className="text-xs text-slate-500">Detected Portion</p>
                           <p className={`text-lg font-bold ${isOver ? 'text-rose-500' : isUnder ? 'text-amber-500' : 'text-emerald-600'}`}>
                             {actualGrams} <span className="text-xs font-normal">g</span>
+                          </p>
+                          <p className="text-[10px] text-slate-400 mt-0.5">
+                            ~{Math.round(food.volume_ml)} ml volume
                           </p>
                         </div>
 
@@ -191,6 +195,10 @@ export default function Analysis() {
                   );
                 })}
               </div>
+            </div>
+          ) : analysisResult ? (
+            <div className="flex h-32 items-center justify-center rounded-xl bg-amber-50 text-amber-600 font-medium text-center px-4">
+              No food items detected. Try a clearer photo.
             </div>
           ) : (
             <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-rose-500 font-medium text-center px-4">

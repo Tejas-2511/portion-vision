@@ -178,18 +178,7 @@ app.get('/api/menu', (req, res) => {
     const menuPath = './data/menu.json';
     if (fs.existsSync(menuPath)) {
       const menu = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-      const items = Array.isArray(menu.items)
-        ? menu.items
-        : Array.isArray(menu.menuItems)
-          ? menu.menuItems
-          : [];
-
-      res.json({
-        ...menu,
-        // Frontend expects `items`; keep `menuItems` for backward compatibility
-        items,
-        menuItems: items,
-      });
+      res.json(menu);
     } else {
       res.json(null);
     }
@@ -222,8 +211,6 @@ app.post('/api/recommend', (req, res) => {
           const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
           if (Array.isArray(menuData.items) && menuData.items.length) {
             menuItems = menuData.items;
-          } else if (Array.isArray(menuData.menuItems) && menuData.menuItems.length) {
-            menuItems = menuData.menuItems;
           }
         } catch (e) {
           console.error("Error reading menu.json fallback:", e);
@@ -312,7 +299,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     const data = {
       date: new Date().toISOString(),
       items: menuItems,
-      menuItems,
     };
 
     // Ensure data directory exists
@@ -459,7 +445,7 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
     // console.log("Calling CV service with expected items:", expectedItems);
     const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
       headers: { ...form.getHeaders() },
-      timeout: 10000 // 10 second timeout
+      timeout: 60000 // 60 second timeout (depth + SAM can be slow)
     });
 
     // 3. Return the portion estimates to frontend

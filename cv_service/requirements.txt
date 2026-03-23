@@ -1,6 +1,22 @@
+# Core
 fastapi
 uvicorn
 python-multipart
+
+# Image processing
 opencv-python-headless
 numpy
+Pillow
+
+# ML / PyTorch
+torch
+torchvision
+
+# Segment Anything (MobileSAM - lightweight)
+mobile-sam
+
+# Depth estimation (MiDaS via torch hub or Depth Anything)
+timm
+
+# Utilities
 scikit-learn

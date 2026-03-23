@@ -1,34 +1,64 @@
+"""
+FastAPI route for the portion estimation endpoint.
+"""
+
 import cv2
+import logging
 import numpy as np
 from fastapi import APIRouter, File, UploadFile, Form
+from fastapi.responses import JSONResponse
 
+from estimation.mass_estimator import estimate_food_mass
+
+logger = logging.getLogger(__name__)
 router = APIRouter()
+
 
 @router.post("/estimate-portion")
 async def estimate_portion(
     image: UploadFile = File(...),
-    expected_items: str = Form(None)
+    expected_items: str = Form(None),
+    plate_profile: str = Form(None),
 ):
-    # Parse expected items if provided
+    """
+    Estimate food mass from a plate image.
+
+    - **image**: JPEG/PNG of the mess plate
+    - **expected_items**: comma-separated food names (optional, for labeling)
+    - **plate_profile**: plate type key (optional, defaults to standard_mess_thali)
+
+    Returns:
+    ```json
+    {
+        "food_items": [
+            {"name": "dal", "volume_ml": 120.5, "mass_g": 126.5},
+            ...
+        ],
+        "confidence": 0.82
+    }
+    ```
+    """
+    # Parse expected items
     items_list = None
     if expected_items:
         items_list = [item.strip() for item in expected_items.split(",") if item.strip()]
 
-    # Read image from upload
+    # Read image bytes → OpenCV BGR
     contents = await image.read()
     nparr = np.frombuffer(contents, np.uint8)
-    img_cv = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    img_bgr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    if img_cv is None:
+    if img_bgr is None:
         return JSONResponse(status_code=400, content={"error": "Invalid image file"})
 
     try:
-        # Step 1: Preprocess and normalize tray
-        top_down_tray = process_image(img_cv)
+        result = estimate_food_mass(
+            image_bgr=img_bgr,
+            expected_items=items_list,
+            plate_profile=plate_profile,
+        )
+        return result
 
-        # Step 2 & 3: Segment and Estimate fill dynamically
-        result = estimate_portions(top_down_tray, expected_items=items_list)
-
-        return {"sections": result["sections"], "confidence": result["confidence"]}
     except Exception as e:
+        logger.exception("Portion estimation failed")
         return JSONResponse(status_code=500, content={"error": str(e)})
