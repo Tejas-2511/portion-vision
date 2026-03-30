@@ -4,7 +4,7 @@
 
 PortionVision is a smart nutrition assistant that helps users balance their meals in a college/office mess setting. It:
 
-1. **Digitizes mess menus** using OCR (Tesseract).
+1. **Digitizes mess menus** using OCR (PaddleOCR).
 2. **Generates personalized plate recommendations** using a multi-phase nutrition engine.
 3. **Estimates actual food mass** from a plate photo using computer vision (SAM + MiDaS depth).
 
@@ -22,7 +22,7 @@ portion-vision/
 
 ### Frontend (React + Vite)
 
-- **Core**: React 19, Vite 6, React Router v7.
+- **Core**: React 19, Vite 7, React Router v7.
 - **Styling**: Tailwind CSS v3 (Emerald/Slate theme).
 - **State**: `AppContext` (Context API).
   - `userProfile` — persisted in **localStorage** (client-only, no server sync).
@@ -38,7 +38,7 @@ portion-vision/
   - `foodDatabase.json` — knowledge base of food items with nutrition data.
 - **Image Processing**: `multer` (uploads).
 - **Recommendation**: `portion_recommender.js` — calorie-aware plate builder.
-- **CV Proxy**: `/api/analyze-plate` and `/ocr` proxy images to the Python CV service.
+- **CV Proxy**: `/api/analyze-plate` (60s timeout) and `/ocr` (30s timeout) proxy images to the Python CV service via `FormData`.
 
 ### CV Service (Python + FastAPI)
 
@@ -203,8 +203,10 @@ cv_service/
 │   └── depth_estimator.py           # MiDaS monocular depth estimation
 ├── volume/
 │   └── volume_calculator.py         # Per-pixel volume integration
-└── estimation/
-    └── mass_estimator.py            # End-to-end orchestrator
+├── estimation/
+│   └── mass_estimator.py            # End-to-end orchestrator
+└── ocr/
+    └── menu_ocr.py                  # PaddleOCR menu extraction
 ```
 
 #### Pipeline Steps
@@ -286,6 +288,7 @@ Lookup: exact match → substring match → default (1.0).
 | `GET` | `/api/foods/search?q=` | Backend | Search foods by name (substring + fuzzy) |
 | `POST` | `/api/analyze-plate` | Backend → CV | Upload plate photo for mass estimation (proxied to CV service) |
 | `POST` | `/estimate-portion` | CV Service | Direct CV endpoint (internal, port 8000) |
+| `POST` | `/ocr` | CV Service | Direct menu OCR endpoint (internal, port 8000) |
 | `GET` | `/health` | CV Service | CV service health check |
 
 ---
@@ -347,6 +350,7 @@ portion-vision/
 │   ├── depth/                      # depth_estimator.py (MiDaS)
 │   ├── volume/                     # volume_calculator.py
 │   ├── estimation/                 # mass_estimator.py (pipeline orchestrator)
+│   ├── ocr/                        # menu_ocr.py (PaddleOCR menu text extraction)
 │   ├── api/                        # routes.py (FastAPI endpoint)
 │   └── main.py                     # FastAPI entry point
 └── technical.md                    # ← This file

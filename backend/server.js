@@ -310,7 +310,8 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     // Add new items that don't exist yet — enrich with fallback details
     let addedCount = 0;
     menuItems.forEach(itemName => {
-      if (!existingNames.has(itemName)) {
+      const normalizedItemName = normalizeFoodName(itemName);
+      if (!existingNames.has(normalizedItemName)) {
         console.log(`➕ Adding new item with fallback enrichment: ${itemName}`);
         const fallback = getFallbackDetails(itemName);
         foodDatabase.push({
@@ -336,7 +337,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
           tags: fallback.tags || [],
           _enrichedByFallback: true
         });
-        existingNames.add(itemName);
+        existingNames.add(normalizedItemName);
         addedCount++;
       } else {
         console.log(`⏭️ Skipping existing item: ${itemName}`);
