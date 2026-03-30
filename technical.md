@@ -36,13 +36,14 @@ portion-vision/
 - **Storage**: JSON flat-files in `backend/data/`.
   - `menu.json` — current active menu (`{ date, items }` — single `items` array).
   - `foodDatabase.json` — knowledge base of food items with nutrition data.
-- **Image Processing**: `multer` (uploads) + `sharp` (preprocessing) + `tesseract.js` (OCR).
+- **Image Processing**: `multer` (uploads).
 - **Recommendation**: `portion_recommender.js` — calorie-aware plate builder.
-- **CV Proxy**: `/api/analyze-plate` proxies image to the Python CV service.
+- **CV Proxy**: `/api/analyze-plate` and `/ocr` proxy images to the Python CV service.
 
 ### CV Service (Python + FastAPI)
 
 - **Framework**: FastAPI + Uvicorn.
+- **OCR Engine**: PaddleOCR for structured text layouts (menu extraction).
 - **Segmentation**: MobileSAM (Segment Anything).
 - **Depth**: MiDaS Small (monocular depth estimation via torch.hub).
 - **Detection**: OpenCV contour analysis for plate/compartment detection.
@@ -54,19 +55,15 @@ portion-vision/
 
 ### 1. Menu OCR Pipeline (`POST /ocr`)
 
-1. **Input**: Image (camera or gallery).
-2. **Preprocessing** (Sharp):
-   - Add white border (40px top, 20px sides) to help edge text.
-   - Resize to width 1200px.
-   - Grayscale → normalize → threshold (160) → sharpen.
-3. **OCR**: Tesseract.js (page segmentation mode 6).
-4. **Parsing** (`cleanMenuItems`):
-   - Split by `\n`, `,`, `/`, `&`.
-   - Normalize using shared `normalizeFoodName()`.
-   - Filter noise (short strings, blacklisted headers).
+1. **Input**: Image (camera or gallery) uploaded to Node.js backend, which proxies it to CV Service.
+2. **OCR Engine**: PaddleOCR (Python `cv_service/ocr/menu_ocr.py`).
+3. **Parsing** (`clean_menu_items`):
+   - Split by `,`, `/`, `&`, `|`, `+`.
+   - Normalize: lowercase, strip non-alpha edge characters.
+   - Filter noise (short strings, blacklisted headers like "breakfast", "menu").
    - Deduplicate and sort alphabetically.
-5. **Storage**: Saves to `menu.json` as `{ date, items }`.
-6. **Database Enrichment**: New items not in `foodDatabase.json` are auto-added with fallback nutrition estimates from `getFallbackDetails()`.
+4. **Storage**: Backend saves parsed items to `menu.json` as `{ date, items }`.
+5. **Database Enrichment**: New items not in `foodDatabase.json` are auto-added with fallback nutrition estimates from `getFallbackDetails()`.
 
 ### 2. Recommendation Engine (`portion_recommender.js`)
 
@@ -283,7 +280,7 @@ Lookup: exact match → substring match → default (1.0).
 |--------|----------|---------|-------------|
 | `GET` | `/health` | Backend | Health check |
 | `GET` | `/api/menu` | Backend | Get current digitized menu |
-| `POST` | `/ocr` | Backend | Upload image for menu OCR extraction |
+| `POST` | `/ocr` | Backend → CV | Upload image for menu OCR extraction (proxied to CV service) |
 | `POST` | `/api/recommend` | Backend | Get plate recommendations. Body: `{ userProfile, mealType, menuItems }` |
 | `GET` | `/api/foods` | Backend | Get all foods in the database |
 | `GET` | `/api/foods/search?q=` | Backend | Search foods by name (substring + fuzzy) |

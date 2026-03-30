@@ -16,9 +16,7 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "form-data": "^4.0.5",
-    "multer": "^2.0.2",
-    "sharp": "^0.34.5",
-    "tesseract.js": "^7.0.0"
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

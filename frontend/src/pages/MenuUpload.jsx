@@ -154,7 +154,7 @@ export default function MenuUpload() {
         loading={loading}
         className="mb-8 w-full"
       >
-        Extract Text (OCR)
+        Extract Menu
       </Button>
 
       {extractedText && (

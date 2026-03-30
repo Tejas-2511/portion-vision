@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const Tesseract = require("tesseract.js");
 const fs = require("fs");
-const sharp = require("sharp");
 const path = require("path");
+const axios = require("axios");
+const FormData = require("form-data");
 const { normalizeFoodName } = require("./utils/normalize");
 const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
 const { getFallbackDetails } = require("./portion_recommender");
@@ -65,23 +65,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-// Clean and parse OCR text to extract individual menu items
-// Removes common headers, noise, and short strings
-// Uses regex to split lines by commas, slashes, and ampersands
-function cleanMenuItems(rawText) {
-  const blacklist = ["menu", "breakfast", "lunch", "dinner"];
-
-  return rawText
-    .split("\n")
-    .flatMap(line => line.split(","))
-    .flatMap(line => line.split("/"))
-    .flatMap(line => line.split("&"))
-    .map(normalizeFoodName) // Use shared normalization
-    .filter(line => line.length > 2) // Filter very short garbage
-    .filter(line => !blacklist.some(word => line.includes(word)))
-    .filter((item, index, self) => self.indexOf(item) === index)
-    .sort(); // Sort alphabetically
-}
 
 // ============================================
 // Food Database API Endpoints
@@ -253,12 +236,11 @@ app.post('/api/recommend', (req, res) => {
 });
 
 // ============================================
-// OCR Endpoint
+// OCR Endpoint (proxies to Python CV service)
 // ============================================
 
 app.post("/ocr", upload.single("image"), async (req, res) => {
   let originalPath = null;
-  let processedPath = null;
 
   try {
     if (!req.file) {
@@ -266,35 +248,17 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     }
 
     originalPath = req.file.path;
-    processedPath = `uploads/processed-${Date.now()}.png`;
 
-    // Image processing with security considerations
-    // 1. Extend canvas to add white border (helps OCR with edge text)
-    // 2. Resize to width 1200px (optimal for Tesseract)
-    // 3. Convert to grayscale (removes color noise)
-    // 4. Normalize and threshold (binarization for high contrast)
-    // 5. Sharpen (enhances text edges)
-    await sharp(originalPath)
-      .extend({
-        top: 40,
-        bottom: 20,
-        left: 20,
-        right: 20,
-        background: { r: 255, g: 255, b: 255 }
-      })
-      .resize({ width: 1200 })
-      .grayscale()
-      .normalize()
-      .threshold(160)
-      .sharpen()
-      .toFile(processedPath);
+    // Forward the image to the Python CV service's PaddleOCR endpoint
+    const form = new FormData();
+    form.append("image", fs.createReadStream(originalPath));
 
-    const result = await Tesseract.recognize(processedPath, "eng", {
-      tessedit_pageseg_mode: 6,
+    const ocrResponse = await axios.post("http://127.0.0.1:8000/ocr", form, {
+      headers: { ...form.getHeaders() },
+      timeout: 30000, // 30 second timeout
     });
 
-    const rawText = result.data.text;
-    const menuItems = cleanMenuItems(rawText);
+    const menuItems = ocrResponse.data.items || [];
 
     const data = {
       date: new Date().toISOString(),
@@ -309,7 +273,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
 
-
     // Update foodDatabase.json with new items
     const foodDbPath = './data/foodDatabase.json';
     let foodDatabase = [];
@@ -321,7 +284,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
       try {
         const existingData = fs.readFileSync(foodDbPath, 'utf8');
         foodDatabase = JSON.parse(existingData);
-        // Handle if it's an object instead of array
         if (!Array.isArray(foodDatabase)) {
           console.log('⚠️ Database was not an array, resetting...');
           foodDatabase = [];
@@ -339,14 +301,13 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     // Get existing food names (normalized for consistent comparison)
     const existingNames = new Set(
       foodDatabase
-        .filter(item => item && item.name) // Filter out invalid items
+        .filter(item => item && item.name)
         .map(item => normalizeFoodName(item.name))
     );
 
     console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);
 
-    // Add new items that don't exist yet — enrich with fallback details so
-    // they have realistic macro estimates and can be used by the recommender
+    // Add new items that don't exist yet — enrich with fallback details
     let addedCount = 0;
     menuItems.forEach(itemName => {
       if (!existingNames.has(itemName)) {
@@ -373,7 +334,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
           proteinLevel: fallback.protein_level || "low",
           mealRole: fallback.meal_role || "single",
           tags: fallback.tags || [],
-          _enrichedByFallback: true // flag for future manual review
+          _enrichedByFallback: true
         });
         existingNames.add(itemName);
         addedCount++;
@@ -384,35 +345,29 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     console.log(`✨ Added ${addedCount} new items to database`);
 
-    // Sort database alphabetically by name
     foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
-
-    // Save updated database
     fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
 
-
     res.json(data);
   } catch (err) {
+    if (err.code === 'ECONNREFUSED') {
+      return res.status(503).json({
+        error: "OCR service is offline. Please ensure the Python CV service is running on port 8000.",
+        isOffline: true,
+      });
+    }
     console.error("OCR ERROR:", err);
     res.status(500).json({
       error: "OCR processing failed",
       message: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
   } finally {
-    // Always cleanup temp files
     if (originalPath && fs.existsSync(originalPath)) {
       try {
         fs.unlinkSync(originalPath);
       } catch (e) {
         console.error("Failed to delete original file:", e);
-      }
-    }
-    if (processedPath && fs.existsSync(processedPath)) {
-      try {
-        fs.unlinkSync(processedPath);
-      } catch (e) {
-        console.error("Failed to delete processed file:", e);
       }
     }
   }
@@ -422,8 +377,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 // Plate Analysis Endpoint (Integration w/ CV)
 // ============================================
 
-const axios = require("axios");
-const FormData = require("form-data");
 
 app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
   if (!req.file) {

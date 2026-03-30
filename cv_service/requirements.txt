@@ -12,11 +12,15 @@ Pillow
 torch
 torchvision
 
-# Segment Anything (MobileSAM - lightweight)
-mobile-sam
+# Segment Anything (MobileSAM - lightweight, installed from GitHub)
+mobile-sam @ git+https://github.com/ChaoningZhang/MobileSAM.git
 
 # Depth estimation (MiDaS via torch hub or Depth Anything)
 timm
 
 # Utilities
 scikit-learn
+
+# OCR (PaddleOCR for menu text extraction)
+paddlepaddle
+paddleocr
