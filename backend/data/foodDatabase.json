@@ -1307,6 +1307,32 @@
     ]
   },
   {
+    "id": "coconut_laddu",
+    "name": "coconut laddu",
+    "diet": "veg",
+    "dishType": "sweet",
+    "category": "dessert",
+    "serving": {
+      "size": 50,
+      "unit": "g",
+      "unitType": "piece"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 2,
+      "carbs": 30,
+      "fat": 8,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "sweet",
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "coffee",
     "name": "Coffee",
     "diet": "veg",
@@ -1432,8 +1458,8 @@
     "id": "curd",
     "name": "Curd",
     "diet": "veg",
-    "dishType": "drink",
-    "category": "beverage",
+    "dishType": "raita",
+    "category": "side",
     "serving": {
       "size": 100,
       "unit": "g",
@@ -1449,7 +1475,8 @@
     "proteinLevel": "low",
     "mealRole": "single",
     "tags": [
-      "veg"
+      "veg",
+      "dairy"
     ]
   },
   {
@@ -2017,6 +2044,31 @@
     "tags": [
       "veg"
     ]
+  },
+  {
+    "id": "frymus",
+    "name": "frymus",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 4,
+      "carbs": 14,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
   },
   {
     "id": "fryum",
@@ -2968,6 +3020,31 @@
     ]
   },
   {
+    "id": "khatta_meetha_kaddu",
+    "name": "khatta meetha kaddu",
+    "diet": "veg",
+    "dishType": "generic",
+    "category": "side",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 5,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "khichdi",
     "name": "Khichdi",
     "diet": "veg",
@@ -3537,6 +3614,31 @@
     ]
   },
   {
+    "id": "matar_mushroom",
+    "name": "matar mushroom",
+    "diet": "veg",
+    "dishType": "generic",
+    "category": "side",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 5,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "matar_paneer",
     "name": "Matar Paneer",
     "diet": "veg",
@@ -3841,6 +3943,31 @@
       "sweet",
       "veg"
     ]
+  },
+  {
+    "id": "moti_rice",
+    "name": "moti rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 50,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
   },
   {
     "id": "murgh_hydrabadi",
@@ -4546,6 +4673,31 @@
     ]
   },
   {
+    "id": "pluspring-indya_foods",
+    "name": "pluspring-indya foods",
+    "diet": "veg",
+    "dishType": "generic",
+    "category": "side",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "serving"
+    },
+    "nutrition": {
+      "calories": 150,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 5,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "poha",
     "name": "Poha",
     "diet": "veg",
@@ -4697,12 +4849,12 @@
     "id": "raita",
     "name": "Raita",
     "diet": "veg",
-    "dishType": "condiment",
+    "dishType": "raita",
     "category": "side",
     "serving": {
       "size": 100,
       "unit": "g",
-      "unitType": "serving"
+      "unitType": "bowl"
     },
     "nutrition": {
       "calories": 75,
@@ -5939,6 +6091,32 @@
     ]
   },
   {
+    "id": "veg_raita",
+    "name": "veg raita",
+    "diet": "veg",
+    "dishType": "raita",
+    "category": "side",
+    "serving": {
+      "size": 100,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 80,
+      "protein": 4,
+      "carbs": 8,
+      "fat": 2,
+      "fiber": 0
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "dairy",
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "veg_upma",
     "name": "Veg Upma",
     "diet": "veg",
@@ -6082,5 +6260,30 @@
       "gravy",
       "veg"
     ]
+  },
+  {
+    "id": "yellow_moong_dal",
+    "name": "yellow moong dal",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
   }
 ]
