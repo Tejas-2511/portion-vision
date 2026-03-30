@@ -4,7 +4,7 @@
 
 PortionVision is a smart nutrition assistant that helps users balance their meals in a college/office mess setting. It:
 
-1. **Digitizes mess menus** using OCR (PaddleOCR).
+1. **Digitizes mess menus** using OCR (Tesseract.js).
 2. **Generates personalized plate recommendations** using a multi-phase nutrition engine.
 3. **Estimates actual food mass** from a plate photo using computer vision (SAM + MiDaS depth).
 
@@ -14,9 +14,9 @@ PortionVision is a smart nutrition assistant that helps users balance their meal
 
 ```
 portion-vision/
-├── backend/          Node.js + Express API (port 5000)
-├── frontend/         React 19 + Vite 6 PWA (port 5173)
-├── cv_service/       Python FastAPI CV microservice (port 8000)
+├── backend/          Node.js + Express API (port 5000) - Handles OCR
+├── frontend/         React 19 + Vite 7 PWA (port 5173)
+├── cv_service/       Python FastAPI CV microservice (port 8000) - Analysis only
 └── technical.md      ← You are here
 ```
 
@@ -24,6 +24,9 @@ portion-vision/
 
 - **Core**: React 19, Vite 7, React Router v7.
 - **Styling**: Tailwind CSS v3 (Emerald/Slate theme).
+- **Security & Stability**: 
+  - Overrides in `package.json` fix vulnerabilities in `serialize-javascript` and `@rollup/plugin-terser`.
+  - `vite-plugin-pwa` pinned for compatibility with Vite 7.
 - **State**: `AppContext` (Context API).
   - `userProfile` — persisted in **localStorage** (client-only, no server sync).
   - `todaysMenu` — synced from server on load, cached in localStorage.
@@ -33,21 +36,24 @@ portion-vision/
 ### Backend (Node.js + Express)
 
 - **API**: Express.js REST endpoints.
+- **OCR Engine**: Native **Tesseract.js** integration.
+  - Uses local `eng.traineddata` for offline/deterministic performance.
+  - No longer proxies OCR requests to Python.
 - **Storage**: JSON flat-files in `backend/data/`.
   - `menu.json` — current active menu (`{ date, items }` — single `items` array).
   - `foodDatabase.json` — knowledge base of food items with nutrition data.
 - **Image Processing**: `multer` (uploads).
 - **Recommendation**: `portion_recommender.js` — calorie-aware plate builder.
-- **CV Proxy**: `/api/analyze-plate` (60s timeout) and `/ocr` (30s timeout) proxy images to the Python CV service via `FormData`.
+- **CV Proxy**: `/api/analyze-plate` (60s timeout) proxies images to the Python CV service via `FormData`.
 
 ### CV Service (Python + FastAPI)
 
 - **Framework**: FastAPI + Uvicorn.
-- **OCR Engine**: PaddleOCR for structured text layouts (menu extraction).
 - **Segmentation**: MobileSAM (Segment Anything).
-- **Depth**: MiDaS Small (monocular depth estimation via torch.hub).
+- **Depth**: MiDaS v2.1 Small (monocular depth estimation via torch.hub).
 - **Detection**: OpenCV contour analysis for plate/compartment detection.
 - **Volume**: Per-pixel integration (area × height).
+- **Weight Management**: Weights are cached locally in `cv_service/weights/` and `~/.cache/torch/hub/`.
 
 ---
 
@@ -55,15 +61,19 @@ portion-vision/
 
 ### 1. Menu OCR Pipeline (`POST /ocr`)
 
-1. **Input**: Image (camera or gallery) uploaded to Node.js backend, which proxies it to CV Service.
-2. **OCR Engine**: PaddleOCR (Python `cv_service/ocr/menu_ocr.py`).
-3. **Parsing** (`clean_menu_items`):
+1. **Input**: Image (camera or gallery) uploaded to Node.js backend.
+2. **OCR Engine**: Tesseract.js (Node.js `backend/server.js`).
+3. **Execution**:
+   - Tesseract processes the image using `eng.traineddata`.
+   - Raw text is passed to `parseMenuText`.
+4. **Parsing** (`parseMenuText`):
+   - Normalize: lowercase, remove non-alpha characters (except `,/&-`).
    - Split by `,`, `/`, `&`, `|`, `+`.
-   - Normalize: lowercase, strip non-alpha edge characters.
-   - Filter noise (short strings, blacklisted headers like "breakfast", "menu").
+   - Filter noise using `OCR_BLACKLIST` (e.g., "breakfast", "mess", "timing").
+   - Filter short tokens (< 3 chars).
    - Deduplicate and sort alphabetically.
-4. **Storage**: Backend saves parsed items to `menu.json` as `{ date, items }`.
-5. **Database Enrichment**: New items not in `foodDatabase.json` are auto-added with fallback nutrition estimates from `getFallbackDetails()`.
+5. **Storage**: Backend saves parsed items to `menu.json`.
+6. **Database Enrichment**: New items not in `foodDatabase.json` are auto-added with fallback nutrition estimates from `getFallbackDetails()`.
 
 ### 2. Recommendation Engine (`portion_recommender.js`)
 
@@ -205,8 +215,7 @@ cv_service/
 │   └── volume_calculator.py         # Per-pixel volume integration
 ├── estimation/
 │   └── mass_estimator.py            # End-to-end orchestrator
-└── ocr/
-    └── menu_ocr.py                  # PaddleOCR menu extraction
+└── weights/                         # Locally cached model weights
 ```
 
 #### Pipeline Steps
@@ -270,7 +279,6 @@ Lookup: exact match → substring match → default (1.0).
 #### Model Loading
 
 - MobileSAM and MiDaS weights are **lazy-loaded** on first request.
-- First call is slow (~10-30s for download + init).
 - Subsequent calls reuse loaded models in memory.
 - GPU (CUDA) used if available, otherwise CPU.
 
@@ -282,13 +290,12 @@ Lookup: exact match → substring match → default (1.0).
 |--------|----------|---------|-------------|
 | `GET` | `/health` | Backend | Health check |
 | `GET` | `/api/menu` | Backend | Get current digitized menu |
-| `POST` | `/ocr` | Backend → CV | Upload image for menu OCR extraction (proxied to CV service) |
+| `POST` | `/ocr` | Backend | Upload image for menu OCR (Native Tesseract.js) |
 | `POST` | `/api/recommend` | Backend | Get plate recommendations. Body: `{ userProfile, mealType, menuItems }` |
 | `GET` | `/api/foods` | Backend | Get all foods in the database |
 | `GET` | `/api/foods/search?q=` | Backend | Search foods by name (substring + fuzzy) |
 | `POST` | `/api/analyze-plate` | Backend → CV | Upload plate photo for mass estimation (proxied to CV service) |
 | `POST` | `/estimate-portion` | CV Service | Direct CV endpoint (internal, port 8000) |
-| `POST` | `/ocr` | CV Service | Direct menu OCR endpoint (internal, port 8000) |
 | `GET` | `/health` | CV Service | CV service health check |
 
 ---
@@ -301,7 +308,7 @@ cd backend
 npm install
 npm run dev
 ```
-Runs on `http://localhost:5000`.
+Runs on `http://localhost:5000`. Requires `eng.traineddata` in root for OCR.
 
 ### 2. Frontend (React)
 ```bash
@@ -319,7 +326,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 python main.py
 ```
-Runs on `http://localhost:8000`. Models download automatically on first request.
+Runs on `http://localhost:8000`. Weights download automatically on first request.
 
 ---
 
@@ -331,7 +338,8 @@ portion-vision/
 │   ├── data/                       # JSON database (menu.json, foodDatabase.json)
 │   ├── utils/                      # Shared utilities (normalize.js, fuzzyMatch.js)
 │   ├── uploads/                    # Temp image storage (auto-cleaned)
-│   ├── server.js                   # Express API + OCR + CV proxy
+│   ├── eng.traineddata             # Tesseract OCR language data
+│   ├── server.js                   # Express API + Tesseract OCR + CV proxy
 │   └── portion_recommender.js      # Recommendation engine
 ├── frontend/
 │   ├── src/
@@ -341,6 +349,7 @@ portion-vision/
 │   │   ├── pages/                  # Home, MenuUpload, Preferences, Analysis
 │   │   ├── services/               # api.js (centralized HTTP client)
 │   │   └── utils/                  # validation.js
+│   ├── package.json                # PWA + Dependency overrides
 │   ├── vite.config.js              # PWA + proxy config
 │   └── tailwind.config.js          # Theme config
 ├── cv_service/
@@ -350,8 +359,8 @@ portion-vision/
 │   ├── depth/                      # depth_estimator.py (MiDaS)
 │   ├── volume/                     # volume_calculator.py
 │   ├── estimation/                 # mass_estimator.py (pipeline orchestrator)
-│   ├── ocr/                        # menu_ocr.py (PaddleOCR menu text extraction)
 │   ├── api/                        # routes.py (FastAPI endpoint)
+│   ├── weights/                    # Locally cached model weights (mobile_sam.pt)
 │   └── main.py                     # FastAPI entry point
-└── technical.md                    # ← This file
+└── technical.md                    # Documentation
 ```

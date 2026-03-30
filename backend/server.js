@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const FormData = require("form-data");
+const Tesseract = require("tesseract.js");
 const { normalizeFoodName } = require("./utils/normalize");
 const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
 const { getFallbackDetails } = require("./portion_recommender");
@@ -235,9 +236,59 @@ app.post('/api/recommend', (req, res) => {
   }
 });
 
-// ============================================
-// OCR Endpoint (proxies to Python CV service)
-// ============================================
+// Noise words and patterns to strip from OCR output
+const OCR_BLACKLIST = new Set([
+  'menu', 'breakfast', 'lunch', 'dinner', 'snack', 'snacks',
+  'today', 'date', 'day', 'monday', 'tuesday', 'wednesday',
+  'thursday', 'friday', 'saturday', 'sunday',
+  'mess', 'hostel', 'canteen', 'cafeteria',
+  'special', 'note', 'notes', 'timings', 'timing',
+  'price', 'rate', 'rupees', 'rs', 'amount', 'total',
+  'veg', 'non-veg', 'nonveg', 'jain', 'menu', 'items'
+]);
+
+function parseMenuText(rawText) {
+  if (!rawText) return [];
+
+  // Split by newlines or tabs (common in tables)
+  const lines = rawText.split(/[\n\t]/).map(l => l.trim()).filter(Boolean);
+  const items = [];
+  const seen = new Set();
+
+  for (const line of lines) {
+    // Normalise: lowercase, keep letters and limited punctuation for food names
+    let norm = line.toLowerCase()
+      .replace(/[^a-z\s/,&\-]/g, ' ') // replace noise with spaces
+      .replace(/\s+/g, ' ')          // collapse multiple spaces
+      .trim();
+
+    if (!norm || norm.length < 3) continue;
+
+    // Split on common menu delimiters
+    const parts = norm.split(/[,/&|+]/).map(p => p.trim()).filter(p => p.length >= 3);
+
+    for (const part of parts) {
+      // Split words to check against blacklist
+      const words = part.split(' ');
+
+      // Skip if the whole part is just a blacklist word or too generic
+      if (OCR_BLACKLIST.has(part)) continue;
+
+      // Skip if every single word in the item is a noise word
+      if (words.every(w => OCR_BLACKLIST.has(w))) continue;
+
+      // Clean up common prefixes like "1. ", "a) " (already handled by regex but for clarity)
+      const cleanItem = part;
+
+      if (!seen.has(cleanItem)) {
+        seen.add(cleanItem);
+        items.push(cleanItem);
+      }
+    }
+  }
+
+  return items.sort();
+}
 
 app.post("/ocr", upload.single("image"), async (req, res) => {
   let originalPath = null;
@@ -248,30 +299,39 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     }
 
     originalPath = req.file.path;
+    console.log(`🔍 Running Tesseract OCR on: ${req.file.originalname}`);
 
-    // Forward the image to the Python CV service's PaddleOCR endpoint
-    const form = new FormData();
-    form.append("image", fs.createReadStream(originalPath));
-
-    const ocrResponse = await axios.post("http://127.0.0.1:8000/ocr", form, {
-      headers: { ...form.getHeaders() },
-      timeout: 30000, // 30 second timeout
+    // Tesseract.js — points to local directory for trained data
+    const { data: { text, confidence } } = await Tesseract.recognize(originalPath, 'eng', {
+      gzip: false,
+      langPath: __dirname, // Points to directory containing eng.traineddata
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          // Log progress occasionally
+          if (Math.round(m.progress * 100) % 25 === 0) {
+            console.log(`📄 OCR Progress: ${Math.round(m.progress * 100)}%`);
+          }
+        }
+      }
     });
 
-    const menuItems = ocrResponse.data.items || [];
+    console.log(`✅ OCR Complete (Confidence: ${Math.round(confidence)}%)`);
+    // console.log('📄 Raw text excerpt:', text.substring(0, 100).replace(/\n/g, ' '));
+
+    const menuItems = parseMenuText(text);
+    console.log(`✅ Parsed ${menuItems.length} menu items`);
 
     const data = {
       date: new Date().toISOString(),
       items: menuItems,
+      confidence: Math.round(confidence)
     };
 
     // Ensure data directory exists
     const dataDir = './data';
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
-    fs.writeFileSync("./data/menu.json", JSON.stringify(data, null, 2));
+    fs.writeFileSync('./data/menu.json', JSON.stringify(data, null, 2));
 
     // Update foodDatabase.json with new items
     const foodDbPath = './data/foodDatabase.json';
@@ -279,7 +339,6 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
     console.log('📊 Updating food database...');
 
-    // Load existing database
     if (fs.existsSync(foodDbPath)) {
       try {
         const existingData = fs.readFileSync(foodDbPath, 'utf8');
@@ -291,23 +350,19 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
           console.log(`✅ Loaded ${foodDatabase.length} existing items`);
         }
       } catch (e) {
-        console.error("❌ Error reading foodDatabase.json, creating new:", e);
+        console.error('❌ Error reading foodDatabase.json, creating new:', e);
         foodDatabase = [];
       }
     } else {
       console.log('📝 No existing database found, creating new one');
     }
 
-    // Get existing food names (normalized for consistent comparison)
     const existingNames = new Set(
-      foodDatabase
-        .filter(item => item && item.name)
-        .map(item => normalizeFoodName(item.name))
+      foodDatabase.filter(item => item && item.name).map(item => normalizeFoodName(item.name))
     );
 
     console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);
 
-    // Add new items that don't exist yet — enrich with fallback details
     let addedCount = 0;
     menuItems.forEach(itemName => {
       const normalizedItemName = normalizeFoodName(itemName);
@@ -317,13 +372,13 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         foodDatabase.push({
           id: itemName.toLowerCase().replace(/\s+/g, '_'),
           name: itemName,
-          diet: fallback.veg !== undefined ? (fallback.veg ? "veg" : "non-veg") : "veg",
-          dishType: fallback.dish_type || "",
-          category: fallback.category || "",
+          diet: fallback.veg !== undefined ? (fallback.veg ? 'veg' : 'non-veg') : 'veg',
+          dishType: fallback.dish_type || '',
+          category: fallback.category || '',
           serving: {
             size: fallback.serving_size || 100,
-            unit: fallback.serving_unit || "g",
-            unitType: fallback.unit_type || "serving"
+            unit: fallback.serving_unit || 'g',
+            unitType: fallback.unit_type || 'serving'
           },
           nutrition: {
             calories: fallback.calories || 0,
@@ -332,8 +387,8 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
             fat: fallback.fat || 0,
             fiber: fallback.fiber || 0
           },
-          proteinLevel: fallback.protein_level || "low",
-          mealRole: fallback.meal_role || "single",
+          proteinLevel: fallback.protein_level || 'low',
+          mealRole: fallback.meal_role || 'single',
           tags: fallback.tags || [],
           _enrichedByFallback: true
         });
@@ -351,25 +406,16 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
 
     res.json(data);
+
   } catch (err) {
-    if (err.code === 'ECONNREFUSED') {
-      return res.status(503).json({
-        error: "OCR service is offline. Please ensure the Python CV service is running on port 8000.",
-        isOffline: true,
-      });
-    }
-    console.error("OCR ERROR:", err);
+    console.error('OCR ERROR:', err);
     res.status(500).json({
-      error: "OCR processing failed",
+      error: 'OCR processing failed',
       message: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
   } finally {
     if (originalPath && fs.existsSync(originalPath)) {
-      try {
-        fs.unlinkSync(originalPath);
-      } catch (e) {
-        console.error("Failed to delete original file:", e);
-      }
+      try { fs.unlinkSync(originalPath); } catch (e) { console.error('Failed to delete temp file:', e); }
     }
   }
 });

@@ -21,6 +21,4 @@ timm
 # Utilities
 scikit-learn
 
-# OCR (PaddleOCR for menu text extraction)
-paddlepaddle
-paddleocr
+# OCR is handled by Tesseract.js in the Node.js backend — no Python OCR deps needed
