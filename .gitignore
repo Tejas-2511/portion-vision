@@ -20,5 +20,21 @@ build/
 .DS_Store
 Thumbs.db
 
-# Specific service requested by user
-cv_service/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python environments
+venv/
+env/
+.venv/
+cv_service/venv/
+
+# CV Models and large files
+*.pt
+*.pth
+*.onnx
+cv_service/weights/
+cv_service/volume/
+~/.paddleocr/
