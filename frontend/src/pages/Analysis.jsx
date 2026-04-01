@@ -144,23 +144,70 @@ export default function Analysis() {
             </div>
           ) : analysisResult && analysisResult.food_items && analysisResult.food_items.length > 0 ? (
             <div className="space-y-4">
+              {/* Overall Detected Summary */}
+              <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 mb-2">
+                <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-2">Detected Macros</p>
+                <div className="flex justify-between items-end">
+                  <div className="flex flex-col">
+                    <span className="text-3xl font-black text-emerald-700">
+                      {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.calories, 0))}
+                      <span className="text-sm font-normal ml-1">kcal</span>
+                    </span>
+                    <span className="text-xs text-emerald-600 font-medium opacity-80">Estimated Total</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-blue-700">
+                        {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.protein, 0))}g
+                      </div>
+                      <div className="text-[9px] text-blue-500 font-medium">Protein</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-orange-700">
+                        {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.carbs, 0))}g
+                      </div>
+                      <div className="text-[9px] text-orange-500 font-medium">Carbs</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-slate-700">
+                        {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.fat, 0))}g
+                      </div>
+                      <div className="text-[9px] text-slate-500 font-medium">Fat</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between text-sm text-slate-500 mb-2 px-1">
                 <span>Confidence: {(analysisResult.confidence * 100).toFixed(0)}%</span>
-                <span className="text-emerald-600 font-medium">Analysis Complete</span>
+                <span className="text-emerald-600 font-medium">Detected Items</span>
               </div>
 
               <div className="space-y-3">
                 {analysisResult.food_items.map((food, idx) => {
                   const recGrams = getRecommendedGrams(food.name);
-                  const actualGrams = Math.round(food.mass_g);
-                  const isOver = recGrams && actualGrams > recGrams * 1.1; // 10% tolerance
-                  const isUnder = recGrams && actualGrams < recGrams * 0.9;
+                    const actualGrams = Math.round(food.mass_g);
+                    const isOver = recGrams && actualGrams > recGrams * 1.1;
+                    const isUnder = recGrams && actualGrams < recGrams * 0.9;
 
-                  return (
-                    <div key={idx} className="flex flex-col rounded-xl bg-slate-50 p-3 border border-slate-100">
-                      <div className="flex justify-between font-medium text-slate-700 capitalize mb-1">
-                        <span className="truncate">{food.name.replace(/_/g, ' ')}</span>
-                      </div>
+                    return (
+                      <div key={idx} className="flex flex-col rounded-xl bg-slate-50 p-4 border border-slate-100 shadow-sm">
+                        <div className="flex justify-between items-start font-medium text-slate-700 capitalize mb-1">
+                          <span className="truncate pr-2 font-bold">{food.name.replace(/_/g, ' ')}</span>
+                          <span className="shrink-0 text-emerald-600 font-bold">{Math.round(food.calories)} kcal</span>
+                        </div>
+
+                        <div className="flex gap-2 mt-1 mb-3 flex-wrap">
+                          <span className="text-[10px] font-semibold bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                            {food.protein}g protein
+                          </span>
+                          <span className="text-[10px] font-semibold bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded">
+                            {food.carbs}g carbs
+                          </span>
+                          <span className="text-[10px] font-semibold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
+                            {food.fat}g fat
+                          </span>
+                        </div>
 
                       <div className="flex justify-between items-end mt-2">
                         <div>

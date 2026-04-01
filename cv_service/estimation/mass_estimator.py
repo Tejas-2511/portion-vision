@@ -18,6 +18,7 @@ from segmentation.sam_segmenter import segment_full_image_sam
 from depth.depth_estimator import estimate_depth, normalize_depth_to_plate, depth_to_cm
 from volume.volume_calculator import compute_volume_with_cap
 from config.density_map import get_density
+from config.macro_map import get_macros
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,7 @@ def estimate_food_mass(
     plate_profile: str = None,
 ) -> dict:
     """
-    Improved pipeline: full-image segmentation with per-pixel well mapping.
+    Improved pipeline: full-image segmentation with per-pixel well mapping and macro estimation.
     """
     logger.info("Step 1: Preprocessing & Perspective Warp")
     top_down = process_image(image_bgr)
@@ -53,13 +54,13 @@ def estimate_food_mass(
     for comp in compartments:
         x, y, w, h = comp["bbox"]
         depth = comp.get("depth_cm", 2.0)
-        plate_mask[y : y + h, x : x + w] = False
+        plate_mask[y:y+h, x:x+w] = False
 
         if comp.get("contour") is not None:
             cv2.drawContours(well_depth_map, [comp["contour"]], -1, depth, -1)
         else:
             # Fallback to bbox if contour detection missed the exact shape
-            well_depth_map[y : y + h, x : x + w] = depth
+            well_depth_map[y:y+h, x:x+w] = depth
 
     height_relative = normalize_depth_to_plate(raw_depth, plate_mask)
     height_from_divider = depth_to_cm(height_relative, raw_depth, cm_per_pixel, img_w)
@@ -81,7 +82,6 @@ def estimate_food_mass(
         total_conf += score
 
         # Calc volume using per-pixel well depth
-        # Total height = height relative to divider + depth of well at that pixel
         pixel_heights = height_from_divider[mask] + well_depth_map[mask]
         pixel_heights = np.clip(pixel_heights, 0.1, 10.0) # avoid impossible numbers
         
@@ -107,10 +107,21 @@ def estimate_food_mass(
         density = get_density(food_name)
         mass_g = volume_ml * density
 
+        # Calculate macros
+        m = get_macros(food_name)
+        calories = mass_g * m["calories"]
+        protein = mass_g * m["protein"]
+        carbs = mass_g * m["carbs"]
+        fat = mass_g * m["fat"]
+
         food_items.append({
             "name": food_name,
             "volume_ml": round(float(volume_ml), 1),
             "mass_g": round(float(mass_g), 1),
+            "calories": round(float(calories), 1),
+            "protein": round(float(protein), 1),
+            "carbs": round(float(carbs), 1),
+            "fat": round(float(fat), 1),
             "confidence": round(score, 2)
         })
 

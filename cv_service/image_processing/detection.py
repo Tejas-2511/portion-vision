@@ -7,7 +7,7 @@ and computes a scale factor (cm per pixel) using known plate dimensions.
 
 import cv2
 import numpy as np
-from config.plate_config import get_plate_profile
+from config.plate_config import get_plate_profile, PLATE_PROFILES
 
 
 def find_compartments(image: np.ndarray) -> list[dict]:
@@ -68,6 +68,39 @@ def find_compartments(image: np.ndarray) -> list[dict]:
     return compartments
 
 
+def pick_best_plate_profile(compartments: list[dict]) -> str:
+    """
+    Look at detected compartments and pick the best matching profile
+    from plate_config automatically based on aspect ratios and count.
+    """
+    if not compartments:
+        return "standard_mess_thali"
+
+    best_profile_name = "standard_mess_thali"
+    best_total_diff = float("inf")
+    
+    det_ratios = sorted([c["bbox"][2] / max(c["bbox"][3], 1) for c in compartments], reverse=True)
+
+    for name, p in PLATE_PROFILES.items():
+        prof_ratios = sorted([c["width_cm"] / max(c["height_cm"], 1) for c in p["compartments"]], reverse=True)
+        
+        # Penalty for count mismatch
+        diff = abs(len(det_ratios) - len(prof_ratios)) * 1.5
+        
+        # Add up differences in sorted ratios
+        for i in range(min(len(det_ratios), len(prof_ratios))):
+            diff += abs(det_ratios[i] - prof_ratios[i])
+        
+        # Penalize extra/missing detected items
+        diff += abs(len(det_ratios) - len(prof_ratios)) * 0.5
+
+        if diff < best_total_diff:
+            best_total_diff = diff
+            best_profile_name = name
+
+    return best_profile_name
+
+
 def compute_scale(
     compartments: list[dict],
     image_shape: tuple,
@@ -75,15 +108,11 @@ def compute_scale(
 ) -> float:
     """
     Compute pixels-per-cm scale factor by matching detected compartments
-    to known real-world dimensions from the plate profile.
-
-    Strategy:
-    - If no compartments found, fall back to full-plate outer dimensions.
-    - Otherwise, match the largest detected compartment to the largest
-      known compartment and derive pixels/cm.
-
-    Returns: cm_per_pixel (float).
+    to known real-world dimensions. Handles auto-detection if profile not provided.
     """
+    if plate_profile_name is None:
+        plate_profile_name = pick_best_plate_profile(compartments)
+
     profile = get_plate_profile(plate_profile_name)
     img_h, img_w = image_shape[:2]
 
@@ -121,12 +150,11 @@ def match_compartments_to_profile(
     plate_profile_name: str = None,
 ) -> list[dict]:
     """
-    Best-effort mapping of detected compartments to profile compartment labels.
-    Returns enriched compartment dicts with added keys:
-        - "label": str (matched profile label or generic)
-        - "depth_cm": float (physical depth of that compartment)
-        - "max_volume_ml": float
+    Mapping of detected compartments to labels using auto-detected plate profile.
     """
+    if plate_profile_name is None:
+        plate_profile_name = pick_best_plate_profile(compartments)
+
     profile = get_plate_profile(plate_profile_name)
     profile_comps = profile["compartments"]
 

@@ -8,17 +8,7 @@ from detected compartments.
 
 # ── Standard Indian mess thali plate ─────────────────────────────────────
 # Rectangular stainless-steel plate with molded compartments.
-# Overall outer dimensions and individual compartment sizes (in cm).
-#
-# Layout reference (typical 6-compartment mess plate):
-#  ┌──────────────────────────────────┐
-#  │   ┌─────┐  ┌─────┐  ┌─────┐    │
-#  │   │ sm1 │  │ sm2 │  │ sm3 │    │
-#  │   └─────┘  └─────┘  └─────┘    │
-#  │   ┌────────────┐  ┌─────────┐  │
-#  │   │   large1   │  │  large2 │  │
-#  │   └────────────┘  └─────────┘  │
-#  └──────────────────────────────────┘
+
 
 PLATE_PROFILES = {
     "standard_mess_thali": {

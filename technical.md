@@ -1,366 +1,166 @@
-# PortionVision — Technical Documentation
+# PortionVision — Full Technical Documentation (System Encyclopedia)
 
-## Overview
+## 🌐 1. System Overview & Architecture
 
-PortionVision is a smart nutrition assistant that helps users balance their meals in a college/office mess setting. It:
+PortionVision is an end-to-end nutritional assistant designed for college/office mess environments. It solves the "hidden nutrition" problem by digitizing mess menus and estimating actual plate portions using 3D spatial analysis.
 
-1. **Digitizes mess menus** using OCR (Tesseract.js).
-2. **Generates personalized plate recommendations** using a multi-phase nutrition engine.
-3. **Estimates actual food mass** from a plate photo using computer vision (SAM + MiDaS depth).
-
----
-
-## System Architecture
-
-```
-portion-vision/
-├── backend/          Node.js + Express API (port 5000) - Handles OCR
-├── frontend/         React 19 + Vite 7 PWA (port 5173)
-├── cv_service/       Python FastAPI CV microservice (port 8000) - Analysis only
-└── technical.md      ← You are here
-```
-
-### Frontend (React + Vite)
-
-- **Core**: React 19, Vite 7, React Router v7.
-- **Styling**: Tailwind CSS v3 (Emerald/Slate theme).
-- **Security & Stability**: 
-  - Overrides in `package.json` fix vulnerabilities in `serialize-javascript` and `@rollup/plugin-terser`.
-  - `vite-plugin-pwa` pinned for compatibility with Vite 7.
-- **State**: `AppContext` (Context API).
-  - `userProfile` — persisted in **localStorage** (client-only, no server sync).
-  - `todaysMenu` — synced from server on load, cached in localStorage.
-- **PWA**: `vite-plugin-pwa` for offline capability and mobile install.
-- **Proxy**: Dev server proxies `/api` and `/ocr` → backend port 5000.
-
-### Backend (Node.js + Express)
-
-- **API**: Express.js REST endpoints.
-- **OCR Engine**: Native **Tesseract.js** integration.
-  - Uses local `eng.traineddata` for offline/deterministic performance.
-  - No longer proxies OCR requests to Python.
-- **Storage**: JSON flat-files in `backend/data/`.
-  - `menu.json` — current active menu (`{ date, items }` — single `items` array).
-  - `foodDatabase.json` — knowledge base of food items with nutrition data.
-- **Image Processing**: `multer` (uploads).
-- **Recommendation**: `portion_recommender.js` — calorie-aware plate builder.
-- **CV Proxy**: `/api/analyze-plate` (60s timeout) proxies images to the Python CV service via `FormData`.
-
-### CV Service (Python + FastAPI)
-
-- **Framework**: FastAPI + Uvicorn.
-- **Segmentation**: MobileSAM (Segment Anything).
-- **Depth**: MiDaS v2.1 Small (monocular depth estimation via torch.hub).
-- **Detection**: OpenCV contour analysis for plate/compartment detection.
-- **Volume**: Per-pixel integration (area × height).
-- **Weight Management**: Weights are cached locally in `cv_service/weights/` and `~/.cache/torch/hub/`.
+### The Three-Tier Stack:
+| Tier | Technology | Responsibility |
+|------|------------|----------------|
+| **Frontend** | React 19 + Vite 7 + Tailwind | UX, PWA, Camera Capture, Results Visualization |
+| **Backend** | Node.js + Express + Tesseract.js | Logic, OCR, Recommendations, JSON database |
+| **CV Service** | Python + FastAPI + MobileSAM + MiDaS | 3D Reconstruction, Segmentation, Mass Estimation |
 
 ---
 
-## Core Logic & Algorithms
+## 📱 2. Frontend: Mobile-First PWA
 
-### 1. Menu OCR Pipeline (`POST /ocr`)
+The frontend is a Progressive Web App optimized for low-latency interactions on mobile devices.
 
-1. **Input**: Image (camera or gallery) uploaded to Node.js backend.
-2. **OCR Engine**: Tesseract.js (Node.js `backend/server.js`).
-3. **Execution**:
-   - Tesseract processes the image using `eng.traineddata`.
-   - Raw text is passed to `parseMenuText`.
-4. **Parsing** (`parseMenuText`):
-   - Normalize: lowercase, remove non-alpha characters (except `,/&-`).
-   - Split by `,`, `/`, `&`, `|`, `+`.
-   - Filter noise using `OCR_BLACKLIST` (e.g., "breakfast", "mess", "timing").
-   - Filter short tokens (< 3 chars).
-   - Deduplicate and sort alphabetically.
-5. **Storage**: Backend saves parsed items to `menu.json`.
-6. **Database Enrichment**: New items not in `foodDatabase.json` are auto-added with fallback nutrition estimates from `getFallbackDetails()`.
+### Directory Structure & Responsibilities:
+*   `src/pages/`:
+    *   `Home.jsx`: Entry point with user summary and quick actions.
+    *   `MenuUpload.jsx`: Interface for capturing and uploading mess menus.
+    *   `PlateCapture.jsx`: Camera interface with guide overlays for thali alignment.
+    *   `Analysis.jsx`: Complex results page with macro breakdown of detected portions.
+    *   `Preferences.jsx`: LocalStorage-persisted user profile settings.
+*   `src/components/`:
+    *   `RecommendationCard.jsx`: Displays a balanced plate with progress bars for Calories, Protein, Carbs, and Fat.
+    *   `MacroBar.jsx`: Reusable sub-component for nutritional progress visualization.
+    *   `ErrorMessage.jsx`: standardized error reporting.
+*   `src/contexts/AppContext.jsx`: Central state managing `userProfile`, `todayMenu`, and `imagePreview`.
 
-### 2. Recommendation Engine (`portion_recommender.js`)
-
-Generates specific quantity recommendations to build a balanced plate from available menu items.
-
-#### A. Calorie & Macro Estimation
-
-| Step | Method | Details |
-|------|--------|---------|
-| **BMR** | Mifflin-St Jeor | `10×weight + 6.25×height - 5×age ± offset` (male +5, female -161) |
-| **TDEE** | Activity multiplier | Sedentary 1.2 → Very Active 1.725 |
-| **Goal adjustment** | Deficit/surplus | Lose: -400 kcal · Gain: +300 kcal |
-| **Meal fraction** | Split by meal | Breakfast 25% · Lunch 35% · Dinner 30% · Snack 10% |
-| **Protein target** | Per-kg factor | Maintain: 1.0 g/kg · Lose: 1.6 g/kg · Gain: 2.0 g/kg |
-
-#### B. Food Lookup & Classification
-
-- **Primary**: O(1) normalized index lookup on `foodDatabase.json`.
-- **Fuzzy fallback**: Levenshtein distance ≤ 2 against the full database.
-- **Ultimate fallback**: Keyword-based `getFallbackDetails()` covering 30+ food patterns (biryani, rice, dal, chicken, etc.) with estimated macros.
-
-Categories: `carb_base`, `protein_main`, `side`, `condiment`, `dessert`, `beverage`.
-Meal roles: `mixed` (complete one-pot meal) or `single` (individual component).
-
-#### C. Diet Filtering
-
-Supports 6 diet preferences with tag-based filtering:
-
-| Diet | Excludes |
-|------|----------|
-| **Non-veg** | Nothing |
-| **Vegetarian** | Meat |
-| **Lacto-veg** | Meat, eggs |
-| **Ovo-veg** | Meat, dairy |
-| **Vegan** | All animal products |
-| **Jain** | Meat, eggs, root vegetables (potato, onion, garlic, carrot, etc.) |
-
-Plus custom `avoidTags` from user profile (allergies, etc.).
-
-#### D. Plate Building Algorithm (Multi-Phase)
-
-The engine uses meal-type-specific fast paths and a phased approach:
-
-**Snack fast-path** (mealType = `snack`):
-- Pick 1-2 items within budget, prioritize protein. Add salad if available.
-
-**Mixed-meal fast-path** (mealType = `lunch`/`dinner`, biryani/khichdi on menu):
-- Use the highest-protein mixed item as the plate. Optionally add a side.
-
-**Breakfast fast-path** (mealType = `breakfast`):
-- Prefer breakfast-specific carbs (poha, upma, idli, oats).
-- Add protein if budget allows. Include beverages.
-
-**Standard plate build** (lunch/dinner, no mixed meal):
-
-| Phase | Action | Budget Allocation |
-|-------|--------|-------------------|
-| **Phase 1** | Reserve calories for a vegetable side (highest fiber) | Up to 150 kcal reserved |
-| **Phase 2** | Select protein(s) — sorted by protein/calorie efficiency | ~40% of remaining budget |
-| **Phase 3** | Select carbs — roti+rice split if budget > 300 kcal | Remaining budget |
-| **Phase 4** | Place reserved vegetable side on plate | Reserved kcal |
-| **Trim** | If > 12% over target → reduce carb by 1 unit | — |
-| **Fill** | If < 80% of target → add second side or bump carb | — |
-
-Salads are always added (low calorie, always beneficial).
-Condiments, beverages, and desserts go to `optionalItems`.
-
-#### E. Serving Calculation (`calcServings`)
-
-- Discrete items (roti, paratha): integer quantities, capped at 3-4.
-- Bowl-based items (rice, dal, sabzi): 0.5 increments, capped at 1.5-2.
-- Constrained by both calorie budget AND per-item fat limit.
-
-#### F. Output Shape
-
-```json
-{
-  "mealType": "lunch",
-  "dietPreference": "non-veg",
-  "recommendedPlate": [
-    {
-      "item": "chicken curry",
-      "dish_type": "curry",
-      "role": "protein",
-      "recommendedQuantity": 1,
-      "unit": "bowl",
-      "serving_size": 150,
-      "totalGrams": 150,
-      "estimatedCalories": 280,
-      "protein": 25,
-      "carbs": 5,
-      "fat": 14,
-      "fiber": 1,
-      "reason": "Muscle repair & satiety",
-      "icon": "💪"
-    }
-  ],
-  "optionalItems": [
-    { "item": "papad", "calories": 40, "note": "Condiment — small amount", "limit": "~10g" }
-  ],
-  "summary": {
-    "dailyCalories": 2200,
-    "targetMealCalories": 770,
-    "totalPlateCalories": 745,
-    "totalPlateProtein": 42,
-    "totalPlateCarbs": 85,
-    "totalPlateFat": 22,
-    "targetProtein": 38,
-    "plateLogic": "Balanced 770 kcal lunch targeting 38g protein.",
-    "dietNote": "",
-    "notes": "Portions are estimates based on standard serving sizes."
-  }
-}
-```
+### PWA Configuration:
+*   Uses `vite-plugin-pwa` for service worker generation.
+*   `registerType: 'autoUpdate'` ensures users always have the latest food density maps.
+*   Offline capability allows users to view their recommendation even with poor mess-hall reception.
 
 ---
 
-### 3. Computer Vision — Food Mass Estimation (`cv_service/`)
+## ⚙️ 3. Backend: Logic, OCR & Recommendations
 
-Estimates food mass from a single image of a non-circular, sectioned mess plate.
+The backend serves as the "Knowledge Hub" and "Nutritionist" of the system.
 
-#### Architecture
+### A. The OCR Pipeline (`server.js`)
+*   **Engine**: Tesseract.js running native in Node.js.
+*   **Data**: Uses local `eng.traineddata`.
+*   **Logic**:
+    1.  Image upload via `multer`.
+    2.  `Tesseract.recognize` extracts raw text.
+    3.  `parseMenuText` normalization:
+        *   Regex `/[^a-z\s/,&\-]/g` strips punctuation.
+        *   `OCR_BLACKLIST` removes non-food noise (Breakfast, Lunch, Dinner, Monday, Mess, Price, rs, etc.).
+    4.  Items are checked against `foodDatabase.json`. New items are added with `_enrichedByFallback: true`.
 
-```
-cv_service/
-├── main.py                          # FastAPI entry point (port 8000)
-├── api/routes.py                    # POST /estimate-portion
-├── config/
-│   ├── plate_config.py              # Known plate dimensions (cm)
-│   └── density_map.py               # Food density table (g/ml)
-├── image_processing/
-│   ├── preprocess.py                # Resize + perspective warp
-│   └── detection.py                 # Compartment detection + scale calibration
-├── segmentation/
-│   └── sam_segmenter.py             # MobileSAM food segmentation
-├── depth/
-│   └── depth_estimator.py           # MiDaS monocular depth estimation
-├── volume/
-│   └── volume_calculator.py         # Per-pixel volume integration
-├── estimation/
-│   └── mass_estimator.py            # End-to-end orchestrator
-└── weights/                         # Locally cached model weights
-```
+### B. Dietary Preference Logic
+The recommendation engine strictly filters menu items based on these tags:
 
-#### Pipeline Steps
+| Diet | Excludes Items with Tags |
+|------|-------------------------|
+| **Non-veg** | (No exclusions) |
+| **Vegetarian** | "meat" |
+| **Lacto-veg** | "meat", "eggs" |
+| **Ovo-veg** | "meat", "dairy" |
+| **Vegan** | "meat", "eggs", "dairy", "honey" |
+| **Jain** | "meat", "eggs", "root_veg" (potato, onion, garlic) |
 
-| Step | Module | What it does |
-|------|--------|-------------|
-| 1. Preprocess | `preprocess.py` | Resize (longest edge → 1024px) + detect plate boundary + perspective warp to top-down view |
-| 2. Detect compartments | `detection.py` | Combined adaptive-threshold + Canny edge detection → contour filtering (2-90% of plate area). Outputs bounding boxes sorted top-left → bottom-right |
-| 3. Scale calibration | `detection.py` | Matches largest detected compartment to known real-world dimensions from `plate_config.py` → computes `cm_per_pixel` scale factor |
-| 4. Depth estimation | `depth_estimator.py` | MiDaS Small (via `torch.hub`) generates relative depth map. Plate surface = baseline (median depth). Height = depth – baseline, clamped ≥ 0. Relative heights scaled to assumed max food height (default 3 cm) |
-| 5. Segmentation | `sam_segmenter.py` | MobileSAM with grid-point prompts segments food within each compartment. Masks filtered by area (1-95% of compartment) and overlap (< 50%). Falls back to HSV color thresholding if SAM unavailable |
-| 6. Volume integration | `volume_calculator.py` | For each food mask: `volume = Σ (pixel_area_cm² × height_cm)` over all mask pixels. Capped at compartment's physical max volume |
-| 7. Mass estimation | `mass_estimator.py` | `mass_g = volume_ml × density` using density lookup from `density_map.py` (80+ Indian foods, substring-match fallback, default 1.0 g/ml) |
-
-#### Plate Configuration
-
-Known plate profiles defined in `plate_config.py`:
-
-- **`standard_mess_thali`**: 37×27 cm, 5 compartments (3 small wells + 2 large sections).
-- **`4_compartment_plate`**: 33×25 cm, 4 equal sections.
-
-Each compartment has known `width_cm`, `height_cm`, `depth_cm`, and `max_volume_ml`.
-
-Compartment matching uses aspect-ratio comparison (greedy, largest-first).
-
-#### Food Density Table
-
-`density_map.py` contains densities (g/ml) for 80+ foods:
-
-| Category | Example | Density (g/ml) |
-|----------|---------|----------------|
-| Rice (cooked) | steam rice | 1.08 |
-| Flatbread | chapati, roti | 0.85 |
-| Dal / lentils | dal, sambar | 1.02–1.05 |
-| Curries | chicken curry | 1.05 |
-| Sabzi (veg) | mixed veg | 0.90 |
-| Condiments | pickle | 1.10 |
-| Sweets | gulab jamun | 1.15 |
-
-Lookup: exact match → substring match → default (1.0).
-
-#### API: `POST /estimate-portion`
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `image` | File | Yes | JPEG/PNG plate image |
-| `expected_items` | string | No | Comma-separated food names for labeling |
-| `plate_profile` | string | No | Plate type (default: `standard_mess_thali`) |
-
-**Response:**
-```json
-{
-  "food_items": [
-    { "name": "dal", "volume_ml": 120.5, "mass_g": 126.5 },
-    { "name": "rice", "volume_ml": 210.0, "mass_g": 231.0 }
-  ],
-  "confidence": 0.82
-}
-```
-
-#### Model Loading
-
-- MobileSAM and MiDaS weights are **lazy-loaded** on first request.
-- Subsequent calls reuse loaded models in memory.
-- GPU (CUDA) used if available, otherwise CPU.
+### C. Recommendation Algorithm (`portion_recommender.js`)
+1.  **BMR (Mifflin-St Jeor)**: `(10 * wt) + (6.25 * ht) - (5 * age) + s` (Male: +5, Female: -161).
+2.  **Activity Adjustment**: Sedentary (1.2), Moderate (1.55), Very Active (1.725).
+3.  **Meal Calorie Targets**:
+    *   **Breakfast**: 25% of daily budget.
+    *   **Lunch**: 35% of daily budget.
+    *   **Dinner**: 30% of daily budget.
+    *   **Snacks**: 10% of daily budget.
+4.  **Plate Building Phases**:
+    *   **Phase 1**: Reserve 150 kcal for a "veg side" (fiber/vitamins).
+    *   **Phase 2**: Select a "protein_main". If multiple, pick the one with highest protein-to-calorie density.
+    *   **Phase 3**: Allocate remaining calories to "carb_base".
+    *   **Failsafe**: If diet excludes all items, a "No compatible items" warning is returned.
 
 ---
 
-## API Reference
+## 🤖 4. CV Service: Computer Vision & 3D Estimation
 
-| Method | Endpoint | Service | Description |
-|--------|----------|---------|-------------|
-| `GET` | `/health` | Backend | Health check |
-| `GET` | `/api/menu` | Backend | Get current digitized menu |
-| `POST` | `/ocr` | Backend | Upload image for menu OCR (Native Tesseract.js) |
-| `POST` | `/api/recommend` | Backend | Get plate recommendations. Body: `{ userProfile, mealType, menuItems }` |
-| `GET` | `/api/foods` | Backend | Get all foods in the database |
-| `GET` | `/api/foods/search?q=` | Backend | Search foods by name (substring + fuzzy) |
-| `POST` | `/api/analyze-plate` | Backend → CV | Upload plate photo for mass estimation (proxied to CV service) |
-| `POST` | `/estimate-portion` | CV Service | Direct CV endpoint (internal, port 8000) |
-| `GET` | `/health` | CV Service | CV service health check |
+The Python service performs the "heavy lifting" of spatial estimation.
 
----
-
-## Setup
-
-### 1. Backend (Node.js)
-```bash
-cd backend
-npm install
-npm run dev
-```
-Runs on `http://localhost:5000`. Requires `eng.traineddata` in root for OCR.
-
-### 2. Frontend (React)
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Runs on `http://localhost:5173`. Access via network IP for mobile testing.
-
-### 3. CV Service (Python)
-```bash
-cd cv_service
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python main.py
-```
-Runs on `http://localhost:8000`. Weights download automatically on first request.
+### A. The Image Pipeline
+1.  **`preprocess.py`**:
+    *   Resizes image to 1024px.
+    *   Applies a Bilateral Filter to preserve edges while reducing sensor noise.
+    *   warps perspective to a 1024x1024 square representation of the plate.
+2.  **`detection.py` (Autonomous Calibration)**:
+    *   Detects internal compartment contours.
+    *   Calculates a "Geometric Fingerprint" for the plate.
+    *   **Auto-detects Profile**: Compares the fingerprint to known profiles.
+3.  **`depth_estimator.py` (MiDaS v2.1 Small)**:
+    *   Generates a relative depth map.
+    *   **Physics Check**: Calculates metric height $H = \frac{(Depth_{base} - Depth_{pixel}) \times Z_{dist}}{Focal_{len}}$.
+    *   Baseline is established using the detected rim of the plate.
+4.  **`sam_segmenter.py` (MobileSAM)**:
+    *   Performs a global scan with a 225-point grid.
+    *   **Heuristic Foodness Check**:
+        *   **Texture**: Laplacian variance must be $> 25$ (Smooth steel has low variance).
+        *   **Color**: HSV Saturation must be $> 12$ (Metallic surfaces have low saturation).
+5.  **`volume_calculator.py`**:
+    *   Total height $H_{total} = H_{relative\_to\_rim} + Depth_{physical\_well}$.
+    *   $Volume = \sum (H_{total} \times PixelArea_{cm^2})$.
 
 ---
 
-## Folder Structure
+## 📊 5. Data Constants & Schemas (Dead-Accurate)
 
-```
-portion-vision/
-├── backend/
-│   ├── data/                       # JSON database (menu.json, foodDatabase.json)
-│   ├── utils/                      # Shared utilities (normalize.js, fuzzyMatch.js)
-│   ├── uploads/                    # Temp image storage (auto-cleaned)
-│   ├── eng.traineddata             # Tesseract OCR language data
-│   ├── server.js                   # Express API + Tesseract OCR + CV proxy
-│   └── portion_recommender.js      # Recommendation engine
-├── frontend/
-│   ├── src/
-│   │   ├── components/             # RecommendationCard, Button, ErrorMessage
-│   │   ├── contexts/               # AppContext (global state)
-│   │   ├── hooks/                  # useApp, useErrorHandler
-│   │   ├── pages/                  # Home, MenuUpload, Preferences, Analysis
-│   │   ├── services/               # api.js (centralized HTTP client)
-│   │   └── utils/                  # validation.js
-│   ├── package.json                # PWA + Dependency overrides
-│   ├── vite.config.js              # PWA + proxy config
-│   └── tailwind.config.js          # Theme config
-├── cv_service/
-│   ├── config/                     # plate_config.py, density_map.py
-│   ├── image_processing/           # preprocess.py, detection.py
-│   ├── segmentation/               # sam_segmenter.py (MobileSAM)
-│   ├── depth/                      # depth_estimator.py (MiDaS)
-│   ├── volume/                     # volume_calculator.py
-│   ├── estimation/                 # mass_estimator.py (pipeline orchestrator)
-│   ├── api/                        # routes.py (FastAPI endpoint)
-│   ├── weights/                    # Locally cached model weights (mobile_sam.pt)
-│   └── main.py                     # FastAPI entry point
-└── technical.md                    # Documentation
-```
+### A. Known Plate Profiles (`plate_config.py`)
+| Profile Name | Outer Dim (cm) | Context |
+|--------------|----------------|---------|
+| **standard_mess_thali** | 37.0 x 27.0 | Standard 6-compartment tray. Wells = 2.5cm deep. |
+| **4_compartment_plate** | 33.0 x 25.0 | 4-section square tray. Wells = 2.5cm deep. |
+
+### B. Core Density Library (`density_map.py`)
+*Used for: Mass (g) = Volume (ml) × Density*
+| Food Item | Density (g/ml) |
+|-----------|----------------|
+| **Steam Rice** | 1.08 |
+| **Dal Fry** | 1.05 |
+| **Mixed Veg** | 0.90 |
+| **Chapati/Roti** | 0.85 |
+| **Paneer** | 1.03 |
+| **Salad** | 0.60 |
+
+### C. Nutritional Macro Map (`macro_map.py`)
+*Units are per **1.0 gram** of food.*
+| Category | Cal/g | Prot/g | Carb/g | Fat/g |
+|----------|-------|--------|--------|-------|
+| **Rice (Steam)** | 1.30 | 0.027 | 0.280 | 0.003 |
+| **Roti (Chapati)** | 2.60 | 0.080 | 0.500 | 0.030 |
+| **Dal (Yellow)** | 0.85 | 0.055 | 0.120 | 0.020 |
+| **Aloo Gobi** | 0.95 | 0.030 | 0.120 | 0.050 |
+| **Chicken Curry** | 1.40 | 0.150 | 0.040 | 0.080 |
+
+### D. Dietary Preference Logic
+The recommendation engine strictly filters using `MEAT_TAGS`, `isEgg()`, and `isDairy()` logic:
+
+| Diet | Exclusions |
+|------|------------|
+| **Jain** | `MEAT_TAGS` + `Egg` + `Root_Veg` (potato, onion, garlic, carrot, etc.) |
+| **Vegan** | `MEAT_TAGS` + `Egg` + `Dairy` (milk, ghee, butter, paneer) |
+| **Lacto-Veg** | `MEAT_TAGS` + `Egg` |
+| **Ovo-Veg** | `MEAT_TAGS` + `Dairy` |
+
+---
+
+## 🛠️ 6. Developer & Calibration Guide
+
+*   **Depth Calibration**:
+    *   **Z-Scale**: `1.2` multiplier in `depth_estimator.py` acts as a "distance correction factor."
+    *   **Baseline**: Automatically derived from the median depth of pixels tagged as "plate divider."
+*   **AI Vision Params**:
+    *   **SAM Grid**: Uses a **15x15 (225 points)** prompt grid.
+    *   **Foodness Saturation**: Threshold set to `12` (HSV gamut).
+    *   **Foodness Texture**: Laplacian variance threshold set to `25`.
+*   **Database Synchronization**:
+    *   When OCR runs, items with `_enrichedByFallback: true` are added.
+    *   Manually review `backend/data/foodDatabase.json` to move fallback estimates to "verified" status.
+*   **Service Monitoring**:
+    *   Backend: Port 5000 (`/health`).
+    *   AI Service: Port 8000 (`/health`).
