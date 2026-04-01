@@ -16,7 +16,6 @@ from image_processing.detection import (
 )
 from segmentation.sam_segmenter import segment_full_image_sam
 from depth.depth_estimator import estimate_depth, normalize_depth_to_plate, depth_to_cm
-from volume.volume_calculator import compute_volume_with_cap
 from config.density_map import get_density
 from config.macro_map import get_macros
 

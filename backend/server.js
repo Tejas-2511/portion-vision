@@ -206,7 +206,7 @@ app.post('/api/recommend', (req, res) => {
       return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
     }
 
-    // Reconstruct user object from frontend profile, including diet preference
+    // Reconstruct user object from frontend profile
     const user = {
       weight_kg: parseFloat(userProfile.weight),
       height_cm: parseFloat(userProfile.height),
@@ -215,9 +215,14 @@ app.post('/api/recommend', (req, res) => {
       activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
       goal: (userProfile.goalType || 'maintain').toLowerCase(),
       goalType: userProfile.goalType,
+      proteinPct: userProfile.proteinPct,
+      carbsPct: userProfile.carbsPct,
+      fatPct: userProfile.fatPct,
       dietPreference: userProfile.dietPreference || 'non-veg',
       avoidTags: userProfile.avoidTags || []
     };
+
+    console.log(`🥗 [REC REQUEST] Goal: ${user.goal}, Split: ${user.proteinPct}/${user.carbsPct}/${user.fatPct}`);
 
     const { recommendPlate } = require("./portion_recommender");
 
@@ -357,19 +362,28 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
       console.log('📝 No existing database found, creating new one');
     }
 
-    const existingNames = new Set(
-      foodDatabase.filter(item => item && item.name).map(item => normalizeFoodName(item.name))
+    // Use a helper to make comparison case-insensitive and space-insensitive
+    const getCompareKey = (name) => (name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const existingKeys = new Set(
+      foodDatabase.filter(item => item && item.name).map(item => getCompareKey(item.name))
     );
 
-    console.log(`📋 Menu items to process: ${menuItems.join(', ')}`);
-
+    const cleanedMenuItems = [];
     let addedCount = 0;
+    let skippedCount = 0;
+
     menuItems.forEach(itemName => {
-      const normalizedItemName = normalizeFoodName(itemName);
-      if (!existingNames.has(normalizedItemName)) {
-        console.log(`➕ Adding new item with fallback enrichment: ${itemName}`);
+      const compareKey = getCompareKey(itemName);
+      
+      // Look for any existing item that matches this key
+      const existing = foodDatabase.find(f => getCompareKey(f.name) === compareKey);
+
+      if (!existing) {
+        console.log(`➕ New: ${itemName}`);
+        addedCount++;
         const fallback = getFallbackDetails(itemName);
-        foodDatabase.push({
+        const newItem = {
           id: itemName.toLowerCase().replace(/\s+/g, '_'),
           name: itemName,
           diet: fallback.veg !== undefined ? (fallback.veg ? 'veg' : 'non-veg') : 'veg',
@@ -391,21 +405,34 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
           mealRole: fallback.meal_role || 'single',
           tags: fallback.tags || [],
           _enrichedByFallback: true
-        });
-        existingNames.add(normalizedItemName);
-        addedCount++;
+        };
+        foodDatabase.push(newItem);
+        existingKeys.add(compareKey);
+        cleanedMenuItems.push(itemName);
       } else {
-        console.log(`⏭️ Skipping existing item: ${itemName}`);
+        console.log(`⏭️ Skip: ${itemName} (Matched: ${existing.name})`);
+        skippedCount++;
+        // USE THE CLEAN NAME FROM DB INSTEAD OF OCR STRING
+        cleanedMenuItems.push(existing.name);
       }
     });
 
-    console.log(`✨ Added ${addedCount} new items to database`);
+    console.log(`✨ DB Sync: ${addedCount} added, ${skippedCount} items already exist.`);
 
     foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
     fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
     console.log(`💾 Saved database with ${foodDatabase.length} total items`);
 
-    res.json(data);
+    const resultData = { 
+      date: new Date().toISOString(), 
+      items: cleanedMenuItems.sort(), // Use the cleaned names!
+      text, 
+      confidence: Math.round(confidence) 
+    };
+
+    fs.writeFileSync('./data/menu.json', JSON.stringify(resultData, null, 2));
+
+    res.json(resultData);
 
   } catch (err) {
     console.error('OCR ERROR:', err);

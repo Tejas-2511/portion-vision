@@ -339,7 +339,7 @@ def apply_nutrition(item: dict, cal, pro, carb, fat, fib, ss, su, dt, cat, veg) 
 
 def main():
     print("=" * 60)
-    print("  Portion Vision — Nutrition Updater")
+    print("  Portion Vision - Nutrition Updater")
     print("=" * 60)
 
     db = load_database()
@@ -365,7 +365,7 @@ def main():
 
         # --- Fallback: Open Food Facts API ---
         else:
-            print(f"    Not in curated table — querying Open Food Facts ...")
+            print(f"    Not in curated table - querying Open Food Facts ...")
             data = query_open_food_facts(name)
             time.sleep(0.5)   # polite delay
 
@@ -386,7 +386,7 @@ def main():
                 print(f"    ✓ API      | {data['calories']} kcal | P:{data['protein']}g C:{data['carbs']}g F:{data['fat']}g")
             else:
                 skipped += 1
-                print(f"    ✗ No data found — keeping existing values.")
+                print(f"    ✗ No data found - keeping existing values.")
 
     # Save once at the end
     save_database(db)

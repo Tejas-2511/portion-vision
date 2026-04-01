@@ -18,7 +18,6 @@ mobile-sam @ git+https://github.com/ChaoningZhang/MobileSAM.git
 # Depth estimation (MiDaS via torch hub or Depth Anything)
 timm
 
-# Utilities
-scikit-learn
+
 
 # OCR is handled by Tesseract.js in the Node.js backend — no Python OCR deps needed

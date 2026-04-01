@@ -113,11 +113,7 @@ export default function RecommendationCard({ recommendation, loading }) {
                     {totalCal} kcal
                 </span>
             </div>
-            <p className="text-xs text-slate-400 mb-1">{summary.plateLogic}</p>
-            {summary.dietNote && (
-                <p className="text-[10px] text-teal-600 mb-4 font-medium">🌿 {summary.dietNote}</p>
-            )}
-            {!summary.dietNote && <div className="mb-4" />}
+            <div className="mb-4" />
 
             {/* Main Plate Items */}
             <div className="space-y-3 mb-6">
@@ -129,9 +125,6 @@ export default function RecommendationCard({ recommendation, loading }) {
                                 <div className="text-2xl pt-0.5 shrink-0">{s.icon}</div>
                                 <div className="min-w-0">
                                     <p className={`font-bold text-sm capitalize break-words leading-tight ${s.text}`}>{item.item}</p>
-                                    {item.reason && (
-                                        <p className="text-[10px] opacity-70 mt-0.5">{item.reason}</p>
-                                    )}
                                     <div className="flex gap-2 mt-1 flex-wrap">
                                         {item.protein > 0 && (
                                             <span className="text-[10px] font-semibold bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
@@ -212,9 +205,6 @@ export default function RecommendationCard({ recommendation, loading }) {
                 </div>
             )}
 
-            <div className="pt-3 border-t border-slate-100 text-center">
-                <p className="text-xs text-slate-400">{summary.notes}</p>
-            </div>
         </div>
     );
 }

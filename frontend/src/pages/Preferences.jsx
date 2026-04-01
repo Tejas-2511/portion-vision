@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useApp } from "../hooks/useApp";
 import { validateProfileData } from "../utils/validation";
@@ -6,6 +7,8 @@ import ErrorMessage from "../components/ErrorMessage";
 // Preferences page - User profile and health metrics management
 export default function Preferences() {
   const { userProfile, setUserProfile } = useApp();
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -16,6 +19,10 @@ export default function Preferences() {
   const [activityLevel, setActivityLevel] = useState("Sedentary");
   const [goalType, setGoalType] = useState("Maintain Weight");
   const [dietPreference, setDietPreference] = useState("Vegetarian");
+  const [carbsPct, setCarbsPct] = useState(50);
+  const [fatPct, setFatPct] = useState(30);
+  const [proteinPct, setProteinPct] = useState(20);
+  const [isManualMacros, setIsManualMacros] = useState(false);
 
   const [bmi, setBmi] = useState("To be calculated...");
   const [calories, setCalories] = useState("To be calculated...");
@@ -37,6 +44,9 @@ export default function Preferences() {
       setBmi(userProfile.bmi || "To be calculated...");
       setCalories(userProfile.calories ? `${userProfile.calories} kcal/day` : "To be calculated...");
       setProtein(userProfile.protein ? `${userProfile.protein} g/day` : "To be calculated...");
+      setProteinPct(userProfile.proteinPct || 20);
+      setCarbsPct(userProfile.carbsPct || 50);
+      setFatPct(userProfile.fatPct || 30);
     }
   }, [userProfile]);
 
@@ -96,25 +106,37 @@ export default function Preferences() {
     if (goalType === "Muscle Gain") proteinFactor = 2.0;
 
     const proteinReq = w * proteinFactor;
+    
+    // Calculate percentages
+    const calcProteinPct = Math.round(((proteinReq * 4) / calorieReq) * 100);
+    const calcFatPct = 30;
+    const calcCarbsPct = 100 - calcProteinPct - calcFatPct;
 
     // Update UI
     setBmi(bmiVal.toFixed(2));
-    setCalories(`${Math.round(calorieReq)} kcal/day`);
-    setProtein(`${Math.round(proteinReq)} g/day`);
+    setCalories(`${Math.round(calorieReq)} kcal`);
+    setProtein(`${Math.round(proteinReq)} g`);
 
-    // Save to context (which auto-syncs to localStorage)
+    const finalProteinPct = isManualMacros ? parseInt(proteinPct || 0) : calcProteinPct;
+    const finalCarbsPct = isManualMacros ? parseInt(carbsPct || 0) : calcCarbsPct;
+    const finalFatPct = isManualMacros ? parseInt(fatPct || 0) : calcFatPct;
+
+    // Update state ONLY if not in manual mode
+    if (!isManualMacros) {
+      setProteinPct(calcProteinPct);
+      setCarbsPct(calcCarbsPct);
+      setFatPct(calcFatPct);
+    }
+
+    // Save to context using the definitive values
     const userData = {
-      name,
-      age,
-      height,
-      weight,
-      gender,
-      activityLevel,
-      goalType,
-      dietPreference,
+      name, age, height, weight, gender, activityLevel, goalType, dietPreference,
       bmi: bmiVal.toFixed(2),
       calories: Math.round(calorieReq),
-      protein: Math.round(proteinReq),
+      protein: Math.round((calorieReq * (finalProteinPct / 100)) / 4),
+      proteinPct: finalProteinPct,
+      carbsPct: finalCarbsPct,
+      fatPct: finalFatPct,
     };
 
     setUserProfile(userData);
@@ -123,7 +145,15 @@ export default function Preferences() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-8">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-8 shadow-xl">
+      <div className="w-full max-w-lg rounded-2xl bg-white p-8 shadow-xl relative">
+        <button 
+          onClick={() => navigate(-1)}
+          className="absolute top-8 left-6 text-slate-400 hover:text-slate-600 transition-colors"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
         <h2 className="mb-6 text-center text-2xl font-bold text-emerald-600">
           User Profile
         </h2>
@@ -179,7 +209,7 @@ export default function Preferences() {
 
           <select
             value={activityLevel}
-            onChange={(e) => setActivityLevel(e.target.value)}
+            onChange={(e) => { setActivityLevel(e.target.value); setIsManualMacros(false); }}
             className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
           >
             <option>Sedentary</option>
@@ -190,7 +220,7 @@ export default function Preferences() {
 
           <select
             value={goalType}
-            onChange={(e) => setGoalType(e.target.value)}
+            onChange={(e) => { setGoalType(e.target.value); setIsManualMacros(false); }}
             className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
           >
             <option>Maintain Weight</option>
@@ -212,6 +242,45 @@ export default function Preferences() {
             <option>Non-Vegetarian</option>
             <option>Vegan</option>
           </select>
+
+          <div className="pt-2">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-3">Macro Distribution (%)</p>
+            <div className="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">Prot %</label>
+                <input
+                  type="number"
+                  value={proteinPct}
+                  onChange={(e) => { setProteinPct(e.target.value); setIsManualMacros(true); }}
+                  className="w-full mt-1 bg-transparent border-b border-slate-200 py-1 font-bold text-slate-700 outline-none focus:border-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">Carb %</label>
+                <input
+                  type="number"
+                  value={carbsPct}
+                  onChange={(e) => { setCarbsPct(e.target.value); setIsManualMacros(true); }}
+                  className="w-full mt-1 bg-transparent border-b border-slate-200 py-1 font-bold text-slate-700 outline-none focus:border-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">Fat %</label>
+                <input
+                  type="number"
+                  value={fatPct}
+                  onChange={(e) => { setFatPct(e.target.value); setIsManualMacros(true); }}
+                  className="w-full mt-1 bg-transparent border-b border-slate-200 py-1 font-bold text-slate-700 outline-none focus:border-emerald-500"
+                />
+              </div>
+            </div>
+            <div className="mt-3 flex items-center gap-2 pl-1">
+                <span className={`h-2 w-2 rounded-full ${Math.abs(parseInt(proteinPct || 0) + parseInt(carbsPct || 0) + parseInt(fatPct || 0) - 100) < 1 ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                <p className="text-[9px] text-slate-400 italic">
+                    Total: {parseInt(proteinPct || 0) + parseInt(carbsPct || 0) + parseInt(fatPct || 0)}% (Aim for exactly 100% for best results).
+                </p>
+            </div>
+          </div>
 
           <div className="mt-4 flex flex-col gap-3 rounded-lg bg-emerald-50 p-4 text-emerald-900">
             <p className="flex justify-between">

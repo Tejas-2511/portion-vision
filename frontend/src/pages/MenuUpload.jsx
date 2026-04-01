@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../hooks/useApp";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { validateImageFile } from "../utils/validation";
@@ -8,6 +9,7 @@ import ErrorMessage from "../components/ErrorMessage";
 
 // MenuUpload page - Handles mess menu image upload and OCR processing
 export default function MenuUpload() {
+  const navigate = useNavigate();
   const { setTodaysMenu } = useApp();
   const { error, handleError, clearError, retry, canRetry } = useErrorHandler();
 
@@ -15,7 +17,6 @@ export default function MenuUpload() {
   const [preview, setPreview] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [mealType, setMealType] = useState("lunch"); // Default for testing
 
   // Handle file selection from gallery or camera
   // Validates file type and size before setting state
@@ -61,7 +62,6 @@ export default function MenuUpload() {
         items: data.items,
         text: menuText,
         date: data.date,
-        mealType: mealType // Save selected meal type
       });
     } catch (err) {
       handleError(err);
@@ -71,7 +71,15 @@ export default function MenuUpload() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-lg flex-col items-center p-6 text-slate-800">
+    <div className="mx-auto flex min-h-screen max-w-lg flex-col items-center p-6 text-slate-800 relative">
+      <button 
+        onClick={() => navigate(-1)}
+        className="absolute top-8 left-6 text-slate-400 hover:text-slate-600 transition-colors"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
       <h2 className="mb-8 text-3xl font-bold text-emerald-600">
         Upload Mess Menu
       </h2>
@@ -88,24 +96,6 @@ export default function MenuUpload() {
 
       <div className="mb-6 w-full space-y-4">
 
-        {/* Meal Type Selector (For Testing) */}
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-          <label className="block text-sm font-medium text-slate-700 mb-2">Select Meal Type</label>
-          <div className="grid grid-cols-4 gap-2">
-            {["breakfast", "lunch", "snack", "dinner"].map((type) => (
-              <button
-                key={type}
-                onClick={() => setMealType(type)}
-                className={`py-2 px-1 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors ${mealType === type
-                  ? "bg-emerald-600 text-white shadow-md"
-                  : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                  }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Camera Capture Button */}
         <label className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-emerald-400 bg-emerald-50 hover:bg-emerald-100 transition-colors">

@@ -1,13 +1,18 @@
 {
-  "date": "2026-03-30T21:35:27.370Z",
+  "date": "2026-04-01T19:21:47.687Z",
   "items": [
-    "aloo",
-    "chapati",
-    "mix dal",
-    "papad",
-    "pickle",
-    "rajma masala",
-    "steam rice",
-    "tomato chutney"
-  ]
+    "Aloo Semfali",
+    "Chapati",
+    "Curd",
+    "Green Salad",
+    "Jeera Rice",
+    "Onion Kadhi",
+    "Papad",
+    "Pickle",
+    "Semiya Payasam",
+    "Sev Tomato",
+    "Steamed Rice",
+    "Tomato Chilli Chutney"
+  ],
+  "confidence": 92
 }

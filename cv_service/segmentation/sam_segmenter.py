@@ -128,11 +128,6 @@ def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
     return results
 
 
-def segment_compartment_sam(compartment_crop: np.ndarray) -> list[dict]:
-    """
-    Backwards compatibility: Just runs the full scan on the crop.
-    """
-    return segment_full_image_sam(compartment_crop)
 
 
 def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:

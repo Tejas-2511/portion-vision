@@ -57,7 +57,7 @@ function findFood(name) {
   return fuzzyMatchFood(normalized, FOOD_DB, 2);
 }
 
-// Fallback logic if food not in DB — also used for OCR enrichment
+// Fallback logic if food not in DB - also used for OCR enrichment
 function getFallbackDetails(name) {
   const n = name.toLowerCase();
 
@@ -106,12 +106,18 @@ function getFallbackDetails(name) {
     return { category: "side", meal_role: "single", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 80, protein: 4, carbs: 8, fat: 2, fiber: 0, dish_type: "raita", meal_types: ["lunch", "dinner"], tags: ["dairy", "veg"], veg: true };
 
   // ── Desserts & Snacks ──
+  if (n.includes("bun") || n.includes("pav") || n.includes("bread"))
+    return { category: "carb_base", meal_role: "single", unit_type: "piece", serving_size: 60, serving_unit: "g", calories: 180, protein: 5, carbs: 35, fat: 8, fiber: 1, dish_type: "bun", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
   if (n.includes("sweet") || n.includes("halwa") || n.includes("jamun") || n.includes("laddu") || n.includes("kheer") || n.includes("barfi") || n.includes("mithai"))
     return { category: "dessert", meal_role: "single", unit_type: "piece", serving_size: 50, serving_unit: "g", calories: 200, protein: 2, carbs: 30, fat: 8, fiber: 0, dish_type: "sweet", meal_types: ["lunch", "dinner", "snack"], tags: ["sweet", "veg"], veg: true };
   if (n.includes("fruit") || n.includes("banana") || n.includes("apple") || n.includes("orange"))
-    return { category: "side", meal_role: "single", unit_type: "piece", serving_size: 120, serving_unit: "g", calories: 80, protein: 1, carbs: 18, fat: 0, fiber: 3, dish_type: "fruit", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+    return { category: "snack", meal_role: "single", unit_type: "piece", serving_size: 1, serving_unit: "piece", calories: 80, protein: 1, carbs: 20, fat: 0, fiber: 3, dish_type: "fruit", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
+  if (n.includes("salad") || n.includes("cucumber") || n.includes("tomato"))
+    return { category: "side", meal_role: "single", unit_type: "bowl", serving_size: 100, serving_unit: "g", calories: 40, protein: 1, carbs: 8, fat: 0, fiber: 3, dish_type: "salad", meal_types: ["lunch", "dinner", "snack"], tags: ["veg"], veg: true };
+  if (n.includes("pickle") || n.includes("chutney") || n.includes("achar") || n.includes("sauce"))
+    return { category: "condiment", meal_role: "single", unit_type: "tbsp", serving_size: 15, serving_unit: "g", calories: 30, protein: 0.5, carbs: 4, fat: 1, fiber: 1, dish_type: "condiment", meal_types: ["lunch", "dinner", "breakfast"], tags: ["veg"], veg: true };
 
-  // ── Condiments — tag garlic/onion items so Jain filter works ──
+  // ── Condiments - tag garlic/onion items so Jain filter works ──
   if (n.includes("garlic chutney") || n.includes("lasun"))
     return { category: "condiment", meal_role: "single", unit_type: "tsp", serving_size: 10, serving_unit: "g", calories: 30, protein: 1, carbs: 4, fat: 1, fiber: 0, dish_type: "condiment", tags: ["garlic", "veg"], veg: true };
   if (n.includes("papad") || n.includes("pickle") || n.includes("chutney") || n.includes("sauce") || n.includes("achaar"))
@@ -184,7 +190,7 @@ function filterFoods(foods, dietPreference, avoidTags = []) {
       if (food.veg === false) return false;
     }
     else if (diet === "jain") {
-      // Jain: no meat, no eggs — additional root vegetable tags applied via avoidTags below
+      // Jain: no meat, no eggs - additional root vegetable tags applied via avoidTags below
       if (isMeat(food) || isEgg(food)) return false;
       if (food.veg === false) return false;
     }
@@ -205,7 +211,7 @@ function filterFoods(foods, dietPreference, avoidTags = []) {
       // Allow items that are veg:false but are eggs or dairy (eggs, paneer, raita, etc.)
       if (food.veg === false && !isEgg(food) && !isDairy(food)) return false;
     }
-    // "non-veg" — no restriction at all
+    // "non-veg" - no restriction at all
 
     // Apply extra avoid-tags (allergies, jain root veg additions, etc.)
     if (allAvoidTags.length > 0) {
@@ -254,8 +260,8 @@ function estimateDailyCalories(user) {
   const actKey = activityLevel.split(" ")[0];
   let tdee = bmr * (activityMultipliers[actKey] || 1.55);
 
-  if (goal.includes("lose") || goal.includes("fat")) tdee -= 400;
-  if (goal.includes("gain") || goal.includes("muscle")) tdee += 300;
+  if (goal.includes("lose") || goal.includes("fat") || goal.includes("weight")) tdee -= 500;
+  if (goal.includes("gain") || goal.includes("muscle") || goal.includes("weight")) tdee += 400;
 
   return Math.round(Math.max(1200, Math.min(4000, tdee)));
 }
@@ -274,16 +280,14 @@ function computeMacroTargets(user, mealType) {
   const mealFrac = mealFractions[(mealType || "lunch").toLowerCase()] || 0.33;
   const targetCalories = dailyCalories * mealFrac;
 
-  // Protein factor by goal (g per kg body weight per day)
-  let proteinFactor = 1.0; // maintain
-  if (goal.includes("muscle") || goal.includes("gain")) proteinFactor = 2.0;
-  else if (goal.includes("fat") || goal.includes("lose")) proteinFactor = 1.6;
-  const dailyProtein = weight * proteinFactor;
-  const targetProtein = dailyProtein * mealFrac;
+  // Macro split: Use user preferences if available, otherwise default to 45/25/30
+  const pPct = (user.proteinPct || 25) / 100;
+  const cPct = (user.carbsPct || 45) / 100;
+  const fPct = (user.fatPct || 30) / 100;
 
-  // Macro split: 45% carbs, 25% protein calories, 30% fat (standard balanced)
-  const targetCarbsKcal = targetCalories * 0.45;
-  const maxFatKcal = targetCalories * 0.35;
+  const targetProtein = (targetCalories * pPct) / 4;
+  const targetCarbsKcal = targetCalories * cPct;
+  const maxFatKcal = targetCalories * fPct;
 
   return {
     dailyCalories,
@@ -292,7 +296,7 @@ function computeMacroTargets(user, mealType) {
     targetCarbs_g: Math.round(targetCarbsKcal / 4),
     maxFat_g: Math.round(maxFatKcal / 9),
     mealFrac,
-    proteinPriority: proteinFactor >= 1.6 ? "high" : "medium"
+    proteinPriority: pPct >= 0.30 ? "high" : "medium"
   };
 }
 
@@ -367,7 +371,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   const carbsBreakfast = filtered.filter(f => f.category === "carb_base" && ["poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
   const carbsOther = filtered.filter(f => f.category === "carb_base" && !["roti", "rice", "biryani", "poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
   const allCarbs = [...carbsRoti, ...carbsRice, ...carbsBreakfast, ...carbsOther];
-  // Salads always go on the plate — separate them from regular sides
+  // Salads always go on the plate - separate them from regular sides
   const salads   = filtered.filter(f => f.category === "side" && f.dish_type === "salad");
   const sides    = filtered.filter(f => f.category === "side" && f.dish_type !== "salad");
   const condiments = filtered.filter(f => f.category === "condiment" || f.dish_type === "condiment" || f.name.toLowerCase().includes("papad") || f.name.toLowerCase().includes("pickle") || f.name.toLowerCase().includes("chutney"));
@@ -377,48 +381,68 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
   const plate = [];
   let caloriesUsed = 0;
 
-  // ── Phase 0a: Snack fast-path — light, simple, no full meal logic ──
+  // ── Phase 0a: Snack fast-path - light, simple, no full meal logic ──
   if (mt === "snack") {
-    // For snacks just pick 1-2 suitable items within calorie budget
-    const snackCandidates = [...carbsBreakfast, ...carbsRoti, ...carbsOther, ...proteins, ...sides]
-      .filter(f => f.calories && f.calories <= targetCalories);
-    snackCandidates.sort((a, b) => (b.protein || 0) - (a.protein || 0));
-    let snackBudget = targetCalories;
-    for (const candidate of snackCandidates.slice(0, 2)) {
-      if (snackBudget < 40) break;
-      const qty = calcServings(candidate, snackBudget, 2);
+    // For snacks, include beverages and desserts (like buns) in the selection
+    const snackCandidates = [...carbsBreakfast, ...carbsRoti, ...carbsOther, ...proteins, ...sides, ...beverages, ...desserts]
+      .filter(f => f.calories && f.calories > 0);
+    
+    // Sort: prioritize solid carbs/proteins first, then beverages, then desserts
+    snackCandidates.sort((a, b) => {
+      const aVal = (a.category === "carb_base" || a.category === "protein_main") ? 10 : 0;
+      const bVal = (b.category === "carb_base" || b.category === "protein_main") ? 10 : 0;
+      return bVal - aVal || (b.protein || 0) - (a.protein || 0);
+    });
+    
+    let snackBudget = targetCalories + 50; // Allow slight overflow for snacks
+    for (const candidate of snackCandidates.slice(0, 3)) {
+      if (snackBudget < 20) break;
+      
+      // Calculate servings - for snacks we are more generous with the calorie goal per item
+      let qty = calcServings(candidate, Math.max(candidate.calories, snackBudget), 2);
+      const isDiscrete = ["piece", "roti", "paratha", "glass", "cup"].includes((candidate.unit_type || "").toLowerCase());
+      if (isDiscrete && qty < 1 && candidate.calories <= snackBudget + 40) qty = 1;
+      
+      if (qty <= 0) continue;
+
       const item = scaleItem(candidate, qty);
-      plate.push({ ...item, role: candidate.category === "protein_main" ? "protein" : "carb", reason: "Light snack" });
+      let role = "snack";
+      if (candidate.category === "protein_main") role = "protein";
+      if (candidate.category === "beverage") role = "addon";
+      if (candidate.category === "dessert") role = "limit";
+
+      plate.push({ ...item, role, reason: "Perfect for snack time." });
       snackBudget -= item.estimatedCalories;
     }
+    
     if (salads.length > 0) plate.push({ ...scaleItem(salads[0], 1), role: "veg", reason: "Fresh & light" });
-    return buildResponse(plate, condiments, beverages, desserts, macros);
+    return buildResponse(plate, [], [], [], macros);
   }
 
-  // ── Phase 0b: Mixed meal fast-path (biryani, khichdi etc. — mealRole:"mixed") ──
+  // ── Phase 0b: Mixed meal fast-path (biryani, khichdi etc. - mealRole:"mixed") ──
   if (mixed.length > 0) {
     // Pick the highest-protein mixed item
     const best = [...mixed].sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
     const qty = calcServings(best, targetCalories, 3);
     const item = scaleItem(best, qty);
     caloriesUsed += item.estimatedCalories;
-    plate.push({ ...item, role: "mixed", reason: "Complete balanced meal" });
+    plate.push({ ...item, role: "mixed", reason: "" });
 
     // Optionally add a side if calories allow
     if (sides.length > 0 && caloriesUsed < targetCalories * 0.95) {
       const side = [...sides].sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
-      plate.push({ ...scaleItem(side, 1), role: "veg", reason: "Fiber & vitamins" });
+      plate.push({ ...scaleItem(side, 1), role: "veg", reason: "" });
     }
 
     // Always add salad(s) if present
     salads.forEach(salad => {
-      plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens & micronutrients" });
+      plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" });
     });
 
     return buildResponse(plate, condiments, beverages, desserts, macros);
   }
 
-  // ── Phase 0c: Breakfast fast-path — lighter carbs first, protein optional ──
+  // ── Phase 0c: Breakfast fast-path - lighter carbs first, protein optional ──
   if (mt === "breakfast") {
     // Prefer breakfast-specific carbs (poha, upma, idli, oats, sandwich)
     const bfCarbs = carbsBreakfast.length > 0 ? carbsBreakfast : [...carbsRoti, ...carbsOther];
@@ -427,7 +451,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       const qty = calcServings(bfItem, targetCalories * 0.55, 2);
       const item = scaleItem(bfItem, qty);
       caloriesUsed += item.estimatedCalories;
-      plate.push({ ...item, role: "carb", reason: "Breakfast energy" });
+      plate.push({ ...item, role: "carb", reason: "" });
     }
     // Add a protein if budget allows and protein source available
     if (proteins.length > 0 && caloriesUsed < targetCalories * 0.80) {
@@ -435,11 +459,11 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       const pqty = calcServings(pfood, targetCalories * 0.35, 1.5);
       const pitem = scaleItem(pfood, pqty);
       caloriesUsed += pitem.estimatedCalories;
-      plate.push({ ...pitem, role: "protein", reason: "Morning protein" });
+      plate.push({ ...pitem, role: "protein", reason: "" });
     }
     // Salads & beverages
-    if (beverages.length > 0) plate.push({ ...scaleItem(beverages[0], 1), role: "addon", reason: "Hydration" });
-    salads.forEach(salad => plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens" }));
+    if (beverages.length > 0) plate.push({ ...scaleItem(beverages[0], 1), role: "addon", reason: "" });
+    salads.forEach(salad => plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" }));
     return buildResponse(plate, condiments, beverages, desserts, macros);
   }
 
@@ -480,7 +504,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     const item = scaleItem(primary, qty);
     caloriesUsed += item.estimatedCalories;
     proteinAccum += item.protein;
-    plate.push({ ...item, role: "protein", reason: "Muscle repair & satiety" });
+    plate.push({ ...item, role: "protein", reason: "" });
 
     // If still under protein target and second protein source available
     if (proteinAccum < targetProtein * 0.6 && sortedProteins.length > 1) {
@@ -491,7 +515,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
         const item2 = scaleItem(secondary, qty2);
         caloriesUsed += item2.estimatedCalories;
         proteinAccum += item2.protein;
-        plate.push({ ...item2, role: "protein", reason: "Additional protein boost" });
+        plate.push({ ...item2, role: "protein", reason: "" });
       }
     }
   }
@@ -527,7 +551,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     const qty = calcServings(carbSource, primaryTarget, maxPrimary, fatForCarbs);
     const item = scaleItem(carbSource, qty);
     caloriesUsed += item.estimatedCalories;
-    plate.push({ ...item, role: "carb", reason: "Sustained energy & fuel" });
+    plate.push({ ...item, role: "carb", reason: "" });
 
     if (addSecondaryCarb) {
       const remainingCarbTarget = carbTarget - item.estimatedCalories;
@@ -535,7 +559,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
         const qty2 = calcServings(carbsRice[0], remainingCarbTarget, 1.5, fatForCarbs);
         const item2 = scaleItem(carbsRice[0], qty2);
         caloriesUsed += item2.estimatedCalories;
-        plate.push({ ...item2, role: "carb", reason: "Variety & energy" });
+        plate.push({ ...item2, role: "carb", reason: "" });
       }
     }
   }
@@ -550,7 +574,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     const qty = calcServings(primarySide, Math.min(finalVegBudget * 0.60, primarySide.calories * 1.5), 2);
     const item = scaleItem(primarySide, Math.max(1, qty)); // Guarantee at least 1 serving
     caloriesUsed += item.estimatedCalories;
-    plate.push({ ...item, role: "veg", reason: "Required fiber, vitamins & minerals" });
+    plate.push({ ...item, role: "veg", reason: "" });
   }
 
   // ── Phase 4: Validate & adjust ──
@@ -575,14 +599,30 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     if (extraSide) {
       const item = scaleItem(extraSide, 1);
       caloriesUsed += item.estimatedCalories;
-      plate.push({ ...item, role: "veg", reason: "Fiber & variety" });
+      plate.push({ ...item, role: "veg", reason: "" });
     }
   }
 
-  // Always add salads to the plate — they're low calorie and always beneficial
+  // Always add salads to the plate - they're low calorie and always beneficial
   salads.forEach(salad => {
-    plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Fresh greens & micronutrients" });
+    plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" });
   });
+
+  // ── Phase 5: Emergency Survival (Demo Mode) ──
+  // If the plate is still empty but we have some items available, don't return a blank result.
+  if (plate.length === 0 && allFoods.length > 0) {
+    // Just pick the top 2 items from the menu regardless of role to avoid a blank screen
+    const emergencyList = [...allFoods].sort((a, b) => (b.calories || 0) - (a.calories || 0));
+    for (const food of emergencyList.slice(0, 2)) {
+      const qty = calcServings(food, targetCalories * 0.4, 1.5);
+      const item = scaleItem(food, qty);
+      plate.push({ 
+        ...item, 
+        role: food.category === "protein_main" ? "protein" : "snack", 
+        reason: "Recommended based on available menu items." 
+      });
+    }
+  }
 
   return buildResponse(plate, condiments, beverages, desserts, macros);
 }
@@ -594,9 +634,9 @@ function buildResponse(plate, condiments, beverages, desserts, macros) {
   const totalFat = Math.round(plate.reduce((sum, i) => sum + (i.fat || 0), 0) * 10) / 10;
 
   const optionals = [
-    ...condiments.slice(0, 3).map(f => ({ item: f.name, calories: f.calories || 0, note: "Condiment — small amount", limit: `~${f.serving_size || 10}${f.serving_unit || "g"}` })),
+    ...condiments.slice(0, 3).map(f => ({ item: f.name, calories: f.calories || 0, note: "Condiment - small amount", limit: `~${f.serving_size || 10}${f.serving_unit || "g"}` })),
     ...beverages.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Hydration", limit: `1 ${f.unit_type || "glass"}` })),
-    ...desserts.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Treat — consume in moderation", limit: `~${f.serving_size || 50}${f.serving_unit || "g"}` }))
+    ...desserts.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Treat - consume in moderation", limit: `~${f.serving_size || 50}${f.serving_unit || "g"}` }))
   ];
 
   return { plate, optionals, macros: { ...macros, totalCalories, totalProtein, totalCarbs, totalFat } };
@@ -607,11 +647,13 @@ function buildResponse(plate, condiments, beverages, desserts, macros) {
 // ==========================================
 
 function recommendPlate({ user, menuItems, mealType }) {
+  const mt = (mealType || "lunch").toLowerCase();
+  console.log(`\n🥗 [AI LOGIC] Generating ${mt.toUpperCase()} recommendations...`);
+  
   const dietPreference = user.dietPreference || user.diet || "non-veg";
   const avoidTags = user.avoidTags || [];
-  const mt = (mealType || "lunch").toLowerCase();
 
-  const result = buildPlate({ user, menuItems, mealType, dietPreference, avoidTags });
+  const result = buildPlate({ user, menuItems, mealType: mt, dietPreference, avoidTags });
 
   // Map to frontend-expected shape
   const recommendedPlate = result.plate.map(item => ({
@@ -635,12 +677,12 @@ function recommendPlate({ user, menuItems, mealType }) {
 
   // Meal-type contextual notes
   const mealLogicMap = {
-    breakfast: `Light ${macros.targetCalories} kcal breakfast — gentle start to the day.`,
+    breakfast: `Light ${macros.targetCalories} kcal breakfast - gentle start to the day.`,
     lunch:     `Balanced ${macros.targetCalories} kcal lunch targeting ${macros.targetProtein}g protein.`,
-    dinner:    `Light-to-moderate ${macros.targetCalories} kcal dinner — easy on digestion.`,
-    snack:     `Quick ${macros.targetCalories} kcal snack — keep it light between meals.`,
+    dinner:    `Light-to-moderate ${macros.targetCalories} kcal dinner - easy on digestion.`,
+    snack:     `Quick ${macros.targetCalories} kcal snack - keep it light between meals.`,
   };
-  const plateLogic = mealLogicMap[mt] || `${macros.targetCalories} kcal plate targeting ${macros.targetProtein}g protein.`;
+  const plateLogic = "";
 
   // Diet-specific guidance note
   const dietNoteMap = {
@@ -689,7 +731,7 @@ function getIconForRole(role) {
 }
 
 // ==========================================
-// 6. Classify helper (unchanged — used by other parts)
+// 6. Classify helper (unchanged - used by other parts)
 // ==========================================
 
 function classifyItem(foodName) {

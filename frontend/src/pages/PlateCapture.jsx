@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // PlateCapture page - Handles plate image capture for portion analysis
 export default function PlateCapture() {
@@ -7,6 +7,7 @@ export default function PlateCapture() {
   const [preview, setPreview] = useState(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Handle file selection
   function handleFileSelect(e) {
@@ -23,7 +24,8 @@ export default function PlateCapture() {
       navigate("/analysis", {
         state: {
           imageFile: selectedFile,
-          imagePreview: preview
+          imagePreview: preview,
+          mealType: location.state?.mealType
         }
       });
     }
@@ -31,12 +33,20 @@ export default function PlateCapture() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-emerald-600 px-6 py-4 text-white shadow-md">
+      <div className="bg-emerald-600 px-6 py-4 text-white shadow-md flex items-center gap-4">
+        <button 
+          onClick={() => navigate(-1)}
+          className="text-white hover:text-emerald-100 transition-colors"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
         <h1 className="text-xl font-bold">Plate Photo</h1>
       </div>
 
       <div className="mx-auto max-w-lg p-6">
-        <div className="relative mb-6 flex h-80 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-inner">
+        <div className="relative mb-6 flex h-80 w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-inner group">
           {preview ? (
             <img
               src={preview}
@@ -46,9 +56,19 @@ export default function PlateCapture() {
           ) : (
             <div className="flex flex-col items-center text-slate-400">
               <span className="text-4xl mb-2">📷</span>
-              <p>Camera Preview Placeholder</p>
+              <p>Camera Preview</p>
             </div>
           )}
+
+          {/* Top-down Alignment Guide */}
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div className="w-56 h-56 border-2 border-dashed border-white/50 rounded-full flex items-center justify-center box-border animate-pulse">
+                <div className="w-1 h-1 bg-white/50 rounded-full"></div>
+            </div>
+          </div>
+          <p className="absolute bottom-4 left-0 right-0 text-center text-[10px] font-bold text-white uppercase tracking-widest drop-shadow-md">
+            Align Plate within Circle
+          </p>
         </div>
 
         <div className="mb-8 space-y-4">

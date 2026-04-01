@@ -238,6 +238,31 @@
     ]
   },
   {
+    "id": "aloo_semfali",
+    "name": "aloo semfali",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 4,
+      "carbs": 14,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "apple",
     "name": "Apple",
     "diet": "veg",
@@ -982,6 +1007,31 @@
     ]
   },
   {
+    "id": "chana_dal_tadka",
+    "name": "chana dal tadka",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "chana_masala",
     "name": "Chana Masala",
     "diet": "veg",
@@ -1004,6 +1054,31 @@
     "tags": [
       "veg"
     ]
+  },
+  {
+    "id": "chanadaltadka",
+    "name": "chanadaltadka",
+    "diet": "veg",
+    "dishType": "dal",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 190,
+      "protein": 11,
+      "carbs": 30,
+      "fat": 4,
+      "fiber": 8
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
   },
   {
     "id": "chapati",
@@ -2573,6 +2648,19 @@
     ]
   },
   {
+    "id": "hot_milk_&_flavored_milk",
+    "name": "hot milk & flavored milk",
+    "diet": "veg",
+    "dishType": "drink",
+    "nutrition": {
+      "calories": 120,
+      "protein": 6,
+      "carbs": 12,
+      "fat": 4
+    },
+    "_enrichedByFallback": true
+  },
+  {
     "id": "ice_tea",
     "name": "Ice Tea",
     "diet": "veg",
@@ -2820,6 +2908,32 @@
     ]
   },
   {
+    "id": "kadhai_chicken",
+    "name": "kadhai chicken",
+    "diet": "non-veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 25,
+      "carbs": 5,
+      "fat": 14,
+      "fiber": 1
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
+    "tags": [
+      "chicken",
+      "non-veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "kadhai_paneer",
     "name": "Kadhai Paneer",
     "diet": "veg",
@@ -2868,6 +2982,32 @@
     "tags": [
       "veg"
     ]
+  },
+  {
+    "id": "kadhaichicken",
+    "name": "kadhaichicken",
+    "diet": "non-veg",
+    "dishType": "curry",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 25,
+      "carbs": 5,
+      "fat": 14,
+      "fiber": 1
+    },
+    "proteinLevel": "high",
+    "mealRole": "single",
+    "tags": [
+      "chicken",
+      "non-veg"
+    ],
+    "_enrichedByFallback": true
   },
   {
     "id": "kadhi_pakoda",
@@ -4122,6 +4262,32 @@
     ]
   },
   {
+    "id": "onion_kadhi",
+    "name": "Onion Kadhi",
+    "diet": "veg",
+    "dishType": "main",
+    "category": "protein_main",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 200,
+      "protein": 10,
+      "carbs": 18,
+      "fat": 12,
+      "fiber": 2
+    },
+    "proteinLevel": "medium",
+    "mealRole": "single",
+    "tags": [
+      "veg",
+      "kadhi",
+      "curry"
+    ]
+  },
+  {
     "id": "onion_pulao",
     "name": "Onion Pulao",
     "diet": "veg",
@@ -4323,32 +4489,6 @@
       "gravy",
       "veg"
     ]
-  },
-  {
-    "id": "paneer_do_pyaza",
-    "name": "paneer do pyaza",
-    "diet": "veg",
-    "dishType": "curry",
-    "category": "protein_main",
-    "serving": {
-      "size": 150,
-      "unit": "g",
-      "unitType": "bowl"
-    },
-    "nutrition": {
-      "calories": 280,
-      "protein": 18,
-      "carbs": 5,
-      "fat": 20,
-      "fiber": 0
-    },
-    "proteinLevel": "high",
-    "mealRole": "single",
-    "tags": [
-      "dairy",
-      "veg"
-    ],
-    "_enrichedByFallback": true
   },
   {
     "id": "paneer_handi",
@@ -5293,6 +5433,31 @@
     ]
   },
   {
+    "id": "sev_tomato",
+    "name": "sev tomato",
+    "diet": "veg",
+    "dishType": "sabji",
+    "category": "side",
+    "serving": {
+      "size": 150,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 140,
+      "protein": 4,
+      "carbs": 14,
+      "fat": 7,
+      "fiber": 4
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
+  },
+  {
     "id": "sewai_kheer",
     "name": "Sewai Kheer",
     "diet": "veg",
@@ -5763,6 +5928,31 @@
     "tags": [
       "veg"
     ]
+  },
+  {
+    "id": "tomato_chilli_chutney",
+    "name": "tomato chilli chutney",
+    "diet": "veg",
+    "dishType": "condiment",
+    "category": "condiment",
+    "serving": {
+      "size": 10,
+      "unit": "g",
+      "unitType": "tsp"
+    },
+    "nutrition": {
+      "calories": 40,
+      "protein": 1,
+      "carbs": 5,
+      "fat": 2,
+      "fiber": 1
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "veg"
+    ],
+    "_enrichedByFallback": true
   },
   {
     "id": "tomato_chutney",
@@ -6285,5 +6475,30 @@
       "veg"
     ],
     "_enrichedByFallback": true
+  },
+  {
+    "id": "jeera_rice",
+    "name": "Jeera Rice",
+    "diet": "veg",
+    "dishType": "rice",
+    "category": "carb_base",
+    "serving": {
+      "size": 200,
+      "unit": "g",
+      "unitType": "bowl"
+    },
+    "nutrition": {
+      "calories": 280,
+      "protein": 6,
+      "carbs": 55,
+      "fat": 4,
+      "fiber": 2
+    },
+    "proteinLevel": "low",
+    "mealRole": "single",
+    "tags": [
+      "rice",
+      "veg"
+    ]
   }
 ]

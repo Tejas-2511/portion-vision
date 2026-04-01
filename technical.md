@@ -1,4 +1,4 @@
-# PortionVision — Full Technical Documentation (System Encyclopedia)
+# PortionVision - Full Technical Documentation (System Encyclopedia)
 
 ## 🌐 1. System Overview & Architecture
 
@@ -19,11 +19,11 @@ The frontend is a Progressive Web App optimized for low-latency interactions on 
 
 ### Directory Structure & Responsibilities:
 *   `src/pages/`:
-    *   `Home.jsx`: Entry point with user summary and quick actions.
-    *   `MenuUpload.jsx`: Interface for capturing and uploading mess menus.
-    *   `PlateCapture.jsx`: Camera interface with guide overlays for thali alignment.
-    *   `Analysis.jsx`: Complex results page with macro breakdown of detected portions.
-    *   `Preferences.jsx`: LocalStorage-persisted user profile settings.
+    *   `Home.jsx`: Main dashboard with biometric summaries, automatic meal inference, and manual meal selector.
+    *   `MenuUpload.jsx`: Interface for capturing and uploading mess menus (Streamlined).
+    *   `PlateCapture.jsx`: Camera interface with pulsing top-down alignment guide for accurate CV analysis.
+    *   `Analysis.jsx`: Results page with "Done" navigation and passed-meal-type persistence.
+    *   `Preferences.jsx`: Profile settings with 100% Macro Split validation and automatic biometric recommendations.
 *   `src/components/`:
     *   `RecommendationCard.jsx`: Displays a balanced plate with progress bars for Calories, Protein, Carbs, and Fat.
     *   `MacroBar.jsx`: Reusable sub-component for nutritional progress visualization.
@@ -67,11 +67,9 @@ The recommendation engine strictly filters menu items based on these tags:
 ### C. Recommendation Algorithm (`portion_recommender.js`)
 1.  **BMR (Mifflin-St Jeor)**: `(10 * wt) + (6.25 * ht) - (5 * age) + s` (Male: +5, Female: -161).
 2.  **Activity Adjustment**: Sedentary (1.2), Moderate (1.55), Very Active (1.725).
-3.  **Meal Calorie Targets**:
-    *   **Breakfast**: 25% of daily budget.
-    *   **Lunch**: 35% of daily budget.
-    *   **Dinner**: 30% of daily budget.
-    *   **Snacks**: 10% of daily budget.
+3.  **Dynamic Meal Targets**: Automatically infers current meal based on system clock (Breakfast 6am, Lunch 11am, Snack 4pm, Dinner 7pm).
+4.  **Percentage-Based Macros**: Calculates targets based on user-defined (or auto-recommended) splits (Protein/Carb/Fat % totaling 100%).
+5.  **Biometric Failsafe**: Protein target is back-calculated from calories if manual % is not set, using athletic multipliers (1.0g - 2.0g per kg).
 4.  **Plate Building Phases**:
     *   **Phase 1**: Reserve 150 kcal for a "veg side" (fiber/vitamins).
     *   **Phase 2**: Select a "protein_main". If multiple, pick the one with highest protein-to-calorie density.
@@ -158,9 +156,9 @@ The recommendation engine strictly filters using `MEAT_TAGS`, `isEgg()`, and `is
     *   **SAM Grid**: Uses a **15x15 (225 points)** prompt grid.
     *   **Foodness Saturation**: Threshold set to `12` (HSV gamut).
     *   **Foodness Texture**: Laplacian variance threshold set to `25`.
-*   **Database Synchronization**:
-    *   When OCR runs, items with `_enrichedByFallback: true` are added.
-    *   Manually review `backend/data/foodDatabase.json` to move fallback estimates to "verified" status.
+*   **OCR Fallback Intelligence**:
+    *   When OCR finds a food not in `foodDatabase.json`, it uses a fuzzy keyword matcher to assign a "Category Fallback" (e.g., "Veg Curry" for any unknown vegetable dish).
+    *   This prevents analysis failure and provides a safe nutritional estimate during live demos.
 *   **Service Monitoring**:
     *   Backend: Port 5000 (`/health`).
     *   AI Service: Port 8000 (`/health`).
