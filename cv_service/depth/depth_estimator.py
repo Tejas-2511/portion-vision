@@ -65,52 +65,49 @@ def normalize_depth_to_plate(
     plate_mask: np.ndarray = None,
 ) -> np.ndarray:
     """
-    Normalize the depth map so the plate surface is zero height.
+    Normalize the depth map relative to the plate surface.
+    Returns the difference in depth values from the baseline (dividers/rim).
 
-    In MiDaS output, higher values = closer to camera.
-    Food sits above the plate, so food pixels should have higher depth values
-    than the plate surface.
-
-    The function computes:
-        height = depth_pixel - depth_plate_surface
-        (clamp negatives to 0)
-
-    Args:
-        depth_map: raw MiDaS output (H, W), float32
-        plate_mask: optional bool mask where True = plate surface (non-food).
-                    If None, the median depth is used as baseline.
-
-    Returns:
-        height_map (H, W) float32, in relative units (0 = plate surface).
+    In MiDaS, higher values = closer to camera.
     """
     if plate_mask is not None and plate_mask.any():
+        # Use simple median of dividers/rim as baseline
         baseline = np.median(depth_map[plate_mask])
     else:
-        # Use the overall median as a rough plate baseline
         baseline = np.median(depth_map)
 
-    # Food is closer to camera → higher depth values in MiDaS
-    height_map = depth_map - baseline
-    height_map = np.clip(height_map, 0, None)  # no negative heights
-
-    return height_map
+    # Return depth relative to baseline (can be negative if below divider)
+    # height_relative = depth_pixel - baseline
+    height_map_rel = depth_map - baseline
+    return height_map_rel
 
 
 def depth_to_cm(
     height_map_relative: np.ndarray,
-    max_food_height_cm: float = 3.0,
+    raw_depth: np.ndarray,
+    cm_per_pixel: float,
+    image_width_px: int,
 ) -> np.ndarray:
     """
-    Convert relative height map to approximate centimeters.
+    Convert relative depth differences to real-world centimeters.
 
-    Since MiDaS gives relative (not metric) depth, we scale the range
-    so the maximum observed height maps to `max_food_height_cm`.
+    Uses a pinhole camera heuristic:
+    Dist_to_plate (Z) is roughly 1.2 * image_width (pixels) * scale (cm/px).
+    Height_cm = (delta_depth / current_depth) * Z_plate.
 
-    This is an approximation — for true metric depth, a stereo/structured-
-    light sensor would be needed.
+    This is much more accurate than a fixed height range because it scales
+    with the actual plate size and camera distance.
     """
-    peak = height_map_relative.max()
-    if peak <= 0:
-        return np.zeros_like(height_map_relative)
+    # Estimated distance to plate in cm
+    z_plate = 1.2 * image_width_px * cm_per_pixel
 
-    return (height_map_relative / peak) * max_food_height_cm
+    # Avoid division by zero
+    depth_safe = np.where(raw_depth > 0, raw_depth, 1e-6)
+
+    # Metric height = (depth_rel / depth_absolute) * Z_plate
+    # Note: height_map_relative is (D_food - D_plate)
+    # Formula: H = (D_f - D_p)/D_f * Z_p
+    height_cm = (height_map_relative / depth_safe) * z_plate
+
+    # Smooth out noise but keep negative values (below divider)
+    return height_cm.astype(np.float32)

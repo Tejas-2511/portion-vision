@@ -58,39 +58,30 @@ def _load_sam():
     return _sam_predictor
 
 
-def segment_compartment_sam(compartment_crop: np.ndarray) -> list[dict]:
+def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
     """
-    Segment food items in a single compartment crop using MobileSAM.
-
-    Returns a list of masks:
-        [{"mask": np.ndarray (H, W bool), "area": int, "score": float}, ...]
+    Segment all food items in the full plate image using a global SAM run
+    combined with the 'foodness' heuristic.
     """
     predictor = _load_sam()
-
     if predictor is None:
-        # Fallback: use color-based segmentation
-        return _segment_color_fallback(compartment_crop)
+        # For full-image fallback, we use the color/texture method directly
+        return _segment_color_fallback(image_bgr)
 
-    # MobileSAM expects RGB
-    rgb = cv2.cvtColor(compartment_crop, cv2.COLOR_BGR2RGB)
+    rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
     predictor.set_image(rgb)
 
-    h, w = compartment_crop.shape[:2]
+    h, w = image_bgr.shape[:2]
 
-    # Use automatic grid-point prompts across the compartment
-    # Generate a grid of points as prompts
+    # Generate a grid of points for the whole image (more points)
     grid_points = []
-    step_x, step_y = max(w // 5, 1), max(h // 5, 1)
-    for y in range(step_y, h - step_y, step_y):
-        for x in range(step_x, w - step_x, step_x):
+    step_x, step_y = max(w // 15, 1), max(h // 15, 1)
+    for y in range(step_y, h, step_y):
+        for x in range(step_x, w, step_x):
             grid_points.append([x, y])
 
-    if not grid_points:
-        # Very small crop — use center point
-        grid_points = [[w // 2, h // 2]]
-
     point_coords = np.array(grid_points)
-    point_labels = np.ones(len(grid_points), dtype=np.int32)  # all foreground
+    point_labels = np.ones(len(grid_points), dtype=np.int32)
 
     masks, scores, _ = predictor.predict(
         point_coords=point_coords,
@@ -98,60 +89,69 @@ def segment_compartment_sam(compartment_crop: np.ndarray) -> list[dict]:
         multimask_output=True,
     )
 
-    # Filter and deduplicate masks
+    # Heuristics setup
+    gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
+    laplacian = cv2.Laplacian(gray, cv2.CV_32F)
+    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+    sat = hsv[:, :, 1]
+
     results = []
     used_area = np.zeros((h, w), dtype=bool)
 
-    # Sort by score descending
     order = np.argsort(-scores)
     for idx in order:
         mask = masks[idx].astype(bool)
-        score = float(scores[idx])
-
-        # Skip masks that are too small (< 1% of compartment) or too large (> 95%)
         area = int(mask.sum())
-        comp_area = h * w
-        if area < comp_area * 0.01 or area > comp_area * 0.95:
+        img_area = h * w
+
+        # Global size filters
+        if area < img_area * 0.001 or area > img_area * 0.5:
             continue
 
-        # Skip if heavily overlapping with already-used area
-        overlap = (mask & used_area).sum()
-        if overlap > area * 0.5:
+        # Foodness check
+        m_sat = np.mean(sat[mask])
+        m_var = np.var(laplacian[mask])
+
+        # Plate: low sat, low var. Food: high sat OR high var.
+        # Adjusted for global view: food is usually quite textured here.
+        if m_sat < 12 and m_var < 300:
+            continue
+
+        # Deduplication
+        new_area = (mask & ~used_area).sum()
+        if new_area < area * 0.2:
             continue
 
         used_area |= mask
         results.append({
             "mask": mask,
             "area": area,
-            "score": score,
+            "score": float(scores[idx]),
         })
-
-    # If SAM produced nothing useful, fall back
-    if not results:
-        return _segment_color_fallback(compartment_crop)
 
     return results
 
 
+def segment_compartment_sam(compartment_crop: np.ndarray) -> list[dict]:
+    """
+    Backwards compatibility: Just runs the full scan on the crop.
+    """
+    return segment_full_image_sam(compartment_crop)
+
+
 def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:
     """
-    Fallback segmentation using HSV color thresholding.
-    Separates food (colorful) from plate/tray (typically silver/white/grey).
-    Returns a single mask for the entire food region.
+    Improved fallback using broader color/texture heuristic.
     """
     if image_crop.size == 0:
         return []
 
     hsv = cv2.cvtColor(image_crop, cv2.COLOR_BGR2HSV)
-    h, w = image_crop.shape[:2]
+    gray = cv2.cvtColor(image_crop, cv2.COLOR_BGR2GRAY)
+    lap = np.abs(cv2.Laplacian(gray, cv2.CV_32F))
 
-    # Plate/tray is typically low-saturation (grey/silver/white)
-    # Food tends to have higher saturation
-    sat = hsv[:, :, 1]
-    val = hsv[:, :, 2]
-
-    # Threshold: food has saturation > 30 and not pure black
-    food_mask = (sat > 30) & (val > 40)
+    # Saturation > 12 OR high texture
+    food_mask = (hsv[:, :, 1] > 12) | (lap > 25)
 
     # Morphological cleanup
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
@@ -160,11 +160,11 @@ def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:
     food_mask = food_mask.astype(bool)
 
     area = int(food_mask.sum())
-    if area < (h * w) * 0.01:
+    if area < (image_crop.shape[0] * image_crop.shape[1]) * 0.01:
         return []
 
     return [{
         "mask": food_mask,
         "area": area,
-        "score": 0.6,  # lower confidence for fallback
+        "score": 0.5,
     }]
