@@ -386,25 +386,20 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         const newItem = {
           id: itemName.toLowerCase().replace(/\s+/g, '_'),
           name: itemName,
-          diet: fallback.veg !== undefined ? (fallback.veg ? 'veg' : 'non-veg') : 'veg',
-          dishType: fallback.dish_type || '',
-          category: fallback.category || '',
-          serving: {
-            size: fallback.serving_size || 100,
-            unit: fallback.serving_unit || 'g',
-            unitType: fallback.unit_type || 'serving'
-          },
-          nutrition: {
-            calories: fallback.calories || 0,
-            protein: fallback.protein || 0,
-            carbs: fallback.carbs || 0,
-            fat: fallback.fat || 0,
-            fiber: fallback.fiber || 0
-          },
-          proteinLevel: fallback.protein_level || 'low',
-          mealRole: fallback.meal_role || 'single',
-          tags: fallback.tags || [],
-          _enrichedByFallback: true
+          veg: fallback.veg !== undefined ? fallback.veg : true,
+          dish_type: fallback.dish_type || 'sabji',
+          category: fallback.category || 'side',
+          serving_size: fallback.serving_size || 100,
+          serving_unit: fallback.serving_unit || 'g',
+          unit_type: fallback.unit_type || 'bowl',
+          calories: fallback.calories || 0,
+          protein: fallback.protein || 0,
+          carbs: fallback.carbs || 0,
+          fat: fallback.fat || 0,
+          fiber: fallback.fiber || 0,
+          protein_level: fallback.protein_level || 'low',
+          meal_role: fallback.meal_role || 'single',
+          tags: fallback.tags || []
         };
         foodDatabase.push(newItem);
         existingKeys.add(compareKey);

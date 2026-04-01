@@ -1,18 +1,21 @@
 {
-  "date": "2026-04-01T19:21:47.687Z",
+  "date": "2026-04-01T19:37:58.022Z",
   "items": [
-    "Aloo Semfali",
-    "Chapati",
-    "Curd",
-    "Green Salad",
-    "Jeera Rice",
-    "Onion Kadhi",
-    "Papad",
-    "Pickle",
-    "Semiya Payasam",
-    "Sev Tomato",
-    "Steamed Rice",
-    "Tomato Chilli Chutney"
+    "Bhaji",
+    "Bread",
+    "Butter",
+    "Coffee",
+    "Flavored Milk",
+    "Jam",
+    "Kulcha",
+    "Pav",
+    "Tea",
+    "Watermelon",
+    "bornvita",
+    "cornfalkes with hot milk",
+    "egg bhurji",
+    "godhi upma"
   ],
-  "confidence": 92
+  "text": "TEA\nCOFFEE\nCORNFALKES WITH HOT MILK/FLAVORED MILK\nBORNVITA\nBREAD,BUTTER &JAM\nPAV/KULCHA\nBHAJI\n\nGODHI UPMA\nWATERMELON\n\nEGG BHURIJI\n",
+  "confidence": 88
 }

@@ -16,26 +16,7 @@ try {
   const dbPath = path.join(__dirname, "data", "foodDatabase.json");
   if (fs.existsSync(dbPath)) {
     const rawDB = JSON.parse(fs.readFileSync(dbPath, "utf8"));
-    FOOD_DB = rawDB.map(item => {
-      if (item.nutrition) {
-        return {
-          ...item,
-          veg: item.diet === "veg",
-          dish_type: item.dishType,
-          serving_size: item.serving?.size,
-          serving_unit: item.serving?.unit,
-          unit_type: item.serving?.unitType,
-          calories: item.nutrition.calories,
-          protein: item.nutrition.protein,
-          carbs: item.nutrition.carbs,
-          fat: item.nutrition.fat,
-          fiber: item.nutrition.fiber,
-          protein_level: item.proteinLevel,
-          meal_role: item.mealRole
-        };
-      }
-      return item;
-    });
+    FOOD_DB = rawDB;
 
     // Build Index
     FOOD_DB.forEach(item => {
@@ -57,8 +38,19 @@ function findFood(name) {
   return fuzzyMatchFood(normalized, FOOD_DB, 2);
 }
 
-// Fallback logic if food not in DB - also used for OCR enrichment
 function getFallbackDetails(name) {
+  const item = _getRawFallback(name);
+  if (item.protein >= 15) item.protein_level = 'high';
+  else if (item.protein >= 8) item.protein_level = 'medium';
+  else item.protein_level = 'low';
+
+  if (item.protein >= 10 && item.category === 'side') {
+      item.category = 'protein_main';
+  }
+  return item;
+}
+
+function _getRawFallback(name) {
   const n = name.toLowerCase();
 
   // ── One-pot mixed meals ──
@@ -108,7 +100,7 @@ function getFallbackDetails(name) {
   // ── Desserts & Snacks ──
   if (n.includes("bun") || n.includes("pav") || n.includes("bread"))
     return { category: "carb_base", meal_role: "single", unit_type: "piece", serving_size: 60, serving_unit: "g", calories: 180, protein: 5, carbs: 35, fat: 8, fiber: 1, dish_type: "bun", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
-  if (n.includes("sweet") || n.includes("halwa") || n.includes("jamun") || n.includes("laddu") || n.includes("kheer") || n.includes("barfi") || n.includes("mithai"))
+  if (n.includes("sweet") || n.includes("halwa") || n.includes("jamun") || n.includes("laddu") || n.includes("kheer") || n.includes("barfi") || n.includes("mithai") || n.includes("payasam") || n.includes("pudding"))
     return { category: "dessert", meal_role: "single", unit_type: "piece", serving_size: 50, serving_unit: "g", calories: 200, protein: 2, carbs: 30, fat: 8, fiber: 0, dish_type: "sweet", meal_types: ["lunch", "dinner", "snack"], tags: ["sweet", "veg"], veg: true };
   if (n.includes("fruit") || n.includes("banana") || n.includes("apple") || n.includes("orange"))
     return { category: "snack", meal_role: "single", unit_type: "piece", serving_size: 1, serving_unit: "piece", calories: 80, protein: 1, carbs: 20, fat: 0, fiber: 3, dish_type: "fruit", meal_types: ["breakfast", "snack"], tags: ["veg"], veg: true };
@@ -124,7 +116,7 @@ function getFallbackDetails(name) {
     return { category: "condiment", meal_role: "single", unit_type: "tsp", serving_size: 10, serving_unit: "g", calories: 40, protein: 1, carbs: 5, fat: 2, fiber: 1, dish_type: "condiment", tags: ["veg"], veg: true };
 
   // Default generic side
-  return { category: "side", meal_role: "single", unit_type: "serving", serving_size: 100, serving_unit: "g", calories: 150, protein: 3, carbs: 20, fat: 5, fiber: 2, dish_type: "generic", tags: ["veg"], veg: true };
+  return { category: "side", meal_role: "single", unit_type: "piece", serving_size: 100, serving_unit: "g", calories: 150, protein: 3, carbs: 20, fat: 5, fiber: 2, dish_type: "sabji", tags: ["veg"], veg: true };
 }
 
 // Guard: skip foods that have no calorie data (OCR stubs)
@@ -364,19 +356,19 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
 
   // Partition into roles
   // mealRole: "mixed" = complete one-pot meal (biryani, khichdi); "single" = individual component
-  const mixed    = filtered.filter(f => f.meal_role === "mixed");
+  const mixed = filtered.filter(f => f.meal_role === "mixed");
   const proteins = filtered.filter(f => f.category === "protein_main");
-  const carbsRoti  = filtered.filter(f => f.category === "carb_base" && f.dish_type === "roti");
-  const carbsRice  = filtered.filter(f => f.category === "carb_base" && (f.dish_type === "rice" || f.dish_type === "biryani"));
+  const carbsRoti = filtered.filter(f => f.category === "carb_base" && f.dish_type === "roti");
+  const carbsRice = filtered.filter(f => f.category === "carb_base" && (f.dish_type === "rice" || f.dish_type === "biryani"));
   const carbsBreakfast = filtered.filter(f => f.category === "carb_base" && ["poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
   const carbsOther = filtered.filter(f => f.category === "carb_base" && !["roti", "rice", "biryani", "poha", "upma", "idli", "oats", "sandwich"].includes(f.dish_type || ""));
   const allCarbs = [...carbsRoti, ...carbsRice, ...carbsBreakfast, ...carbsOther];
   // Salads always go on the plate - separate them from regular sides
-  const salads   = filtered.filter(f => f.category === "side" && f.dish_type === "salad");
-  const sides    = filtered.filter(f => f.category === "side" && f.dish_type !== "salad");
-  const condiments = filtered.filter(f => f.category === "condiment" || f.dish_type === "condiment" || f.name.toLowerCase().includes("papad") || f.name.toLowerCase().includes("pickle") || f.name.toLowerCase().includes("chutney"));
-  const beverages  = filtered.filter(f => f.category === "beverage");
-  const desserts   = filtered.filter(f => f.category === "dessert");
+  const salads = filtered.filter(f => f.category === "side" && f.dish_type === "salad");
+  const sides = filtered.filter(f => f.category === "side" && f.dish_type !== "salad");
+  let condiments = filtered.filter(f => f.category === "condiment" || f.dish_type === "condiment" || f.name.toLowerCase().includes("papad") || f.name.toLowerCase().includes("pickle") || f.name.toLowerCase().includes("chutney"));
+  let beverages = filtered.filter(f => f.category === "beverage");
+  let desserts = filtered.filter(f => f.category === "dessert");
 
   const plate = [];
   let caloriesUsed = 0;
@@ -386,23 +378,23 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
     // For snacks, include beverages and desserts (like buns) in the selection
     const snackCandidates = [...carbsBreakfast, ...carbsRoti, ...carbsOther, ...proteins, ...sides, ...beverages, ...desserts]
       .filter(f => f.calories && f.calories > 0);
-    
+
     // Sort: prioritize solid carbs/proteins first, then beverages, then desserts
     snackCandidates.sort((a, b) => {
       const aVal = (a.category === "carb_base" || a.category === "protein_main") ? 10 : 0;
       const bVal = (b.category === "carb_base" || b.category === "protein_main") ? 10 : 0;
       return bVal - aVal || (b.protein || 0) - (a.protein || 0);
     });
-    
+
     let snackBudget = targetCalories + 50; // Allow slight overflow for snacks
     for (const candidate of snackCandidates.slice(0, 3)) {
       if (snackBudget < 20) break;
-      
+
       // Calculate servings - for snacks we are more generous with the calorie goal per item
       let qty = calcServings(candidate, Math.max(candidate.calories, snackBudget), 2);
       const isDiscrete = ["piece", "roti", "paratha", "glass", "cup"].includes((candidate.unit_type || "").toLowerCase());
       if (isDiscrete && qty < 1 && candidate.calories <= snackBudget + 40) qty = 1;
-      
+
       if (qty <= 0) continue;
 
       const item = scaleItem(candidate, qty);
@@ -414,9 +406,9 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       plate.push({ ...item, role, reason: "Perfect for snack time." });
       snackBudget -= item.estimatedCalories;
     }
-    
+
     if (salads.length > 0) plate.push({ ...scaleItem(salads[0], 1), role: "veg", reason: "Fresh & light" });
-    return buildResponse(plate, [], [], [], macros);
+    return buildResponse({ plate, condiments: [], beverages: [], desserts: [], macros, resolved, mt });
   }
 
   // ── Phase 0b: Mixed meal fast-path (biryani, khichdi etc. - mealRole:"mixed") ──
@@ -439,7 +431,7 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" });
     });
 
-    return buildResponse(plate, condiments, beverages, desserts, macros);
+    return buildResponse({ plate, condiments, beverages, desserts, macros, resolved, mt });
   }
 
   // ── Phase 0c: Breakfast fast-path - lighter carbs first, protein optional ──
@@ -462,9 +454,18 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
       plate.push({ ...pitem, role: "protein", reason: "" });
     }
     // Salads & beverages
-    if (beverages.length > 0) plate.push({ ...scaleItem(beverages[0], 1), role: "addon", reason: "" });
-    salads.forEach(salad => plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" }));
-    return buildResponse(plate, condiments, beverages, desserts, macros);
+    // Move other beverages to the condiments/extras list
+    let onPlateNames = new Set(plate.map(p => p.name));
+    
+    // Pick first beverage for plate
+    if (beverages.length > 0) {
+      plate.push({ ...scaleItem(beverages[0], 1), role: "addon", reason: "Breakfast hydration." });
+      onPlateNames.add(beverages[0].name);
+    }
+    
+    salads.forEach(salad => plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Healthy start." }));
+    
+    return buildResponse({ plate, condiments, beverages, desserts, macros, resolved, mt });
   }
 
   // ── Phase 1: High-Fiber Vegetables (Strict Enforcement) ──
@@ -605,41 +606,59 @@ function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
 
   // Always add salads to the plate - they're low calorie and always beneficial
   salads.forEach(salad => {
-    plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "" });
+    plate.push({ ...scaleItem(salad, 1), role: "veg", reason: "Health first." });
   });
+
+  // ── Phase 4.5: Conditional Add-ons ──
+  // (Papad and Desserts are now handled in Optionals below per user request)
 
   // ── Phase 5: Emergency Survival (Demo Mode) ──
   // If the plate is still empty but we have some items available, don't return a blank result.
-  if (plate.length === 0 && allFoods.length > 0) {
-    // Just pick the top 2 items from the menu regardless of role to avoid a blank screen
-    const emergencyList = [...allFoods].sort((a, b) => (b.calories || 0) - (a.calories || 0));
+  if (plate.length === 0 && resolved.length > 0) {
+    const emergencyList = [...resolved].sort((a, b) => (b.calories || 0) - (a.calories || 0));
     for (const food of emergencyList.slice(0, 2)) {
       const qty = calcServings(food, targetCalories * 0.4, 1.5);
       const item = scaleItem(food, qty);
-      plate.push({ 
-        ...item, 
-        role: food.category === "protein_main" ? "protein" : "snack", 
-        reason: "Recommended based on available menu items." 
+      plate.push({
+        ...item,
+        role: food.category === "protein_main" ? "protein" : "snack",
+        reason: "Recommended based on available menu items."
       });
     }
   }
 
-  return buildResponse(plate, condiments, beverages, desserts, macros);
+  return buildResponse({ plate, condiments, beverages, desserts, macros, resolved, mt });
 }
 
-function buildResponse(plate, condiments, beverages, desserts, macros) {
+function buildResponse({ plate, condiments, beverages, desserts, macros, resolved, mt }) {
   const totalCalories = Math.round(plate.reduce((sum, i) => sum + (i.estimatedCalories || 0), 0));
   const totalProtein = Math.round(plate.reduce((sum, i) => sum + (i.protein || 0), 0) * 10) / 10;
   const totalCarbs = Math.round(plate.reduce((sum, i) => sum + (i.carbs || 0), 0) * 10) / 10;
   const totalFat = Math.round(plate.reduce((sum, i) => sum + (i.fat || 0), 0) * 10) / 10;
 
-  const optionals = [
-    ...condiments.slice(0, 3).map(f => ({ item: f.name, calories: f.calories || 0, note: "Condiment - small amount", limit: `~${f.serving_size || 10}${f.serving_unit || "g"}` })),
-    ...beverages.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Hydration", limit: `1 ${f.unit_type || "glass"}` })),
-    ...desserts.slice(0, 1).map(f => ({ item: f.name, calories: f.calories || 0, note: "Treat - consume in moderation", limit: `~${f.serving_size || 50}${f.serving_unit || "g"}` }))
+  const plateItemNames = new Set(plate.map(p => p.name));
+  const finalOptionals = [
+    ...condiments.filter(f => !plateItemNames.has(f.name)).slice(0, 4).map(f => ({
+      item: f.name,
+      calories: f.calories || 0,
+      note: f.name.toLowerCase().includes("papad") ? "Crunchy extra" : "Condiment",
+      limit: f.unit_type === "piece" ? "1 piece" : `~${f.serving_size || 15}${f.serving_unit || "g"}`
+    })),
+    ...beverages.filter(f => !plateItemNames.has(f.name)).slice(0, 1).map(f => ({
+      item: f.name,
+      calories: f.calories || 0,
+      note: "Beverage",
+      limit: "1 glass"
+    })),
+    ...desserts.filter(f => !plateItemNames.has(f.name)).slice(0, 1).map(f => ({
+      item: f.name,
+      calories: f.calories || 0,
+      note: "Dessert - Treat",
+      limit: `~${f.serving_size || 50}${f.serving_unit || "g"}`
+    }))
   ];
 
-  return { plate, optionals, macros: { ...macros, totalCalories, totalProtein, totalCarbs, totalFat } };
+  return { plate, optionals: finalOptionals, macros: { ...macros, totalCalories, totalProtein, totalCarbs, totalFat } };
 }
 
 // ==========================================
@@ -649,7 +668,7 @@ function buildResponse(plate, condiments, beverages, desserts, macros) {
 function recommendPlate({ user, menuItems, mealType }) {
   const mt = (mealType || "lunch").toLowerCase();
   console.log(`\n🥗 [AI LOGIC] Generating ${mt.toUpperCase()} recommendations...`);
-  
+
   const dietPreference = user.dietPreference || user.diet || "non-veg";
   const avoidTags = user.avoidTags || [];
 
@@ -661,7 +680,7 @@ function recommendPlate({ user, menuItems, mealType }) {
     dish_type: item.dish_type,
     role: item.role,
     recommendedQuantity: item.quantity,
-    unit: item.unit_type || "serving",
+    unit: item.unit_type || "bowl",
     serving_size: item.serving_size,
     totalGrams: item.grams,
     estimatedCalories: item.estimatedCalories,
@@ -678,19 +697,19 @@ function recommendPlate({ user, menuItems, mealType }) {
   // Meal-type contextual notes
   const mealLogicMap = {
     breakfast: `Light ${macros.targetCalories} kcal breakfast - gentle start to the day.`,
-    lunch:     `Balanced ${macros.targetCalories} kcal lunch targeting ${macros.targetProtein}g protein.`,
-    dinner:    `Light-to-moderate ${macros.targetCalories} kcal dinner - easy on digestion.`,
-    snack:     `Quick ${macros.targetCalories} kcal snack - keep it light between meals.`,
+    lunch: `Balanced ${macros.targetCalories} kcal lunch targeting ${macros.targetProtein}g protein.`,
+    dinner: `Light-to-moderate ${macros.targetCalories} kcal dinner - easy on digestion.`,
+    snack: `Quick ${macros.targetCalories} kcal snack - keep it light between meals.`,
   };
   const plateLogic = "";
 
   // Diet-specific guidance note
   const dietNoteMap = {
-    jain:        "Jain-friendly: root vegetables & garlic excluded.",
-    vegan:       "Vegan: all animal products excluded.",
+    jain: "Jain-friendly: root vegetables & garlic excluded.",
+    vegan: "Vegan: all animal products excluded.",
     "lacto-veg": "Lacto-vegetarian: dairy included, no eggs or meat.",
-    "ovo-veg":   "Ovo-vegetarian: eggs included, no dairy or meat.",
-    vegetarian:  "Vegetarian: dairy & eggs OK, no meat.",
+    "ovo-veg": "Ovo-vegetarian: eggs included, no dairy or meat.",
+    vegetarian: "Vegetarian: dairy & eggs OK, no meat.",
   };
   const normalizedDiet = normalizeDiet(dietPreference);
   const dietNote = dietNoteMap[normalizedDiet] || "";

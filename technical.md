@@ -50,7 +50,7 @@ The backend serves as the "Knowledge Hub" and "Nutritionist" of the system.
     3.  `parseMenuText` normalization:
         *   Regex `/[^a-z\s/,&\-]/g` strips punctuation.
         *   `OCR_BLACKLIST` removes non-food noise (Breakfast, Lunch, Dinner, Monday, Mess, Price, rs, etc.).
-    4.  Items are checked against `foodDatabase.json`. New items are added with `_enrichedByFallback: true`.
+    4.  Items are checked against `foodDatabase.json`. New items are added using the standardized flat schema.
 
 ### B. Dietary Preference Logic
 The recommendation engine strictly filters menu items based on these tags:
@@ -70,10 +70,11 @@ The recommendation engine strictly filters menu items based on these tags:
 3.  **Dynamic Meal Targets**: Automatically infers current meal based on system clock (Breakfast 6am, Lunch 11am, Snack 4pm, Dinner 7pm).
 4.  **Percentage-Based Macros**: Calculates targets based on user-defined (or auto-recommended) splits (Protein/Carb/Fat % totaling 100%).
 5.  **Biometric Failsafe**: Protein target is back-calculated from calories if manual % is not set, using athletic multipliers (1.0g - 2.0g per kg).
-4.  **Plate Building Phases**:
-    *   **Phase 1**: Reserve 150 kcal for a "veg side" (fiber/vitamins).
-    *   **Phase 2**: Select a "protein_main". If multiple, pick the one with highest protein-to-calorie density.
-    *   **Phase 3**: Allocate remaining calories to "carb_base".
+4.  **Macro-Aware Fallbacks**: Fallback items (for unknown OCR results) are generated through a logic-heavy wrapper that calculates `protein_level` (High/Medium/Low) based on actual macros, ensuring they behave identical to database entries in the selection logic.
+5.  **Plate Building Phases**:
+    *   **Phase 1**: Reserve exact calories for a high-fiber "veg side".
+    *   **Phase 2**: Select a "protein_main". If multiple, pick the most protein-efficient (Protein/Calorie ratio).
+    *   **Phase 3**: Allocate remaining calories (Carb Target) to "carb_base". Logic intelligently splits between Roti and Rice if calorie needs are high (>300 excess).
     *   **Failsafe**: If diet excludes all items, a "No compatible items" warning is returned.
 
 ---
@@ -106,36 +107,25 @@ The Python service performs the "heavy lifting" of spatial estimation.
 
 ---
 
-## 📊 5. Data Constants & Schemas (Dead-Accurate)
+### A. Flat Food Database Schema (`foodDatabase.json`)
+The database uses a flattened schema to eliminate runtime transformation overhead and ensure strict logic consistency.
 
-### A. Known Plate Profiles (`plate_config.py`)
-| Profile Name | Outer Dim (cm) | Context |
-|--------------|----------------|---------|
-| **standard_mess_thali** | 37.0 x 27.0 | Standard 6-compartment tray. Wells = 2.5cm deep. |
-| **4_compartment_plate** | 33.0 x 25.0 | 4-section square tray. Wells = 2.5cm deep. |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Unique identifier (e.g., `dal_makhani`) |
+| `name` | string | Display name |
+| `veg` | boolean | `true` if vegetarian, `false` otherwise |
+| `category` | string | `protein_main`, `carb_base`, `side`, `dessert`, `beverage` |
+| `dish_type` | string | `dal`, `curry`, `sabji`, `rice`, `roti`, `salad`, etc. |
+| `unit_type` | string | `bowl`, `piece`, `glass`, `tsp` (Controls portion snapping) |
+| `serving_size` | number | Weight in `serving_unit` (usually 150g for bowls, 40g for roti) |
+| `calories` | number | Energy content per serving |
+| `protein` | number | Protein (g) per serving |
+| `carbs` | number | Carbohydrates (g) per serving |
+| `fat` | number | Fat (g) per serving |
+| `protein_level`| string | `high` (≥15g), `medium` (8-14g), `low` (<8g) |
 
-### B. Core Density Library (`density_map.py`)
-*Used for: Mass (g) = Volume (ml) × Density*
-| Food Item | Density (g/ml) |
-|-----------|----------------|
-| **Steam Rice** | 1.08 |
-| **Dal Fry** | 1.05 |
-| **Mixed Veg** | 0.90 |
-| **Chapati/Roti** | 0.85 |
-| **Paneer** | 1.03 |
-| **Salad** | 0.60 |
-
-### C. Nutritional Macro Map (`macro_map.py`)
-*Units are per **1.0 gram** of food.*
-| Category | Cal/g | Prot/g | Carb/g | Fat/g |
-|----------|-------|--------|--------|-------|
-| **Rice (Steam)** | 1.30 | 0.027 | 0.280 | 0.003 |
-| **Roti (Chapati)** | 2.60 | 0.080 | 0.500 | 0.030 |
-| **Dal (Yellow)** | 0.85 | 0.055 | 0.120 | 0.020 |
-| **Aloo Gobi** | 0.95 | 0.030 | 0.120 | 0.050 |
-| **Chicken Curry** | 1.40 | 0.150 | 0.040 | 0.080 |
-
-### D. Dietary Preference Logic
+### B. Dietary Preference Logic
 The recommendation engine strictly filters using `MEAT_TAGS`, `isEgg()`, and `isDairy()` logic:
 
 | Diet | Exclusions |
@@ -144,6 +134,12 @@ The recommendation engine strictly filters using `MEAT_TAGS`, `isEgg()`, and `is
 | **Vegan** | `MEAT_TAGS` + `Egg` + `Dairy` (milk, ghee, butter, paneer) |
 | **Lacto-Veg** | `MEAT_TAGS` + `Egg` |
 | **Ovo-Veg** | `MEAT_TAGS` + `Dairy` |
+| **Vegetarian** | `MEAT_TAGS` |
+
+### C. Standardized Unit Snapping
+*   **Piece**: Snaps to integer values (1, 2, 3). Used for Bread, Roti, Eggs, Fruit.
+*   **Bowl/Glass**: Snaps to 0.5 increments. Used for Dal, Rice, Beverages.
+*   **Tsp/Tbsp**: Fine increments for condiments.
 
 ---
 
