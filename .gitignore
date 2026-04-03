@@ -1,3 +1,6 @@
+# Local made tool
+ai-agent/
+
 # Dependency directories
 node_modules/
 backend/node_modules/

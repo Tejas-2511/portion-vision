@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useApp } from "../hooks/useApp";
 import api from "../services/api";
 import RecommendationCard from "../components/RecommendationCard";
+import { inferMealType } from "../utils/time";
 
 // Analysis page - Displays portion analysis results
 export default function Analysis() {
@@ -31,15 +32,7 @@ export default function Analysis() {
     setLoading(true);
     try {
       // Use the meal type passed from Home page, or fall back to time inference
-      const passedMealType = location.state?.mealType;
-      const hour = new Date().getHours();
-      let inferredType = "lunch";
-      if (hour >= 6 && hour < 11) inferredType = "breakfast";
-      else if (hour >= 11 && hour < 16) inferredType = "lunch";
-      else if (hour >= 16 && hour < 19) inferredType = "snack";
-      else if (hour >= 19) inferredType = "dinner";
-
-      const mealType = passedMealType || inferredType;
+      const mealType = location.state?.mealType || inferMealType();
       const data = await api.getRecommendations(userProfile, mealType);
 
       if (data && data.recommendedPlate) {

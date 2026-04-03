@@ -6,525 +6,359 @@ const path = require("path");
 const axios = require("axios");
 const FormData = require("form-data");
 const Tesseract = require("tesseract.js");
+
+const Database = require("./utils/db");
 const { normalizeFoodName } = require("./utils/normalize");
 const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
-const { getFallbackDetails } = require("./portion_recommender");
+const { recommendPlate, getFallbackDetails } = require("./portion_recommender");
 
 const app = express();
 
-// Security: CORS configuration - Allow all origins for development
+// Security: CORS configuration
 app.use(cors());
 
-app.use(express.json({ limit: '10mb' })); // Limit JSON payload size
+// Middleware
+app.use(express.json({ limit: '10mb' }));
+
+// Utility for path safety
+const uploadsPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath, { recursive: true });
+}
 
 // Security: File upload configuration with validation
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadDir = 'uploads/';
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    destination: (req, file, cb) => cb(null, uploadsPath),
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'upload-' + uniqueSuffix + path.extname(file.originalname));
     }
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'upload-' + uniqueSuffix + path.extname(file.originalname));
-  }
 });
 
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB max file size
-    files: 1 // Only 1 file per request
-  },
-  fileFilter: function (req, file, cb) {
-    // Accept only image files
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-
-    if (allowedMimeTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error('Invalid file type. Only JPEG, PNG, and WEBP images are allowed.'));
+    storage: storage,
+    limits: {
+        fileSize: 10 * 1024 * 1024, // 10MB
+        files: 1
+    },
+    fileFilter: (req, file, cb) => {
+        const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+        if (allowedMimeTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Invalid file type. Only JPEG, PNG, and WEBP images are allowed.'));
+        }
     }
-  }
 });
-
-
 
 // Security: Basic security headers
 app.use((req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  next();
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    next();
 });
 
-// Health check endpoint
+// Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+    res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
-
 
 // ============================================
 // Food Database API Endpoints
 // ============================================
 
-// GET /api/foods - Retrieve all foods from database
-app.get('/api/foods', (req, res) => {
-  try {
-    const foodDbPath = './data/foodDatabase.json';
-
-    if (!fs.existsSync(foodDbPath)) {
-      // console.log('📂 Food database not found, returning empty array');
-      return res.json([]);
+app.get('/api/foods', async (req, res) => {
+    try {
+        const foods = await Database.getFoods();
+        res.json(foods);
+    } catch (err) {
+        console.error('API Error (GET /api/foods):', err);
+        res.status(500).json({ error: 'Failed to load food database' });
     }
-
-    const data = fs.readFileSync(foodDbPath, 'utf8');
-    const foods = JSON.parse(data);
-
-    if (!Array.isArray(foods)) {
-      console.error('⚠️ Food database is not an array');
-      return res.json([]);
-    }
-
-    // console.log(`✅ Retrieved ${foods.length} foods from database`);
-    res.json(foods);
-  } catch (err) {
-    console.error('❌ Error reading food database:', err);
-    res.status(500).json({
-      error: 'Failed to load food database',
-      message: process.env.NODE_ENV === 'development' ? err.message : undefined
-    });
-  }
 });
 
-// GET /api/foods/search?q=query - Search foods by name
-app.get('/api/foods/search', (req, res) => {
-  try {
-    const normalizedQuery = normalizeFoodName(req.query.q);
+app.get('/api/foods/search', async (req, res) => {
+    try {
+        const query = req.query.q;
+        const normalizedQuery = normalizeFoodName(query);
 
-    if (!normalizedQuery) {
-      return res.status(400).json({
-        error: 'Search query required',
-        message: 'Please provide a valid search query'
-      });
-    }
-
-    const foodDbPath = './data/foodDatabase.json';
-
-    if (!fs.existsSync(foodDbPath)) {
-      return res.json([]);
-    }
-
-    const data = fs.readFileSync(foodDbPath, 'utf8');
-    const foods = JSON.parse(data);
-
-    if (!Array.isArray(foods)) {
-      return res.json([]);
-    }
-
-
-
-    // First, try exact/partial substring match
-    let results = foods.filter(food =>
-      food.name && normalizeFoodName(food.name).includes(normalizedQuery)
-    );
-
-    // If few results, complement with fuzzy search
-    if (results.length < 5) {
-      const fuzzyResults = foods
-        .filter(food => food.name && !results.some(r => r.name === food.name))
-        .map(food => ({
-          food,
-          score: levenshteinDistance(normalizedQuery, normalizeFoodName(food.name))
-        }))
-        .filter(item => item.score <= 3) // threshold
-        .sort((a, b) => a.score - b.score)
-        .map(item => item.food);
-
-      results = [...results, ...fuzzyResults].slice(0, 10);
-    }
-    res.json(results);
-  } catch (err) {
-    console.error('❌ Search failed:', err);
-    res.status(500).json({
-      error: 'Search failed',
-      message: process.env.NODE_ENV === 'development' ? err.message : undefined
-    });
-  }
-});
-
-// GET /api/menu - Get current menu
-app.get('/api/menu', (req, res) => {
-  try {
-    const menuPath = './data/menu.json';
-    if (fs.existsSync(menuPath)) {
-      const menu = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-      res.json(menu);
-    } else {
-      res.json(null);
-    }
-  } catch (err) {
-    console.error("Error reading menu:", err);
-    res.status(500).json({ error: "Failed to read menu" });
-  }
-});
-
-
-
-// POST /api/recommend - Generate portion recommendations
-// POST /api/recommend - Generate balanced plate recommendation
-app.post('/api/recommend', (req, res) => {
-  // console.log("Recommend endpoint hit. Body keys:", Object.keys(req.body));
-  try {
-    const { userProfile, mealType, menuItems: clientMenuItems } = req.body;
-
-    if (!userProfile) {
-      return res.status(400).json({ error: 'User profile is required' });
-    }
-
-    let menuItems = clientMenuItems || [];
-
-    // Fallback if client didn't send items
-    if (!menuItems.length) {
-      const menuPath = './data/menu.json';
-      if (fs.existsSync(menuPath)) {
-        try {
-          const menuData = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
-          if (Array.isArray(menuData.items) && menuData.items.length) {
-            menuItems = menuData.items;
-          }
-        } catch (e) {
-          console.error("Error reading menu.json fallback:", e);
+        if (!normalizedQuery) {
+            return res.status(400).json({ error: 'Search query required' });
         }
-      }
+
+        const foods = await Database.getFoods();
+        
+        // Exact/Partial matches
+        let results = foods.filter(food => 
+            food.name && normalizeFoodName(food.name).includes(normalizedQuery)
+        );
+
+        // Complement with fuzzy search if needed
+        if (results.length < 5) {
+            const fuzzyResults = foods
+                .filter(food => food.name && !results.some(r => r.name === food.name))
+                .map(food => ({
+                    food,
+                    score: levenshteinDistance(normalizedQuery, normalizeFoodName(food.name))
+                }))
+                .filter(item => item.score <= 3)
+                .sort((a, b) => a.score - b.score)
+                .map(item => item.food);
+
+            results = [...results, ...fuzzyResults].slice(0, 10);
+        }
+        res.json(results);
+    } catch (err) {
+        console.error('API Error (GET /api/foods/search):', err);
+        res.status(500).json({ error: 'Search failed' });
     }
-
-    if (!menuItems.length) {
-      return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
-    }
-
-    // Reconstruct user object from frontend profile
-    const user = {
-      weight_kg: parseFloat(userProfile.weight),
-      height_cm: parseFloat(userProfile.height),
-      age: parseInt(userProfile.age),
-      sex: userProfile.gender,
-      activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
-      goal: (userProfile.goalType || 'maintain').toLowerCase(),
-      goalType: userProfile.goalType,
-      proteinPct: userProfile.proteinPct,
-      carbsPct: userProfile.carbsPct,
-      fatPct: userProfile.fatPct,
-      dietPreference: userProfile.dietPreference || 'non-veg',
-      avoidTags: userProfile.avoidTags || []
-    };
-
-    console.log(`🥗 [REC REQUEST] Goal: ${user.goal}, Split: ${user.proteinPct}/${user.carbsPct}/${user.fatPct}`);
-
-    const { recommendPlate } = require("./portion_recommender");
-
-    const recommendation = recommendPlate({
-      user,
-      menuItems,
-      mealType: mealType || 'lunch'
-    });
-
-    // console.log(`🥗 Generated plate for ${user.sex}, ${user.goal} (${mealType})`);
-    res.json(recommendation);
-
-  } catch (err) {
-    console.error('❌ Recommendation failed:', err);
-    res.status(500).json({ error: 'Failed to generate recommendations' });
-  }
 });
 
-// Noise words and patterns to strip from OCR output
+app.get('/api/menu', async (req, res) => {
+    try {
+        const menu = await Database.getMenu();
+        res.json(menu);
+    } catch (err) {
+        console.error("API Error (GET /api/menu):", err);
+        res.status(500).json({ error: "Failed to read menu" });
+    }
+});
+
+app.post('/api/recommend', async (req, res) => {
+    try {
+        const { userProfile, mealType, menuItems: clientMenuItems } = req.body;
+
+        if (!userProfile) {
+            return res.status(400).json({ error: 'User profile is required' });
+        }
+
+        let menuItems = clientMenuItems || [];
+
+        if (!menuItems.length) {
+            const menuData = await Database.getMenu();
+            if (menuData && Array.isArray(menuData.items)) {
+                menuItems = menuData.items;
+            }
+        }
+
+        if (!menuItems.length) {
+            return res.json({ recommendedPlate: [], summary: { notes: "No menu available" } });
+        }
+
+        // Normalize user profile for the recommender
+        const user = {
+            weight_kg: parseFloat(userProfile.weight),
+            height_cm: parseFloat(userProfile.height),
+            age: parseInt(userProfile.age),
+            sex: userProfile.gender,
+            activity_level: (userProfile.activityLevel || 'moderate').toLowerCase().split(' ')[0],
+            goalType: userProfile.goalType,
+            proteinPct: userProfile.proteinPct,
+            carbsPct: userProfile.carbsPct,
+            fatPct: userProfile.fatPct,
+            dietPreference: userProfile.dietPreference || 'non-veg',
+            avoidTags: userProfile.avoidTags || []
+        };
+
+        const recommendation = await recommendPlate({
+            user,
+            menuItems,
+            mealType: mealType || 'lunch'
+        });
+
+        res.json(recommendation);
+    } catch (err) {
+        console.error('API Error (POST /api/recommend):', err);
+        res.status(500).json({ error: 'Failed to generate recommendations' });
+    }
+});
+
+// ============================================
+// OCR Pipeline
+// ============================================
+
 const OCR_BLACKLIST = new Set([
-  'menu', 'breakfast', 'lunch', 'dinner', 'snack', 'snacks',
-  'today', 'date', 'day', 'monday', 'tuesday', 'wednesday',
-  'thursday', 'friday', 'saturday', 'sunday',
-  'mess', 'hostel', 'canteen', 'cafeteria',
-  'special', 'note', 'notes', 'timings', 'timing',
-  'price', 'rate', 'rupees', 'rs', 'amount', 'total',
-  'veg', 'non-veg', 'nonveg', 'jain', 'menu', 'items'
+    'menu', 'breakfast', 'lunch', 'dinner', 'snack', 'snacks',
+    'today', 'date', 'day', 'monday', 'tuesday', 'wednesday',
+    'thursday', 'friday', 'saturday', 'sunday',
+    'mess', 'hostel', 'canteen', 'cafeteria',
+    'special', 'note', 'notes', 'timings', 'timing',
+    'price', 'rate', 'rupees', 'rs', 'amount', 'total',
+    'veg', 'non-veg', 'nonveg', 'jain', 'menu'
 ]);
 
 function parseMenuText(rawText) {
-  if (!rawText) return [];
+    if (!rawText) return [];
 
-  // Split by newlines or tabs (common in tables)
-  const lines = rawText.split(/[\n\t]/).map(l => l.trim()).filter(Boolean);
-  const items = [];
-  const seen = new Set();
+    const lines = rawText.split(/[\n\t]/).map(l => l.trim()).filter(Boolean);
+    const items = [];
+    const seen = new Set();
 
-  for (const line of lines) {
-    // Normalise: lowercase, keep letters and limited punctuation for food names
-    let norm = line.toLowerCase()
-      .replace(/[^a-z\s/,&\-]/g, ' ') // replace noise with spaces
-      .replace(/\s+/g, ' ')          // collapse multiple spaces
-      .trim();
+    for (const line of lines) {
+        let norm = line.toLowerCase()
+            .replace(/[^a-z\s/,&\-]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
 
-    if (!norm || norm.length < 3) continue;
+        if (!norm || norm.length < 3) continue;
 
-    // Split on common menu delimiters
-    const parts = norm.split(/[,/&|+]/).map(p => p.trim()).filter(p => p.length >= 3);
+        const parts = norm.split(/[,/&|+]/).map(p => p.trim()).filter(p => p.length >= 3);
 
-    for (const part of parts) {
-      // Split words to check against blacklist
-      const words = part.split(' ');
+        for (const part of parts) {
+            if (OCR_BLACKLIST.has(part)) continue;
+            
+            const words = part.split(' ');
+            if (words.every(w => OCR_BLACKLIST.has(w))) continue;
 
-      // Skip if the whole part is just a blacklist word or too generic
-      if (OCR_BLACKLIST.has(part)) continue;
-
-      // Skip if every single word in the item is a noise word
-      if (words.every(w => OCR_BLACKLIST.has(w))) continue;
-
-      // Clean up common prefixes like "1. ", "a) " (already handled by regex but for clarity)
-      const cleanItem = part;
-
-      if (!seen.has(cleanItem)) {
-        seen.add(cleanItem);
-        items.push(cleanItem);
-      }
+            if (!seen.has(part)) {
+                seen.add(part);
+                items.push(part);
+            }
+        }
     }
-  }
-
-  return items.sort();
+    return items.sort();
 }
 
 app.post("/ocr", upload.single("image"), async (req, res) => {
-  let originalPath = null;
+    let originalPath = null;
 
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No image uploaded" });
-    }
-
-    originalPath = req.file.path;
-    console.log(`🔍 Running Tesseract OCR on: ${req.file.originalname}`);
-
-    // Tesseract.js — points to local directory for trained data
-    const { data: { text, confidence } } = await Tesseract.recognize(originalPath, 'eng', {
-      gzip: false,
-      langPath: __dirname, // Points to directory containing eng.traineddata
-      logger: m => {
-        if (m.status === 'recognizing text') {
-          // Log progress occasionally
-          if (Math.round(m.progress * 100) % 25 === 0) {
-            console.log(`📄 OCR Progress: ${Math.round(m.progress * 100)}%`);
-          }
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: "No image uploaded" });
         }
-      }
-    });
 
-    console.log(`✅ OCR Complete (Confidence: ${Math.round(confidence)}%)`);
-    // console.log('📄 Raw text excerpt:', text.substring(0, 100).replace(/\n/g, ' '));
+        originalPath = req.file.path;
+        console.log(`🔍 Running Tesseract OCR: ${req.file.originalname}`);
 
-    const menuItems = parseMenuText(text);
-    console.log(`✅ Parsed ${menuItems.length} menu items`);
+        const { data: { text, confidence } } = await Tesseract.recognize(originalPath, 'eng', {
+            gzip: false,
+            langPath: __dirname,
+            logger: m => {
+                if (m.status === 'recognizing text') {
+                    if (Math.round(m.progress * 100) % 25 === 0) {
+                        console.log(`📄 OCR Progress: ${Math.round(m.progress * 100)}%`);
+                    }
+                }
+            }
+        });
 
-    const data = {
-      date: new Date().toISOString(),
-      items: menuItems,
-      confidence: Math.round(confidence)
-    };
+        const menuItems = parseMenuText(text);
+        
+        // Sync with Food Database
+        let foodDatabase = await Database.getFoods();
+        const getCompareKey = (name) => (name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+        
+        const cleanedMenuItems = [];
+        let addedCount = 0;
 
-    // Ensure data directory exists
-    const dataDir = './data';
-    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+        for (const itemName of menuItems) {
+            const compareKey = getCompareKey(itemName);
+            const existing = foodDatabase.find(f => getCompareKey(f.name) === compareKey);
 
-    fs.writeFileSync('./data/menu.json', JSON.stringify(data, null, 2));
-
-    // Update foodDatabase.json with new items
-    const foodDbPath = './data/foodDatabase.json';
-    let foodDatabase = [];
-
-    console.log('📊 Updating food database...');
-
-    if (fs.existsSync(foodDbPath)) {
-      try {
-        const existingData = fs.readFileSync(foodDbPath, 'utf8');
-        foodDatabase = JSON.parse(existingData);
-        if (!Array.isArray(foodDatabase)) {
-          console.log('⚠️ Database was not an array, resetting...');
-          foodDatabase = [];
-        } else {
-          console.log(`✅ Loaded ${foodDatabase.length} existing items`);
+            if (!existing) {
+                const fallback = getFallbackDetails(itemName);
+                const newItem = {
+                    id: itemName.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
+                    name: itemName,
+                    veg: fallback.veg !== undefined ? fallback.veg : true,
+                    dish_type: fallback.dish_type || 'sabji',
+                    category: fallback.category || 'side',
+                    serving_size: fallback.serving_size || 100,
+                    serving_unit: fallback.serving_unit || 'g',
+                    unit_type: fallback.unit_type || 'bowl',
+                    calories: fallback.calories || 0,
+                    protein: fallback.protein || 0,
+                    carbs: fallback.carbs || 0,
+                    fat: fallback.fat || 0,
+                    fiber: fallback.fiber || 0,
+                    protein_level: fallback.protein_level || 'low',
+                    meal_role: fallback.meal_role || 'single',
+                    tags: fallback.tags || []
+                };
+                foodDatabase.push(newItem);
+                addedCount++;
+                cleanedMenuItems.push(itemName);
+            } else {
+                cleanedMenuItems.push(existing.name);
+            }
         }
-      } catch (e) {
-        console.error('❌ Error reading foodDatabase.json, creating new:', e);
-        foodDatabase = [];
-      }
-    } else {
-      console.log('📝 No existing database found, creating new one');
-    }
 
-    // Use a helper to make comparison case-insensitive and space-insensitive
-    const getCompareKey = (name) => (name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (addedCount > 0) {
+            foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
+            await Database.saveFoods(foodDatabase);
+        }
 
-    const existingKeys = new Set(
-      foodDatabase.filter(item => item && item.name).map(item => getCompareKey(item.name))
-    );
-
-    const cleanedMenuItems = [];
-    let addedCount = 0;
-    let skippedCount = 0;
-
-    menuItems.forEach(itemName => {
-      const compareKey = getCompareKey(itemName);
-      
-      // Look for any existing item that matches this key
-      const existing = foodDatabase.find(f => getCompareKey(f.name) === compareKey);
-
-      if (!existing) {
-        console.log(`➕ New: ${itemName}`);
-        addedCount++;
-        const fallback = getFallbackDetails(itemName);
-        const newItem = {
-          id: itemName.toLowerCase().replace(/\s+/g, '_'),
-          name: itemName,
-          veg: fallback.veg !== undefined ? fallback.veg : true,
-          dish_type: fallback.dish_type || 'sabji',
-          category: fallback.category || 'side',
-          serving_size: fallback.serving_size || 100,
-          serving_unit: fallback.serving_unit || 'g',
-          unit_type: fallback.unit_type || 'bowl',
-          calories: fallback.calories || 0,
-          protein: fallback.protein || 0,
-          carbs: fallback.carbs || 0,
-          fat: fallback.fat || 0,
-          fiber: fallback.fiber || 0,
-          protein_level: fallback.protein_level || 'low',
-          meal_role: fallback.meal_role || 'single',
-          tags: fallback.tags || []
+        const resultData = {
+            date: new Date().toISOString(),
+            items: cleanedMenuItems.sort(),
+            text,
+            confidence: Math.round(confidence)
         };
-        foodDatabase.push(newItem);
-        existingKeys.add(compareKey);
-        cleanedMenuItems.push(itemName);
-      } else {
-        console.log(`⏭️ Skip: ${itemName} (Matched: ${existing.name})`);
-        skippedCount++;
-        // USE THE CLEAN NAME FROM DB INSTEAD OF OCR STRING
-        cleanedMenuItems.push(existing.name);
-      }
-    });
 
-    console.log(`✨ DB Sync: ${addedCount} added, ${skippedCount} items already exist.`);
+        await Database.saveMenu(resultData);
+        res.json(resultData);
 
-    foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
-    fs.writeFileSync(foodDbPath, JSON.stringify(foodDatabase, null, 2));
-    console.log(`💾 Saved database with ${foodDatabase.length} total items`);
-
-    const resultData = { 
-      date: new Date().toISOString(), 
-      items: cleanedMenuItems.sort(), // Use the cleaned names!
-      text, 
-      confidence: Math.round(confidence) 
-    };
-
-    fs.writeFileSync('./data/menu.json', JSON.stringify(resultData, null, 2));
-
-    res.json(resultData);
-
-  } catch (err) {
-    console.error('OCR ERROR:', err);
-    res.status(500).json({
-      error: 'OCR processing failed',
-      message: process.env.NODE_ENV === 'development' ? err.message : undefined
-    });
-  } finally {
-    if (originalPath && fs.existsSync(originalPath)) {
-      try { fs.unlinkSync(originalPath); } catch (e) { console.error('Failed to delete temp file:', e); }
+    } catch (err) {
+        console.error('OCR ERROR:', err);
+        res.status(500).json({ error: 'OCR processing failed' });
+    } finally {
+        if (originalPath && fs.existsSync(originalPath)) {
+            try { fs.unlinkSync(originalPath); } catch (e) { console.error('Cleanup failed:', e); }
+        }
     }
-  }
 });
 
 // ============================================
-// Plate Analysis Endpoint (Integration w/ CV)
+// Plate Analysis Integration
 // ============================================
-
 
 app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No image uploaded" });
-  }
-
-  const { expectedItems } = req.body; // e.g., "rice, dal, roti, sabzi"
-  let originalPath = req.file.path;
-
-  try {
-    // 1. Prepare form data to send to Python microservice
-    const form = new FormData();
-    form.append("image", fs.createReadStream(originalPath));
-    if (expectedItems) {
-      form.append("expected_items", expectedItems);
+    if (!req.file) {
+        return res.status(400).json({ error: "No image uploaded" });
     }
 
-    // 2. Call the CV microservice
-    // console.log("Calling CV service with expected items:", expectedItems);
-    const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
-      headers: { ...form.getHeaders() },
-      timeout: 60000 // 60 second timeout (depth + SAM can be slow)
-    });
+    const { expectedItems } = req.body;
+    let originalPath = req.file.path;
 
-    // 3. Return the portion estimates to frontend
-    res.json(cvResponse.data);
+    try {
+        const form = new FormData();
+        form.append("image", fs.createReadStream(originalPath));
+        if (expectedItems) form.append("expected_items", expectedItems);
 
-  } catch (err) {
-    if (err.code === 'ECONNREFUSED') {
-      res.status(503).json({
-        error: "CV service is currently offline. Please ensure the Python service is running on port 8000.",
-        isOffline: true
-      });
-    } else {
-      res.status(500).json({
-        error: "Portion analysis failed",
-        message: process.env.NODE_ENV === 'development' ? err.message : undefined
-      });
+        const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
+            headers: { ...form.getHeaders() },
+            timeout: 90000 
+        });
+
+        res.json(cvResponse.data);
+    } catch (err) {
+        if (err.code === 'ECONNREFUSED') {
+            res.status(503).json({
+                error: "CV service is offline",
+                isOffline: true
+            });
+        } else {
+            console.error('CV Error:', err);
+            res.status(500).json({ error: "Portion analysis failed" });
+        }
+    } finally {
+        if (originalPath && fs.existsSync(originalPath)) {
+            try { fs.unlinkSync(originalPath); } catch (e) { console.error("Cleanup failed:", e); }
+        }
     }
-  } finally {
-    // Cleanup the uploaded temp file
-    if (originalPath && fs.existsSync(originalPath)) {
-      try {
-        fs.unlinkSync(originalPath);
-      } catch (e) {
-        console.error("Failed to delete original file:", e);
-      }
-    }
-  }
 });
 
-// Global error handling middleware
+// Global error handling
 app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ error: 'File too large. Maximum size is 10MB.' });
+    if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: err.message });
     }
-    if (err.code === 'LIMIT_FILE_COUNT') {
-      return res.status(400).json({ error: 'Too many files. Only 1 file allowed.' });
-    }
-    return res.status(400).json({ error: err.message });
-  }
-
-  if (err.message === 'Not allowed by CORS') {
-    return res.status(403).json({ error: 'CORS policy: Origin not allowed' });
-  }
-
-  if (err.message && err.message.includes('Invalid file type')) {
-    return res.status(400).json({ error: err.message });
-  }
-
-  console.error("Unhandled error:", err);
-  res.status(500).json({ error: 'Internal server error' });
+    console.error("Unhandled error:", err);
+    res.status(500).json({ error: 'Internal server error' });
 });
 
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || '0.0.0.0';
-
-app.listen(PORT, HOST, () => {
-  console.log(`Backend running on http://${HOST}:${PORT}`);
-  console.log('CORS: All origins allowed');
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
 });

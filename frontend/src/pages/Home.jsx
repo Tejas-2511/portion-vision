@@ -3,16 +3,7 @@ import { useState, useEffect } from "react";
 import { useApp } from "../hooks/useApp";
 import api from "../services/api";
 import RecommendationCard from "../components/RecommendationCard";
-
-const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack"];
-
-function inferMealType() {
-  const hour = new Date().getHours();
-  if (hour >= 6 && hour < 11) return "breakfast";
-  if (hour >= 11 && hour < 16) return "lunch";
-  if (hour >= 16 && hour < 19) return "snack";
-  return "dinner";
-}
+import { inferMealType, MEAL_TYPES, getMealLabel } from "../utils/time";
 
 // Home page - Main dashboard displaying today's mess menu
 export default function Home() {
@@ -74,7 +65,7 @@ export default function Home() {
             Hello, {userProfile?.name?.split(' ')[0] || 'there'}! 👋
           </h1>
           <p className="text-sm text-slate-500 font-medium">
-            Based on the time, it's almost {inferMealType()} time.
+            Based on the time, it's almost {getMealLabel(inferMealType())} time.
           </p>
         </div>
 
