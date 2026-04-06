@@ -54,21 +54,32 @@ export default function PlateCapture() {
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex flex-col items-center text-slate-400">
-              <span className="text-4xl mb-2">📷</span>
-              <p>Camera Preview</p>
+            <div className="flex flex-col items-start justify-center p-6 text-slate-700 bg-emerald-50/50 h-full w-full">
+              <h3 className="text-sm font-black text-emerald-800 mb-4 uppercase tracking-widest flex items-center gap-2">
+                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                AI Camera Rules
+              </h3>
+              <ul className="text-xs space-y-3 text-left pl-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-500 mt-0.5">■</span> 
+                  <span><strong className="text-slate-800">Top-Down Angle:</strong> Hold your phone perfectly flat over the plate like a scanner.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-500 mt-0.5">■</span> 
+                  <span><strong className="text-slate-800">Clear Edges:</strong> Make sure your plate contrasts with the table (e.g. steel plate on dark wood).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-500 mt-0.5">■</span> 
+                  <span><strong className="text-slate-800">Good Lighting:</strong> Avoid massive harsh phone-shadows cutting across your food.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-500 mt-0.5">■</span> 
+                  <span><strong className="text-slate-800">Separation:</strong> Ensure items aren't completely mashed together so the AI can map them individually!</span>
+                </li>
+              </ul>
             </div>
           )}
 
-          {/* Top-down Alignment Guide */}
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div className="w-56 h-56 border-2 border-dashed border-white/50 rounded-full flex items-center justify-center box-border animate-pulse">
-                <div className="w-1 h-1 bg-white/50 rounded-full"></div>
-            </div>
-          </div>
-          <p className="absolute bottom-4 left-0 right-0 text-center text-[10px] font-bold text-white uppercase tracking-widest drop-shadow-md">
-            Align Plate within Circle
-          </p>
         </div>
 
         <div className="mb-8 space-y-4">

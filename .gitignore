@@ -50,3 +50,8 @@ cv_service/outputs/
 # Temp/scratch files
 audit_output.json
 install_log.txt
+
+# Dynamic Data and Uploads
+menu.json
+backend/data/menu.json
+backend/uploads/

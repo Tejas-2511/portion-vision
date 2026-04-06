@@ -122,11 +122,10 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
 
 ### `segmentation/sam_segmenter.py` — Deep Segmentation
 *   **`segment_full_image_sam(image_bgr, ctx=None)`**:
-*   **MobileSAM Integration**: Lightweight Vit-T model for fast inference.
-*   **Foodness Heuristics**:
-    - **Saturation Filter**: `Mean Sat < 12`. Discards stainless steel (neutral gray).
-    - **Texture Filter**: `Mean Laplacian < 15`. Discards smooth surfaces.
-    - Result: Only areas with color or texture (food) are segmented.
+*   **MobileSAM Integration**: Utilizing the ViT-T deep-learning model (successfully installed via pip wheel). This provides highly accurate boundary masking regardless of lighting or plate coloring, overriding the color-fallback mechanism.
+*   **Foodness Heuristics (Pre-SAM)**:
+    - **Saturation Filter**: `Mean Sat < 12`. Avoids running SAM on pure stainless steel.
+    - **Texture Filter**: `Mean Laplacian < 15`. Discards perfectly smooth empty surfaces.
 *   **Diagnostics**: Saves each food item's binary mask (`01_mask_item_N.png`) and a combined semi-transparent overlay with contour borders, confidence labels, and distinct colors per item.
 
 ### `estimation/mass_estimator.py` — Pipeline Orchestrator
@@ -160,6 +159,9 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
     - Read `localStorage` on mount (Zero-latency UI).
     - Fetch `/api/menu` to verify if the server version has updated (Consistency).
     - Merge server-side items into local menu state.
+
+### `pages/PlateCapture.jsx` — Input Sanitization (Human-in-the-Loop)
+*   Instead of a live camera feed (which lacks browser support for high-res layout bounds), this page presents strict **AI Camera Rules** (Top-Down Angle, Clear Boundaries, Good Lighting, Spatial Separation) to the user *before* invoking the native device camera. This heavily increases the quality of the image fed to the CV Service.
 
 ### `pages/Analysis.jsx` — Result Orchestration
 *   **Flow**:
@@ -234,7 +236,7 @@ The diagnostics system is implemented in `cv_service/diagnostics/run_context.py`
 *   **Creation**: The `outputs/` directory does **not** exist at clone time. It is created lazily on the first pipeline execution.
 *   **Location**: `cv_service/outputs/{timestamp}_{uuid}/` (e.g., `20260406_191042_a3f1c8e2/`).
 *   **Rule**: Each run gets a unique directory. Outputs are **never overwritten** across runs.
-*   **Git**: The `cv_service/outputs/` directory is in `.gitignore`.
+*   **Git Integrity**: Specific directories designed to hold dynamic or sensitive intermediate outputs are excluded via the project root `.gitignore`. This includes `cv_service/outputs/`, `backend/uploads/` (multer cache), and `backend/data/menu.json` (daily parsed strings).
 
 ### Directory Structure (per run)
 ```
