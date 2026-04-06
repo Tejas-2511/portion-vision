@@ -46,6 +46,26 @@
     ]
   },
   {
+    "id": "aloo_capsicum_1775486288755",
+    "name": "aloo capsicum",
+    "veg": true,
+    "dish_type": "sabji",
+    "category": "side",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "unit_type": "bowl",
+    "calories": 140,
+    "protein": 4,
+    "carbs": 14,
+    "fat": 7,
+    "fiber": 4,
+    "protein_level": "low",
+    "meal_role": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
     "id": "aloo_gobi",
     "name": "Aloo Gobi",
     "veg": true,
@@ -1362,6 +1382,26 @@
     ]
   },
   {
+    "id": "dal_palak_1775486288755",
+    "name": "dal palak",
+    "veg": true,
+    "dish_type": "dal",
+    "category": "protein_main",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "unit_type": "bowl",
+    "calories": 190,
+    "protein": 11,
+    "carbs": 30,
+    "fat": 4,
+    "fiber": 8,
+    "protein_level": "medium",
+    "meal_role": "single",
+    "tags": [
+      "veg"
+    ]
+  },
+  {
     "id": "dal_panchmail",
     "name": "Dal Panchmail",
     "veg": true,
@@ -2224,6 +2264,26 @@
     "carbs": 38,
     "fat": 4,
     "fiber": 1,
+    "protein_level": "low",
+    "tags": [
+      "rice"
+    ]
+  },
+  {
+    "id": "jeera_rice",
+    "name": "Jeera Rice",
+    "veg": true,
+    "category": "carb_base",
+    "dish_type": "rice",
+    "meal_role": "single",
+    "serving_size": 200,
+    "serving_unit": "g",
+    "unit_type": "bowl",
+    "calories": 280,
+    "protein": 6,
+    "carbs": 55,
+    "fat": 4,
+    "fiber": 2,
     "protein_level": "low",
     "tags": [
       "rice"
@@ -5072,25 +5132,5 @@
     "fiber": 8,
     "protein_level": "medium",
     "tags": []
-  },
-  {
-    "id": "jeera_rice",
-    "name": "Jeera Rice",
-    "veg": true,
-    "category": "carb_base",
-    "dish_type": "rice",
-    "meal_role": "single",
-    "serving_size": 200,
-    "serving_unit": "g",
-    "unit_type": "bowl",
-    "calories": 280,
-    "protein": 6,
-    "carbs": 55,
-    "fat": 4,
-    "fiber": 2,
-    "protein_level": "low",
-    "tags": [
-      "rice"
-    ]
   }
 ]

@@ -5,12 +5,13 @@ Detects individual compartments inside a non-circular sectioned mess plate
 and computes a scale factor (cm per pixel) using known plate dimensions.
 """
 
+import time
 import cv2
 import numpy as np
 from config.plate_config import get_plate_profile, PLATE_PROFILES
 
 
-def find_compartments(image: np.ndarray) -> list[dict]:
+def find_compartments(image: np.ndarray, ctx=None) -> list[dict]:
     """
     Detect compartments in the plate image using contour analysis.
 
@@ -22,6 +23,9 @@ def find_compartments(image: np.ndarray) -> list[dict]:
         }
     sorted top-left → bottom-right.
     """
+    debug = ctx is not None and ctx.debug
+    t0 = time.perf_counter()
+
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
@@ -64,6 +68,36 @@ def find_compartments(image: np.ndarray) -> list[dict]:
 
     # Sort: top row first (by y), then left→right (by x)
     compartments.sort(key=lambda c: c["bbox"][1] * img_w + c["bbox"][0])
+
+    elapsed = time.perf_counter() - t0
+
+    # ── Debug: save overlays ─────────────────────────────────────────────
+    if debug:
+        # Save threshold result
+        idx = ctx.next_index("compartments")
+        ctx.save_image("compartments", f"{idx:02d}_adaptive_threshold.png", thresh)
+
+        # Save combined edges
+        idx = ctx.next_index("compartments")
+        ctx.save_image("compartments", f"{idx:02d}_combined_edges.png", combined)
+
+        # Draw bounding boxes + contours on the image copy
+        overlay = image.copy()
+        for i, comp in enumerate(compartments):
+            x, y, w, h = comp["bbox"]
+            cv2.rectangle(overlay, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            if comp["contour"] is not None:
+                cv2.drawContours(overlay, [comp["contour"]], -1, (0, 200, 255), 2)
+            cv2.putText(overlay, f"#{i+1} ({comp['area_px']}px)",
+                        (x, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+
+        idx = ctx.next_index("compartments")
+        fname = f"{idx:02d}_compartments_overlay.png"
+        ctx.save_image("compartments", fname, overlay)
+        ctx.log("Compartment Detection", f"Detected {len(compartments)} compartments",
+                {"min_area_frac": 0.02, "max_area_frac": 0.90,
+                 "compartment_count": len(compartments)},
+                elapsed=elapsed, output_file=fname)
 
     return compartments
 

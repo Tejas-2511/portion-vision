@@ -44,6 +44,9 @@ cv_service/volume/
 # Tesseract cache
 .tessdata/
 
+# Pipeline debug outputs
+cv_service/outputs/
+
 # Temp/scratch files
 audit_output.json
 install_log.txt

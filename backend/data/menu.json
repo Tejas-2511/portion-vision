@@ -1,21 +1,14 @@
 {
-  "date": "2026-04-01T19:37:58.022Z",
+  "date": "2026-04-06T14:38:08.769Z",
   "items": [
-    "Bhaji",
-    "Bread",
-    "Butter",
-    "Coffee",
-    "Flavored Milk",
-    "Jam",
-    "Kulcha",
-    "Pav",
-    "Tea",
-    "Watermelon",
-    "bornvita",
-    "cornfalkes with hot milk",
-    "egg bhurji",
-    "godhi upma"
+    "Chapati",
+    "Dal Vada Curry",
+    "Papad",
+    "Pickle",
+    "Steam Rice",
+    "aloo capsicum",
+    "dal palak"
   ],
-  "text": "TEA\nCOFFEE\nCORNFALKES WITH HOT MILK/FLAVORED MILK\nBORNVITA\nBREAD,BUTTER &JAM\nPAV/KULCHA\nBHAJI\n\nGODHI UPMA\nWATERMELON\n\nEGG BHURIJI\n",
-  "confidence": 88
+  "text": "ALOO CAPSICUM\nDAL VADA CURRY\nDAL PALAK\nSTEAM RICE\nPAPAD\nPICKLE\nCHAPATI\n",
+  "confidence": 93
 }

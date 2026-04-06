@@ -5,6 +5,7 @@ Generates per-food binary masks within each compartment using
 the Segment Anything architecture (lightweight MobileSAM variant).
 """
 
+import time
 import logging
 import numpy as np
 import cv2
@@ -67,14 +68,21 @@ def _load_sam_generator():
     return _mask_generator
 
 
-def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
+def segment_full_image_sam(image_bgr: np.ndarray, ctx=None) -> list[dict]:
     """
     Segment all food items in the full plate image using a global SAM run
     combined with the 'foodness' heuristic.
     """
+    debug = ctx is not None and ctx.debug
+    t0 = time.perf_counter()
+
     generator = _load_sam_generator()
     if generator is None:
-        return _segment_color_fallback(image_bgr)
+        results = _segment_color_fallback(image_bgr)
+        if debug:
+            _save_segmentation_debug(image_bgr, results, ctx, time.perf_counter() - t0,
+                                     method="color_fallback")
+        return results
 
     rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
     
@@ -95,6 +103,7 @@ def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
     # Sort by confidence/stability
     masks_data.sort(key=lambda x: x['stability_score'], reverse=True)
 
+    rejected_count = 0
     for data in masks_data:
         mask = data['segmentation']
         area = int(data['area'])
@@ -102,6 +111,7 @@ def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
 
         # Global size filters (ignore tiny noise or massive table-regions)
         if area < img_area * 0.002 or area > img_area * 0.4:
+            rejected_count += 1
             continue
 
         # Foodness check: stainless steel is smooth (low var) and colorless (low sat)
@@ -111,11 +121,13 @@ def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
         # Plate: low sat, low edge density. Food: higher of either.
         # Thresh 12 for saturation, 15 for texture density
         if m_sat < 12 and m_var < 15:
+            rejected_count += 1
             continue
 
         # Deduplication (ignore sub-masks of already tracked items)
         new_area = (mask & ~used_area).sum()
         if new_area < area * 0.25:
+            rejected_count += 1
             continue
 
         used_area |= mask
@@ -125,9 +137,79 @@ def segment_full_image_sam(image_bgr: np.ndarray) -> list[dict]:
             "score": float(data['stability_score']),
         })
 
+    elapsed = time.perf_counter() - t0
+
+    if debug:
+        _save_segmentation_debug(image_bgr, results, ctx, elapsed,
+                                 method="MobileSAM",
+                                 total_candidates=len(masks_data),
+                                 rejected=rejected_count)
+
     return results
 
 
+def _save_segmentation_debug(
+    image_bgr: np.ndarray,
+    results: list[dict],
+    ctx,
+    elapsed: float,
+    method: str = "unknown",
+    total_candidates: int = 0,
+    rejected: int = 0,
+):
+    """Save individual masks and a combined overlay for debugging."""
+    h, w = image_bgr.shape[:2]
+
+    # ── Save individual binary masks ─────────────────────────────────────
+    for i, item in enumerate(results):
+        mask_uint8 = (item["mask"].astype(np.uint8)) * 255
+        idx = ctx.next_index("segmentation")
+        ctx.save_image("segmentation", f"{idx:02d}_mask_item_{i+1}.png", mask_uint8)
+
+    # ── Save combined overlay ────────────────────────────────────────────
+    overlay = image_bgr.copy()
+    # Generate distinct colors for each mask
+    colors = [
+        (66, 133, 244),   # blue
+        (52, 168, 83),    # green
+        (234, 67, 53),    # red
+        (251, 188, 4),    # yellow
+        (154, 78, 174),   # purple
+        (0, 172, 193),    # teal
+        (255, 112, 67),   # orange
+        (121, 134, 203),  # indigo
+    ]
+
+    for i, item in enumerate(results):
+        color = colors[i % len(colors)]
+        mask_bool = item["mask"]
+        # Semi-transparent color fill
+        color_layer = np.zeros_like(overlay)
+        color_layer[mask_bool] = color
+        overlay = cv2.addWeighted(overlay, 1.0, color_layer, 0.4, 0)
+        # Draw contour border
+        mask_u8 = mask_bool.astype(np.uint8)
+        contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cv2.drawContours(overlay, contours, -1, color, 2)
+        # Label
+        M = cv2.moments(mask_u8)
+        if M["m00"] > 0:
+            cx = int(M["m10"] / M["m00"])
+            cy = int(M["m01"] / M["m00"])
+            cv2.putText(overlay, f"#{i+1} ({item['score']:.2f})",
+                        (cx - 30, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (255, 255, 255), 2)
+
+    idx = ctx.next_index("segmentation")
+    fname = f"{idx:02d}_segmentation_overlay.png"
+    ctx.save_image("segmentation", fname, overlay)
+
+    ctx.log("Segmentation", f"{len(results)} food items segmented",
+            {"method": method,
+             "total_candidates": total_candidates,
+             "rejected": rejected,
+             "accepted": len(results)},
+            elapsed=elapsed, output_file=fname)
 
 
 def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:

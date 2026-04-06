@@ -244,6 +244,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         });
 
         const menuItems = parseMenuText(text);
+        console.log(`📝 Parsed Items from OCR: [${menuItems.join(", ")}]`);
         
         // Sync with Food Database
         let foodDatabase = await Database.getFoods();
@@ -252,11 +253,13 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         const cleanedMenuItems = [];
         let addedCount = 0;
 
+        console.log("🔍 Checking items against Food Database...");
         for (const itemName of menuItems) {
             const compareKey = getCompareKey(itemName);
             const existing = foodDatabase.find(f => getCompareKey(f.name) === compareKey);
 
             if (!existing) {
+                console.log(`   ➕ ADDING NEW ITEM: "${itemName}" (Creating fallback nutrition)`);
                 const fallback = getFallbackDetails(itemName);
                 const newItem = {
                     id: itemName.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
@@ -280,11 +283,13 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
                 addedCount++;
                 cleanedMenuItems.push(itemName);
             } else {
+                console.log(`   ✅ FOUND IN DB: "${existing.name}"`);
                 cleanedMenuItems.push(existing.name);
             }
         }
 
         if (addedCount > 0) {
+            console.log(`💾 Saved ${addedCount} new items to the Food Database.`);
             foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
             await Database.saveFoods(foodDatabase);
         }

@@ -20,6 +20,7 @@ async def estimate_portion(
     image: UploadFile = File(...),
     expected_items: str = Form(None),
     plate_profile: str = Form(None),
+    debug: bool = Form(True),
 ):
     """
     Estimate food mass from a plate image.
@@ -27,6 +28,8 @@ async def estimate_portion(
     - **image**: JPEG/PNG of the mess plate
     - **expected_items**: comma-separated food names (optional, for labeling)
     - **plate_profile**: plate type key (optional, defaults to standard_mess_thali)
+    - **debug**: when true, saves ALL intermediate pipeline outputs to
+      `outputs/<run_id>/` and generates an HTML report
 
     Returns:
     ```json
@@ -35,7 +38,8 @@ async def estimate_portion(
             {"name": "dal", "volume_ml": 120.5, "mass_g": 126.5},
             ...
         ],
-        "confidence": 0.82
+        "confidence": 0.82,
+        "_debug": { "run_id": "...", "run_dir": "...", "report": "..." }
     }
     ```
     """
@@ -55,6 +59,7 @@ async def estimate_portion(
             image_bgr=img_bgr,
             expected_items=items_list,
             plate_profile=plate_profile,
+            debug=debug,
         )
         return result
 
