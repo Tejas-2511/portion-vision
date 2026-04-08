@@ -61,6 +61,16 @@ async def estimate_portion(
             plate_profile=plate_profile,
             debug=debug,
         )
+        # #7 — Quality gate failure is returned as a 422 with a user-friendly message
+        if result.get("error_type") == "image_quality":
+            return JSONResponse(
+                status_code=422,
+                content={
+                    "error":   result["error"],
+                    "type":    "image_quality",
+                    "message": result["error"],
+                },
+            )
         return result
 
     except Exception as e:

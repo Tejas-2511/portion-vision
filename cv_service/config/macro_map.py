@@ -15,6 +15,7 @@ Nutrients are approximate averages for cooked Indian mess food.
 MACRO_MAP = {
     # ── Grains / Carbs (per 1g) ──
     "rice":             {"calories": 1.30, "protein": 0.027, "carbs": 0.28, "fat": 0.003},
+    "sada rice":        {"calories": 1.30, "protein": 0.027, "carbs": 0.28, "fat": 0.003},
     "steam rice":       {"calories": 1.30, "protein": 0.027, "carbs": 0.28, "fat": 0.003},
     "jeera rice":       {"calories": 1.40, "protein": 0.027, "carbs": 0.28, "fat": 0.02},
     "fried rice":       {"calories": 1.65, "protein": 0.04,  "carbs": 0.26, "fat": 0.06},
@@ -34,6 +35,7 @@ MACRO_MAP = {
 
     # ── Dals / Lentils ──
     "dal":              {"calories": 0.85, "protein": 0.055, "carbs": 0.12, "fat": 0.02},
+    "dal palak":        {"calories": 0.85, "protein": 0.050, "carbs": 0.11, "fat": 0.02},
     "dal amritsari":    {"calories": 0.90, "protein": 0.06,  "carbs": 0.12, "fat": 0.03},
     "dal fry":          {"calories": 1.10, "protein": 0.05,  "carbs": 0.12, "fat": 0.05},
     "dal tadka":        {"calories": 1.00, "protein": 0.05,  "carbs": 0.12, "fat": 0.04},
@@ -60,7 +62,9 @@ MACRO_MAP = {
     "sabji":            {"calories": 0.90, "protein": 0.03, "carbs": 0.10, "fat": 0.05},
     "sabzi":            {"calories": 0.90, "protein": 0.03, "carbs": 0.10, "fat": 0.05},
     "aloo":             {"calories": 1.10, "protein": 0.02, "carbs": 0.20, "fat": 0.04},
+    "aloo capsicum":    {"calories": 1.00, "protein": 0.02, "carbs": 0.15, "fat": 0.05},
     "aloo gobi":        {"calories": 0.95, "protein": 0.03, "carbs": 0.12, "fat": 0.05},
+    "dal vada curry":   {"calories": 1.30, "protein": 0.06, "carbs": 0.15, "fat": 0.06},
     "gobi":             {"calories": 0.60, "protein": 0.03, "carbs": 0.08, "fat": 0.03},
     "bhindi":           {"calories": 0.90, "protein": 0.03, "carbs": 0.08, "fat": 0.06},
     "baingan":          {"calories": 0.80, "protein": 0.02, "carbs": 0.08, "fat": 0.05},

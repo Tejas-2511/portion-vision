@@ -1,6 +1,11 @@
 """
 Image preprocessing — resize, denoise, enhance, perspective warp.
 
+Enhancements:
+  • #7  Input quality gate — validates blur score and plate tilt before any
+        processing.  Returns a structured error so the API can surface a
+        user-friendly message without wasting model inference time.
+
 Each intermediate result is saved when a RunContext is provided.
 """
 
@@ -9,10 +14,77 @@ import cv2
 import numpy as np
 
 
+# ── Quality gate thresholds (tune as needed) ─────────────────────────────────
+_BLUR_THRESHOLD  = 80.0    # Laplacian variance; below this = too blurry
+_TILT_THRESHOLD  = 30.0    # degrees away from 0° / 90°; above this = too tilted
+
+
+def validate_image_quality(
+    image: np.ndarray,
+    blur_thresh: float = _BLUR_THRESHOLD,
+    tilt_thresh: float = _TILT_THRESHOLD,
+) -> dict:
+    """
+    Enhancement #7 — Input quality validation.
+
+    Checks:
+    1. Blur:  Laplacian variance of the greyscale image.
+              Low variance → image is blurry → depth & segmentation will fail.
+    2. Tilt:  Dominant edge orientation via Hough lines.
+              Large deviation from 0°/90° → camera tilted → perspective distorted.
+
+    Returns:
+        {
+            "ok":          bool,    # True if image is acceptable
+            "blur_score":  float,   # higher = sharper (>80 recommended)
+            "tilt_deg":    float,   # absolute tilt in degrees (< 30 recommended)
+            "reason":      str,     # user-facing error message, or "" if ok
+        }
+    """
+    gray  = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # ── Blur score (Laplacian variance) ──────────────────────────────────────
+    blur_score = float(cv2.Laplacian(gray, cv2.CV_64F).var())
+
+    # ── Tilt estimation via Hough lines ─────────────────────────────────────
+    edges   = cv2.Canny(gray, 50, 150, apertureSize=3)
+    lines   = cv2.HoughLines(edges, 1, np.pi / 180, threshold=100)
+    tilt_deg = 0.0
+    if lines is not None and len(lines) > 0:
+        angles = []
+        for line in lines[:30]:   # use up to 30 dominant lines
+            theta = float(line[0][1])   # radians (0 = vertical, π/2 = horizontal)
+            deg   = np.degrees(theta)
+            # Normalise to deviation from nearest axis (0° or 90°)
+            dev   = min(abs(deg), abs(deg - 90.0), abs(deg - 180.0))
+            angles.append(dev)
+        tilt_deg = float(np.median(angles))
+
+    ok     = True
+    reason = ""
+
+    if blur_score < blur_thresh:
+        ok     = False
+        reason = (
+            "Image is too blurry. Please hold the camera steady and "
+            "ensure the plate is in sharp focus before capturing."
+        )
+    elif tilt_deg > tilt_thresh:
+        ok     = False
+        reason = (
+            "Camera angle is too steep. Please capture a top-down "
+            "photo directly above the plate like a scanner."
+        )
+
+    return {"ok": ok, "blur_score": round(blur_score, 2),
+            "tilt_deg": round(tilt_deg, 2), "reason": reason}
+
+
 def process_image(
     image: np.ndarray,
     target_long_edge: int = 1024,
     ctx=None,
+    skip_quality_check: bool = False,
 ) -> np.ndarray:
     """
     Preprocess the input image:
@@ -29,6 +101,16 @@ def process_image(
     Returns the warped (or enhanced) image.
     """
     debug = ctx is not None and ctx.debug
+
+    # ── Step 0: Input quality gate ───────────────────────────────────────
+    if not skip_quality_check:
+        qc = validate_image_quality(image)
+        if ctx:
+            ctx.log("Quality Gate",
+                    "PASS" if qc["ok"] else "FAIL — " + qc["reason"],
+                    {"blur_score": qc["blur_score"], "tilt_deg": qc["tilt_deg"]})
+        if not qc["ok"]:
+            raise ValueError(qc["reason"])
 
     # ── 1. Resize ────────────────────────────────────────────────────────
     t0 = time.perf_counter()

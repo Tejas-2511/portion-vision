@@ -16,7 +16,7 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
 1.  **Ingestion**: Captured `File` (Binary) $\rightarrow$ `FormData` (Stream).
 2.  **OCR Processing**: Image $\rightarrow$ Tesseract (WASM Worker) $\rightarrow$ Sanitized String $\rightarrow$ Parsed Array.
 3.  **Portion Logic**: User Context $\rightarrow$ TDEE Matrix $\rightarrow$ Macro Partitioning $\rightarrow$ Scaled Recommendations.
-4.  **CV Estimation**: Rectified Top-Down Matrix $\rightarrow$ Scale Factor $\rightarrow$ Height Map (MiDaS) $\rightarrow$ Binary Masks (SAM) $\rightarrow$ Volumetric Integration ($cm^3$) $\rightarrow$ Mass ($g$) $\rightarrow$ Nutrients.
+4.  **CV Estimation**: Rectified Top-Down Matrix $\rightarrow$ Quality Gate (blur/tilt) $\rightarrow$ Scale Factor (ellipse-first) $\rightarrow$ Height Map (MiDaS + food priors) $\rightarrow$ Per-Compartment Binary Masks (SAM) $\rightarrow$ Food Classification (MobileNetV3 + OCR fusion) $\rightarrow$ Hungarian Optimal Assignment $\rightarrow$ Dynamic Density $\rightarrow$ Volumetric Integration ($cm^3$) $\rightarrow$ Mass ($g$) $\rightarrow$ Nutrients $\rightarrow$ Composite Confidence.
 
 ---
 
@@ -83,71 +83,207 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
 
 ---
 
-## 🐍 3. CV Service Deconstruction (`cv_service/`)
+## 🐍 3. CV Service Deconstruction (`cv_service/`) — v3.0 Enhanced
+
+> **Version 3.0 introduces 10 targeted upgrades** organised across 8 files. All upgrades are backward-compatible (no API contract changes). Every new code path has a fallback.
 
 ### `main.py` & `api/routes.py`
-*   **FastAPI Engine**: Uses `async def` and `UploadFile`. 
-*   **Binary Buffer Flow**: `image.read()` pulls bytes $\rightarrow$ `np.frombuffer` $\rightarrow$ `cv2.imdecode`. The image is now a BGR matrix in RAM.
-*   **Debug Parameter**: The `/estimate-portion` endpoint accepts an optional `debug: bool = Form(False)` field. When enabled, the full diagnostic pipeline is activated and the response includes a `_debug` metadata block containing the `run_id`, `run_dir` path, and `report` HTML path.
+*   **FastAPI Engine**: Uses `async def` and `UploadFile`.
+*   **Binary Buffer Flow**: `image.read()` → `np.frombuffer` → `cv2.imdecode`. The image is now a BGR matrix in RAM.
+*   **Quality Error Handling**: If the quality gate (#7) rejects an image, the API returns `HTTP 422` with a structured JSON body `{ "type": "image_quality", "message": "<user-facing string>" }` instead of a 500. The frontend can display this directly.
+*   **Debug Parameter**: `/estimate-portion` accepts `debug: bool = Form(True)`. When enabled, the full diagnostic pipeline is activated and the response includes a `_debug` metadata block.
 
-### `image_processing/preprocess.py` — The Warp Engine
-*   **`process_image(image, target_long_edge, ctx=None)`**:
-    1.  Resizes longest edge to 1024px for consistent inference.
-    2.  Gaussian denoise (5×5 kernel).
-    3.  LAB color normalization (mean-shift on L/A/B channels).
-    4.  CLAHE contrast enhancement (clipLimit=2.0, 8×8 grid).
-    5.  `Canny` edges $\rightarrow$ `findContours`.
-    6.  If a 4-point polygon (the plate) is found, it calls `_four_point_transform`.
-*   **`_four_point_transform`**: 
-    - Uses **Perspective Warp** to rectify the camera angle. This ensures that a tilted photo is converted into a geometrically accurate top-down view for pixel-to-area calculations.
-*   **Diagnostics**: When `ctx.debug=True`, saves 6 intermediates: `01_resized.png`, `02_denoised.png`, `03_color_normalized.png`, `04_contrast_enhanced.png`, `05_edges.png`, `06_perspective_warp.png`.
+### `image_processing/preprocess.py` — Warp Engine + Quality Gate (#7)
+*   **`validate_image_quality(image, blur_thresh=80, tilt_thresh=30)`** *(new)*:
+    -   **Blur Detection**: Laplacian variance of the greyscale image. Values below 80 indicate motion blur or an out-of-focus lens.
+    -   **Tilt Detection**: Applies `cv2.HoughLines`, extracts the dominant edge orientation, and computes deviation from the nearest cardinal axis (0°/90°). Deviations above 30° indicate the camera is angled.
+    -   Returns `{ ok, blur_score, tilt_deg, reason }`. If `ok=False`, `process_image()` raises a `ValueError` with the user-facing `reason` string.
+    -   Configurable via `blur_thresh` and `tilt_thresh` kwargs — no code changes needed to tune.
+*   **`process_image(image, target_long_edge, ctx, skip_quality_check=False)`**:
+    -   Step 0 (new): calls `validate_image_quality()` and aborts early if it fails.
+    -   Steps 1-6 unchanged: Resize → Gaussian denoise → LAB normalisation → CLAHE → Canny edges → Perspective warp.
+*   **Diagnostics**: When `ctx.debug=True`, saves `Quality Gate` log entry with blur and tilt scores.
 
 ### `image_processing/detection.py` — Well Calibration
-*   **`find_compartments(image, ctx=None)`**: 
-    - Uses `adaptiveThreshold` ($15 \times 15$ window) to find divider walls under varying lighting.
-    - Filters by $2\%$ to $90\%$ of plate area to isolate wells from noise.
-    - **Diagnostics**: Saves adaptive threshold, combined edge map, and a bounding-box overlay with contour annotations.
-*   **`compute_scale`**: 
-    - Critical calibration step. Matches the largest detected contour to the largest width/height in `config/plate_config.py`.
-    - Result: A fixed `cm_per_pixel` scale factor (e.g., 0.045).
+*   **`find_compartments`**: Uses adaptive threshold + Canny to detect compartment dividers. Filters by 2%–90% of plate area. Unchanged.
+*   **`compute_scale`**: Bbox-based pixel-to-cm calibration. Used as fallback when ellipse calibration (#4) fails.
 
-### `depth/depth_estimator.py` — Monocular Vision
-*   **Model**: MiDaS v2.1 Small loader via `torch.hub`.
-*   **`estimate_depth(image_bgr, ctx=None)`**: Runs MiDaS inference. When debugging, saves raw `.npy`, normalized grayscale, and INFERNO-colored depth visualization.
-*   **`normalize_depth_to_plate(depth_map, plate_mask, ctx=None)`**: Subtracts the median value of the dividers (mask) from the depth map. This sets the stainless steel plate surface to $Z = 0$. Saves relative height `.npy` and JET-colored visualization.
-*   **`depth_to_cm(height_map_relative, raw_depth, cm_per_pixel, image_width_px, ctx=None)`**:
-    - **Mathematics**: $H_{cm} = (RelativeDepth / AbsoluteDepth) \times Z_{est}$.
-    - $Z_{est}$ is calibrated as $1.2 \times image\_width \times scale$. This is camera-distance invariant.
-    - **Diagnostics**: Saves the final height-in-cm array as `.npy`.
+### `depth/depth_estimator.py` — Monocular Vision v2 (#1 #4 #5)
 
-### `segmentation/sam_segmenter.py` — Deep Segmentation
-*   **`segment_full_image_sam(image_bgr, ctx=None)`**:
-*   **MobileSAM Integration**: Utilizing the ViT-T deep-learning model (successfully installed via pip wheel). This provides highly accurate boundary masking regardless of lighting or plate coloring, overriding the color-fallback mechanism.
-*   **Foodness Heuristics (Pre-SAM)**:
-    - **Saturation Filter**: `Mean Sat < 12`. Avoids running SAM on pure stainless steel.
-    - **Texture Filter**: `Mean Laplacian < 15`. Discards perfectly smooth empty surfaces.
-*   **Diagnostics**: Saves each food item's binary mask (`01_mask_item_N.png`) and a combined semi-transparent overlay with contour borders, confidence labels, and distinct colors per item.
+**Enhancement #1 — Hybrid Depth with Food Geometric Priors**
+*   **`FOOD_HEIGHT_PRIORS`** *(new)*: A module-level dictionary mapping 40+ canonical food names to `(min_cm, max_cm)` height ranges derived from real serving geometry.
+    ```python
+    FOOD_HEIGHT_PRIORS = {
+        "rice":  (1.5, 4.5),
+        "dal":   (1.5, 3.5),
+        "roti":  (0.4, 1.5),
+        ...
+    }
+    ```
+*   **`apply_food_height_prior(height_map, food_label, alpha=0.70, beta=0.30)`** *(new)*:
+    -   Lookup: exact match → substring match → no prior (return unchanged).
+    -   Fusion: `fused = 0.70 × midas_height + 0.30 × prior_midpoint`.
+    -   Clamp: `np.clip(fused, min_h, max_h)`. Prevents MiDaS noise producing impossible 8cm roti or 0.2cm dal.
+    -   Called per-mask in `mass_estimator.py` *after* classification assigns a label.
 
-### `estimation/mass_estimator.py` — Pipeline Orchestrator
+**Enhancement #4 — Ellipse-Based Scale Calibration**
+*   **`calibrate_scale_from_ellipse(image_bgr, known_diameter_cm=26.0)`** *(new)*:
+    -   Detects the plate rim contour via Canny + `cv2.fitEllipse`.
+    -   Sanity checks: ellipse major/minor axis ratio < 2.0 (not elongated), area 10%–95% of frame.
+    -   Returns `cm_per_pixel = known_diameter_cm / avg_axis_px` or `None` on failure.
+    -   In `mass_estimator.py`, if this returns a value it overrides the bbox-based scale and boosts `scale_confidence` from 0.7 → 1.0.
+
+**Enhancement #5 — Gaussian Smoothing**
+*   Inside `estimate_depth()`, `cv2.GaussianBlur(depth, (5,5), 0)` is applied immediately after the MiDaS `resize`. This suppresses per-pixel shot noise before normalization and volume integration.
+
+*   **`normalize_depth_to_plate`** and **`depth_to_cm`**: Unchanged from baseline.
+
+### `segmentation/sam_segmenter.py` — Deep Segmentation v2 (#8)
+
+**Enhancement #8 — Per-Compartment SAM**
+*   **`segment_per_compartment_sam(image_bgr, compartments, ctx=None)`** *(new)*:
+    -   Loads `SamPredictor` (prompt-based SAM, same weights as `SamAutomaticMaskGenerator`).
+    -   For each compartment bbox, crops the region and sets it as the predictor's image.
+    -   Sends a 3×3 grid of foreground point prompts inside the compartment, uses `multimask_output=True`, picks the highest-scoring mask.
+    -   Re-maps cropped mask coordinates back to full-image space.
+    -   Deduplicates by requiring 25% new area (same heuristic as full-image mode).
+    -   **Fallback chain**: if `SamPredictor` is unavailable → `segment_full_image_sam(); if per-compartment returns no masks → `segment_full_image_sam()`.
+*   **`segment_full_image_sam`**: Original method, kept intact as fallback.
+*   **`_save_segmentation_debug`**: Now includes the classifier label (if available) in the overlay annotation text.
+
+### `classification/classifier.py` — New Module (#2 #3)
+
+**Enhancement #2 — Vision-Based Food Classification**
+*   **Model**: `torchvision.models.mobilenet_v3_small` with `IMAGENET1K_V1` weights. Lazy-loaded as a global singleton.
+*   **Custom weight hook**: If `cv_service/weights/food_classifier.pth` exists, it is loaded instead of ImageNet weights, enabling production fine-tuning.
+*   **`_IMAGENET_TO_FOOD`** dict: 60+ ImageNet class names mapped to canonical Indian food labels (e.g., `"soup" → "dal"`, `"bread" → "roti"`).
+*   **`classify_mask_region(image_bgr, mask, allowed_labels=None, top_k=3)`**:
+    1.  Crops the mask bounding box; blanks non-mask pixels to neutral grey so the model sees only the food.
+    2.  Resizes to 224×224, applies standard ImageNet normalisation.
+    3.  Runs `torch.no_grad()` forward pass → 1000-class softmax.
+    4.  Maps ImageNet probs → food label probabilities by summing over bridged classes.
+    5.  Normalises food-label scores to sum to 1.
+    6.  Returns `{ label, confidence, top_k }`.
+
+**Enhancement #3 — OCR + CV Fusion**
+*   `classify_mask_region()` accepts `allowed_labels` (list of OCR-extracted food names).
+*   If provided, each label in `allowed_labels` gets its probability multiplied by `OCR_BOOST = 2.5`, then all scores are re-normalised. This makes the classifier strongly prefer OCR-confirmed items without making it a hard constraint.
+*   No API changes required — `expected_items` (already passed from OCR via Node.js) flows directly into the CV pipeline as `allowed_labels`.
+
+### `config/density_map.py` — Dynamic Density (#6)
+*   **`get_density(food_name)`**: Original static lookup — unchanged.
+*   **`get_dynamic_density(food_name, mask_region_bgr=None)`** *(new)*:
+    -   Extracts three visual features from the food's pixel region:
+        -   `mean_brightness` — HSV V-channel mean (0–255)
+        -   `mean_saturation` — HSV S-channel mean (0–255)
+        -   `texture` — Laplacian variance (higher = chunkier)
+    -   Applies food-specific rules:
+        | Food | Condition | Adjustment |
+        |------|-----------|------------|
+        | rice | brightness > 200 (fluffy white) | −0.15 g/ml |
+        | rice | brightness < 160 (compact dry) | +0.10 g/ml |
+        | dal | saturation < 40 (watery) | −0.10 g/ml |
+        | dal | texture > 200 (chunky) | +0.08 g/ml |
+        | sabzi/curry | texture > 300 | +0.10 g/ml |
+        | roti | texture > 500 (puffed) | −0.10 g/ml |
+    -   Falls back to `get_density()` if `mask_region_bgr is None` or image read fails.
+
+### `estimation/mass_estimator.py` — Pipeline Orchestrator v3 (#9 #10)
 *   **`estimate_food_mass(image_bgr, expected_items, plate_profile, debug=False)`**:
-*   Creates a `RunContext` instance, passes it (`ctx=`) to every stage function.
-*   Pipeline steps:
-    1.  **Input Preservation**: Saves original image and metadata JSON.
-    2.  **Preprocessing**: Calls `process_image(img, ctx=ctx)`.
-    3.  **Compartment Detection**: Calls `find_compartments(img, ctx=ctx)` → `compute_scale` → `match_compartments_to_profile`.
-    4.  **Depth Estimation**: Calls `estimate_depth` → `normalize_depth_to_plate` → `depth_to_cm`, all with `ctx=ctx`.
-    5.  **Segmentation**: Calls `segment_full_image_sam(img, ctx=ctx)`.
-    6.  **Volume & Mass**: Per-pixel height integration, compartment matching, density lookup, macro calculation.
-*   **Always saves** (regardless of debug flag): original input, final annotated image (with food labels + grams overlay), `results.json`, `pipeline.log`, and the HTML report.
-*   **Debug-only saves**: All preprocessing intermediates, depth `.npy` arrays, individual masks, per-item feature JSONs, height-map heatmaps.
-*   **The Majority-Area Loop**: The most expensive computation — for every mask:
-    1.  **Pixel Height Mapping**: `pixel_heights = height_from_divider[mask] + well_depth_map[mask]`.
-    2.  **Majority-Choice Compartment Matching**: Assigns each food mask to the compartment it overlaps the most.
-    3.  **Applies Density**: $Mass = Volume \times Density$ from `density_map.py`.
-*   **Final Mass**: `Volume (ml) * Density (g/ml)`.
-*   **Macros**: Multiplies mass by the `config/macro_map.py` lookup.
-*   **Return**: Dict with `food_items`, `confidence`, and `_debug` metadata (run_id, run_dir, report path, pipeline_time_s).
 
+**Pipeline steps (revised)**:
+
+| Step | Enhancement | Description |
+|------|-------------|-------------|
+| 0 | #7 | Quality gate via `validate_image_quality()`. Returns `error_type: "image_quality"` on failure. |
+| 1 | — | Preprocessing + perspective warp (unchanged) |
+| 2 | #4 | Compartment detection → bbox scale → **ellipse refinement** → `scale_confidence` set to 0.7 (bbox) or 1.0 (ellipse) |
+| 3 | #1 #5 | `estimate_depth()` (with smoothing) → `normalize_depth_to_plate` → `depth_to_cm` |
+| 4 | #8 | `segment_per_compartment_sam()` when compartments exist, else `segment_full_image_sam()` |
+| 5 | #2 #3 | `classify_mask_region()` per mask with `allowed_labels=expected_items` |
+| 6 | #9 | `_hungarian_assign()` — optimal mask↔expected_item matching via `scipy.optimize.linear_sum_assignment` |
+| 7 | #1 #6 | Per-mask: `apply_food_height_prior()` → `get_dynamic_density()` → volume → mass → macros |
+| — | #10 | `_composite_confidence()` per item |
+
+**Enhancement #9 — Hungarian Optimal Assignment**
+*   **`_hungarian_assign(food_masks, expected_items, compartments)`**:
+    -   Builds an `n×n` cost matrix where `cost[i,j]` = weighted dissimilarity between mask *i* and expected item *j*.
+    -   Cost components: compartment-label mismatch (1.0), classifier-label mismatch scaled by `1 - class_conf` (0–2.0), spatial overlap penalty (0–1.0 inverse of best compartment overlap fraction).
+    -   Uses `scipy.optimize.linear_sum_assignment` for $O(n^3)$ optimal matching.
+    -   Falls back to greedy index-based assignment if scipy is unavailable.
+
+**Enhancement #10 — Composite Confidence Score**
+*   **`_composite_confidence(seg_score, class_conf, depth_stability, scale_confidence)`**:
+    -   All inputs ∈ [0, 1]. Computes geometric mean: `(seg × class × depth × scale) ** 0.25`.
+    -   `depth_stability`: 1.0 if a matching food prior exists, else 0.65.
+    -   `scale_confidence`: 1.0 if ellipse calibration succeeded, else 0.70.
+    -   Result replaces the raw SAM `stability_score` in `food_items[n].confidence`.
+    -   Mean composite confidence replaces the old average-SAM-score top-level `confidence`.
+
+**API Response changes** (additive only — backward-compatible):
+```json
+{
+  "food_items": [
+    {
+      "name":             "rice",
+      "volume_ml":        185.4,
+      "mass_g":           196.3,
+      "calories":         255.2,
+      "protein":          5.3,
+      "carbs":            54.9,
+      "fat":              0.6,
+      "confidence":       0.8134,    // NEW: composite score
+      "class_label":      "rice",    // NEW: from MobileNetV3
+      "class_confidence": 0.6712     // NEW: raw classifier score
+    }
+  ],
+  "confidence": 0.7901
+}
+```
+
+---
+
+## 🧬 3.1. CV Deep Dive: The "0 to 100" Journey (v3)
+
+Tracking a single **Dal** portion from camera capture to calorie result.
+
+### **Phase 0: Quality Gate (pre-processing) — NEW**
+1.  **Blur Check**: Laplacian variance on the grey image. If below 80, the pipeline aborts immediately with `"Image is too blurry..."`. Time saved: ~4 seconds of wasted inference.
+2.  **Tilt Check**: HoughLines extracts dominant edge angle. If deviation > 30° from cardinal axis, the pipeline aborts with `"Camera angle is too steep..."`. The frontend surfaces this as an amber retake prompt.
+
+### **Phase 1: Ingestion (0-10%)**
+3.  **Mobile Capture**: User takes a photo. `PlateCapture.jsx` enforces "AI Camera Rules" (top-down, focused, full plate visible).
+4.  **Node.js Proxy**: `server.js` streams bytes to disk → pipes stream to Python CV Service via `axios`.
+
+### **Phase 2: Rectification (10-30%)**
+5.  **Color Space Shift**: `preprocess.py` converts BGR → LAB. This separates lightness from chrominance, enabling shadow-invariant processing.
+6.  **Perspective Warp**: If a 4-point boundary is found, a **Non-Linear Homography Matrix** rectifies the tilted plate into a top-down rectangle.
+
+### **Phase 3: Spatial Calibration (30-50%) — Enhanced #4**
+7.  **Ellipse Fit**: `calibrate_scale_from_ellipse()` fits an ellipse to the plate rim. Divides known plate diameter (26 cm) by detected axis length → `cm_per_pixel`. `scale_confidence = 1.0`.
+8.  **Fallback Ruler**: If ellipse fails, `compute_scale()` matches bounding-box pixel-width to `plate_config.py`. `scale_confidence = 0.7`.
+9.  **Well Mapping**: Adaptive threshold finds dividers → defines $Z_{surface}$ baseline.
+
+### **Phase 4: Volumetric Sensing (50-65%) — Enhanced #1 #5**
+10. **MiDaS Depth (smoothed)**: Neural network predicts relative disparity map. Gaussian blur (5×5) is applied to suppress pixel-level noise *before* rescaling.
+11. **Baseline Subtraction**: Depth values on dividers are sampled → subtracted. Plate surface = 0.0 cm.
+12. **Height Link**: $H_{cm} = (RelDepth / AbsDepth) \times (1.2 \times Width \times Scale)$.
+
+### **Phase 5: Semantic Segmentation (65-75%) — Enhanced #8**
+13. **Per-Compartment SAM**: `SamPredictor` runs on each compartment crop separately with a 3×3 grid of foreground prompts. The highest-scoring mask is re-mapped to full-image coordinates.
+14. **Result**: One binary mask per food item, tightly bounded within its plate well.
+
+### **Phase 6: Classification & Optimal Assignment (75-85%) — NEW #2 #3 #9**
+15. **MobileNetV3 Classifier**: Each mask crop is classified. ImageNet probabilities are bridged to Indian food labels. OCR label set (`allowed_labels`) boosts matching items by 2.5×.
+16. **Hungarian Matching**: Cost matrix built from label mismatch + spatial overlap + classifier confidence. `scipy.optimize.linear_sum_assignment` finds the globally optimal mask↔food pairing.
+
+### **Phase 7: Integration & Density (85-100%) — Enhanced #1 #6 #10**
+17. **Hybrid Height Fusion**: `apply_food_height_prior("dal")` fuses MiDaS heights with prior midpoint (3.0 cm) at 70/30, then clamps to [1.5, 3.5] cm. Prevents shadow-induced underestimates.
+18. **Voxel Summing**: $V = \sum (H_{fused} + D_{well}) \times (cm\_per\_pixel)^2$
+19. **Dynamic Density**: HSV brightness/saturation and Laplacian texture are extracted from Dal pixels. Watery, pale dal → `density = 0.95 g/ml`; chunky dal → `density = 1.13 g/ml`.
+20. **Composite Confidence**: $\text{conf} = (seg \times class \times depth\_stability \times scale)^{0.25}$.
+21. **Macros**: Mass × `macro_map.py` per-gram factors → Protein/Carbs/Fat.
+22. **Report**: `RunContext` compiles every intermediate into `report.html`.
 
 ---
 
@@ -198,7 +334,7 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
 
 ---
 
-## 🧬 6. Internal Object Evolution (The "Dal" Life-Cycle)
+## 🏁 7. Internal Object Evolution (The "Dal" Life-Cycle)
 
 Tracking the transformation of a data object:
 1.  **OCR Stub**: `{ name: "Dal Tadka" }`.

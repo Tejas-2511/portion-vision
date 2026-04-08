@@ -1,9 +1,16 @@
 """
 SAM-based food segmentation using MobileSAM.
 
-Generates per-food binary masks within each compartment using
-the Segment Anything architecture (lightweight MobileSAM variant).
+Enhancements over baseline:
+  • #8  Per-compartment segmentation — SAM is optionally run inside each
+        detected compartment region, then masks are stitched back to full-
+        image coordinates. This avoids false positives from table/tray edges
+        and is faster than running the full-image generator.
+
+The original segment_full_image_sam() is kept intact as a fallback.
 """
+
+from __future__ import annotations
 
 import time
 import logging
@@ -14,13 +21,14 @@ from PIL import Image
 
 logger = logging.getLogger(__name__)
 
-# ── Lazy-loaded global model singletons ──────────────────────────────────
-_sam_model = None
-_mask_generator = None
+# ── Lazy-loaded global model singletons ──────────────────────────────────────
+_sam_model       = None
+_mask_generator  = None
+_sam_predictor   = None   # SamPredictor instance used for per-compartment mode
 
 
 def _load_sam_generator():
-    """Load MobileSAM model (downloads weights on first run)."""
+    """Load MobileSAM automatic mask generator (downloads weights on first run)."""
     global _sam_model, _mask_generator
 
     if _mask_generator is not None:
@@ -31,22 +39,21 @@ def _load_sam_generator():
         import urllib.request
         import os
 
-        checkpoint_dir = os.path.join(os.path.dirname(__file__), "..", "weights")
+        checkpoint_dir  = os.path.join(os.path.dirname(__file__), "..", "weights")
         os.makedirs(checkpoint_dir, exist_ok=True)
         checkpoint_path = os.path.join(checkpoint_dir, "mobile_sam.pt")
 
-        # Download weights if not present
         if not os.path.exists(checkpoint_path):
             url = "https://raw.githubusercontent.com/ChaoningZhang/MobileSAM/master/weights/mobile_sam.pt"
             logger.info("Downloading MobileSAM weights...")
             urllib.request.urlretrieve(url, checkpoint_path)
             logger.info("MobileSAM weights downloaded.")
 
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        _sam_model = sam_model_registry["vit_t"](checkpoint=checkpoint_path)
+        device      = "cuda" if torch.cuda.is_available() else "cpu"
+        _sam_model  = sam_model_registry["vit_t"](checkpoint=checkpoint_path)
         _sam_model.to(device)
         _sam_model.eval()
-        
+
         _mask_generator = SamAutomaticMaskGenerator(
             model=_sam_model,
             points_per_side=16,
@@ -68,73 +75,90 @@ def _load_sam_generator():
     return _mask_generator
 
 
+def _load_sam_predictor():
+    """Load MobileSAM SamPredictor used for per-compartment prompting."""
+    global _sam_predictor
+
+    if _sam_predictor is not None:
+        return _sam_predictor
+
+    # Ensure the base model is already loaded
+    generator = _load_sam_generator()
+    if generator is None or _sam_model is None:
+        return None
+
+    try:
+        from mobile_sam import SamPredictor
+        _sam_predictor = SamPredictor(_sam_model)
+        logger.info("MobileSAM SamPredictor loaded")
+    except Exception as exc:
+        logger.warning(f"Could not load SamPredictor: {exc}")
+        _sam_predictor = None
+
+    return _sam_predictor
+
+
+# ── Public API ────────────────────────────────────────────────────────────────
+
 def segment_full_image_sam(image_bgr: np.ndarray, ctx=None) -> list[dict]:
     """
-    Segment all food items in the full plate image using a global SAM run
-    combined with the 'foodness' heuristic.
+    Segment all food items in the full plate image (original baseline method).
+
+    Uses the automatic mask generator on the full image, then applies
+    'foodness' heuristics to filter out plate/tray/background regions.
     """
     debug = ctx is not None and ctx.debug
-    t0 = time.perf_counter()
+    t0    = time.perf_counter()
 
     generator = _load_sam_generator()
     if generator is None:
         results = _segment_color_fallback(image_bgr)
         if debug:
-            _save_segmentation_debug(image_bgr, results, ctx, time.perf_counter() - t0,
+            _save_segmentation_debug(image_bgr, results, ctx,
+                                     time.perf_counter() - t0,
                                      method="color_fallback")
         return results
 
-    rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-    
-    # Run the generator to find all candidate objects
+    rgb       = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
     masks_data = generator.generate(rgb)
 
-    # Heuristics setup
-    gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
-    # Edge density via Laplacian
+    gray      = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
     laplacian = np.abs(cv2.Laplacian(gray, cv2.CV_32F))
-    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
-    sat = hsv[:, :, 1]
+    hsv       = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+    sat       = hsv[:, :, 1]
 
-    results = []
-    h, w = image_bgr.shape[:2]
-    used_area = np.zeros((h, w), dtype=bool)
+    results    = []
+    h, w       = image_bgr.shape[:2]
+    used_area  = np.zeros((h, w), dtype=bool)
+    rejected   = 0
 
-    # Sort by confidence/stability
-    masks_data.sort(key=lambda x: x['stability_score'], reverse=True)
+    masks_data.sort(key=lambda x: x["stability_score"], reverse=True)
 
-    rejected_count = 0
     for data in masks_data:
-        mask = data['segmentation']
-        area = int(data['area'])
-        img_area = h * w
+        mask  = data["segmentation"]
+        area  = int(data["area"])
+        img_a = h * w
 
-        # Global size filters (ignore tiny noise or massive table-regions)
-        if area < img_area * 0.002 or area > img_area * 0.4:
-            rejected_count += 1
+        if area < img_a * 0.002 or area > img_a * 0.4:
+            rejected += 1
             continue
 
-        # Foodness check: stainless steel is smooth (low var) and colorless (low sat)
         m_sat = np.mean(sat[mask])
         m_var = np.mean(laplacian[mask])
-
-        # Plate: low sat, low edge density. Food: higher of either.
-        # Thresh 12 for saturation, 15 for texture density
         if m_sat < 12 and m_var < 15:
-            rejected_count += 1
+            rejected += 1
             continue
 
-        # Deduplication (ignore sub-masks of already tracked items)
         new_area = (mask & ~used_area).sum()
         if new_area < area * 0.25:
-            rejected_count += 1
+            rejected += 1
             continue
 
         used_area |= mask
         results.append({
-            "mask": mask,
-            "area": area,
-            "score": float(data['stability_score']),
+            "mask":  mask,
+            "area":  area,
+            "score": float(data["stability_score"]),
         })
 
     elapsed = time.perf_counter() - t0
@@ -143,10 +167,117 @@ def segment_full_image_sam(image_bgr: np.ndarray, ctx=None) -> list[dict]:
         _save_segmentation_debug(image_bgr, results, ctx, elapsed,
                                  method="MobileSAM",
                                  total_candidates=len(masks_data),
-                                 rejected=rejected_count)
+                                 rejected=rejected)
 
     return results
 
+
+def segment_per_compartment_sam(
+    image_bgr: np.ndarray,
+    compartments: list[dict],
+    ctx=None,
+) -> list[dict]:
+    """
+    Enhancement #8 — Per-compartment SAM segmentation.
+
+    Runs SAM inside each detected compartment region separately, then maps
+    masks back into full-image coordinates.  Avoids false positives from
+    plate rims / table edges outside compartments.
+
+    Falls back to segment_full_image_sam() if:
+    - SamPredictor unavailable
+    - No compartments provided
+    """
+    debug = ctx is not None and ctx.debug
+
+    if not compartments:
+        logger.info("No compartments — falling back to full-image SAM")
+        return segment_full_image_sam(image_bgr, ctx=ctx)
+
+    predictor = _load_sam_predictor()
+    if predictor is None:
+        logger.info("SamPredictor unavailable — falling back to full-image SAM")
+        return segment_full_image_sam(image_bgr, ctx=ctx)
+
+    t0     = time.perf_counter()
+    h_full, w_full = image_bgr.shape[:2]
+    results        = []
+    used_area      = np.zeros((h_full, w_full), dtype=bool)
+
+    rgb_full = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+
+    for comp_idx, comp in enumerate(compartments):
+        cx, cy, cw, ch = comp["bbox"]
+
+        # Guard against zero-area bbox
+        if cw < 10 or ch < 10:
+            continue
+
+        # Crop compartment
+        crop_rgb = rgb_full[cy:cy+ch, cx:cx+cw]
+
+        try:
+            predictor.set_image(crop_rgb)
+        except Exception as exc:
+            logger.warning(f"Compartment {comp_idx}: predictor.set_image failed: {exc}")
+            continue
+
+        # Grid of point prompts inside the compartment
+        pts_x = np.linspace(cw * 0.2, cw * 0.8, 3, dtype=int)
+        pts_y = np.linspace(ch * 0.2, ch * 0.8, 3, dtype=int)
+        grid_pts = np.array([[px, py] for py in pts_y for px in pts_x])
+        labels   = np.ones(len(grid_pts), dtype=int)  # foreground
+
+        try:
+            masks_pred, scores, _ = predictor.predict(
+                point_coords=grid_pts,
+                point_labels=labels,
+                multimask_output=True,
+            )
+        except Exception as exc:
+            logger.warning(f"Compartment {comp_idx}: predict failed: {exc}")
+            continue
+
+        # Pick the highest-scoring mask
+        best_idx  = int(np.argmax(scores))
+        crop_mask = masks_pred[best_idx]   # (ch, cw) bool
+        score     = float(scores[best_idx])
+
+        # Map back to full-image coordinates
+        full_mask = np.zeros((h_full, w_full), dtype=bool)
+        full_mask[cy:cy+ch, cx:cx+cw] = crop_mask
+
+        # Deduplication
+        area     = int(full_mask.sum())
+        new_area = int((full_mask & ~used_area).sum())
+        if area < 50 or new_area < area * 0.25:
+            continue
+
+        used_area |= full_mask
+        results.append({
+            "mask":           full_mask,
+            "area":           area,
+            "score":          score,
+            "compartment_idx": comp_idx,
+        })
+
+    elapsed = time.perf_counter() - t0
+
+    # If we got nothing, fall back to full-image mode
+    if not results:
+        logger.info("Per-compartment SAM found no masks — falling back to full-image SAM")
+        return segment_full_image_sam(image_bgr, ctx=ctx)
+
+    if debug:
+        _save_segmentation_debug(image_bgr, results, ctx, elapsed,
+                                 method="MobileSAM-per-compartment",
+                                 total_candidates=len(compartments),
+                                 rejected=len(compartments) - len(results))
+
+    return results
+
+
+# ── Debug helpers ─────────────────────────────────────────────────────────────
 
 def _save_segmentation_debug(
     image_bgr: np.ndarray,
@@ -160,47 +291,37 @@ def _save_segmentation_debug(
     """Save individual masks and a combined overlay for debugging."""
     h, w = image_bgr.shape[:2]
 
-    # ── Save individual binary masks ─────────────────────────────────────
     for i, item in enumerate(results):
         mask_uint8 = (item["mask"].astype(np.uint8)) * 255
         idx = ctx.next_index("segmentation")
         ctx.save_image("segmentation", f"{idx:02d}_mask_item_{i+1}.png", mask_uint8)
 
-    # ── Save combined overlay ────────────────────────────────────────────
     overlay = image_bgr.copy()
-    # Generate distinct colors for each mask
-    colors = [
-        (66, 133, 244),   # blue
-        (52, 168, 83),    # green
-        (234, 67, 53),    # red
-        (251, 188, 4),    # yellow
-        (154, 78, 174),   # purple
-        (0, 172, 193),    # teal
-        (255, 112, 67),   # orange
-        (121, 134, 203),  # indigo
+    colors  = [
+        (66, 133, 244), (52, 168, 83),  (234, 67, 53),
+        (251, 188, 4),  (154, 78, 174), (0, 172, 193),
+        (255, 112, 67), (121, 134, 203),
     ]
 
     for i, item in enumerate(results):
-        color = colors[i % len(colors)]
-        mask_bool = item["mask"]
-        # Semi-transparent color fill
+        color       = colors[i % len(colors)]
+        mask_bool   = item["mask"]
         color_layer = np.zeros_like(overlay)
         color_layer[mask_bool] = color
         overlay = cv2.addWeighted(overlay, 1.0, color_layer, 0.4, 0)
-        # Draw contour border
         mask_u8 = mask_bool.astype(np.uint8)
         contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cv2.drawContours(overlay, contours, -1, color, 2)
-        # Label
         M = cv2.moments(mask_u8)
         if M["m00"] > 0:
             cx = int(M["m10"] / M["m00"])
             cy = int(M["m01"] / M["m00"])
-            cv2.putText(overlay, f"#{i+1} ({item['score']:.2f})",
+            label_text = item.get("label", f"#{i+1}")
+            cv2.putText(overlay, f"{label_text} ({item['score']:.2f})",
                         (cx - 30, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                         (255, 255, 255), 2)
 
-    idx = ctx.next_index("segmentation")
+    idx  = ctx.next_index("segmentation")
     fname = f"{idx:02d}_segmentation_overlay.png"
     ctx.save_image("segmentation", fname, overlay)
 
@@ -212,23 +333,22 @@ def _save_segmentation_debug(
             elapsed=elapsed, output_file=fname)
 
 
+# ── Color-based fallback (unchanged) ─────────────────────────────────────────
+
 def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:
-    """
-    Improved fallback using broader color/texture heuristic.
-    """
+    """Improved fallback using broader color/texture heuristic."""
     if image_crop.size == 0:
         return []
 
-    hsv = cv2.cvtColor(image_crop, cv2.COLOR_BGR2HSV)
+    hsv  = cv2.cvtColor(image_crop, cv2.COLOR_BGR2HSV)
     gray = cv2.cvtColor(image_crop, cv2.COLOR_BGR2GRAY)
-    lap = np.abs(cv2.Laplacian(gray, cv2.CV_32F))
+    lap  = np.abs(cv2.Laplacian(gray, cv2.CV_32F))
 
-    # Saturation > 12 OR high texture
     food_mask = (hsv[:, :, 1] > 12) | (lap > 20)
 
-    # Morphological cleanup
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-    food_mask = cv2.morphologyEx(food_mask.astype(np.uint8), cv2.MORPH_CLOSE, kernel, iterations=2)
+    kernel    = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    food_mask = cv2.morphologyEx(food_mask.astype(np.uint8),
+                                  cv2.MORPH_CLOSE, kernel, iterations=2)
     food_mask = cv2.morphologyEx(food_mask, cv2.MORPH_OPEN, kernel, iterations=1)
     food_mask = food_mask.astype(bool)
 
@@ -236,8 +356,4 @@ def _segment_color_fallback(image_crop: np.ndarray) -> list[dict]:
     if area < (image_crop.shape[0] * image_crop.shape[1]) * 0.01:
         return []
 
-    return [{
-        "mask": food_mask,
-        "area": area,
-        "score": 0.5,
-    }]
+    return [{"mask": food_mask, "area": area, "score": 0.5}]

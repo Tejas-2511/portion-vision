@@ -185,7 +185,7 @@ const OCR_BLACKLIST = new Set([
     'mess', 'hostel', 'canteen', 'cafeteria',
     'special', 'note', 'notes', 'timings', 'timing',
     'price', 'rate', 'rupees', 'rs', 'amount', 'total',
-    'veg', 'non-veg', 'nonveg', 'jain', 'menu'
+    'veg', 'non-veg', 'nonveg', 'jain'
 ]);
 
 function parseMenuText(rawText) {

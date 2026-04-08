@@ -20,4 +20,7 @@ timm
 
 
 
+# Optimal assignment (Hungarian algorithm)
+scipy
+
 # OCR is handled by Tesseract.js in the Node.js backend — no Python OCR deps needed

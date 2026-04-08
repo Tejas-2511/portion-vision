@@ -326,7 +326,7 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
             .sort((a, b) => (b.protein || 0) - (a.protein || 0));
         
         for (const can of candidates.slice(0, 2)) {
-            const qty = calcServings(can, targetCalories * 0.7, 2);
+            const qty = calcServings(can, targetCalories * 0.45, 2);
             if (qty > 0) {
                 const item = scaleItem(can, qty);
                 plate.push({ ...item, role: can.category === "beverage" ? "addon" : "snack", reason: "Quick energy." });
@@ -364,7 +364,7 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     let remaining = targetCalories - caloriesUsed - reservedVeg;
     if (partitions.carbs.length > 0 && remaining > 50) {
         const c = partitions.carbs[0];
-        const qty = calcServings(c, remaining, c.dish_type === "roti" ? 3 : 1.5, maxFat_g * 0.3);
+        const qty = calcServings(c, Math.max(0, remaining), c.dish_type === "roti" ? 3 : 1.5, maxFat_g * 0.3);
         const item = scaleItem(c, qty);
         plate.push({ ...item, role: "carb", reason: "Fuels your activity." });
         caloriesUsed += item.estimatedCalories;
@@ -373,7 +373,7 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     // Phase 4: Sides
     if (mainSide) {
         remaining = targetCalories - caloriesUsed;
-        const qty = calcServings(mainSide, Math.max(reservedVeg, remaining), 1.5);
+        const qty = calcServings(mainSide, Math.max(50, remaining), 1.5);
         plate.push({ ...scaleItem(mainSide, qty), role: "veg", reason: "High fiber side." });
     }
 
