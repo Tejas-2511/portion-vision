@@ -1382,7 +1382,7 @@
     ]
   },
   {
-    "id": "dal_palak_1775486288755",
+    "id": "dal_palak_",
     "name": "dal palak",
     "veg": true,
     "dish_type": "dal",
@@ -3528,6 +3528,29 @@
       "dal",
       "gravy",
       "protein"
+    ]
+  },
+  {
+    "id": "palak_paneer",
+    "name": "Palak Paneer",
+    "veg": true,
+    "category": "protein_main",
+    "dish_type": "curry",
+    "meal_role": "single",
+    "serving_size": 150,
+    "serving_unit": "g",
+    "unit_type": "bowl",
+    "calories": 240,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 16,
+    "fiber": 6,
+    "protein_level": "medium",
+    "tags": [
+      "paneer",
+      "spinach",
+      "gravy",
+      "veg"
     ]
   },
   {

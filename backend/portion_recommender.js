@@ -26,12 +26,15 @@ async function findFood(name, foodData = null) {
     let match = FOOD_INDEX.get(normalized);
     if (match) return match;
 
+    // Safety: Don't fuzzy match very short strings (like "Dal" matching "Jam")
+    if (normalized.length <= 3) return null;
+
     return fuzzyMatchFood(normalized, FOOD_DB, 2);
 }
 
 function getFallbackDetails(name) {
     const item = _getRawFallback(name);
-    
+
     // Assign protein level based on content
     if (item.protein >= 15) item.protein_level = 'high';
     else if (item.protein >= 8) item.protein_level = 'medium';
@@ -78,7 +81,7 @@ function _getRawFallback(name) {
         return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 250, protein: 22, carbs: 3, fat: 14, fiber: 0, protein_level: "high", dish_type: "curry", meal_types: ["lunch", "dinner"], tags: ["non-veg"], veg: false };
     if (n.includes("paneer"))
         return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 280, protein: 18, carbs: 5, fat: 20, fiber: 0, protein_level: "high", dish_type: "curry", meal_types: ["lunch", "dinner"], tags: ["dairy", "veg"], veg: true };
-    if (n.includes("dal") || n.includes("sambar") || n.includes("rajma") || n.includes("chole") || n.includes("chana"))
+    if (n === "dal" || n.startsWith("dal ") || n.endsWith(" dal") || n.includes(" dal ") || n.includes("sambar") || n.includes("rajma") || n.includes("chole") || n.includes("chana"))
         return { category: "protein_main", meal_role: "single", unit_type: "bowl", serving_size: 150, serving_unit: "g", calories: 190, protein: 11, carbs: 30, fat: 4, fiber: 8, protein_level: "medium", dish_type: "dal", meal_types: ["lunch", "dinner"], tags: ["veg"], veg: true };
     if (n.includes("milk") || n.includes("lassi") || n.includes("chaas"))
         return { category: "beverage", meal_role: "single", unit_type: "glass", serving_size: 250, serving_unit: "ml", calories: 120, protein: 6, carbs: 12, fat: 4, fiber: 0, dish_type: "drink", meal_types: ["breakfast", "snack"], tags: ["dairy", "veg"], veg: true };
@@ -226,10 +229,10 @@ function estimateDailyCalories(user) {
     const actKey = activityLevel.split(" ")[0];
     let tdee = bmr * (activityMultipliers[actKey] || 1.55);
 
-    if (goal.includes("lose") || goal.includes("fat")) tdee -= 500;
-    if (goal.includes("gain") || goal.includes("muscle")) tdee += 400;
+    if (goal.includes("lose") || goal.includes("fat")) tdee *= 0.8; // Proportional 20% deficit
+    if (goal.includes("gain") || goal.includes("muscle")) tdee *= 1.15; // Proportional 15% surplus
 
-    return Math.round(Math.max(1200, Math.min(4000, tdee)));
+    return Math.round(Math.max(1000, Math.min(5000, tdee)));
 }
 
 function computeMacroTargets(user, mealType) {
@@ -254,7 +257,9 @@ function computeMacroTargets(user, mealType) {
         targetProtein: Math.round((targetCalories * pPct) / 4),
         targetCarbs_g: Math.round((targetCalories * cPct) / 4),
         maxFat_g: Math.round((targetCalories * fPct) / 9),
-        mealFrac
+        mealFrac,
+        pPct,
+        cPct
     };
 }
 
@@ -290,17 +295,31 @@ function scaleItem(food, qty) {
 }
 
 async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags }) {
+    const logicLogs = [];
+    const logLogic = (msg) => {
+        logicLogs.push(msg);
+        console.log(`[REASONING] ${msg}`);
+    };
+
     const foodData = await loadFoodData();
     const macros = computeMacroTargets(user, mealType);
-    const { targetCalories, targetProtein, maxFat_g } = macros;
+    const { targetCalories, maxFat_g, pPct, cPct } = macros;
     const mt = (mealType || "lunch").toLowerCase();
+
+    logLogic(`Targeting ${Math.round(targetCalories)} kcal for ${mt} (${user.goalType || 'maintenance'}).`);
+    logLogic(`Macro split goal: ${user.proteinPct || 25}% Protein, ${user.carbsPct || 45}% Carbs, ${user.fatPct || 30}% Fat.`);
 
     const resolved = await Promise.all((menuItems || []).map(async name => {
         const dbItem = await findFood(name, foodData);
-        return dbItem ? { ...dbItem, name } : { name, ...getFallbackDetails(name) };
+        const item = dbItem ? { ...dbItem, name } : { name, ...getFallbackDetails(name) };
+        logLogic(`Resolved '${name}' to '${item.name}' (ID: ${item.id || 'fallback'}) - Category: ${item.category}`);
+        return item;
     }));
 
     const filtered = filterFoods(resolved, dietPreference || "non-veg", avoidTags || []);
+    if (filtered.length < resolved.length) {
+        logLogic(`Filtered out ${resolved.length - filtered.length} items based on '${dietPreference}' diet.`);
+    }
 
     if (filtered.length === 0) {
         return { plate: [], optionals: [], macros, notes: "No suitable items found for your dietary preference." };
@@ -317,6 +336,8 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
         desserts: filtered.filter(f => f.category === "dessert")
     };
 
+    logLogic(`Partitions count: Proteins: ${partitions.proteins.length}, Carbs: ${partitions.carbs.length}, Sides: ${partitions.sides.length}.`);
+
     let plate = [];
     let caloriesUsed = 0;
 
@@ -324,9 +345,10 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     if (mt === "snack") {
         const candidates = [...partitions.carbs, ...partitions.proteins, ...partitions.sides, ...partitions.beverages]
             .sort((a, b) => (b.protein || 0) - (a.protein || 0));
-        
+
+        const snackFractions = candidates.length > 0 ? 0.9 / candidates.length : 0.45;
         for (const can of candidates.slice(0, 2)) {
-            const qty = calcServings(can, targetCalories * 0.45, 2);
+            const qty = calcServings(can, targetCalories * snackFractions, 3.0);
             if (qty > 0) {
                 const item = scaleItem(can, qty);
                 plate.push({ ...item, role: can.category === "beverage" ? "addon" : "snack", reason: "Quick energy." });
@@ -339,7 +361,7 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     // Fast-path: Mixed Meal
     if (partitions.mixed.length > 0) {
         const best = partitions.mixed.sort((a, b) => (b.protein || 0) - (a.protein || 0))[0];
-        const qty = calcServings(best, targetCalories, 2);
+        const qty = calcServings(best, targetCalories, 3.5);
         plate.push({ ...scaleItem(best, qty), role: "mixed", reason: "Complete nutritious meal." });
         partitions.salads.forEach(s => plate.push({ ...scaleItem(s, 1), role: "veg", reason: "Fresh fiber." }));
         return buildResponse({ plate, partitions, macros, mt });
@@ -348,42 +370,112 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     // Phase 1: Veg Side (Fiber)
     let reservedVeg = 0;
     let mainSide = partitions.sides.sort((a, b) => (b.fiber || 0) - (a.fiber || 0))[0];
-    if (mainSide) reservedVeg = Math.min(mainSide.calories, 150);
+    if (mainSide) reservedVeg = Math.min(mainSide.calories * 2, Math.max(150, targetCalories * 0.2));
 
     // Phase 2: Protein
     const sortedProteins = partitions.proteins.sort((a, b) => (b.protein / (b.calories || 1)) - (a.protein / (a.calories || 1)));
+    const pRatio = pPct / (pPct + cPct || 1);
+    const proteinBudget = (targetCalories - reservedVeg) * pRatio;
+
     if (sortedProteins.length > 0) {
-        const p = sortedProteins[0];
-        const qty = calcServings(p, (targetCalories - reservedVeg) * 0.45, 1.5, maxFat_g * 0.5);
-        const item = scaleItem(p, qty);
-        plate.push({ ...item, role: "protein", reason: "Primary protein source." });
-        caloriesUsed += item.estimatedCalories;
+        // Variety: Use up to 2 protein items if available
+        const p1 = sortedProteins[0];
+        const p2 = sortedProteins[1]; // exists or undefined
+
+        if (p2 && proteinBudget > 100) {
+            logLogic(`Using multi-protein 'Thali' style split (60/40) between ${p1.name} and ${p2.name}.`);
+            const qty1 = calcServings(p1, proteinBudget * 0.6, 2.5, maxFat_g);
+            const qty2 = calcServings(p2, proteinBudget * 0.4, 2.5, maxFat_g);
+
+            if (qty1 > 0) {
+                const item1 = scaleItem(p1, qty1);
+                plate.push({ ...item1, role: "protein", reason: "Primary protein source." });
+                caloriesUsed += item1.estimatedCalories;
+            }
+            if (qty2 > 0) {
+                const item2 = scaleItem(p2, qty2);
+                plate.push({ ...item2, role: "protein", reason: "Secondary protein source." });
+                caloriesUsed += item2.estimatedCalories;
+            }
+        } else {
+            logLogic(`Using single protein source: ${p1.name}.`);
+            const qty = calcServings(p1, proteinBudget, 3.5, maxFat_g);
+            const item = scaleItem(p1, qty);
+            plate.push({ ...item, role: "protein", reason: "Primary protein source." });
+            caloriesUsed += item.estimatedCalories;
+        }
     }
 
     // Phase 3: Carbs
-    let remaining = targetCalories - caloriesUsed - reservedVeg;
+    remaining = targetCalories - caloriesUsed - (plate.some(it => it.role === "veg") ? 0 : reservedVeg);
     if (partitions.carbs.length > 0 && remaining > 50) {
-        const c = partitions.carbs[0];
-        const qty = calcServings(c, Math.max(0, remaining), c.dish_type === "roti" ? 3 : 1.5, maxFat_g * 0.3);
-        const item = scaleItem(c, qty);
-        plate.push({ ...item, role: "carb", reason: "Fuels your activity." });
-        caloriesUsed += item.estimatedCalories;
+        const c1 = partitions.carbs[0];
+        const c2 = partitions.carbs[1];
+
+        if (c2 && remaining > 200) {
+            logLogic(`Using multi-carb split (50/50) between ${c1.name} and ${c2.name}.`);
+            const qty1 = calcServings(c1, remaining * 0.5, c1.dish_type === "roti" ? 4 : 3, maxFat_g);
+            const qty2 = calcServings(c2, remaining * 0.5, c2.dish_type === "roti" ? 4 : 3, maxFat_g);
+
+            if (qty1 > 0) {
+                const item1 = scaleItem(c1, qty1);
+                plate.push({ ...item1, role: "carb", reason: "Main carb source." });
+                caloriesUsed += item1.estimatedCalories;
+            }
+            if (qty2 > 0) {
+                const item2 = scaleItem(c2, qty2);
+                plate.push({ ...item2, role: "carb", reason: "Secondary carb source." });
+                caloriesUsed += item2.estimatedCalories;
+            }
+        } else {
+            logLogic(`Using single carb source: ${c1.name}.`);
+            const qty = calcServings(c1, Math.max(0, remaining), c1.dish_type === "roti" ? 4 : 3.5, maxFat_g);
+            const item = scaleItem(c1, qty);
+            plate.push({ ...item, role: "carb", reason: "Fuels your activity." });
+            caloriesUsed += item.estimatedCalories;
+        }
     }
 
     // Phase 4: Sides
     if (mainSide) {
         remaining = targetCalories - caloriesUsed;
-        const qty = calcServings(mainSide, Math.max(50, remaining), 1.5);
+        const qty = calcServings(mainSide, Math.max(50, remaining), 2.5);
         plate.push({ ...scaleItem(mainSide, qty), role: "veg", reason: "High fiber side." });
     }
 
     // Add Salads
-    partitions.salads.forEach(s => plate.push({ ...scaleItem(s, 1), role: "veg", reason: "Light and crunchy." }));
+    partitions.salads.forEach(s => {
+        const item = scaleItem(s, 1);
+        plate.push({ ...item, role: "veg", reason: "Light and crunchy." });
+        caloriesUsed += item.estimatedCalories;
+    });
 
-    return buildResponse({ plate, partitions, macros, mt });
+    // Phase 5: Calorie Top-up (Close the gap to target)
+    let gap = targetCalories - caloriesUsed;
+    if (gap > targetCalories * 0.05) {
+        logLogic(`Calorie gap of ${Math.round(gap)} kcal detected. Attempting to top-up portions.`);
+        // Try to bump the most calorie dense main item (Carb or Protein)
+        const filler = plate.find(it => it.role === "carb" || it.role === "protein");
+        if (filler) {
+            // Find how much more we need in servings, but don't overshoot by more than 50kcal
+            let needed = gap / filler.calories;
+            let extraQty = Math.round(needed * 2) / 2; // Snap to 0.5
+            if (extraQty > 2) extraQty = 2; // Cap extra
+
+            if (extraQty > 0) {
+                logLogic(`Topping up ${filler.item || filler.name} by +${extraQty} servings.`);
+                const index = plate.indexOf(filler);
+                plate[index] = scaleItem(filler, filler.quantity + extraQty);
+                caloriesUsed += (plate[index].estimatedCalories - filler.estimatedCalories);
+            }
+        }
+    }
+
+    logLogic(`Final plate generated with ${Math.round(caloriesUsed)} kcal.`);
+    return buildResponse({ plate, partitions, macros, mt, logicLogs });
 }
 
-function buildResponse({ plate, partitions, macros, mt }) {
+function buildResponse({ plate, partitions, macros, mt, logicLogs }) {
     const totals = {
         calories: Math.round(plate.reduce((s, i) => s + (i.estimatedCalories || 0), 0)),
         protein: Math.round(plate.reduce((s, i) => s + (i.protein || 0), 0) * 10) / 10,
@@ -398,7 +490,7 @@ function buildResponse({ plate, partitions, macros, mt }) {
         ...partitions.desserts.filter(f => !usedNames.has(f.name)).slice(0, 1).map(f => ({ item: f.name, note: "Sweet Treat", limit: "Moderation" }))
     ];
 
-    return { plate, optionals, macros: { ...macros, ...totals } };
+    return { plate, optionals, macros: { ...macros, ...totals }, logicLogs };
 }
 
 async function recommendPlate({ user, menuItems, mealType }) {
@@ -447,7 +539,8 @@ async function recommendPlate({ user, menuItems, mealType }) {
             totalPlateFat: result.macros.fat,
             targetProtein: result.macros.targetProtein,
             dietNote: dietNoteMap[normalizeDiet(dietPreference)] || "",
-            notes: result.notes || "Portions are estimates based on standard serving sizes."
+            notes: result.notes || "Portions are estimates based on standard serving sizes.",
+            logicLogs: result.logicLogs
         }
     };
 }
