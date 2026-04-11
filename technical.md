@@ -4,6 +4,20 @@ This document is a principal-level, exhaustive manual for the PortionVision code
 
 ---
 
+## 📑 Table of Contents
+- [1. System Architecture & Lifecycle](#-1-system-architecture--lifecycle)
+- [2. Backend Deconstruction (`backend/`)](#️-2-backend-deconstruction-backend)
+- [3. CV Service Deconstruction (`cv_service/`) — v3.0 Enhanced](#-3-cv-service-deconstruction-cv_service--v30-enhanced)
+  - [3.1. CV Deep Dive: The "0 to 100" Journey (v3)](#-31-cv-deep-dive-the-0-to-100-journey-v3)
+- [4. Frontend Deconstruction (`frontend/`)](#-4-frontend-deconstruction-frontend)
+- [5. Data Schema & Models](#-5-data-schema--models)
+- [6. Internal Object Evolution (The "Dal" Life-Cycle)](#-6-internal-object-evolution-the-dal-life-cycle)
+- [7. Global Runtime Mechanics & Resilience](#-7-global-runtime-mechanics--resilience)
+- [8. Pipeline Diagnostics & Logging System](#-8-pipeline-diagnostics--logging-system)
+- [9. Developer Setup & Fast-Start](#-9-developer-setup--fast-start)
+
+---
+
 ## 🏗️ 1. System Architecture & Lifecycle
 
 PortionVision is an end-to-end health-tech solution that converts visual food data into nutritional insights. It operates across three specialized services:
@@ -16,7 +30,7 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
 1.  **Ingestion**: Captured `File` (Binary) $\rightarrow$ `FormData` (Stream).
 2.  **OCR Processing**: Image $\rightarrow$ Tesseract (WASM Worker) $\rightarrow$ Sanitized String $\rightarrow$ Parsed Array.
 3.  **Portion Logic**: User Context $\rightarrow$ TDEE Matrix $\rightarrow$ Macro Partitioning $\rightarrow$ Scaled Recommendations.
-4.  **CV Estimation**: Rectified Top-Down Matrix $\rightarrow$ Quality Gate (blur/tilt) $\rightarrow$ Scale Factor (ellipse-first) $\rightarrow$ Height Map (MiDaS + food priors) $\rightarrow$ Per-Compartment Binary Masks (SAM) $\rightarrow$ Food Classification (MobileNetV3 + OCR fusion) $\rightarrow$ Hungarian Optimal Assignment $\rightarrow$ Dynamic Density $\rightarrow$ Volumetric Integration ($cm^3$) $\rightarrow$ Mass ($g$) $\rightarrow$ Nutrients $\rightarrow$ Composite Confidence.
+4.  **CV Estimation**: Rectified Top-Down Matrix $\rightarrow$ Quality Gate (blur/tilt) $\rightarrow$ Scale Factor (ellipse-first) $\rightarrow$ Height Map (Depth Anything + food priors) $\rightarrow$ Per-Compartment Binary Masks (Full SAM) $\rightarrow$ Food Classification (MobileNetV3 + OCR fusion) $\rightarrow$ Hungarian Optimal Assignment $\rightarrow$ Dynamic Density $\rightarrow$ Volumetric Integration ($cm^3$) $\rightarrow$ Mass ($g$) $\rightarrow$ Nutrients $\rightarrow$ Composite Confidence.
 
 ---
 
@@ -123,8 +137,8 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
     ```
 *   **`apply_food_height_prior(height_map, food_label, alpha=0.70, beta=0.30)`** *(new)*:
     -   Lookup: exact match → substring match → no prior (return unchanged).
-    -   Fusion: `fused = 0.70 × midas_height + 0.30 × prior_midpoint`.
-    -   Clamp: `np.clip(fused, min_h, max_h)`. Prevents MiDaS noise producing impossible 8cm roti or 0.2cm dal.
+    -   Fusion: `fused = 0.70 × depth_anything_height + 0.30 × prior_midpoint`.
+    -   Clamp: `np.clip(fused, min_h, max_h)`. Prevents neural depth noise producing impossible 8cm roti or 0.2cm dal.
     -   Called per-mask in `mass_estimator.py` *after* classification assigns a label.
 
 **Enhancement #4 — Ellipse-Based Scale Calibration**
@@ -135,7 +149,7 @@ PortionVision is an end-to-end health-tech solution that converts visual food da
     -   In `mass_estimator.py`, if this returns a value it overrides the bbox-based scale and boosts `scale_confidence` from 0.7 → 1.0.
 
 **Enhancement #5 — Gaussian Smoothing**
-*   Inside `estimate_depth()`, `cv2.GaussianBlur(depth, (5,5), 0)` is applied immediately after the MiDaS `resize`. This suppresses per-pixel shot noise before normalization and volume integration.
+*   Inside `estimate_depth()`, `cv2.GaussianBlur(depth, (5,5), 0)` is applied immediately after the Depth Anything `resize`. This suppresses per-pixel shot noise before normalization and volume integration.
 
 *   **`normalize_depth_to_plate`** and **`depth_to_cm`**: Unchanged from baseline.
 
@@ -266,7 +280,7 @@ Tracking a single **Dal** portion from camera capture to calorie result.
 9.  **Well Mapping**: Adaptive threshold finds dividers → defines $Z_{surface}$ baseline.
 
 ### **Phase 4: Volumetric Sensing (50-65%) — Enhanced #1 #5**
-10. **MiDaS Depth (smoothed)**: Neural network predicts relative disparity map. Gaussian blur (5×5) is applied to suppress pixel-level noise *before* rescaling.
+10. **Depth Anything (smoothed)**: Neural network predicts relative disparity map. Gaussian blur (5×5) is applied to suppress pixel-level noise *before* rescaling.
 11. **Baseline Subtraction**: Depth values on dividers are sampled → subtracted. Plate surface = 0.0 cm.
 12. **Height Link**: $H_{cm} = (RelDepth / AbsDepth) \times (1.2 \times Width \times Scale)$.
 
@@ -279,7 +293,7 @@ Tracking a single **Dal** portion from camera capture to calorie result.
 16. **Hungarian Matching**: Cost matrix built from label mismatch + spatial overlap + classifier confidence. `scipy.optimize.linear_sum_assignment` finds the globally optimal mask↔food pairing.
 
 ### **Phase 7: Integration & Density (85-100%) — Enhanced #1 #6 #10**
-17. **Hybrid Height Fusion**: `apply_food_height_prior("dal")` fuses MiDaS heights with prior midpoint (3.0 cm) at 70/30, then clamps to [1.5, 3.5] cm. Prevents shadow-induced underestimates.
+17. **Hybrid Height Fusion**: `apply_food_height_prior("dal")` fuses neural heights with prior midpoint (3.0 cm) at 70/30, then clamps to [1.5, 3.5] cm. Prevents shadow-induced underestimates.
 18. **Voxel Summing**: $V = \sum (H_{fused} + D_{well}) \times (cm\_per\_pixel)^2$
 19. **Dynamic Density**: HSV brightness/saturation and Laplacian texture are extracted from Dal pixels. Watery, pale dal → `density = 0.95 g/ml`; chunky dal → `density = 1.13 g/ml`.
 20. **Composite Confidence**: $\text{conf} = (seg \times class \times depth\_stability \times scale)^{0.25}$.
@@ -352,11 +366,11 @@ Tracking the transformation of a data object:
 *   **Network & Stream Failures**:
     - **Broken Mid-Transfer**: If the `axios` stream to the Python service breaks, `server.js` catches the error. It returns a `503 Service Unavailable` with `isOffline: true`. The frontend transitions to a "Manual Analysis" mode.
     - **Partial File Write**: If `multer` crashes during writing, the `upload.single("image")` middleware fails. Node's top-level error handler intercepts the `MulterError`, prevents a process crash, and returns a 400 JSON error.
-*   **SAM Empty Results**: If MobileSAM finds no food, `mass_estimator.py` checks `if not food_masks`. It returns a 0-conf result. The frontend `Analysis.jsx` detects this and prompts the user to "Try a clearer photo".
+*   **SAM Empty Results**: If SAM finds no food, `mass_estimator.py` checks `if not food_masks`. It returns a 0-conf result. The frontend `Analysis.jsx` detects this and prompts the user to "Try a clearer photo".
 
 ### **The Event Loop & Workers**
 - In Node.js, OCR is CPU-heavy. To prevent blocking the Express Event Loop (which would slow down all other users), `Tesseract.js` executes in a **WebAssembly Worker**. 
-- In Python, FastAPI uses `uvicorn`. The inference steps (MiDaS/SAM) are synchronous which saturates the CPU for the specific request, but the underlying server handles network I/O asynchronously.
+- In Python, FastAPI uses `uvicorn`. The inference steps (Depth Anything/SAM) are synchronous which saturates the CPU for the specific request, but the underlying server handles network I/O asynchronously.
 
 ### **Memory Flow Diagram**
 `Browser Image (Bytes)` $\rightarrow$ `Node Stream (Chunks)` $\rightarrow$ `Disk File` $\rightarrow$ `Read Stream` $\rightarrow$ `HTTP Proxy` $\rightarrow$ `Python Matrix`.
@@ -393,7 +407,7 @@ cv_service/outputs/20260406_191042_a3f1c8e2/
 │   ├── 02_combined_edges.png
 │   └── 03_compartments_overlay.png  # Bounding boxes + contours
 ├── depth/
-│   ├── 01_raw_depth.npy          # Float32 MiDaS output
+│   ├── 01_raw_depth.npy          # Float32 Depth array
 │   ├── 02_depth_normalized.png   # Grayscale 0–255
 │   ├── 03_depth_colored.png      # INFERNO colormap
 │   ├── 04_height_relative.npy    # Baseline-subtracted
@@ -438,7 +452,7 @@ cv_service/outputs/20260406_191042_a3f1c8e2/
 Each pipeline step writes to `logs/pipeline.log`:
 ```
 2026-04-06 19:10:42 │ INFO │ [Preprocessing] Resize applied │ params={'original': '4032x3024', 'target_long_edge': 1024, 'scale': 0.254} │ time=0.0123s │ output=01_resized.png
-2026-04-06 19:10:44 │ INFO │ [Depth Estimation] MiDaS depth map computed │ params={'device': 'cpu', 'shape': [768, 1024]} │ time=1.8421s │ output=03_depth_colored.png
+2026-04-06 19:10:44 │ INFO │ [Depth Estimation] Depth Anything depth map computed │ params={'device': 'cpu', 'shape': [768, 1024]} │ time=1.8421s │ output=03_depth_colored.png
 2026-04-06 19:10:46 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 3, 'avg_confidence': 0.89} │ time=4.231s
 ```
 

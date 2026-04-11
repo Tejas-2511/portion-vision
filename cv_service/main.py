@@ -2,7 +2,7 @@
 Portion Vision — Computer Vision Microservice
 
 FastAPI application for food mass estimation from mess plate images.
-Uses SAM for segmentation, MiDaS for depth, and per-pixel volume integration.
+Uses Full SAM for segmentation, Depth Anything for depth, and per-pixel volume integration.
 """
 
 import logging

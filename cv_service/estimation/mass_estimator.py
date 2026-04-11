@@ -3,7 +3,7 @@ End-to-end mass estimation pipeline.
 
 Orchestrates all enhancements:
 
-  #1  Hybrid depth (MiDaS + food geometric priors)
+  #1  Hybrid depth (Depth Anything + food geometric priors)
   #2  Food classification via MobileNetV3
   #3  OCR→CV fusion (OCR labels constrain classifier)
   #4  Ellipse-based scale calibration
@@ -159,7 +159,7 @@ def _composite_confidence(
     poor score drags the overall result down.
 
     depth_stability: 1.0 if depth was stable (prior was applied),
-                     otherwise raw MiDaS score heuristic.
+                     otherwise raw Depth score heuristic.
     scale_confidence: 1.0 if ellipse calibration succeeded, 0.7 otherwise.
     """
     product = seg_score * class_conf * depth_stability * scale_confidence
@@ -180,7 +180,7 @@ def estimate_food_mass(
       0. Quality gate
       1. Preprocessing & perspective warp
       2. Compartment detection & scale (+ ellipse refinement)
-      3. Depth estimation (MiDaS + smoothing)
+      3. Depth estimation (Depth Anything + smoothing)
       4. Per-compartment SAM segmentation
       5. Food classification (+ OCR-constrained re-ranking)
       6. Hungarian assignment

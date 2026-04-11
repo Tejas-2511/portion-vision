@@ -1,5 +1,5 @@
 """
-SAM-based food segmentation using MobileSAM.
+SAM-based food segmentation using Full Segment Anything Model (SAM).
 
 Enhancements over baseline:
   • #8  Per-compartment segmentation — SAM is optionally run inside each
@@ -28,29 +28,29 @@ _sam_predictor   = None   # SamPredictor instance used for per-compartment mode
 
 
 def _load_sam_generator():
-    """Load MobileSAM automatic mask generator (downloads weights on first run)."""
+    """Load Full SAM automatic mask generator (downloads weights on first run)."""
     global _sam_model, _mask_generator
 
     if _mask_generator is not None:
         return _mask_generator
 
     try:
-        from mobile_sam import sam_model_registry, SamAutomaticMaskGenerator
+        from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
         import urllib.request
         import os
 
         checkpoint_dir  = os.path.join(os.path.dirname(__file__), "..", "weights")
         os.makedirs(checkpoint_dir, exist_ok=True)
-        checkpoint_path = os.path.join(checkpoint_dir, "mobile_sam.pt")
+        checkpoint_path = os.path.join(checkpoint_dir, "sam_vit_h_4b8939.pth")
 
         if not os.path.exists(checkpoint_path):
-            url = "https://raw.githubusercontent.com/ChaoningZhang/MobileSAM/master/weights/mobile_sam.pt"
-            logger.info("Downloading MobileSAM weights...")
+            url = "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
+            logger.info("Downloading Full SAM (vit_h) weights...")
             urllib.request.urlretrieve(url, checkpoint_path)
-            logger.info("MobileSAM weights downloaded.")
+            logger.info("Full SAM weights downloaded.")
 
         device      = "cuda" if torch.cuda.is_available() else "cpu"
-        _sam_model  = sam_model_registry["vit_t"](checkpoint=checkpoint_path)
+        _sam_model  = sam_model_registry["vit_h"](checkpoint=checkpoint_path)
         _sam_model.to(device)
         _sam_model.eval()
 
@@ -63,12 +63,12 @@ def _load_sam_generator():
             crop_n_points_downscale_factor=2,
             min_mask_region_area=100,
         )
-        logger.info(f"MobileSAM Mask Generator loaded on {device}")
+        logger.info(f"Full SAM Mask Generator loaded on {device}")
 
     except ImportError:
         logger.warning(
-            "mobile_sam not installed — falling back to color-based segmentation. "
-            "Install with: pip install mobile-sam"
+            "segment_anything not installed — falling back to color-based segmentation. "
+            "Install with: pip install git+https://github.com/facebookresearch/segment-anything.git"
         )
         _mask_generator = None
 
@@ -76,7 +76,7 @@ def _load_sam_generator():
 
 
 def _load_sam_predictor():
-    """Load MobileSAM SamPredictor used for per-compartment prompting."""
+    """Load Full SAM SamPredictor used for per-compartment prompting."""
     global _sam_predictor
 
     if _sam_predictor is not None:
@@ -88,9 +88,9 @@ def _load_sam_predictor():
         return None
 
     try:
-        from mobile_sam import SamPredictor
+        from segment_anything import SamPredictor
         _sam_predictor = SamPredictor(_sam_model)
-        logger.info("MobileSAM SamPredictor loaded")
+        logger.info("Full SAM SamPredictor loaded")
     except Exception as exc:
         logger.warning(f"Could not load SamPredictor: {exc}")
         _sam_predictor = None
@@ -165,7 +165,7 @@ def segment_full_image_sam(image_bgr: np.ndarray, ctx=None) -> list[dict]:
 
     if debug:
         _save_segmentation_debug(image_bgr, results, ctx, elapsed,
-                                 method="MobileSAM",
+                                 method="FullSAM",
                                  total_candidates=len(masks_data),
                                  rejected=rejected)
 
@@ -270,7 +270,7 @@ def segment_per_compartment_sam(
 
     if debug:
         _save_segmentation_debug(image_bgr, results, ctx, elapsed,
-                                 method="MobileSAM-per-compartment",
+                                 method="FullSAM-per-compartment",
                                  total_candidates=len(compartments),
                                  rejected=len(compartments) - len(results))
 

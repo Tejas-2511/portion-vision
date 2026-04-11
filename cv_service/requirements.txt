@@ -12,11 +12,12 @@ Pillow
 torch
 torchvision
 
-# Segment Anything (MobileSAM - lightweight, installed from GitHub)
-mobile-sam @ git+https://github.com/ChaoningZhang/MobileSAM.git
+# Segment Anything (Full SAM - installed from GitHub)
+segment-anything @ git+https://github.com/facebookresearch/segment-anything.git
 
-# Depth estimation (MiDaS via torch hub or Depth Anything)
+# Depth estimation (Depth Anything via huggingface transformers)
 timm
+transformers
 
 
 

@@ -1,8 +1,8 @@
 """
-Monocular depth estimation using MiDaS (via torch.hub).
+Monocular depth estimation using Depth Anything.
 
 Enhancements over baseline:
-  • #1  Hybrid depth — fuses MiDaS output with per-food geometric priors
+  • #1  Hybrid depth — fuses Depth Anything output with per-food geometric priors
   • #4  Ellipse-based scale calibration — fits an ellipse to the plate rim
         for a more accurate cm-per-pixel estimate
   • #5  Gaussian smoothing before returning the depth map to suppress noise
@@ -22,12 +22,11 @@ import torch
 logger = logging.getLogger(__name__)
 
 # ── Lazy-loaded global model ─────────────────────────────────────────────────
-_midas_model     = None
-_midas_transform = None
-_midas_device    = None
+_depth_pipeline  = None
+_depth_device    = None
 
 # ── Food-specific height priors (min_cm, max_cm) ─────────────────────────────
-# Used by apply_food_height_prior() to clamp and blend MiDaS output.
+# Used by apply_food_height_prior() to clamp and blend Depth Anything output.
 FOOD_HEIGHT_PRIORS: dict[str, tuple[float, float]] = {
     # Flat / thin items
     "roti":     (0.4, 1.5),
@@ -84,7 +83,7 @@ FOOD_HEIGHT_PRIORS: dict[str, tuple[float, float]] = {
 }
 
 # Blending weights for hybrid depth
-_MIDAS_ALPHA = 0.70   # weight given to MiDaS raw output
+_DEPTH_ALPHA = 0.70   # weight given to raw depth output
 _PRIOR_BETA  = 0.30   # weight given to the geometric prior mid-point
 
 # Assumed plate outer diameter in cm — used by ellipse calibrator
@@ -93,29 +92,26 @@ _PLATE_DIAMETER_CM = 26.0
 
 # ── Depth model ───────────────────────────────────────────────────────────────
 
-def _load_midas() -> None:
-    """Load MiDaS small model via torch.hub (downloads on first run)."""
-    global _midas_model, _midas_transform, _midas_device
+def _load_depth_model() -> None:
+    """Load Depth Anything model via transformers pipeline."""
+    global _depth_pipeline, _depth_device
 
-    if _midas_model is not None:
+    if _depth_pipeline is not None:
         return
 
-    _midas_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    from transformers import pipeline
 
-    # MiDaS v2.1 Small — fast and good enough for relative depth
-    _midas_model = torch.hub.load("intel-isl/MiDaS", "MiDaS_small", trust_repo=True)
-    _midas_model.to(_midas_device)
-    _midas_model.eval()
+    _depth_device = 0 if torch.cuda.is_available() else -1
 
-    midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms", trust_repo=True)
-    _midas_transform = midas_transforms.small_transform
+    # Depth Anything V2 small, state of the art relative depth
+    _depth_pipeline = pipeline("depth-estimation", model="depth-anything/Depth-Anything-V2-Small-hf", device=_depth_device)
 
-    logger.info(f"MiDaS loaded on {_midas_device}")
+    logger.info(f"Depth Anything loaded on device factor {_depth_device}")
 
 
 def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
     """
-    Run MiDaS depth estimation on a BGR image.
+    Run Depth Anything depth estimation on a BGR image.
 
     Returns a depth map (H, W) as float32.
     Higher values = closer to camera (i.e., taller objects).
@@ -126,17 +122,18 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
     debug = ctx is not None and ctx.debug
     t0 = time.perf_counter()
 
-    _load_midas()
+    _load_depth_model()
 
     rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-    input_batch = _midas_transform(rgb).to(_midas_device)
+    from PIL import Image
+    pil_img = Image.fromarray(rgb)
 
-    with torch.no_grad():
-        prediction = _midas_model(input_batch)
+    prediction = _depth_pipeline(pil_img)
+    # Use raw tensor for geometric precision, not the normalized 0-255 PIL image
+    pred_depth = prediction["predicted_depth"].squeeze().cpu().numpy()
 
     # Resize prediction to match input image dimensions
-    depth = prediction.squeeze().cpu().numpy()
-    depth = cv2.resize(depth, (image_bgr.shape[1], image_bgr.shape[0]))
+    depth = cv2.resize(pred_depth, (image_bgr.shape[1], image_bgr.shape[0]))
     depth = depth.astype(np.float32)
 
     # #5 — Smooth depth map before any downstream use
@@ -157,8 +154,8 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
         fname = f"{idx:02d}_depth_colored.png"
         ctx.save_image("depth", fname, d_colored)
 
-        ctx.log("Depth Estimation", "MiDaS depth map computed (smoothed)",
-                {"device": str(_midas_device),
+        ctx.log("Depth Estimation", "Depth Anything depth map computed (smoothed)",
+                {"device": str(_depth_device),
                  "shape": list(depth.shape),
                  "min": round(float(depth.min()), 3),
                  "max": round(float(depth.max()), 3)},
@@ -170,19 +167,19 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
 def apply_food_height_prior(
     height_map: np.ndarray,
     food_label: str,
-    alpha: float = _MIDAS_ALPHA,
+    alpha: float = _DEPTH_ALPHA,
     beta: float = _PRIOR_BETA,
 ) -> np.ndarray:
     """
     Enhancement #1 — Hybrid depth fusion with food-specific geometric priors.
 
-    Blends MiDaS-derived height_map with a mid-point prior from
+    Blends neural-derived height_map with a mid-point prior from
     FOOD_HEIGHT_PRIORS and then clamps to the physiologically valid range.
 
     Args:
         height_map:  Per-pixel height in cm (float32 array, same H×W as image).
         food_label:  Canonical food name (must match keys in FOOD_HEIGHT_PRIORS).
-        alpha:       Weight for MiDaS (default 0.70).
+        alpha:       Weight for neural depth (default 0.70).
         beta:        Weight for prior mid-point (default 0.30).
 
     Returns:
@@ -285,7 +282,7 @@ def normalize_depth_to_plate(
     Normalize the depth map relative to the plate surface.
     Returns the difference in depth values from the baseline (dividers/rim).
 
-    In MiDaS, higher values = closer to camera.
+    In Depth Anything, higher values = closer to camera.
     """
     debug = ctx is not None and ctx.debug
     t0    = time.perf_counter()
