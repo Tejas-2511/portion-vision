@@ -311,7 +311,7 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
 
     const resolved = await Promise.all((menuItems || []).map(async name => {
         const dbItem = await findFood(name, foodData);
-        const item = dbItem ? { ...dbItem, name } : { name, ...getFallbackDetails(name) };
+        const item = dbItem ? { ...dbItem } : { name, ...getFallbackDetails(name) };
         logLogic(`Resolved '${name}' to '${item.name}' (ID: ${item.id || 'fallback'}) - Category: ${item.category}`);
         return item;
     }));
@@ -378,26 +378,22 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     const proteinBudget = (targetCalories - reservedVeg) * pRatio;
 
     if (sortedProteins.length > 0) {
-        // Variety: Use up to 2 protein items if available
-        const p1 = sortedProteins[0];
-        const p2 = sortedProteins[1]; // exists or undefined
-
-        if (p2 && proteinBudget > 100) {
-            logLogic(`Using multi-protein 'Thali' style split (60/40) between ${p1.name} and ${p2.name}.`);
-            const qty1 = calcServings(p1, proteinBudget * 0.6, 2.5, maxFat_g);
-            const qty2 = calcServings(p2, proteinBudget * 0.4, 2.5, maxFat_g);
-
-            if (qty1 > 0) {
-                const item1 = scaleItem(p1, qty1);
-                plate.push({ ...item1, role: "protein", reason: "Primary protein source." });
-                caloriesUsed += item1.estimatedCalories;
-            }
-            if (qty2 > 0) {
-                const item2 = scaleItem(p2, qty2);
-                plate.push({ ...item2, role: "protein", reason: "Secondary protein source." });
-                caloriesUsed += item2.estimatedCalories;
-            }
+        const budgetPerProtein = proteinBudget / sortedProteins.length;
+        
+        if (sortedProteins.length > 1 && proteinBudget > 100) {
+            logLogic(`Using multi-protein split across ${sortedProteins.length} items.`);
+            sortedProteins.forEach((p, idx) => {
+                // slightly weight the top protein
+                const weight = (idx === 0 && sortedProteins.length === 2) ? 0.6 : (1.0 / sortedProteins.length);
+                const qty = calcServings(p, proteinBudget * weight, 2.5, maxFat_g);
+                if (qty > 0) {
+                    const item = scaleItem(p, qty);
+                    plate.push({ ...item, role: "protein", reason: idx === 0 ? "Primary protein source." : "Secondary protein." });
+                    caloriesUsed += item.estimatedCalories;
+                }
+            });
         } else {
+            const p1 = sortedProteins[0];
             logLogic(`Using single protein source: ${p1.name}.`);
             const qty = calcServings(p1, proteinBudget, 3.5, maxFat_g);
             const item = scaleItem(p1, qty);
@@ -407,27 +403,21 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     }
 
     // Phase 3: Carbs
-    remaining = targetCalories - caloriesUsed - (plate.some(it => it.role === "veg") ? 0 : reservedVeg);
+    let remaining = targetCalories - caloriesUsed - (plate.some(it => it.role === "veg") ? 0 : reservedVeg);
     if (partitions.carbs.length > 0 && remaining > 50) {
-        const c1 = partitions.carbs[0];
-        const c2 = partitions.carbs[1];
-
-        if (c2 && remaining > 200) {
-            logLogic(`Using multi-carb split (50/50) between ${c1.name} and ${c2.name}.`);
-            const qty1 = calcServings(c1, remaining * 0.5, c1.dish_type === "roti" ? 4 : 3, maxFat_g);
-            const qty2 = calcServings(c2, remaining * 0.5, c2.dish_type === "roti" ? 4 : 3, maxFat_g);
-
-            if (qty1 > 0) {
-                const item1 = scaleItem(c1, qty1);
-                plate.push({ ...item1, role: "carb", reason: "Main carb source." });
-                caloriesUsed += item1.estimatedCalories;
-            }
-            if (qty2 > 0) {
-                const item2 = scaleItem(c2, qty2);
-                plate.push({ ...item2, role: "carb", reason: "Secondary carb source." });
-                caloriesUsed += item2.estimatedCalories;
-            }
+        if (partitions.carbs.length > 1 && remaining > 200) {
+            logLogic(`Using multi-carb split across ${partitions.carbs.length} items.`);
+            const budgetPerCarb = remaining / partitions.carbs.length;
+            partitions.carbs.forEach((c, idx) => {
+                const qty = calcServings(c, budgetPerCarb, c.dish_type === "roti" ? 4 : 3, maxFat_g);
+                if (qty > 0) {
+                    const item = scaleItem(c, qty);
+                    plate.push({ ...item, role: "carb", reason: idx === 0 ? "Main carb source." : "Secondary carb." });
+                    caloriesUsed += item.estimatedCalories;
+                }
+            });
         } else {
+            const c1 = partitions.carbs[0];
             logLogic(`Using single carb source: ${c1.name}.`);
             const qty = calcServings(c1, Math.max(0, remaining), c1.dish_type === "roti" ? 4 : 3.5, maxFat_g);
             const item = scaleItem(c1, qty);
@@ -437,10 +427,17 @@ async function buildPlate({ user, menuItems, mealType, dietPreference, avoidTags
     }
 
     // Phase 4: Sides
-    if (mainSide) {
+    if (partitions.sides.length > 0) {
         remaining = targetCalories - caloriesUsed;
-        const qty = calcServings(mainSide, Math.max(50, remaining), 2.5);
-        plate.push({ ...scaleItem(mainSide, qty), role: "veg", reason: "High fiber side." });
+        const sideBudget = Math.max(reservedVeg, remaining);
+        const budgetPerSide = sideBudget / partitions.sides.length;
+
+        partitions.sides.forEach(side => {
+            const qty = calcServings(side, Math.max(50, budgetPerSide), 2.5);
+            const item = scaleItem(side, qty);
+            plate.push({ ...item, role: "veg", reason: "Healthy vegetable side." });
+            caloriesUsed += item.estimatedCalories;
+        });
     }
 
     // Add Salads

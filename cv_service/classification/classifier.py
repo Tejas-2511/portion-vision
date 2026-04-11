@@ -249,8 +249,17 @@ def classify_mask_region(
     # ── Apply OCR boost ───────────────────────────────────────────────────────
     if allowed_labels:
         allowed_set = {lbl.strip().lower() for lbl in allowed_labels}
+        
+        def is_allowed(food_str: str) -> bool:
+            # Check if canonical food name is substring of any OCR label, or vice versa
+            food_str = food_str.lower()
+            for allowed in allowed_set:
+                if food_str in allowed or allowed in food_str:
+                    return True
+            return False
+
         food_scores = {
-            food: (score * OCR_BOOST if food in allowed_set else score)
+            food: (score * OCR_BOOST if is_allowed(food) else score)
             for food, score in food_scores.items()
         }
         # Re-normalise after boost

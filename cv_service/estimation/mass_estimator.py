@@ -97,9 +97,10 @@ def _hungarian_assign(
                 c += 1.0
 
             # Component 2: classifier confidence mismatch
-            class_label = mask_data.get("class_label", "")
+            class_label = mask_data.get("class_label", "").lower()
+            expected_lower = expected.lower()
             class_conf  = mask_data.get("class_conf",  0.0)
-            if class_label != expected:
+            if class_label not in expected_lower and expected_lower not in class_label:
                 c += (1.0 - class_conf) * 2.0
 
             # Component 3: spatial — penalise masks far from compartments
@@ -117,7 +118,10 @@ def _hungarian_assign(
 
     row_ind, col_ind = linear_sum_assignment(cost)
 
-    labels = ["unknown"] * n_masks
+    labels = []
+    for i in range(n_masks):
+        labels.append(food_masks[i].get("class_label", "unknown"))
+        
     for r, c in zip(row_ind, col_ind):
         if r < n_masks and c < n_items:
             labels[r] = expected_items[c]
@@ -136,7 +140,7 @@ def _greedy_assign(
         if f_idx < len(expected_items):
             labels.append(expected_items[f_idx])
         else:
-            labels.append(mask_data.get("comp_label", "unknown"))
+            labels.append(mask_data.get("class_label", "unknown"))
     return labels
 
 
@@ -370,10 +374,9 @@ def estimate_food_mass(
     if expected_items:
         assigned_names = _hungarian_assign(food_masks, expected_items, compartments)
     else:
-        # No expected list — use classifier output or compartment label
+        # No expected list — use classifier output directly
         assigned_names = [
-            item["class_label"] if item["class_label"] != "unknown"
-            else item["comp_label"]
+            item.get("class_label", "unknown")
             for item in food_masks
         ]
 
