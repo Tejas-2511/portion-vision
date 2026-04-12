@@ -15,6 +15,7 @@ export default function Analysis() {
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [analyzingPlate, setAnalyzingPlate] = useState(false);
+  const [analysisError, setAnalysisError] = useState(null);
 
   useEffect(() => {
     if (userProfile) {
@@ -49,6 +50,8 @@ export default function Analysis() {
     if (!imageFile || !recommendation) return;
 
     setAnalyzingPlate(true);
+    setAnalysisError(null);
+    console.log("Retrying plate analysis...");
     try {
       // Build a comma-separated list of expected items from recommendation
       const expectedItemsArray = [
@@ -61,6 +64,7 @@ export default function Analysis() {
       setAnalysisResult(result);
     } catch (err) {
       console.error("Failed to analyze plate:", err);
+      setAnalysisError(err.message || "Portion analysis failed");
     } finally {
       setAnalyzingPlate(false);
     }
@@ -284,9 +288,20 @@ export default function Analysis() {
             <div className="flex h-32 items-center justify-center rounded-xl bg-amber-50 text-amber-600 font-medium text-center px-4">
               No food items detected. Try a clearer photo.
             </div>
+          ) : analysisError ? (
+            <div className="flex flex-col gap-2 items-center justify-center rounded-xl bg-rose-50 p-6 text-center">
+              <div className="text-rose-600 font-bold">Analysis Failed</div>
+              <p className="text-sm text-rose-500 mb-2">{analysisError}</p>
+              <button 
+                onClick={analyzeCapturedPlate}
+                className="text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-600 px-4 py-2 rounded-full hover:bg-rose-200 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
           ) : (
-            <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-rose-500 font-medium text-center px-4">
-              Analysis failed. Please try capturing again.
+            <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-slate-500 font-medium text-center px-4">
+              Capture a photo to start AI portion analysis.
             </div>
           )}
         </div>

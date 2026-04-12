@@ -88,9 +88,9 @@ app.get('/api/foods/search', async (req, res) => {
         }
 
         const foods = await Database.getFoods();
-        
+
         // Exact/Partial matches
-        let results = foods.filter(food => 
+        let results = foods.filter(food =>
             food.name && normalizeFoodName(food.name).includes(normalizedQuery)
         );
 
@@ -160,6 +160,8 @@ app.post('/api/recommend', async (req, res) => {
             dietPreference: userProfile.dietPreference || 'non-veg',
             avoidTags: userProfile.avoidTags || []
         };
+        console.log(`[DEBUG] Recommending for ${user.dietPreference} (${mealType})`);
+
 
         const recommendation = await recommendPlate({
             user,
@@ -207,7 +209,7 @@ function parseMenuText(rawText) {
 
         for (const part of parts) {
             if (OCR_BLACKLIST.has(part)) continue;
-            
+
             const words = part.split(' ');
             if (words.every(w => OCR_BLACKLIST.has(w))) continue;
 
@@ -245,11 +247,11 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 
         const menuItems = parseMenuText(text);
         console.log(`📝 Parsed Items from OCR: [${menuItems.join(", ")}]`);
-        
+
         // Sync with Food Database
         let foodDatabase = await Database.getFoods();
         const getCompareKey = (name) => (name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
-        
+
         const cleanedMenuItems = [];
         let addedCount = 0;
 
@@ -262,7 +264,7 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
                 console.log(`   ➕ ADDING NEW ITEM: "${itemName}" (Creating fallback nutrition)`);
                 const fallback = getFallbackDetails(itemName);
                 const newItem = {
-                    id: itemName.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
+                    id: itemName.toLowerCase().replace(/\s+/g, '_'),
                     name: itemName,
                     veg: fallback.veg !== undefined ? fallback.veg : true,
                     dish_type: fallback.dish_type || 'sabji',
@@ -333,7 +335,7 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
 
         const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
             headers: { ...form.getHeaders() },
-            timeout: 90000 
+            timeout: 300000
         });
 
         res.json(cvResponse.data);
@@ -343,9 +345,13 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
                 error: "CV service is offline",
                 isOffline: true
             });
+        } else if (err.response) {
+            // Forward the exact error from CV Service if available (e.g. 422 Quality Gate)
+            console.error('CV API Error:', err.response.data);
+            res.status(err.response.status).json(err.response.data);
         } else {
-            console.error('CV Error:', err);
-            res.status(500).json({ error: "Portion analysis failed" });
+            console.error('CV Error (Other):', err.code, err.message);
+            res.status(500).json({ error: "Portion analysis failed: " + err.message });
         }
     } finally {
         if (originalPath && fs.existsSync(originalPath)) {

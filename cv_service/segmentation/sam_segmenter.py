@@ -16,8 +16,7 @@ import time
 import logging
 import numpy as np
 import cv2
-import torch
-from PIL import Image
+import cv2
 
 logger = logging.getLogger(__name__)
 
@@ -35,22 +34,24 @@ def _load_sam_generator():
         return _mask_generator
 
     try:
+        import torch
+        from PIL import Image
         from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
         import urllib.request
         import os
 
         checkpoint_dir  = os.path.join(os.path.dirname(__file__), "..", "weights")
         os.makedirs(checkpoint_dir, exist_ok=True)
-        checkpoint_path = os.path.join(checkpoint_dir, "sam_vit_h_4b8939.pth")
+        checkpoint_path = os.path.join(checkpoint_dir, "sam_vit_b_01ec64.pth")
 
         if not os.path.exists(checkpoint_path):
-            url = "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
-            logger.info("Downloading Full SAM (vit_h) weights...")
+            url = "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth"
+            logger.info("Downloading SAM Base (vit_b) weights...")
             urllib.request.urlretrieve(url, checkpoint_path)
             logger.info("Full SAM weights downloaded.")
 
         device      = "cuda" if torch.cuda.is_available() else "cpu"
-        _sam_model  = sam_model_registry["vit_h"](checkpoint=checkpoint_path)
+        _sam_model  = sam_model_registry["vit_b"](checkpoint=checkpoint_path)
         _sam_model.to(device)
         _sam_model.eval()
 
@@ -63,7 +64,7 @@ def _load_sam_generator():
             crop_n_points_downscale_factor=2,
             min_mask_region_area=100,
         )
-        logger.info(f"Full SAM Mask Generator loaded on {device}")
+        logger.info(f"SAM Base (vit_b) Mask Generator loaded on {device}")
 
     except ImportError:
         logger.warning(

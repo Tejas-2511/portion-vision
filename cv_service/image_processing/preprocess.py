@@ -16,7 +16,7 @@ import numpy as np
 
 # ── Quality gate thresholds (tune as needed) ─────────────────────────────────
 _BLUR_THRESHOLD  = 80.0    # Laplacian variance; below this = too blurry
-_TILT_THRESHOLD  = 30.0    # degrees away from 0° / 90°; above this = too tilted
+_TILT_THRESHOLD  = 50.0    # degrees away from 0° / 90°; above this = too tilted
 
 
 def validate_image_quality(

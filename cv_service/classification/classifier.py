@@ -22,8 +22,15 @@ import logging
 import time
 import cv2
 import numpy as np
-import torch
-import torch.nn.functional as F
+
+try:
+    import torch
+    import torch.nn.functional as F
+    from torchvision import models, transforms
+    from torchvision.models import MobileNet_V3_Small_Weights
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -125,8 +132,8 @@ def _load_model() -> None:
     if _model is not None:
         return
 
-    from torchvision import models, transforms
-    from torchvision.models import MobileNet_V3_Small_Weights
+    if not TORCH_AVAILABLE:
+        raise ImportError("torch or torchvision is not installed")
 
     _device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -173,7 +180,8 @@ def _imagenet_idx_to_food_label(idx: int, imagenet_classes: list[str]) -> str | 
 
 def _get_imagenet_classes() -> list[str]:
     """Return the 1000 ImageNet class names from torchvision."""
-    from torchvision.models import MobileNet_V3_Small_Weights
+    if not TORCH_AVAILABLE:
+        return []
     return MobileNet_V3_Small_Weights.IMAGENET1K_V1.meta["categories"]
 
 

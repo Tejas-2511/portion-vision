@@ -17,7 +17,6 @@ import time
 import logging
 import cv2
 import numpy as np
-import torch
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +99,7 @@ def _load_depth_model() -> None:
         return
 
     from transformers import pipeline
+    import torch
 
     _depth_device = 0 if torch.cuda.is_available() else -1
 

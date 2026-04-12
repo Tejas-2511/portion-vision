@@ -188,11 +188,17 @@ export default function RecommendationCard({ recommendation, loading }) {
                 <div className="mb-4">
                     <h3 className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">🧂 Condiments & Extras</h3>
                     <div className="flex flex-wrap gap-2">
-                        {optionalItems.map((opt, idx) => (
-                            <div key={idx} className="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-xs">
-                                <span className="font-semibold text-amber-800 capitalize">{opt.item}</span>
-                            </div>
-                        ))}
+                        {optionalItems.map((opt, idx) => {
+                            const isDessert = opt.isSweet || opt.note === "Sweet";
+                            return (
+                                <div key={idx} className={`px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm border transition-all hover:scale-105 ${isDessert ? 'bg-pink-50 border-pink-100' : 'bg-slate-50 border-slate-200'}`}>
+                                    <span className={`font-bold capitalize ${isDessert ? 'text-pink-700' : 'text-slate-700'}`}>{opt.item}</span>
+                                    {isDessert && (
+                                        <span className="text-[10px] font-black bg-pink-500 text-white px-2 py-0.5 rounded-full uppercase tracking-widest shadow-sm">Sweet</span>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             )}
