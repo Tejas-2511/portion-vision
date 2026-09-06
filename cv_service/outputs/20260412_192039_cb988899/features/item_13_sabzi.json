@@ -1,0 +1,14 @@
+{
+  "item_id": "sabzi_13",
+  "area_pixels": 2935,
+  "estimated_height_cm": 3.047,
+  "volume_estimate_ml": 6.2,
+  "density": 1.0,
+  "mass_g": 6.2,
+  "class_label": "sabzi",
+  "class_confidence": 0.4686,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.818,
+  "prior_applied": true
+}

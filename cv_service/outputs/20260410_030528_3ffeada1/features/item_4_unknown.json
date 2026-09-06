@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_4",
+  "area_pixels": 41251,
+  "estimated_height_cm": 9.899,
+  "volume_estimate_ml": 541.8,
+  "density": 1.0,
+  "mass_g": 541.8,
+  "class_label": "chicken",
+  "class_confidence": 0.9493,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8778,
+  "prior_applied": false
+}

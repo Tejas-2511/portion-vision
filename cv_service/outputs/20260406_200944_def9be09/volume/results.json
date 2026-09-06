@@ -1,0 +1,15 @@
+{
+  "food_items": [
+    {
+      "name": "dal palak",
+      "volume_ml": 2815.5,
+      "mass_g": 2956.3,
+      "calories": 2512.9,
+      "protein": 162.6,
+      "carbs": 354.8,
+      "fat": 59.1,
+      "confidence": 0.5
+    }
+  ],
+  "confidence": 0.5
+}

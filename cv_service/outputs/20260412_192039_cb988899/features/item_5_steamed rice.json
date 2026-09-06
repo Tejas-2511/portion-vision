@@ -1,0 +1,14 @@
+{
+  "item_id": "steamed rice_5",
+  "area_pixels": 8782,
+  "estimated_height_cm": 2.327,
+  "volume_estimate_ml": 14.2,
+  "density": 1.2000000000000002,
+  "mass_g": 17.0,
+  "class_label": "sabzi",
+  "class_confidence": 0.806,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9306,
+  "prior_applied": true
+}

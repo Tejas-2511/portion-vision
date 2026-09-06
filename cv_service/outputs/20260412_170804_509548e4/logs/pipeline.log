@@ -1,0 +1,39 @@
+2026-04-12 17:08:04,574 │ INFO │ Run started — debug=True, id=20260412_170804_509548e4
+2026-04-12 17:08:04,623 │ INFO │ [input] Saved image → original.png
+2026-04-12 17:08:04,626 │ INFO │ [input] Saved JSON → metadata.json
+2026-04-12 17:08:04,627 │ INFO │ [Input] Original image saved │ params={'resolution': '857x644'} │ time=0.0517s │ output=original.png
+2026-04-12 17:08:04,627 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-04-12 17:08:04,712 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 867.82, 'tilt_deg': 45.0}
+2026-04-12 17:08:04,777 │ INFO │ [preprocessing] Saved image → 01_resized.png
+2026-04-12 17:08:04,778 │ INFO │ [Preprocessing] Resize applied │ params={'original': '857x644', 'target_long_edge': 1024, 'scale': 1.1949} │ time=0.0018s │ output=01_resized.png
+2026-04-12 17:08:04,839 │ INFO │ [preprocessing] Saved image → 02_denoised.png
+2026-04-12 17:08:04,840 │ INFO │ [Preprocessing] Gaussian blur applied │ params={'kernel': 5} │ time=0.0016s │ output=02_denoised.png
+2026-04-12 17:08:05,111 │ INFO │ [preprocessing] Saved image → 03_color_normalized.png
+2026-04-12 17:08:05,111 │ INFO │ [Preprocessing] LAB color normalization applied │ time=0.2148s │ output=03_color_normalized.png
+2026-04-12 17:08:05,206 │ INFO │ [preprocessing] Saved image → 04_contrast_enhanced.png
+2026-04-12 17:08:05,208 │ INFO │ [Preprocessing] CLAHE contrast enhancement applied │ params={'clip_limit': 2.0, 'tile_grid': '8x8'} │ time=0.0217s │ output=04_contrast_enhanced.png
+2026-04-12 17:08:05,239 │ INFO │ [preprocessing] Saved image → 05_edges.png
+2026-04-12 17:08:05,239 │ INFO │ [Preprocessing] Canny edge detection │ params={'low': 50, 'high': 150} │ time=0.0224s │ output=05_edges.png
+2026-04-12 17:08:05,307 │ INFO │ [preprocessing] Saved image → 06_perspective_warp.png
+2026-04-12 17:08:05,307 │ INFO │ [Preprocessing] Warp skipped (no 4-pt contour) │ params={'warped': False} │ output=06_perspective_warp.png
+2026-04-12 17:08:05,310 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1023x769'} │ time=0.6819s
+2026-04-12 17:08:05,311 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-04-12 17:08:05,343 │ INFO │ [compartments] Saved image → 01_adaptive_threshold.png
+2026-04-12 17:08:05,348 │ INFO │ [compartments] Saved image → 02_combined_edges.png
+2026-04-12 17:08:05,414 │ INFO │ [compartments] Saved image → 03_compartments_overlay.png
+2026-04-12 17:08:05,414 │ INFO │ [Compartment Detection] Detected 0 compartments │ params={'min_area_frac': 0.02, 'max_area_frac': 0.9, 'compartment_count': 0} │ time=0.0226s │ output=03_compartments_overlay.png
+2026-04-12 17:08:05,425 │ INFO │ [Scale Calibration] Ellipse-based calibration succeeded │ params={'cm_per_pixel': 0.02631, 'method': 'ellipse'}
+2026-04-12 17:08:05,425 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.02631, 'pixel_area_cm2': 0.00069219, 'compartments': 0, 'scale_confidence': 1.0} │ time=0.1140s
+2026-04-12 17:08:05,427 │ INFO │ [features] Saved JSON → compartments.json
+2026-04-12 17:08:05,428 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-04-12 17:08:14,728 │ INFO │ [depth] Saved npy → 01_raw_depth.npy
+2026-04-12 17:08:14,741 │ INFO │ [depth] Saved image → 02_depth_normalized.png
+2026-04-12 17:08:14,764 │ INFO │ [depth] Saved image → 03_depth_colored.png
+2026-04-12 17:08:14,764 │ INFO │ [Depth Estimation] Depth Anything depth map computed (smoothed) │ params={'device': '-1', 'shape': [769, 1023], 'min': 0.434, 'max': 6.088} │ time=9.2962s │ output=03_depth_colored.png
+2026-04-12 17:08:14,779 │ INFO │ [depth] Saved npy → 04_height_relative.npy
+2026-04-12 17:08:14,805 │ INFO │ [depth] Saved image → 05_height_relative_colored.png
+2026-04-12 17:08:14,805 │ INFO │ [Depth Normalization] Baseline subtracted from depth │ params={'baseline': 2.593} │ time=0.0077s │ output=05_height_relative_colored.png
+2026-04-12 17:08:14,814 │ INFO │ [depth] Saved npy → 06_height_cm.npy
+2026-04-12 17:08:14,814 │ INFO │ [Depth → cm Conversion] Height map converted to centimetres │ params={'z_plate_cm': 32.3, 'cm_per_pixel': 0.02631} │ time=0.0042s
+2026-04-12 17:08:14,816 │ INFO │ [Depth Estimation] Complete │ time=9.3875s
+2026-04-12 17:08:14,816 │ INFO │ [Pipeline] Step 4 — Segmentation

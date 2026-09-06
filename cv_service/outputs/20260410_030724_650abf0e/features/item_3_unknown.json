@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_3",
+  "area_pixels": 52237,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 6.9,
+  "density": 1.0,
+  "mass_g": 6.9,
+  "class_label": "sabzi",
+  "class_confidence": 0.2838,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.6534,
+  "prior_applied": false
+}

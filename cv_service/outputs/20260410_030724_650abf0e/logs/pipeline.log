@@ -1,0 +1,91 @@
+2026-04-10 03:07:24,864 │ INFO │ Run started — debug=True, id=20260410_030724_650abf0e
+2026-04-10 03:07:25,163 │ INFO │ [input] Saved image → original.png
+2026-04-10 03:07:25,165 │ INFO │ [input] Saved JSON → metadata.json
+2026-04-10 03:07:25,165 │ INFO │ [Input] Original image saved │ params={'resolution': '4080x1840'} │ time=0.3004s │ output=original.png
+2026-04-10 03:07:25,165 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-04-10 03:07:25,357 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 111.85, 'tilt_deg': 3.0}
+2026-04-10 03:07:25,388 │ INFO │ [preprocessing] Saved image → 01_resized.png
+2026-04-10 03:07:25,388 │ INFO │ [Preprocessing] Resize applied │ params={'original': '4080x1840', 'target_long_edge': 1024, 'scale': 0.251} │ time=0.0010s │ output=01_resized.png
+2026-04-10 03:07:25,411 │ INFO │ [preprocessing] Saved image → 02_denoised.png
+2026-04-10 03:07:25,411 │ INFO │ [Preprocessing] Gaussian blur applied │ params={'kernel': 5} │ time=0.0006s │ output=02_denoised.png
+2026-04-10 03:07:25,447 │ INFO │ [preprocessing] Saved image → 03_color_normalized.png
+2026-04-10 03:07:25,447 │ INFO │ [Preprocessing] LAB color normalization applied │ time=0.0123s │ output=03_color_normalized.png
+2026-04-10 03:07:25,476 │ INFO │ [preprocessing] Saved image → 04_contrast_enhanced.png
+2026-04-10 03:07:25,477 │ INFO │ [Preprocessing] CLAHE contrast enhancement applied │ params={'clip_limit': 2.0, 'tile_grid': '8x8'} │ time=0.0035s │ output=04_contrast_enhanced.png
+2026-04-10 03:07:25,484 │ INFO │ [preprocessing] Saved image → 05_edges.png
+2026-04-10 03:07:25,485 │ INFO │ [Preprocessing] Canny edge detection │ params={'low': 50, 'high': 150} │ time=0.0043s │ output=05_edges.png
+2026-04-10 03:07:25,511 │ INFO │ [preprocessing] Saved image → 06_perspective_warp.png
+2026-04-10 03:07:25,511 │ INFO │ [Preprocessing] Warp skipped (no 4-pt contour) │ params={'warped': False} │ output=06_perspective_warp.png
+2026-04-10 03:07:25,512 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x461'} │ time=0.3458s
+2026-04-10 03:07:25,512 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-04-10 03:07:25,519 │ INFO │ [compartments] Saved image → 01_adaptive_threshold.png
+2026-04-10 03:07:25,522 │ INFO │ [compartments] Saved image → 02_combined_edges.png
+2026-04-10 03:07:25,547 │ INFO │ [compartments] Saved image → 03_compartments_overlay.png
+2026-04-10 03:07:25,547 │ INFO │ [Compartment Detection] Detected 0 compartments │ params={'min_area_frac': 0.02, 'max_area_frac': 0.9, 'compartment_count': 0} │ time=0.0041s │ output=03_compartments_overlay.png
+2026-04-10 03:07:25,549 │ INFO │ [Scale Calibration] Ellipse-based calibration succeeded │ params={'cm_per_pixel': 0.03643, 'method': 'ellipse'}
+2026-04-10 03:07:25,551 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03643, 'pixel_area_cm2': 0.00132691, 'compartments': 0, 'scale_confidence': 1.0} │ time=0.0382s
+2026-04-10 03:07:25,552 │ INFO │ [features] Saved JSON → compartments.json
+2026-04-10 03:07:25,552 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-04-10 03:07:25,609 │ INFO │ [depth] Saved npy → 01_raw_depth.npy
+2026-04-10 03:07:25,617 │ INFO │ [depth] Saved image → 02_depth_normalized.png
+2026-04-10 03:07:25,634 │ INFO │ [depth] Saved image → 03_depth_colored.png
+2026-04-10 03:07:25,635 │ INFO │ [Depth Estimation] MiDaS depth map computed (smoothed) │ params={'device': 'cpu', 'shape': [461, 1024], 'min': 271.457, 'max': 690.886} │ time=0.0553s │ output=03_depth_colored.png
+2026-04-10 03:07:25,645 │ INFO │ [depth] Saved npy → 04_height_relative.npy
+2026-04-10 03:07:25,660 │ INFO │ [depth] Saved image → 05_height_relative_colored.png
+2026-04-10 03:07:25,661 │ INFO │ [Depth Normalization] Baseline subtracted from depth │ params={'baseline': 487.317} │ time=0.0037s │ output=05_height_relative_colored.png
+2026-04-10 03:07:25,667 │ INFO │ [depth] Saved npy → 06_height_cm.npy
+2026-04-10 03:07:25,668 │ INFO │ [Depth → cm Conversion] Height map converted to centimetres │ params={'z_plate_cm': 44.76, 'cm_per_pixel': 0.03643} │ time=0.0021s
+2026-04-10 03:07:25,669 │ INFO │ [Depth Estimation] Complete │ time=0.1174s
+2026-04-10 03:07:25,669 │ INFO │ [Pipeline] Step 4 — Segmentation
+2026-04-10 03:07:46,326 │ INFO │ [segmentation] Saved image → 01_mask_item_1.png
+2026-04-10 03:07:46,329 │ INFO │ [segmentation] Saved image → 02_mask_item_2.png
+2026-04-10 03:07:46,332 │ INFO │ [segmentation] Saved image → 03_mask_item_3.png
+2026-04-10 03:07:46,335 │ INFO │ [segmentation] Saved image → 04_mask_item_4.png
+2026-04-10 03:07:46,338 │ INFO │ [segmentation] Saved image → 05_mask_item_5.png
+2026-04-10 03:07:46,341 │ INFO │ [segmentation] Saved image → 06_mask_item_6.png
+2026-04-10 03:07:46,345 │ INFO │ [segmentation] Saved image → 07_mask_item_7.png
+2026-04-10 03:07:46,348 │ INFO │ [segmentation] Saved image → 08_mask_item_8.png
+2026-04-10 03:07:46,352 │ INFO │ [segmentation] Saved image → 09_mask_item_9.png
+2026-04-10 03:07:46,355 │ INFO │ [segmentation] Saved image → 10_mask_item_10.png
+2026-04-10 03:07:46,358 │ INFO │ [segmentation] Saved image → 11_mask_item_11.png
+2026-04-10 03:07:46,360 │ INFO │ [segmentation] Saved image → 12_mask_item_12.png
+2026-04-10 03:07:46,365 │ INFO │ [segmentation] Saved image → 13_mask_item_13.png
+2026-04-10 03:07:46,366 │ INFO │ [segmentation] Saved image → 14_mask_item_14.png
+2026-04-10 03:07:46,369 │ INFO │ [segmentation] Saved image → 15_mask_item_15.png
+2026-04-10 03:07:46,373 │ INFO │ [segmentation] Saved image → 16_mask_item_16.png
+2026-04-10 03:07:46,377 │ INFO │ [segmentation] Saved image → 17_mask_item_17.png
+2026-04-10 03:07:46,380 │ INFO │ [segmentation] Saved image → 18_mask_item_18.png
+2026-04-10 03:07:46,382 │ INFO │ [segmentation] Saved image → 19_mask_item_19.png
+2026-04-10 03:07:46,513 │ INFO │ [segmentation] Saved image → 20_segmentation_overlay.png
+2026-04-10 03:07:46,513 │ INFO │ [Segmentation] 19 food items segmented │ params={'method': 'MobileSAM', 'total_candidates': 30, 'rejected': 11, 'accepted': 19} │ time=20.6541s │ output=20_segmentation_overlay.png
+2026-04-10 03:07:46,515 │ INFO │ [Segmentation] 19 food items found │ time=20.8453s
+2026-04-10 03:07:46,515 │ INFO │ [Pipeline] Step 5 — Food Classification (OCR-constrained)
+2026-04-10 03:07:46,828 │ INFO │ [Classification] Complete │ params={'n_items': 19, 'ocr_labels_used': True} │ time=0.3126s
+2026-04-10 03:07:46,828 │ INFO │ [Pipeline] Step 6 — Hungarian Label Assignment
+2026-04-10 03:07:46,829 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-04-10 03:07:46,834 │ INFO │ [features] Saved JSON → item_1_unknown.json
+2026-04-10 03:07:46,839 │ INFO │ [features] Saved JSON → item_2_unknown.json
+2026-04-10 03:07:46,843 │ INFO │ [features] Saved JSON → item_3_unknown.json
+2026-04-10 03:07:46,848 │ INFO │ [features] Saved JSON → item_4_unknown.json
+2026-04-10 03:07:46,852 │ INFO │ [features] Saved JSON → item_5_chapati.json
+2026-04-10 03:07:46,856 │ INFO │ [features] Saved JSON → item_6_unknown.json
+2026-04-10 03:07:46,860 │ INFO │ [features] Saved JSON → item_7_unknown.json
+2026-04-10 03:07:46,863 │ INFO │ [features] Saved JSON → item_8_unknown.json
+2026-04-10 03:07:46,867 │ INFO │ [features] Saved JSON → item_9_unknown.json
+2026-04-10 03:07:46,870 │ INFO │ [features] Saved JSON → item_10_unknown.json
+2026-04-10 03:07:46,872 │ INFO │ [features] Saved JSON → item_11_unknown.json
+2026-04-10 03:07:46,876 │ INFO │ [features] Saved JSON → item_12_unknown.json
+2026-04-10 03:07:46,879 │ INFO │ [features] Saved JSON → item_13_unknown.json
+2026-04-10 03:07:46,883 │ INFO │ [features] Saved JSON → item_14_unknown.json
+2026-04-10 03:07:46,885 │ INFO │ [features] Saved JSON → item_15_unknown.json
+2026-04-10 03:07:46,889 │ INFO │ [features] Saved JSON → item_16_palak paneer.json
+2026-04-10 03:07:46,892 │ INFO │ [features] Saved JSON → item_17_unknown.json
+2026-04-10 03:07:46,895 │ INFO │ [features] Saved JSON → item_18_unknown.json
+2026-04-10 03:07:46,899 │ INFO │ [features] Saved JSON → item_19_unknown.json
+2026-04-10 03:07:46,899 │ INFO │ [Volume Estimation] Computed mass for 19 items │ params={'total_items': 19} │ time=0.0700s
+2026-04-10 03:07:46,915 │ INFO │ [volume] Saved image → 01_height_map.png
+2026-04-10 03:07:47,056 │ INFO │ [volume] Saved image → 02_final_annotated.png
+2026-04-10 03:07:47,058 │ INFO │ [volume] Saved JSON → results.json
+2026-04-10 03:07:47,059 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 19, 'avg_confidence': 0.8163, 'scale_method': 'ellipse'} │ time=22.1969s
+2026-04-10 03:07:47,060 │ INFO │ [logs] Saved JSON → run_log.json
+2026-04-10 03:07:47,122 │ INFO │ HTML report generated → report.html

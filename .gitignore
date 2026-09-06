@@ -39,13 +39,10 @@ cv_service/venv/
 *.pth
 *.onnx
 cv_service/weights/
-cv_service/volume/
 
 # Tesseract cache
 .tessdata/
 
-# Pipeline debug outputs
-cv_service/outputs/
 
 # Temp/scratch files
 audit_output.json

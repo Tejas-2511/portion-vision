@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_11",
+  "area_pixels": 3228,
+  "estimated_height_cm": 8.01,
+  "volume_estimate_ml": 34.3,
+  "density": 1.0,
+  "mass_g": 34.3,
+  "class_label": "raita",
+  "class_confidence": 0.8929,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8676,
+  "prior_applied": false
+}

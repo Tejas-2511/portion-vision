@@ -1,0 +1,16 @@
+{
+  "resolution": "857x644",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "chapati",
+    "steam rice",
+    "mix veg",
+    "papad",
+    "pickle",
+    "tomato chutney",
+    "papad"
+  ],
+  "plate_profile": null,
+  "debug": true
+}

@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_1",
+  "area_pixels": 101975,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 13.5,
+  "density": 1.0,
+  "mass_g": 13.5,
+  "class_label": "fish curry",
+  "class_confidence": 0.6982,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.819,
+  "prior_applied": false
+}

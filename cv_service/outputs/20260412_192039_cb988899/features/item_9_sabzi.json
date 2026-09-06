@@ -1,0 +1,14 @@
+{
+  "item_id": "sabzi_9",
+  "area_pixels": 6793,
+  "estimated_height_cm": 2.0,
+  "volume_estimate_ml": 9.4,
+  "density": 1.0,
+  "mass_g": 9.4,
+  "class_label": "sabzi",
+  "class_confidence": 0.5858,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8616,
+  "prior_applied": true
+}

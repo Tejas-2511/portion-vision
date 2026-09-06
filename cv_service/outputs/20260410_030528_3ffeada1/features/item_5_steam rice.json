@@ -1,0 +1,14 @@
+{
+  "item_id": "steam rice_5",
+  "area_pixels": 24604,
+  "estimated_height_cm": 1.571,
+  "volume_estimate_ml": 51.3,
+  "density": 1.1800000000000002,
+  "mass_g": 60.5,
+  "class_label": "dal",
+  "class_confidence": 0.9788,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9794,
+  "prior_applied": true
+}

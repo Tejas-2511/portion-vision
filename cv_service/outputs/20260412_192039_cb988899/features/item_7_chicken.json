@@ -1,0 +1,14 @@
+{
+  "item_id": "chicken_7",
+  "area_pixels": 7716,
+  "estimated_height_cm": 4.998,
+  "volume_estimate_ml": 26.7,
+  "density": 1.1500000000000001,
+  "mass_g": 30.7,
+  "class_label": "chicken",
+  "class_confidence": 0.4574,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8099,
+  "prior_applied": true
+}

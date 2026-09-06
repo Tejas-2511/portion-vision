@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_2",
+  "area_pixels": 97035,
+  "estimated_height_cm": 9.336,
+  "volume_estimate_ml": 1202.1,
+  "density": 1.0,
+  "mass_g": 1202.1,
+  "class_label": "gobi",
+  "class_confidence": 0.745,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8202,
+  "prior_applied": false
+}

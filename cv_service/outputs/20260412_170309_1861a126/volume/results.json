@@ -1,0 +1,6 @@
+{
+  "food_items": [],
+  "confidence": 0.0,
+  "error": "Camera angle is too steep. Please capture a top-down photo directly above the plate like a scanner.",
+  "error_type": "image_quality"
+}

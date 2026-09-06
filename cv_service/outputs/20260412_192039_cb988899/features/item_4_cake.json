@@ -1,0 +1,14 @@
+{
+  "item_id": "cake_4",
+  "area_pixels": 54074,
+  "estimated_height_cm": 0.105,
+  "volume_estimate_ml": 3.9,
+  "density": 1.0,
+  "mass_g": 3.9,
+  "class_label": "dal",
+  "class_confidence": 0.9872,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8851,
+  "prior_applied": false
+}

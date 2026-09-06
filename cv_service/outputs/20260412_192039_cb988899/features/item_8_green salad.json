@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_8",
+  "area_pixels": 7150,
+  "estimated_height_cm": 1.0,
+  "volume_estimate_ml": 5.0,
+  "density": 0.6,
+  "mass_g": 3.0,
+  "class_label": "sabzi",
+  "class_confidence": 0.8921,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9678,
+  "prior_applied": true
+}

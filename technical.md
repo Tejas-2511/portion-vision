@@ -504,7 +504,7 @@ cd cv_service
 **2. Terminal: Backend (Node.js/OCR)**
 ```powershell
 cd backend
-npm run dev
+ run dev
 ```
 *Note: Binds to `http://localhost:5000` but uses Express's default `0.0.0.0` allowing local intranet connections.*
 

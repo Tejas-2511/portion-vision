@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_9",
+  "area_pixels": 3718,
+  "estimated_height_cm": 1.871,
+  "volume_estimate_ml": 9.2,
+  "density": 1.0,
+  "mass_g": 9.2,
+  "class_label": "dal",
+  "class_confidence": 0.9381,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8756,
+  "prior_applied": false
+}

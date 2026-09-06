@@ -1,0 +1,43 @@
+[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "857x644"
+    },
+    "elapsed_s": 0.0481,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-04-12T17:03:09.311826"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-04-12T17:03:09.311826"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "FAIL — Camera angle is too steep. Please capture a top-down photo directly above the plate like a scanner.",
+    "params": {
+      "blur_score": 867.82,
+      "tilt_deg": 45.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-04-12T17:03:09.413963"
+  },
+  {
+    "step": "Pipeline",
+    "message": "❌ Quality gate rejected image: Camera angle is too steep. Please capture a top-down photo directly above the plate like a scanner.",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-04-12T17:03:09.414489"
+  }
+]

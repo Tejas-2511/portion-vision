@@ -1,0 +1,14 @@
+{
+  "item_id": "palak paneer_16",
+  "area_pixels": 1781,
+  "estimated_height_cm": 4.965,
+  "volume_estimate_ml": 11.7,
+  "density": 1.1300000000000001,
+  "mass_g": 13.3,
+  "class_label": "raita",
+  "class_confidence": 0.9645,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9801,
+  "prior_applied": true
+}

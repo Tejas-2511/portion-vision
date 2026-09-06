@@ -1,0 +1,14 @@
+{
+  "item_id": "unknown_10",
+  "area_pixels": 3485,
+  "estimated_height_cm": 0.111,
+  "volume_estimate_ml": 0.5,
+  "density": 1.0,
+  "mass_g": 0.5,
+  "class_label": "roti",
+  "class_confidence": 0.7138,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8182,
+  "prior_applied": false
+}

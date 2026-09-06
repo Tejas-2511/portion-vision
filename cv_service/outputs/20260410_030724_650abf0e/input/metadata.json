@@ -1,0 +1,11 @@
+{
+  "resolution": "4080x1840",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "palak paneer",
+    "chapati"
+  ],
+  "plate_profile": null,
+  "debug": true
+}

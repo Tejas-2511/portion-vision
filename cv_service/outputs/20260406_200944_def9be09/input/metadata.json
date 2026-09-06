@@ -1,0 +1,12 @@
+{
+  "resolution": "1600x1204",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "dal palak",
+    "chapati",
+    "aloo capsicum"
+  ],
+  "plate_profile": null,
+  "debug": true
+}

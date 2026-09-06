@@ -1,0 +1,14 @@
+{
+  "item_id": "gobi_14",
+  "area_pixels": 2475,
+  "estimated_height_cm": 2.793,
+  "volume_estimate_ml": 4.8,
+  "density": 0.95,
+  "mass_g": 4.6,
+  "class_label": "gobi",
+  "class_confidence": 0.5497,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8533,
+  "prior_applied": true
+}

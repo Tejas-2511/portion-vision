@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20260410_030528_3ffeada1</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20260410_030528_3ffeada1</code> &nbsp;│&nbsp; Debug: <code>True</code> &nbsp;│&nbsp; Files saved: <code>61</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "4080x1840",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "palak paneer",
+    "steam rice"
+  ],
+  "plate_profile": null,
+  "debug": true
+}</pre></div>
+<h2>📁 preprocessing</h2>
+<div class='card'><span class='fname'>01_resized.png</span><br><img src='preprocessing/01_resized.png' alt='01_resized.png'></div>
+<div class='card'><span class='fname'>02_denoised.png</span><br><img src='preprocessing/02_denoised.png' alt='02_denoised.png'></div>
+<div class='card'><span class='fname'>03_color_normalized.png</span><br><img src='preprocessing/03_color_normalized.png' alt='03_color_normalized.png'></div>
+<div class='card'><span class='fname'>04_contrast_enhanced.png</span><br><img src='preprocessing/04_contrast_enhanced.png' alt='04_contrast_enhanced.png'></div>
+<div class='card'><span class='fname'>05_edges.png</span><br><img src='preprocessing/05_edges.png' alt='05_edges.png'></div>
+<div class='card'><span class='fname'>06_perspective_warp.png</span><br><img src='preprocessing/06_perspective_warp.png' alt='06_perspective_warp.png'></div>
+<h2>📁 compartments</h2>
+<div class='card'><span class='fname'>01_adaptive_threshold.png</span><br><img src='compartments/01_adaptive_threshold.png' alt='01_adaptive_threshold.png'></div>
+<div class='card'><span class='fname'>02_combined_edges.png</span><br><img src='compartments/02_combined_edges.png' alt='02_combined_edges.png'></div>
+<div class='card'><span class='fname'>03_compartments_overlay.png</span><br><img src='compartments/03_compartments_overlay.png' alt='03_compartments_overlay.png'></div>
+<h2>📁 depth</h2>
+<div class='card'><span class='fname'>01_raw_depth.npy</span></div>
+<div class='card'><span class='fname'>02_depth_normalized.png</span><br><img src='depth/02_depth_normalized.png' alt='02_depth_normalized.png'></div>
+<div class='card'><span class='fname'>03_depth_colored.png</span><br><img src='depth/03_depth_colored.png' alt='03_depth_colored.png'></div>
+<div class='card'><span class='fname'>04_height_relative.npy</span></div>
+<div class='card'><span class='fname'>05_height_relative_colored.png</span><br><img src='depth/05_height_relative_colored.png' alt='05_height_relative_colored.png'></div>
+<div class='card'><span class='fname'>06_height_cm.npy</span></div>
+<h2>📁 segmentation</h2>
+<div class='card'><span class='fname'>01_mask_item_1.png</span><br><img src='segmentation/01_mask_item_1.png' alt='01_mask_item_1.png'></div>
+<div class='card'><span class='fname'>02_mask_item_2.png</span><br><img src='segmentation/02_mask_item_2.png' alt='02_mask_item_2.png'></div>
+<div class='card'><span class='fname'>03_mask_item_3.png</span><br><img src='segmentation/03_mask_item_3.png' alt='03_mask_item_3.png'></div>
+<div class='card'><span class='fname'>04_mask_item_4.png</span><br><img src='segmentation/04_mask_item_4.png' alt='04_mask_item_4.png'></div>
+<div class='card'><span class='fname'>05_mask_item_5.png</span><br><img src='segmentation/05_mask_item_5.png' alt='05_mask_item_5.png'></div>
+<div class='card'><span class='fname'>06_mask_item_6.png</span><br><img src='segmentation/06_mask_item_6.png' alt='06_mask_item_6.png'></div>
+<div class='card'><span class='fname'>07_mask_item_7.png</span><br><img src='segmentation/07_mask_item_7.png' alt='07_mask_item_7.png'></div>
+<div class='card'><span class='fname'>08_mask_item_8.png</span><br><img src='segmentation/08_mask_item_8.png' alt='08_mask_item_8.png'></div>
+<div class='card'><span class='fname'>09_mask_item_9.png</span><br><img src='segmentation/09_mask_item_9.png' alt='09_mask_item_9.png'></div>
+<div class='card'><span class='fname'>10_mask_item_10.png</span><br><img src='segmentation/10_mask_item_10.png' alt='10_mask_item_10.png'></div>
+<div class='card'><span class='fname'>11_mask_item_11.png</span><br><img src='segmentation/11_mask_item_11.png' alt='11_mask_item_11.png'></div>
+<div class='card'><span class='fname'>12_mask_item_12.png</span><br><img src='segmentation/12_mask_item_12.png' alt='12_mask_item_12.png'></div>
+<div class='card'><span class='fname'>13_mask_item_13.png</span><br><img src='segmentation/13_mask_item_13.png' alt='13_mask_item_13.png'></div>
+<div class='card'><span class='fname'>14_mask_item_14.png</span><br><img src='segmentation/14_mask_item_14.png' alt='14_mask_item_14.png'></div>
+<div class='card'><span class='fname'>15_mask_item_15.png</span><br><img src='segmentation/15_mask_item_15.png' alt='15_mask_item_15.png'></div>
+<div class='card'><span class='fname'>16_mask_item_16.png</span><br><img src='segmentation/16_mask_item_16.png' alt='16_mask_item_16.png'></div>
+<div class='card'><span class='fname'>17_mask_item_17.png</span><br><img src='segmentation/17_mask_item_17.png' alt='17_mask_item_17.png'></div>
+<div class='card'><span class='fname'>18_mask_item_18.png</span><br><img src='segmentation/18_mask_item_18.png' alt='18_mask_item_18.png'></div>
+<div class='card'><span class='fname'>19_mask_item_19.png</span><br><img src='segmentation/19_mask_item_19.png' alt='19_mask_item_19.png'></div>
+<div class='card'><span class='fname'>20_segmentation_overlay.png</span><br><img src='segmentation/20_segmentation_overlay.png' alt='20_segmentation_overlay.png'></div>
+<h2>📁 features</h2>
+<div class='card'><span class='fname'>compartments.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[]</pre></div>
+<div class='card'><span class='fname'>item_1_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_1",
+  "area_pixels": 101975,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 13.5,
+  "density": 1.0,
+  "mass_g": 13.5,
+  "class_label": "fish curry",
+  "class_confidence": 0.6982,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.819,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_2_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_2",
+  "area_pixels": 97035,
+  "estimated_height_cm": 9.336,
+  "volume_estimate_ml": 1202.1,
+  "density": 1.0,
+  "mass_g": 1202.1,
+  "class_label": "gobi",
+  "class_confidence": 0.745,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8202,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_3_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_3",
+  "area_pixels": 52237,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 6.9,
+  "density": 1.0,
+  "mass_g": 6.9,
+  "class_label": "sabzi",
+  "class_confidence": 0.2838,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.6534,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_4_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_4",
+  "area_pixels": 41251,
+  "estimated_height_cm": 9.899,
+  "volume_estimate_ml": 541.8,
+  "density": 1.0,
+  "mass_g": 541.8,
+  "class_label": "chicken",
+  "class_confidence": 0.9493,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8778,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_5_steam rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "steam rice_5",
+  "area_pixels": 24604,
+  "estimated_height_cm": 1.571,
+  "volume_estimate_ml": 51.3,
+  "density": 1.1800000000000002,
+  "mass_g": 60.5,
+  "class_label": "dal",
+  "class_confidence": 0.9788,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9794,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_6_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_6",
+  "area_pixels": 21788,
+  "estimated_height_cm": 3.87,
+  "volume_estimate_ml": 111.9,
+  "density": 1.0,
+  "mass_g": 111.9,
+  "class_label": "dal",
+  "class_confidence": 0.9492,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8811,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_7_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_7",
+  "area_pixels": 14327,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 1.9,
+  "density": 1.0,
+  "mass_g": 1.9,
+  "class_label": "sabzi",
+  "class_confidence": 0.3327,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.6744,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_8_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_8",
+  "area_pixels": 3896,
+  "estimated_height_cm": 6.408,
+  "volume_estimate_ml": 33.1,
+  "density": 1.0,
+  "mass_g": 33.1,
+  "class_label": "raita",
+  "class_confidence": 0.8398,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8556,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_9_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_9",
+  "area_pixels": 3718,
+  "estimated_height_cm": 1.871,
+  "volume_estimate_ml": 9.2,
+  "density": 1.0,
+  "mass_g": 9.2,
+  "class_label": "dal",
+  "class_confidence": 0.9381,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8756,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_10_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_10",
+  "area_pixels": 3485,
+  "estimated_height_cm": 0.111,
+  "volume_estimate_ml": 0.5,
+  "density": 1.0,
+  "mass_g": 0.5,
+  "class_label": "roti",
+  "class_confidence": 0.7138,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8182,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_11_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_11",
+  "area_pixels": 3228,
+  "estimated_height_cm": 8.01,
+  "volume_estimate_ml": 34.3,
+  "density": 1.0,
+  "mass_g": 34.3,
+  "class_label": "raita",
+  "class_confidence": 0.8929,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8676,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_12_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_12",
+  "area_pixels": 2985,
+  "estimated_height_cm": 7.816,
+  "volume_estimate_ml": 31.0,
+  "density": 1.0,
+  "mass_g": 31.0,
+  "class_label": "raita",
+  "class_confidence": 0.6961,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8147,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_13_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_13",
+  "area_pixels": 2616,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 0.3,
+  "density": 1.0,
+  "mass_g": 0.3,
+  "class_label": "sabzi",
+  "class_confidence": 0.2064,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.5981,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_14_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_14",
+  "area_pixels": 2237,
+  "estimated_height_cm": 7.7,
+  "volume_estimate_ml": 22.9,
+  "density": 1.0,
+  "mass_g": 22.9,
+  "class_label": "raita",
+  "class_confidence": 0.7907,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8417,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_15_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_15",
+  "area_pixels": 2159,
+  "estimated_height_cm": 7.796,
+  "volume_estimate_ml": 22.3,
+  "density": 1.0,
+  "mass_g": 22.3,
+  "class_label": "raita",
+  "class_confidence": 0.958,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8816,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_16_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_16",
+  "area_pixels": 1781,
+  "estimated_height_cm": 4.965,
+  "volume_estimate_ml": 11.7,
+  "density": 1.1300000000000001,
+  "mass_g": 13.3,
+  "class_label": "raita",
+  "class_confidence": 0.9645,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9801,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_17_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_17",
+  "area_pixels": 1540,
+  "estimated_height_cm": 0.866,
+  "volume_estimate_ml": 1.8,
+  "density": 1.0,
+  "mass_g": 1.8,
+  "class_label": "roti",
+  "class_confidence": 0.6739,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8042,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_18_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_18",
+  "area_pixels": 1471,
+  "estimated_height_cm": 0.1,
+  "volume_estimate_ml": 0.2,
+  "density": 1.0,
+  "mass_g": 0.2,
+  "class_label": "gobi",
+  "class_confidence": 0.2905,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.6526,
+  "prior_applied": false
+}</pre></div>
+<div class='card'><span class='fname'>item_19_unknown.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unknown_19",
+  "area_pixels": 1108,
+  "estimated_height_cm": 6.234,
+  "volume_estimate_ml": 9.2,
+  "density": 1.0,
+  "mass_g": 9.2,
+  "class_label": "sabzi",
+  "class_confidence": 0.6955,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8146,
+  "prior_applied": false
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_height_map.png</span><br><img src='volume/01_height_map.png' alt='01_height_map.png'></div>
+<div class='card'><span class='fname'>02_final_annotated.png</span><br><img src='volume/02_final_annotated.png' alt='02_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "unknown",
+      "volume_ml": 13.5,
+      "mass_g": 13.5,
+      "calories": 13.5,
+      "protein": 0.4,
+      "carbs": 2.0,
+      "fat": 0.4,
+      "confidence": 0.819,
+      "class_label": "fish curry",
+      "class_confidence": 0.6982
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 1202.1,
+      "mass_g": 1202.1,
+      "calories": 1202.1,
+      "protein": 36.1,
+      "carbs": 180.3,
+      "fat": 36.1,
+      "confidence": 0.8202,
+      "class_label": "gobi",
+      "class_confidence": 0.745
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 6.9,
+      "mass_g": 6.9,
+      "calories": 6.9,
+      "protein": 0.2,
+      "carbs": 1.0,
+      "fat": 0.2,
+      "confidence": 0.6534,
+      "class_label": "sabzi",
+      "class_confidence": 0.2838
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 541.8,
+      "mass_g": 541.8,
+      "calories": 541.8,
+      "protein": 16.3,
+      "carbs": 81.3,
+      "fat": 16.3,
+      "confidence": 0.8778,
+      "class_label": "chicken",
+      "class_confidence": 0.9493
+    },
+    {
+      "name": "steam rice",
+      "volume_ml": 51.3,
+      "mass_g": 60.5,
+      "calories": 78.7,
+      "protein": 1.6,
+      "carbs": 16.9,
+      "fat": 0.2,
+      "confidence": 0.9794,
+      "class_label": "dal",
+      "class_confidence": 0.9788
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 111.9,
+      "mass_g": 111.9,
+      "calories": 111.9,
+      "protein": 3.4,
+      "carbs": 16.8,
+      "fat": 3.4,
+      "confidence": 0.8811,
+      "class_label": "dal",
+      "class_confidence": 0.9492
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 1.9,
+      "mass_g": 1.9,
+      "calories": 1.9,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.1,
+      "confidence": 0.6744,
+      "class_label": "sabzi",
+      "class_confidence": 0.3327
+    },
+    {
+      "name": "unknown",
+      "volume_ml": 33.1,
+      "mass_g": 33.1,
+      "calories": 33.1,
+      "protein": 1.0,
+      "carbs": 5.0</pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "4080x1840"
+    },
+    "elapsed_s": 0.3016,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-04-10T03:05:28.447601"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 â€” Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-04-10T03:05:28.448671"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 111.85,
+      "tilt_deg": 3.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-04-10T03:05:28.663838"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "4080x1840",
+      "target_long_edge": 1024,
+      "scale": 0.251
+    },
+    "elapsed_s": 0.0018,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-04-10T03:05:28.697306"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0021,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-04-10T03:05:28.728747"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.1328,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-04-10T03:05:28.885929"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.005,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-04-10T03:05:28.915360"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": 0</pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "4080x1840"}</td><td>0.3016s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 111.85, "tilt_deg": 3.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Resize applied</td><td>{"original": "4080x1840", "target_long_edge": 1024, "scale": 0.251}</td><td>0.0018s</td></tr>
+<tr><td>Preprocessing</td><td>Gaussian blur applied</td><td>{"kernel": 5}</td><td>0.0021s</td></tr>
+<tr><td>Preprocessing</td><td>LAB color normalization applied</td><td>—</td><td>0.1328s</td></tr>
+<tr><td>Preprocessing</td><td>CLAHE contrast enhancement applied</td><td>{"clip_limit": 2.0, "tile_grid": "8x8"}</td><td>0.0050s</td></tr>
+<tr><td>Preprocessing</td><td>Canny edge detection</td><td>{"low": 50, "high": 150}</td><td>0.0061s</td></tr>
+<tr><td>Preprocessing</td><td>Warp skipped (no 4-pt contour)</td><td>{"warped": false}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x461"}</td><td>0.5032s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Detected 0 compartments</td><td>{"min_area_frac": 0.02, "max_area_frac": 0.9, "compartment_count": 0}</td><td>0.0064s</td></tr>
+<tr><td>Scale Calibration</td><td>Ellipse-based calibration succeeded</td><td>{"cm_per_pixel": 0.03643, "method": "ellipse"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.03643, "pixel_area_cm2": 0.00132691, "compartments": 0, "scale_confidence": 1.0}</td><td>0.0410s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>MiDaS depth map computed (smoothed)</td><td>{"device": "cpu", "shape": [461, 1024], "min": 271.457, "max": 690.886}</td><td>6.8091s</td></tr>
+<tr><td>Depth Normalization</td><td>Baseline subtracted from depth</td><td>{"baseline": 487.317}</td><td>0.0042s</td></tr>
+<tr><td>Depth → cm Conversion</td><td>Height map converted to centimetres</td><td>{"z_plate_cm": 44.76, "cm_per_pixel": 0.03643}</td><td>0.0029s</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>6.8757s</td></tr>
+<tr><td>Pipeline</td><td>Step 4 — Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>Segmentation</td><td>19 food items segmented</td><td>{"method": "MobileSAM", "total_candidates": 30, "rejected": 11, "accepted": 19}</td><td>22.6791s</td></tr>
+<tr><td>Segmentation</td><td>19 food items found</td><td>—</td><td>22.8547s</td></tr>
+<tr><td>Pipeline</td><td>Step 5 — Food Classification (OCR-constrained)</td><td>—</td><td>—</td></tr>
+<tr><td>Classification</td><td>Complete</td><td>{"n_items": 19, "ocr_labels_used": true}</td><td>17.5693s</td></tr>
+<tr><td>Pipeline</td><td>Step 6 — Hungarian Label Assignment</td><td>—</td><td>—</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 19 items</td><td>{"total_items": 19}</td><td>0.0478s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 19, "avg_confidence": 0.8163, "scale_method": "ellipse"}</td><td>52.3131s</td></tr>
+</table></body></html>

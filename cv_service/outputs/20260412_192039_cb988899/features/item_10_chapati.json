@@ -1,0 +1,14 @@
+{
+  "item_id": "chapati_10",
+  "area_pixels": 4956,
+  "estimated_height_cm": 0.4,
+  "volume_estimate_ml": 1.4,
+  "density": 0.75,
+  "mass_g": 1.0,
+  "class_label": "raita",
+  "class_confidence": 0.6245,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8853,
+  "prior_applied": true
+}

@@ -1,0 +1,10 @@
+2026-04-12 17:03:09,262 │ INFO │ Run started — debug=True, id=20260412_170309_1861a126
+2026-04-12 17:03:09,308 │ INFO │ [input] Saved image → original.png
+2026-04-12 17:03:09,310 │ INFO │ [input] Saved JSON → metadata.json
+2026-04-12 17:03:09,311 │ INFO │ [Input] Original image saved │ params={'resolution': '857x644'} │ time=0.0481s │ output=original.png
+2026-04-12 17:03:09,311 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-04-12 17:03:09,413 │ INFO │ [Quality Gate] FAIL — Camera angle is too steep. Please capture a top-down photo directly above the plate like a scanner. │ params={'blur_score': 867.82, 'tilt_deg': 45.0}
+2026-04-12 17:03:09,414 │ INFO │ [Pipeline] ❌ Quality gate rejected image: Camera angle is too steep. Please capture a top-down photo directly above the plate like a scanner.
+2026-04-12 17:03:09,415 │ INFO │ [volume] Saved JSON → results.json
+2026-04-12 17:03:09,416 │ INFO │ [logs] Saved JSON → run_log.json
+2026-04-12 17:03:09,446 │ INFO │ HTML report generated → report.html
