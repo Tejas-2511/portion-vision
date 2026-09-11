@@ -1,0 +1,14 @@
+{
+  "item_id": "roti_2",
+  "area_pixels": 78694,
+  "estimated_height_cm": 1.499,
+  "volume_estimate_ml": 132.2,
+  "density": 0.85,
+  "mass_g": 112.4,
+  "class_label": "roti",
+  "class_confidence": 0.5015,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8331,
+  "prior_applied": true
+}

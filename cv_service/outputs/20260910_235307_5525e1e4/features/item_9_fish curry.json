@@ -1,0 +1,14 @@
+{
+  "item_id": "fish curry_9",
+  "area_pixels": 6892,
+  "estimated_height_cm": 2.442,
+  "volume_estimate_ml": 18.9,
+  "density": 1.05,
+  "mass_g": 19.8,
+  "class_label": "fish curry",
+  "class_confidence": 0.3775,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.7781,
+  "prior_applied": true
+}

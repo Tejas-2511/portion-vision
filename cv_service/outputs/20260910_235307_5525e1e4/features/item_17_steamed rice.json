@@ -1,0 +1,14 @@
+{
+  "item_id": "steamed rice_17",
+  "area_pixels": 1423,
+  "estimated_height_cm": 1.959,
+  "volume_estimate_ml": 3.1,
+  "density": 1.2000000000000002,
+  "mass_g": 3.7,
+  "class_label": "chicken",
+  "class_confidence": 0.9855,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.984,
+  "prior_applied": true
+}

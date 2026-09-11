@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_13",
+  "area_pixels": 1809,
+  "estimated_height_cm": 1.166,
+  "volume_estimate_ml": 2.4,
+  "density": 0.6,
+  "mass_g": 1.4,
+  "class_label": "chicken",
+  "class_confidence": 0.8171,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9345,
+  "prior_applied": true
+}

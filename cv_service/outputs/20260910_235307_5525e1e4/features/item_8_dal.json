@@ -1,0 +1,14 @@
+{
+  "item_id": "dal_8",
+  "area_pixels": 25491,
+  "estimated_height_cm": 1.5,
+  "volume_estimate_ml": 42.9,
+  "density": 1.1300000000000001,
+  "mass_g": 48.4,
+  "class_label": "dal",
+  "class_confidence": 0.6411,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8871,
+  "prior_applied": true
+}

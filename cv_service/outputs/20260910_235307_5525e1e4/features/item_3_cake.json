@@ -1,0 +1,14 @@
+{
+  "item_id": "cake_3",
+  "area_pixels": 61908,
+  "estimated_height_cm": 6.683,
+  "volume_estimate_ml": 463.8,
+  "density": 1.0,
+  "mass_g": 463.8,
+  "class_label": "chicken",
+  "class_confidence": 0.969,
+  "depth_stability": 0.65,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8843,
+  "prior_applied": false
+}
