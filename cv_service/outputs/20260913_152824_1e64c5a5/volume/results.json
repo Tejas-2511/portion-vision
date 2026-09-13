@@ -1,0 +1,89 @@
+{
+  "food_items": [
+    {
+      "name": "dal",
+      "volume_ml": 243.8,
+      "mass_g": 275.5,
+      "calories": 234.2,
+      "protein": 15.2,
+      "carbs": 33.1,
+      "fat": 5.5,
+      "confidence": 0.8393,
+      "class_label": "dal",
+      "class_confidence": 0.5332
+    },
+    {
+      "name": "chutney",
+      "volume_ml": 75.8,
+      "mass_g": 79.6,
+      "calories": 79.6,
+      "protein": 1.6,
+      "carbs": 11.9,
+      "fat": 3.2,
+      "confidence": 0.8819,
+      "class_label": "chutney",
+      "class_confidence": 0.6209
+    },
+    {
+      "name": "cake",
+      "volume_ml": 5.5,
+      "mass_g": 5.5,
+      "calories": 5.5,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.2,
+      "confidence": 0.9147,
+      "class_label": "dal",
+      "class_confidence": 0.9625
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 70.6,
+      "mass_g": 70.6,
+      "calories": 70.6,
+      "protein": 2.1,
+      "carbs": 10.6,
+      "fat": 2.1,
+      "confidence": 0.9852,
+      "class_label": "dal",
+      "class_confidence": 0.9901
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 55.0,
+      "mass_g": 66.0,
+      "calories": 85.8,
+      "protein": 1.8,
+      "carbs": 18.5,
+      "fat": 0.2,
+      "confidence": 0.9859,
+      "class_label": "dal",
+      "class_confidence": 0.97
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 10.4,
+      "mass_g": 6.2,
+      "calories": 1.6,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.9148,
+      "class_label": "chutney",
+      "class_confidence": 0.7221
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 2.1,
+      "mass_g": 1.8,
+      "calories": 4.6,
+      "protein": 0.1,
+      "carbs": 0.9,
+      "fat": 0.1,
+      "confidence": 0.9327,
+      "class_label": "dal",
+      "class_confidence": 0.7852
+    }
+  ],
+  "confidence": 0.9221
+}

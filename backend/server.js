@@ -6,6 +6,7 @@ const path = require("path");
 const axios = require("axios");
 const FormData = require("form-data");
 const Tesseract = require("tesseract.js");
+const crypto = require("crypto");
 
 const Database = require("./utils/db");
 const { normalizeFoodName } = require("./utils/normalize");
@@ -320,6 +321,10 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
 // Plate Analysis Integration
 // ============================================
 
+let activeCvPromise = null;
+let activeCvKey = null;
+const cvResultCache = new Map(); // reqKey -> { data, timestamp }
+
 app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: "No image uploaded" });
@@ -329,16 +334,68 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
     let originalPath = req.file.path;
 
     try {
+        const fileBuffer = fs.readFileSync(originalPath);
+        const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+        const reqKey = `${hash}_${expectedItems || ''}`;
+
+        // 1. If we already computed results for this image within the last 15 minutes, return immediately
+        const cached = cvResultCache.get(reqKey);
+        if (cached && (Date.now() - cached.timestamp < 15 * 60 * 1000)) {
+            console.log(`[analyze-plate] Found cached CV analysis for image ${hash.slice(0, 8)}. Returning immediately (0ms).`);
+            return res.json(cached.data);
+        }
+
+        // 2. If an estimation for this exact image is currently running, wait for it instead of starting another
+        if (activeCvPromise && activeCvKey === reqKey) {
+            console.log(`[analyze-plate] Concurrent duplicate request detected for hash ${hash.slice(0, 8)}. Awaiting active CV estimation.`);
+            const sharedData = await activeCvPromise;
+            return res.json(sharedData);
+        }
+
+        // Always merge client-provided items with the current menu so the CV
+        // service knows exactly which foods to constrain classification to.
+        const clientItems = expectedItems
+            ? expectedItems.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+            : [];
+
+        let menuItems = [];
+        try {
+            const menuData = await Database.getMenu();
+            if (menuData && Array.isArray(menuData.items)) {
+                menuItems = menuData.items.map(s => s.trim().toLowerCase()).filter(Boolean);
+            }
+        } catch (menuErr) {
+            console.warn('[analyze-plate] Could not load menu for CV constraint:', menuErr.message);
+        }
+
+        // Union of menu items and any recommendation items sent by the client
+        const mergedSet = new Set([...menuItems, ...clientItems]);
+        const mergedItems = [...mergedSet].filter(Boolean);
+        console.log(`[analyze-plate] CV expected_items: [${mergedItems.join(', ')}]`);
+
         const form = new FormData();
         form.append("image", fs.createReadStream(originalPath));
-        if (expectedItems) form.append("expected_items", expectedItems);
+        if (mergedItems.length > 0) {
+            form.append("expected_items", mergedItems.join(','));
+        }
 
-        const cvResponse = await axios.post("http://127.0.0.1:8000/estimate-portion", form, {
+        activeCvKey = reqKey;
+        activeCvPromise = axios.post("http://127.0.0.1:8000/estimate-portion", form, {
             headers: { ...form.getHeaders() },
             timeout: 300000
+        }).then(r => {
+            const data = r.data;
+            cvResultCache.set(reqKey, { data, timestamp: Date.now() });
+            return data;
+        }).finally(() => {
+            if (activeCvKey === reqKey) {
+                activeCvPromise = null;
+                activeCvKey = null;
+            }
         });
 
-        res.json(cvResponse.data);
+        const cvData = await activeCvPromise;
+        res.json(cvData);
     } catch (err) {
         if (err.code === 'ECONNREFUSED') {
             res.status(503).json({

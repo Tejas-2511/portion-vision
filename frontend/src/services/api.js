@@ -131,22 +131,56 @@ class ApiService {
 
     /**
      * Upload captured plate image for CV analysis
+     * Automatically deduplicates in-flight calls for the same file/items to prevent double triggers
      * @param {File} file - Image file to upload
      * @param {string} expectedItems - Comma-separated list of expected items
      * @returns {Promise<{food_items: Array<{name: string, volume_ml: number, mass_g: number}>, confidence: number}>}
      */
     async analyzePlate(file, expectedItems = '') {
+        const fileKey = file ? `${file.name}_${file.size}_${file.lastModified}_${expectedItems}` : null;
+
+        // 1. If we already have the completed result for this exact image and items, return it immediately
+        if (fileKey && this._lastPlateKey === fileKey && this._lastPlateResult) {
+            console.log('[api.analyzePlate] Returning cached completed analysis result:', fileKey);
+            return this._lastPlateResult;
+        }
+
+        // 2. If an analysis for this exact image is currently in flight, reuse the active promise
+        if (fileKey && this._activePlatePromise && this._activePlateKey === fileKey) {
+            console.log('[api.analyzePlate] Concurrent/Strict-mode duplicate call detected, reusing active promise:', fileKey);
+            return this._activePlatePromise;
+        }
+
         const formData = new FormData();
         formData.append('image', file);
         if (expectedItems) {
             formData.append('expectedItems', expectedItems);
         }
 
-        return this.request('/api/analyze-plate', {
+        const reqPromise = this.request('/api/analyze-plate', {
             method: 'POST',
             body: formData,
             // Don't set Content-Type header - let browser set it for FormData
+        }).then(result => {
+            if (fileKey) {
+                this._lastPlateKey = fileKey;
+                this._lastPlateResult = result;
+            }
+            return result;
         });
+
+        if (fileKey) {
+            this._activePlateKey = fileKey;
+            this._activePlatePromise = reqPromise.finally(() => {
+                if (this._activePlateKey === fileKey) {
+                    this._activePlatePromise = null;
+                    this._activePlateKey = null;
+                }
+            });
+            return this._activePlatePromise;
+        }
+
+        return reqPromise;
     }
 }
 

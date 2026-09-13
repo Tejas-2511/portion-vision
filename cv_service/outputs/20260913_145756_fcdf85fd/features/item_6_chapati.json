@@ -1,0 +1,14 @@
+{
+  "item_id": "chapati_6",
+  "area_pixels": 99487,
+  "estimated_height_cm": 3.069,
+  "volume_estimate_ml": 200,
+  "density": 0.75,
+  "mass_g": 150.0,
+  "class_label": "rice",
+  "class_confidence": 0.9407,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9824,
+  "prior_applied": true
+}

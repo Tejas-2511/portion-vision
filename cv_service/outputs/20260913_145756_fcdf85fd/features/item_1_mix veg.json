@@ -1,0 +1,14 @@
+{
+  "item_id": "mix veg_1",
+  "area_pixels": 138962,
+  "estimated_height_cm": 5.004,
+  "volume_estimate_ml": 300,
+  "density": 1.0,
+  "mass_g": 300.0,
+  "class_label": "dal",
+  "class_confidence": 0.8968,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9627,
+  "prior_applied": true
+}

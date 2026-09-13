@@ -1,0 +1,14 @@
+{
+  "item_id": "dal_5",
+  "area_pixels": 100707,
+  "estimated_height_cm": 4.693,
+  "volume_estimate_ml": 150,
+  "density": 1.1300000000000001,
+  "mass_g": 169.5,
+  "class_label": "dal",
+  "class_confidence": 0.6284,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8805,
+  "prior_applied": true
+}

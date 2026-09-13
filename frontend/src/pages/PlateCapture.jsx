@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function PlateCapture() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +19,9 @@ export default function PlateCapture() {
   }
 
   function handleCapture() {
+    if (submitting) return;
     if (selectedFile && preview) {
+      setSubmitting(true);
       navigate("/analysis", {
         state: {
           imageFile: selectedFile,
@@ -156,15 +159,15 @@ export default function PlateCapture() {
         <button
           id="plate-capture-submit"
           onClick={handleCapture}
-          disabled={!selectedFile}
+          disabled={!selectedFile || submitting}
           className={`w-full rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all
-            ${!selectedFile
+            ${!selectedFile || submitting
               ? "bg-slate-400 opacity-50 cursor-not-allowed"
               : "bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98]"
             }
           `}
         >
-          Analyse Plate
+          {submitting ? "Preparing Analysis..." : "Analyse Plate"}
         </button>
       </div>
     </div>

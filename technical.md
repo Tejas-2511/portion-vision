@@ -516,6 +516,7 @@ npm run dev
 
 ### 📱 Mobile Device Testing Architecture
 Running the AI stack live on a mobile phone requires connecting to the Vite server via the Laptop's local network IP.
+npm run dev -- --host
 
 1. Locate the **Network URI** from Vite's startup log (e.g., `http://10.174.1.162:5173/`).
 2. Type this exact URI into the mobile Safari/Chrome browser. Both devices must be on the same WiFi.

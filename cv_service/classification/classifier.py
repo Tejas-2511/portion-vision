@@ -254,23 +254,49 @@ def classify_mask_region(
         # Fall back — return unknown
         return {"label": "unknown", "confidence": 0.0, "top_k": []}
 
-    # ── Apply OCR boost ───────────────────────────────────────────────────────
+    # ── Apply OCR boost + hard clamp to menu items ────────────────────────────
     if allowed_labels:
         allowed_set = {lbl.strip().lower() for lbl in allowed_labels}
-        
-        def is_allowed(food_str: str) -> bool:
-            # Check if canonical food name is substring of any OCR label, or vice versa
-            food_str = food_str.lower()
-            for allowed in allowed_set:
-                if food_str in allowed or allowed in food_str:
-                    return True
-            return False
 
-        food_scores = {
-            food: (score * OCR_BOOST if is_allowed(food) else score)
-            for food, score in food_scores.items()
-        }
-        # Re-normalise after boost
+        SYNONYM_GROUPS = [
+            {"roti", "chapati", "phulka", "paratha", "flatbread", "naan", "bread"},
+            {"rice", "steamed rice", "sada rice", "steam rice", "boiled rice", "jeera rice", "pilaf", "biryani", "pulao", "khichdi"},
+            {"dal", "daal", "sambar", "lentil", "lentils", "rasam"},
+            {"mix veg", "mixed veg", "sabzi", "sabji", "bhaji", "curry", "gravy", "aloo", "gobi", "paneer"},
+            {"salad", "green salad"},
+            {"chutney", "sauce", "dip", "pickle"},
+            {"curd", "dahi", "raita", "yogurt"},
+            {"cake", "sweet", "dessert", "halwa", "gulab jamun", "kheer"},
+        ]
+
+        def find_menu_match(food_str: str) -> str | None:
+            f = food_str.strip().lower()
+            for allowed in allowed_labels:
+                a = allowed.strip().lower()
+                if f == a or f in a or a in f:
+                    return allowed
+            for allowed in allowed_labels:
+                a = allowed.strip().lower()
+                for group in SYNONYM_GROUPS:
+                    if any(term in f or f in term for term in group) and any(term in a or a in term for term in group):
+                        return allowed
+            return None
+
+        # Accumulate scores under canonical menu labels
+        menu_scores: dict[str, float] = {}
+        for food, score in food_scores.items():
+            matched = find_menu_match(food)
+            if matched:
+                menu_scores[matched] = menu_scores.get(matched, 0.0) + (score * OCR_BOOST)
+
+        if menu_scores:
+            food_scores = menu_scores
+        else:
+            # Seed uniform scores from allowed_labels if no match
+            logger.debug("No classifier label matched menu; seeding from allowed_labels directly")
+            food_scores = {lbl: 1.0 / len(allowed_labels) for lbl in allowed_labels}
+
+        # Re-normalise after clamp
         total = sum(food_scores.values())
         food_scores = {k: v / total for k, v in food_scores.items()}
 

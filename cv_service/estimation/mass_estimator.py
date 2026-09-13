@@ -42,6 +42,7 @@ from depth.depth_estimator import (
     depth_to_cm,
     apply_food_height_prior,
     calibrate_scale_from_ellipse,
+    FOOD_HEIGHT_PRIORS,
 )
 from classification.classifier import classify_mask_region
 from config.density_map import get_density, get_dynamic_density
@@ -56,7 +57,7 @@ def _hungarian_assign(
     food_masks: list[dict],
     expected_items: list[str],
     compartments: list[dict],
-) -> list[str]:
+) -> tuple[list[dict], list[str]]:
     """
     Enhancement #9 — Optimal mask ↔ expected-item assignment.
 
@@ -84,64 +85,111 @@ def _hungarian_assign(
     # Cost matrix (float, shape n×n, padded with zeros)
     cost = np.zeros((n, n), dtype=np.float64)
 
+    def _get_category(food_name: str) -> str:
+        f = food_name.lower()
+        if any(k in f for k in ["chapati", "roti", "naan", "paratha", "flatbread", "phulka", "bread"]):
+            return "bread"
+        if any(k in f for k in ["rice", "biryani", "pulao", "khichdi"]):
+            return "rice"
+        if any(k in f for k in ["dal", "daal", "sambar", "curry", "veg", "sabzi", "sabji", "paneer", "chole", "rajma", "gobi", "aloo"]):
+            return "curry"
+        return "side"
+
     for i, mask_data in enumerate(food_masks):
-        mask     = mask_data["mask"]
+        mask   = mask_data["mask"]
+        area   = mask_data.get("area", int(mask.sum()))
         mask_h, mask_w = mask.shape
+
+        rows_m, cols_m = np.where(mask)
+        cy = float(np.mean(rows_m)) if len(rows_m) > 0 else mask_h / 2.0
+        cx = float(np.mean(cols_m)) if len(cols_m) > 0 else mask_w / 2.0
 
         for j, expected in enumerate(expected_items):
             c = 0.0
-
-            # Component 1: compartment label mismatch
-            comp_label = mask_data.get("comp_label", "")
-            if expected.lower() not in comp_label.lower():
-                c += 1.0
-
-            # Component 2: classifier confidence mismatch
-            class_label = mask_data.get("class_label", "").lower()
             expected_lower = expected.lower()
-            class_conf  = mask_data.get("class_conf",  0.0)
-            if class_label not in expected_lower and expected_lower not in class_label:
-                c += (1.0 - class_conf) * 2.0
+            class_label    = mask_data.get("class_label", "").lower()
+            class_conf     = mask_data.get("class_conf",  0.0)
+            cat            = _get_category(expected)
 
-            # Component 3: spatial — penalise masks far from compartments
-            # (already handled by per-compartment segmentation; lighter weight here)
-            best_overlap = 0.0
-            for comp in compartments:
-                cx, cy, cw, ch = comp["bbox"]
-                overlap = float(np.sum(mask[cy:cy+ch, cx:cx+cw]))
-                frac    = overlap / max(float(mask.sum()), 1)
-                if frac > best_overlap:
-                    best_overlap = frac
-            c += (1.0 - best_overlap) * 1.0
+            # Component 1: Classifier label match
+            if expected_lower in class_label or class_label in expected_lower:
+                c -= class_conf * 3.0
+            else:
+                c += (1.0 - class_conf) * 1.5
+
+            # Component 2: Food Category & Area affinity
+            if area > 45000:
+                # Large area (>7.5% of plate) — main carb base (roti or rice)
+                if cat in ["bread", "rice"]:
+                    c -= 3.0
+                    # Spatial vertical prior: roti stack usually sits on top of rice mound
+                    if cat == "bread" and cy < 0.42 * mask_h:
+                        c -= 1.5
+                    elif cat == "rice" and cy >= 0.38 * mask_h:
+                        c -= 1.5
+                else:
+                    c += 5.0
+            elif 18000 <= area <= 45000:
+                # Medium area — well-sized curry, dal, or sabzi
+                if cat == "curry":
+                    c -= 2.0
+                else:
+                    c += 2.5
+            else:
+                # Small area (<18,000 px) — side, chutney, dessert, or salad
+                if cat == "side":
+                    c -= 2.5
+                elif cat in ["bread", "rice"]:
+                    c += 6.0
+                else:
+                    c += 2.0
+
+            # Component 3: Spatial layout on standard Indian mess tray
+            # Right column (cx > 0.48 * mask_w) contains the circular curry/dal wells
+            if cx > 0.48 * mask_w and cat == "curry":
+                c -= 1.5
+            # Left column contains the large carb compartment
+            if cx <= 0.48 * mask_w and cat in ["bread", "rice"]:
+                c -= 1.5
+
+            # Component 4: Compartment bbox overlap (when compartments are detected)
+            if compartments:
+                best_overlap = 0.0
+                for comp in compartments:
+                    bx, by, bw, bh = comp["bbox"]
+                    overlap = float(np.sum(mask[by:by+bh, bx:bx+bw]))
+                    frac    = overlap / max(float(area), 1)
+                    if frac > best_overlap:
+                        best_overlap = frac
+                c += (1.0 - best_overlap) * 1.0
 
             cost[i, j] = c
 
     row_ind, col_ind = linear_sum_assignment(cost)
 
-    labels = []
-    for i in range(n_masks):
-        labels.append(food_masks[i].get("class_label", "unknown"))
-        
-    for r, c in zip(row_ind, col_ind):
-        if r < n_masks and c < n_items:
-            labels[r] = expected_items[c]
+    matched_pairs = [
+        (r, c) for r, c in zip(row_ind, col_ind)
+        if r < n_masks and c < n_items
+    ]
+    # Sort matched pairs by mask area descending
+    matched_pairs.sort(key=lambda p: food_masks[p[0]]["area"], reverse=True)
 
-    return labels
+    selected_masks = [food_masks[r] for r, c in matched_pairs]
+    labels         = [expected_items[c] for r, c in matched_pairs]
+
+    return selected_masks, labels
 
 
 def _greedy_assign(
     food_masks: list[dict],
     expected_items: list[str],
     compartments: list[dict],
-) -> list[str]:
-    """Simple greedy fallback (original behaviour)."""
-    labels = []
-    for f_idx, mask_data in enumerate(food_masks):
-        if f_idx < len(expected_items):
-            labels.append(expected_items[f_idx])
-        else:
-            labels.append(mask_data.get("class_label", "unknown"))
-    return labels
+) -> tuple[list[dict], list[str]]:
+    """Greedy 1-to-1 matching up to min(n_masks, n_items)."""
+    k = min(len(food_masks), len(expected_items))
+    selected_masks = [food_masks[i] for i in range(k)]
+    labels         = [expected_items[i] for i in range(k)]
+    return selected_masks, labels
 
 
 # ── Composite confidence ──────────────────────────────────────────────────────
@@ -317,11 +365,9 @@ def estimate_food_mass(
     ctx.log("Pipeline", "Step 4 — Segmentation")
     t0 = time.perf_counter()
 
-    # #8 — prefer per-compartment mode when compartments were detected
-    if compartments:
-        food_masks = segment_per_compartment_sam(top_down, compartments, ctx=ctx)
-    else:
-        food_masks = segment_full_image_sam(top_down, ctx=ctx)
+    # Use Full-image SAM mask generator to obtain smooth, natural food contours
+    # without rectangular bounding-box cropping artifacts.
+    food_masks = segment_full_image_sam(top_down, ctx=ctx)
 
     if not food_masks:
         ctx.log("Segmentation", "No food items detected",
@@ -343,16 +389,19 @@ def estimate_food_mass(
 
     for f_idx, item in enumerate(food_masks):
         # Determine which compartment this mask belongs to
-        comp_label  = "unknown"
-        max_overlap = -1
+        comp_label      = "unknown"
+        comp_max_vol    = 500   # default (ml)
+        max_overlap     = -1
         for comp in compartments:
             cx2, cy2, cw2, ch2 = comp["bbox"]
             overlap = np.sum(item["mask"][cy2:cy2+ch2, cx2:cx2+cw2])
             if overlap > max_overlap:
-                max_overlap = overlap
-                comp_label  = comp["label"]
+                max_overlap  = overlap
+                comp_label   = comp["label"]
+                comp_max_vol = comp.get("max_volume_ml", 500)
 
-        item["comp_label"] = comp_label
+        item["comp_label"]         = comp_label
+        item["comp_max_volume_ml"] = comp_max_vol
 
         # #2/#3 — Classify with OCR label constraint
         cls_result           = classify_mask_region(
@@ -372,7 +421,7 @@ def estimate_food_mass(
     # ── Step 6: Optimal Assignment (Hungarian) ────────────────────────────────
     ctx.log("Pipeline", "Step 6 — Hungarian Label Assignment")
     if expected_items:
-        assigned_names = _hungarian_assign(food_masks, expected_items, compartments)
+        food_masks, assigned_names = _hungarian_assign(food_masks, expected_items, compartments)
     else:
         # No expected list — use classifier output directly
         assigned_names = [
@@ -392,22 +441,32 @@ def estimate_food_mass(
         food_name  = assigned_names[f_idx]
         class_conf = item.get("class_conf", 0.5)
 
-        # Raw per-pixel heights
-        pixel_heights = height_from_divider[mask] + well_depth_map[mask]
+        # Raw per-pixel heights (normalised 0-1 from depth_to_cm)
+        # Note: well_depth_map is in cm; it is added AFTER the prior maps [0,1] to cm.
+        pixel_heights_rel = height_from_divider[mask]   # in [0, 1]
 
-        # #1 — Fuse with food-specific geometric prior
-        food_heights_fused = apply_food_height_prior(pixel_heights, food_name)
-        pixel_heights      = np.clip(food_heights_fused, 0.1, 10.0)
+        # #1 — Fuse with food-specific geometric prior; output is now in cm
+        food_heights_cm = apply_food_height_prior(pixel_heights_rel, food_name)
 
-        # #5 — depth stability: 1.0 if prior was found (clamp changed range)
-        from depth.depth_estimator import FOOD_HEIGHT_PRIORS
+        # Add the physical well depth offset (how deep the compartment is)
+        well_offset = float(np.mean(well_depth_map[mask])) if mask.any() else 0.0
+        pixel_heights = np.clip(food_heights_cm + well_offset, 0.05, 15.0)
+
+        # #5 — depth stability: 1.0 if prior was found, 0.75 otherwise
         food_key = food_name.strip().lower()
         has_prior = (food_key in FOOD_HEIGHT_PRIORS) or any(
             k in food_key or food_key in k for k in FOOD_HEIGHT_PRIORS
         )
-        depth_stability = 1.0 if has_prior else 0.65
+        # apply_food_height_prior now always maps into a valid range, so even
+        # foods without an explicit prior are more stable than before.
+        depth_stability = 1.0 if has_prior else 0.75
 
         volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2)
+
+        # Cap volume to the physical compartment capacity so depth over-estimates
+        # don't produce impossible results (e.g. 800 ml in a 150 ml well).
+        comp_max_vol = item.get("comp_max_volume_ml", 500)
+        volume_ml = min(volume_ml, comp_max_vol)
 
         # Extract mask crop for visual density analysis
         rows = np.any(mask, axis=1)

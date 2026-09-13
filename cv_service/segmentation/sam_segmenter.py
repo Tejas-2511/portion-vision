@@ -16,7 +16,7 @@ import time
 import logging
 import numpy as np
 import cv2
-import cv2
+
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,6 @@ def _load_sam_generator():
 
     try:
         import torch
-        from PIL import Image
         from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
         import urllib.request
         import os
@@ -128,39 +127,90 @@ def segment_full_image_sam(image_bgr: np.ndarray, ctx=None) -> list[dict]:
     hsv       = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
     sat       = hsv[:, :, 1]
 
-    results    = []
     h, w       = image_bgr.shape[:2]
-    used_area  = np.zeros((h, w), dtype=bool)
+    candidates = []
     rejected   = 0
 
-    masks_data.sort(key=lambda x: x["stability_score"], reverse=True)
+    masks_data.sort(key=lambda x: x.get("stability_score", 0.0), reverse=True)
 
     for data in masks_data:
         mask  = data["segmentation"]
         area  = int(data["area"])
         img_a = h * w
 
-        if area < img_a * 0.002 or area > img_a * 0.4:
+        # Reject masks that are too small (< 0.4% image area) or too large (> 35% image area)
+        if area < img_a * 0.004 or area > img_a * 0.35:
             rejected += 1
             continue
 
-        m_sat = np.mean(sat[mask])
-        m_var = np.mean(laplacian[mask])
-        if m_sat < 12 and m_var < 15:
+        m_sat = float(np.mean(sat[mask]))
+        m_var = float(np.mean(laplacian[mask]))
+
+        # Texture filter:
+        # A region with near-zero texture (m_var < 2.0) is a flat, featureless surface
+        # (table surface, tray rim, or plain background) regardless of saturation.
+        if m_var < 2.0:
             rejected += 1
             continue
 
-        new_area = (mask & ~used_area).sum()
-        if new_area < area * 0.25:
+        # Border filter: If a mask touches the image perimeter and has low texture,
+        # it is table surface surrounding the tray.
+        touches_border = (
+            mask[0, :].any() or mask[-1, :].any() or
+            mask[:, 0].any() or mask[:, -1].any()
+        )
+        if touches_border and m_var < 4.0:
             rejected += 1
             continue
 
-        used_area |= mask
-        results.append({
-            "mask":  mask,
-            "area":  area,
-            "score": float(data["stability_score"]),
+        # Low saturation AND low texture (stainless steel reflection / plain gray surface)
+        if m_sat < 10 and m_var < 15:
+            rejected += 1
+            continue
+
+        # Tray vertical span filter: reject masks completely outside the plate tray
+        # (e.g. table surface below the tray y > 0.88*h or above y < 0.05*h)
+        rows_m = np.where(mask)[0]
+        if len(rows_m) > 0:
+            cy_m = float(np.mean(rows_m))
+            if cy_m > 0.88 * h or cy_m < 0.05 * h:
+                rejected += 1
+                continue
+
+        candidates.append({
+            "mask":     mask,
+            "area":     area,
+            "score":    float(data.get("stability_score", 0.9)),
+            "lap_var":  m_var,
         })
+
+    # Sort candidates by area descending for IoU deduplication / containment suppression
+    candidates.sort(key=lambda x: x["area"], reverse=True)
+
+    results = []
+    for cand in candidates:
+        m    = cand["mask"]
+        area = cand["area"]
+
+        # Check if cand is duplicate or largely contained inside an already kept mask
+        duplicate = False
+        for kept in results:
+            km    = kept["mask"]
+            karea = kept["area"]
+            inter = int(np.sum(m & km))
+            if inter > 0:
+                union = area + karea - inter
+                iou   = inter / max(union, 1)
+                containment = inter / min(area, karea)
+                # If high IoU or one mask is largely contained in another, suppress smaller duplicate
+                if iou > 0.35 or containment > 0.65:
+                    duplicate = True
+                    break
+
+        if not duplicate:
+            results.append(cand)
+        else:
+            rejected += 1
 
     elapsed = time.perf_counter() - t0
 

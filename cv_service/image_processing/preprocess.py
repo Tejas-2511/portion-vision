@@ -158,9 +158,9 @@ def process_image(
         ctx.log("Preprocessing", "LAB color normalization applied",
                 elapsed=elapsed, output_file=fname)
 
-    # ── 4. CLAHE contrast enhancement ────────────────────────────────────
+    # ── 4. CLAHE contrast enhancement (chained after color normalization) ─
     t0 = time.perf_counter()
-    lab2 = cv2.cvtColor(resized, cv2.COLOR_BGR2LAB)
+    lab2 = cv2.cvtColor(color_normalized, cv2.COLOR_BGR2LAB)   # fixed: was `resized`
     l2, a2, b2 = cv2.split(lab2)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
     l2 = clahe.apply(l2)
@@ -175,24 +175,31 @@ def process_image(
                 {"clip_limit": 2.0, "tile_grid": "8x8"},
                 elapsed=elapsed, output_file=fname)
 
-    # ── 5–6. Edge detection → perspective warp ───────────────────────────
+    # ── 5-6. Edge detection on enhanced image -> perspective warp ----------
     t0 = time.perf_counter()
-    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(enhanced, cv2.COLOR_BGR2GRAY)   # fixed: was `resized`
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     edges = cv2.Canny(blurred, 50, 150)
 
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    output = resized  # default — no warp
+    output = enhanced  # default: enhanced image (color-norm + CLAHE applied)  fixed: was `resized`
     warped = False
 
+    img_area = enhanced.shape[0] * enhanced.shape[1]
     if contours:
-        largest = max(contours, key=cv2.contourArea)
-        epsilon = 0.02 * cv2.arcLength(largest, True)
-        approx = cv2.approxPolyDP(largest, epsilon, True)
-        if len(approx) == 4:
-            output = _four_point_transform(resized, approx.reshape(4, 2))
-            warped = True
+        # Only consider contours that cover 20-85% of the image (plate, not bg)
+        valid_contours = [
+            c for c in contours
+            if img_area * 0.20 <= cv2.contourArea(c) <= img_area * 0.85
+        ]
+        if valid_contours:
+            largest = max(valid_contours, key=cv2.contourArea)
+            epsilon = 0.02 * cv2.arcLength(largest, True)
+            approx = cv2.approxPolyDP(largest, epsilon, True)
+            if len(approx) == 4:
+                output = _four_point_transform(enhanced, approx.reshape(4, 2))   # fixed: warp enhanced
+                warped = True
 
     elapsed = time.perf_counter() - t0
 

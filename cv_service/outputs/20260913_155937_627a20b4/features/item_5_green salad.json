@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_5",
+  "area_pixels": 7129,
+  "estimated_height_cm": 1.352,
+  "volume_estimate_ml": 10.9,
+  "density": 0.6,
+  "mass_g": 6.6,
+  "class_label": "mix veg",
+  "class_confidence": 0.7467,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9211,
+  "prior_applied": true
+}

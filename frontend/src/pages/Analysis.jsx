@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useApp } from "../hooks/useApp";
 import api from "../services/api";
 import RecommendationCard from "../components/RecommendationCard";
@@ -10,55 +10,60 @@ export default function Analysis() {
   const location = useLocation();
   const navigate = useNavigate();
   const { imageFile, imagePreview } = location.state || {};
-  const { userProfile } = useApp();
+  const { userProfile, loading: profileLoading } = useApp();
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [analyzingPlate, setAnalyzingPlate] = useState(false);
   const [analysisError, setAnalysisError] = useState(null);
 
-  useEffect(() => {
-    if (userProfile) {
-      loadRecommendation();
-    }
-  }, [userProfile]);
+  const hasAnalyzedRef = useRef(false);
 
   useEffect(() => {
-    if (recommendation && imageFile && !analysisResult && !analyzingPlate) {
-      analyzeCapturedPlate();
-    }
-  }, [recommendation, imageFile]);
+    if (profileLoading || !imageFile || hasAnalyzedRef.current) return;
+    hasAnalyzedRef.current = true;
 
-  async function loadRecommendation() {
-    setLoading(true);
-    try {
-      // Use the meal type passed from Home page, or fall back to time inference
-      const mealType = location.state?.mealType || inferMealType();
-      const data = await api.getRecommendations(userProfile, mealType);
+    async function runFlow() {
+      let currentRec = null;
 
-      if (data && data.recommendedPlate) {
-        setRecommendation(data);
+      if (userProfile) {
+        setLoading(true);
+        try {
+          const mealType = location.state?.mealType || inferMealType();
+          const data = await api.getRecommendations(userProfile, mealType);
+          if (data && data.recommendedPlate) {
+            currentRec = data;
+            setRecommendation(data);
+          }
+        } catch (err) {
+          console.error("Failed to load recommendation:", err);
+        } finally {
+          setLoading(false);
+        }
       }
-    } catch (err) {
-      console.error("Failed to load recommendation:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  async function analyzeCapturedPlate() {
-    if (!imageFile || !recommendation) return;
+      await analyzeCapturedPlate(currentRec);
+    }
+
+    runFlow();
+  }, [profileLoading, userProfile, imageFile]);
+
+  async function analyzeCapturedPlate(recData) {
+    if (!imageFile) return;
 
     setAnalyzingPlate(true);
     setAnalysisError(null);
-    console.log("Retrying plate analysis...");
+    console.log("Starting plate analysis...");
     try {
-      // Build a comma-separated list of expected items from recommendation
-      const expectedItemsArray = [
-        ...recommendation.recommendedPlate.map(item => item.item.toLowerCase()),
-        ...(recommendation.optionalItems ? recommendation.optionalItems.map(item => item.item.toLowerCase()) : [])
-      ];
-      const expectedItemsStr = expectedItemsArray.join(',');
+      const activeRec = recData || recommendation;
+      let expectedItemsStr = '';
+      if (activeRec && activeRec.recommendedPlate) {
+        const expectedItemsArray = [
+          ...activeRec.recommendedPlate.map(item => item.item.toLowerCase()),
+          ...(activeRec.optionalItems ? activeRec.optionalItems.map(item => item.item.toLowerCase()) : [])
+        ];
+        expectedItemsStr = expectedItemsArray.join(',');
+      }
 
       const result = await api.analyzePlate(imageFile, expectedItemsStr);
       setAnalysisResult(result);

@@ -5,6 +5,7 @@ OCR is handled in the Node.js backend via Tesseract.js.
 
 import cv2
 import logging
+import hashlib
 import numpy as np
 from fastapi import APIRouter, File, UploadFile, Form
 from fastapi.responses import JSONResponse
@@ -13,6 +14,9 @@ from estimation.mass_estimator import estimate_food_mass
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+_last_cv_result = None
+_last_cv_hash = None
 
 
 @router.post("/estimate-portion")
@@ -48,6 +52,13 @@ async def estimate_portion(
         items_list = [item.strip() for item in expected_items.split(",") if item.strip()]
 
     contents = await image.read()
+    img_hash = hashlib.sha256(contents).hexdigest() + "_" + str(expected_items)
+
+    global _last_cv_result, _last_cv_hash
+    if _last_cv_hash == img_hash and _last_cv_result is not None:
+        logger.info("[CV Service] Returning cached result for identical run %s (skipping redundant pipeline)", img_hash[:8])
+        return _last_cv_result
+
     nparr = np.frombuffer(contents, np.uint8)
     img_bgr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
@@ -71,6 +82,9 @@ async def estimate_portion(
                     "message": result["error"],
                 },
             )
+
+        _last_cv_hash = img_hash
+        _last_cv_result = result
         return result
 
     except Exception as e:

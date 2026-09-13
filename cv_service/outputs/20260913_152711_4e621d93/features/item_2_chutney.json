@@ -1,0 +1,14 @@
+{
+  "item_id": "chutney_2",
+  "area_pixels": 61967,
+  "estimated_height_cm": 1.103,
+  "volume_estimate_ml": 75.8,
+  "density": 1.05,
+  "mass_g": 79.6,
+  "class_label": "chutney",
+  "class_confidence": 0.6209,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8819,
+  "prior_applied": true
+}

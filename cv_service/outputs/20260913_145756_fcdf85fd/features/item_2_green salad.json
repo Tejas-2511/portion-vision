@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_2",
+  "area_pixels": 137402,
+  "estimated_height_cm": 3.963,
+  "volume_estimate_ml": 150,
+  "density": 0.6,
+  "mass_g": 90.0,
+  "class_label": "rice",
+  "class_confidence": 0.5941,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8737,
+  "prior_applied": true
+}

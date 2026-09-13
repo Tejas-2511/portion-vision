@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_6",
+  "area_pixels": 6826,
+  "estimated_height_cm": 1.373,
+  "volume_estimate_ml": 10.4,
+  "density": 0.6,
+  "mass_g": 6.2,
+  "class_label": "chutney",
+  "class_confidence": 0.7221,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9148,
+  "prior_applied": true
+}

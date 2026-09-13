@@ -78,14 +78,37 @@ FOOD_HEIGHT_PRIORS: dict[str, tuple[float, float]] = {
     "gulab jamun":(3.0, 5.5),
     "salad":    (1.0, 3.0),
     "chutney":  (0.5, 2.0),
+    "tomato chutney": (0.5, 2.0),
     "pickle":   (0.5, 2.0),
+    # Additional items that appear on typical mess menus
+    "aloo capsicum":  (2.0, 5.0),
+    "aloo gobi":      (2.0, 4.5),
+    "dal amritsari":  (1.5, 3.5),
+    "dal vada curry": (2.0, 4.5),
+    "paneer do pyaza":      (2.5, 5.0),
+    "paneer butter masala": (2.5, 5.0),
+    "kofta":    (2.5, 5.0),
+    "poriyal":  (2.0, 4.0),
+    "bhaji":    (2.0, 4.5),
+    "egg":      (3.0, 5.5),   # boiled / fried egg
+    "idli":     (3.0, 5.5),   # cylindrical shape
+    "oats":     (2.0, 4.5),
+    "bread":    (1.5, 3.5),
+    "laddu":    (3.5, 6.0),
+    "barfi":    (1.0, 2.5),
+    "milk":     (1.0, 3.0),
+    "lassi":    (1.5, 4.0),
+    "chaas":    (1.0, 3.5),
+    "mix veg":  (2.0, 4.5),   # alternate spelling
 }
 
 # Blending weights for hybrid depth
 _DEPTH_ALPHA = 0.70   # weight given to raw depth output
 _PRIOR_BETA  = 0.30   # weight given to the geometric prior mid-point
 
-# Assumed plate outer diameter in cm — used by ellipse calibrator
+# Assumed plate outer diameter in cm — used by ellipse calibrator.
+# For rectangular mess trays (typically 33-37 cm wide) this will over-estimate
+# scale. Pass the actual tray width as known_diameter_cm if known.
 _PLATE_DIAMETER_CM = 26.0
 
 
@@ -173,17 +196,18 @@ def apply_food_height_prior(
     """
     Enhancement #1 — Hybrid depth fusion with food-specific geometric priors.
 
-    Blends neural-derived height_map with a mid-point prior from
-    FOOD_HEIGHT_PRIORS and then clamps to the physiologically valid range.
+    IMPORTANT: `height_map` is expected to be a relative depth map normalised
+    to [0, 1] (0 = plate surface, 1 = maximum depth in the scene), NOT in cm.
+    This function maps it into the plausible cm range for the given food type.
 
     Args:
-        height_map:  Per-pixel height in cm (float32 array, same H×W as image).
+        height_map:  Per-pixel relative depth in [0, 1] (float32 array).
         food_label:  Canonical food name (must match keys in FOOD_HEIGHT_PRIORS).
-        alpha:       Weight for neural depth (default 0.70).
+        alpha:       Weight for depth-derived height (default 0.70).
         beta:        Weight for prior mid-point (default 0.30).
 
     Returns:
-        Fused + clamped height map (float32).
+        Height map in cm, clamped to the food's physiological range (float32).
     """
     key = food_label.strip().lower()
     # Try exact match, then substring
@@ -197,13 +221,16 @@ def apply_food_height_prior(
                 break
 
     if prior is None:
-        # No known prior — return unchanged
-        return height_map
+        # No known prior — scale relative map to a generic 0–50 cm range
+        return (height_map * 5.0).astype(np.float32)
 
     min_h, max_h = prior
     prior_mid = (min_h + max_h) / 2.0
+    height_range = max_h - min_h
 
-    fused = alpha * height_map + beta * prior_mid
+    # Map relative [0,1] depth to the food's cm range, then blend with midpoint
+    depth_in_cm = min_h + height_map * height_range   # scale into [min_h, max_h]
+    fused = alpha * depth_in_cm + beta * prior_mid
     clamped = np.clip(fused, min_h, max_h)
     return clamped.astype(np.float32)
 
@@ -325,27 +352,42 @@ def depth_to_cm(
     ctx=None,
 ) -> np.ndarray:
     """
-    Convert relative depth differences to real-world centimetres.
+    Convert a normalised relative depth map to [0, 1] range.
 
-    Uses a pinhole camera heuristic:
-    Dist_to_plate (Z) is roughly 1.2 * image_width (pixels) * scale (cm/px).
-    Height_cm = (delta_depth / current_depth) * Z_plate.
+    Depth Anything produces disparity values with no fixed physical unit.
+    We cannot reliably convert them to cm without a physical reference object.
+    Instead we normalise the map to [0, 1] so that 0 = plate surface (baseline)
+    and 1 = tallest point detected in the scene.
+
+    `apply_food_height_prior()` then maps this [0, 1] range into the food's
+    real-world cm range using known geometric priors.
+
+    cm_per_pixel and image_width_px are retained as arguments so the function
+    signature stays compatible. They will be used once a calibrated depth model
+    is available.
     """
-    debug  = ctx is not None and ctx.debug
-    t0     = time.perf_counter()
+    debug = ctx is not None and ctx.debug
+    t0    = time.perf_counter()
 
-    z_plate    = 1.2 * image_width_px * cm_per_pixel
-    depth_safe = np.where(raw_depth > 0, raw_depth, 1e-6)
-    height_cm  = (height_map_relative / depth_safe) * z_plate
+    # Clamp negative values (food below the plate baseline is not physical)
+    clamped = np.clip(height_map_relative, 0, None)
+
+    # Normalise to [0, 1]
+    max_val = clamped.max()
+    if max_val > 1e-6:
+        normalised = clamped / max_val
+    else:
+        normalised = clamped
 
     elapsed = time.perf_counter() - t0
 
     if debug:
         idx = ctx.next_index("depth")
-        ctx.save_npy("depth", f"{idx:02d}_height_cm.npy", height_cm.astype(np.float32))
-        ctx.log("Depth → cm Conversion", "Height map converted to centimetres",
-                {"z_plate_cm": round(z_plate, 2),
-                 "cm_per_pixel": round(cm_per_pixel, 5)},
+        ctx.save_npy("depth", f"{idx:02d}_height_normalised.npy", normalised.astype(np.float32))
+        ctx.log("Depth Normalised [0-1]", "Relative depth map normalised to [0,1]",
+                {"cm_per_pixel": round(cm_per_pixel, 5),
+                 "image_width_px": image_width_px,
+                 "max_raw_val": round(float(max_val), 4)},
                 elapsed=elapsed)
 
-    return height_cm.astype(np.float32)
+    return normalised.astype(np.float32)

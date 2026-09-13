@@ -38,6 +38,16 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+    // Only handle GET requests and static assets; NEVER intercept POST or API calls
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
+    const url = new URL(event.request.url);
+    if (url.pathname.startsWith('/api') || url.pathname.startsWith('/ocr')) {
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then((response) => {

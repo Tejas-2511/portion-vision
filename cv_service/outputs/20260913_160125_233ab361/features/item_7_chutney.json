@@ -1,0 +1,14 @@
+{
+  "item_id": "chutney_7",
+  "area_pixels": 3369,
+  "estimated_height_cm": 0.725,
+  "volume_estimate_ml": 2.8,
+  "density": 1.05,
+  "mass_g": 2.9,
+  "class_label": "mix veg",
+  "class_confidence": 0.9649,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.984,
+  "prior_applied": true
+}

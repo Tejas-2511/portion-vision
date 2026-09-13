@@ -1,0 +1,14 @@
+{
+  "item_id": "cake_6",
+  "area_pixels": 6247,
+  "estimated_height_cm": 2.995,
+  "volume_estimate_ml": 21.2,
+  "density": 1.0,
+  "mass_g": 21.2,
+  "class_label": "chapati",
+  "class_confidence": 0.8229,
+  "depth_stability": 0.75,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8742,
+  "prior_applied": false
+}
