@@ -17,6 +17,18 @@ export default function MenuUpload() {
   const [preview, setPreview] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [updateDatabase, setUpdateDatabase] = useState(false);
+
+  useEffect(() => {
+    api.getOcrDbUpdateSetting()
+      .then(res => {
+        if (res && typeof res.allowOcrDbUpdate === 'boolean') {
+          setUpdateDatabase(res.allowOcrDbUpdate);
+        }
+      })
+      .catch(err => console.warn("Failed to fetch OCR DB setting:", err));
+  }, []);
+  const [syncStatus, setSyncStatus] = useState(null);
 
   // Handle file selection from gallery or camera
   // Validates file type and size before setting state
@@ -31,13 +43,14 @@ export default function MenuUpload() {
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
       setExtractedText("");
+      setSyncStatus(null);
     } catch (err) {
       handleError(err);
     }
   }
 
   // Process menu image with OCR to extract text
-  // 1. Uploads image to backend via API
+  // 1. Uploads image to backend via API (with updateDatabase toggle)
   // 2. Receives extracted menu items
   // 3. Updates global state (AppContext) with new menu
   async function handleOCR() {
@@ -45,10 +58,11 @@ export default function MenuUpload() {
 
     setLoading(true);
     setExtractedText("");
+    setSyncStatus(null);
     clearError();
 
     try {
-      const data = await api.uploadMenuImage(selectedFile);
+      const data = await api.uploadMenuImage(selectedFile, updateDatabase);
 
       if (!data.items) {
         throw new Error("Invalid response from backend");
@@ -56,6 +70,12 @@ export default function MenuUpload() {
 
       const menuText = data.items.join("\n");
       setExtractedText(menuText);
+      setSyncStatus({
+        dbUpdated: data.dbUpdated,
+        addedCount: data.addedCount || 0,
+        matchedCount: data.matchedCount || 0,
+        dbUpdateEnabled: data.dbUpdateEnabled
+      });
 
       // Save menu to context (which auto-syncs to localStorage)
       setTodaysMenu({
@@ -138,6 +158,42 @@ export default function MenuUpload() {
         </div>
       )}
 
+      {/* Database Auto-Update Toggle */}
+      <div className="mb-6 w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${updateDatabase ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold text-slate-800 text-sm">Update Food Database</span>
+                <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${updateDatabase ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>
+                  {updateDatabase ? "Auto-Save" : "Read-Only"}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {updateDatabase 
+                  ? "Unrecognized menu items will be permanently added to the database."
+                  : "Database is protected. Unrecognized items will use fallback nutrition for this session."}
+              </p>
+            </div>
+          </div>
+
+          <label className="relative inline-flex items-center cursor-pointer ml-3">
+            <input 
+              type="checkbox" 
+              checked={updateDatabase}
+              onChange={(e) => setUpdateDatabase(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+          </label>
+        </div>
+      </div>
+
       <Button
         onClick={handleOCR}
         disabled={!selectedFile}
@@ -147,9 +203,31 @@ export default function MenuUpload() {
         Extract Menu
       </Button>
 
+      {syncStatus && (
+        <div className={`mb-6 w-full rounded-xl p-4 border text-sm ${syncStatus.dbUpdated ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-sky-50 border-sky-200 text-sky-800'}`}>
+          <div className="flex items-start space-x-2">
+            <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="font-semibold">
+                {syncStatus.dbUpdated
+                  ? `💾 Added ${syncStatus.addedCount} new food items to the database!`
+                  : `🛡️ Database Read-Only: ${syncStatus.matchedCount} items matched to existing database.`}
+              </p>
+              <p className="text-xs mt-1 opacity-90">
+                {syncStatus.dbUpdated
+                  ? "Items were saved with estimated macros and can now be recognized across future scans."
+                  : "Database was not modified. Similar foods were resolved via fuzzy matching."}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {extractedText && (
         <div className="w-full rounded-xl bg-white p-6 shadow-lg border border-slate-100">
-          <h3 className="mb-3 text-lg font-bold text-slate-700">Extracted Text</h3>
+          <h3 className="mb-3 text-lg font-bold text-slate-700">Extracted Menu Items</h3>
           <pre className="whitespace-pre-wrap rounded-lg bg-slate-50 p-4 text-sm text-slate-600 font-mono border border-slate-200">
             {extractedText}
           </pre>

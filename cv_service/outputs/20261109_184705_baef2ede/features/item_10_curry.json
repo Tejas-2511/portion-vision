@@ -1,0 +1,14 @@
+{
+  "item_id": "curry_10",
+  "area_pixels": 1461,
+  "estimated_height_cm": 0.375,
+  "volume_estimate_ml": 0.6,
+  "density": 1.11,
+  "mass_g": 0.6,
+  "class_label": "curry",
+  "class_confidence": 0.519,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.659,
+  "prior_applied": true
+}

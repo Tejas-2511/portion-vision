@@ -1,0 +1,434 @@
+{
+  "food_items": [
+    {
+      "name": "rice",
+      "volume_ml": 36.7,
+      "mass_g": 38.9,
+      "calories": 50.6,
+      "protein": 1.1,
+      "carbs": 10.9,
+      "fat": 0.1,
+      "confidence": 0.6709,
+      "class_label": "rice",
+      "class_confidence": 0.2928,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.543,
+          "raw_similarity": -0.0035
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.457,
+          "raw_similarity": -0.0186
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.2928,
+      "segmentation_confidence": 0.9883,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "rice",
+      "volume_ml": 18.7,
+      "mass_g": 19.4,
+      "calories": 25.2,
+      "protein": 0.5,
+      "carbs": 5.4,
+      "fat": 0.1,
+      "confidence": 0.71,
+      "class_label": "rice",
+      "class_confidence": 0.3679,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.5818,
+          "raw_similarity": 0.0197
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.4182,
+          "raw_similarity": -0.0105
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3679,
+      "segmentation_confidence": 0.9865,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "rice",
+      "volume_ml": 74.5,
+      "mass_g": 78.5,
+      "calories": 102.0,
+      "protein": 2.1,
+      "carbs": 22.0,
+      "fat": 0.2,
+      "confidence": 0.8308,
+      "class_label": "rice",
+      "class_confidence": 0.7345,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.7425,
+          "raw_similarity": 0.0985
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.2575,
+          "raw_similarity": -0.0339
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7345,
+      "segmentation_confidence": 0.9267,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 25.3,
+      "mass_g": 27.1,
+      "calories": 27.1,
+      "protein": 1.4,
+      "carbs": 3.3,
+      "fat": 1.1,
+      "confidence": 0.6803,
+      "class_label": "rice",
+      "class_confidence": 0.3304,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.5065,
+          "raw_similarity": 0.0318
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.4935,
+          "raw_similarity": 0.0286
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3304,
+      "segmentation_confidence": 0.9261,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 23.9,
+      "mass_g": 25.8,
+      "calories": 25.8,
+      "protein": 1.3,
+      "carbs": 3.1,
+      "fat": 1.0,
+      "confidence": 0.7438,
+      "class_label": "rice",
+      "class_confidence": 0.446,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.5821,
+          "raw_similarity": 0.0494
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.4179,
+          "raw_similarity": 0.0079
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.446,
+      "segmentation_confidence": 0.9806,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 14.5,
+      "mass_g": 15.5,
+      "calories": 15.5,
+      "protein": 0.8,
+      "carbs": 1.9,
+      "fat": 0.6,
+      "confidence": 0.6783,
+      "class_label": "rice",
+      "class_confidence": 0.3147,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.558,
+          "raw_similarity": 0.0018
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.442,
+          "raw_similarity": -0.0189
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3147,
+      "segmentation_confidence": 0.9611,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 6.1,
+      "mass_g": 6.5,
+      "calories": 6.5,
+      "protein": 0.3,
+      "carbs": 0.8,
+      "fat": 0.3,
+      "confidence": 0.7737,
+      "class_label": "rice",
+      "class_confidence": 0.521,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6674,
+          "raw_similarity": 0.0353
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3326,
+          "raw_similarity": -0.0518
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.521,
+      "segmentation_confidence": 0.9824,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 4.4,
+      "mass_g": 4.8,
+      "calories": 4.8,
+      "protein": 0.2,
+      "carbs": 0.6,
+      "fat": 0.2,
+      "confidence": 0.7269,
+      "class_label": "rice",
+      "class_confidence": 0.4147,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.5973,
+          "raw_similarity": 0.0224
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.4027,
+          "raw_similarity": -0.0269
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4147,
+      "segmentation_confidence": 0.9617,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 5.1,
+      "mass_g": 5.5,
+      "calories": 5.5,
+      "protein": 0.3,
+      "carbs": 0.7,
+      "fat": 0.2,
+      "confidence": 0.7633,
+      "class_label": "rice",
+      "class_confidence": 0.5094,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6712,
+          "raw_similarity": 0.0262
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3288,
+          "raw_similarity": -0.063
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.5094,
+      "segmentation_confidence": 0.952,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 4.5,
+      "mass_g": 4.8,
+      "calories": 4.8,
+      "protein": 0.2,
+      "carbs": 0.6,
+      "fat": 0.2,
+      "confidence": 0.7652,
+      "class_label": "rice",
+      "class_confidence": 0.5011,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6568,
+          "raw_similarity": 0.0314
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3432,
+          "raw_similarity": -0.0497
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.5011,
+      "segmentation_confidence": 0.9775,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 2.6,
+      "mass_g": 2.8,
+      "calories": 2.8,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.1,
+      "confidence": 0.6524,
+      "class_label": "rice",
+      "class_confidence": 0.2706,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6164,
+          "raw_similarity": 0.021
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3836,
+          "raw_similarity": -0.046
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.2706,
+      "segmentation_confidence": 0.9566,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 4.1,
+      "mass_g": 4.4,
+      "calories": 4.4,
+      "protein": 0.2,
+      "carbs": 0.5,
+      "fat": 0.2,
+      "confidence": 0.7701,
+      "class_label": "rice",
+      "class_confidence": 0.528,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6737,
+          "raw_similarity": 0.0348
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3263,
+          "raw_similarity": -0.0558
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.528,
+      "segmentation_confidence": 0.9516,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal tadka",
+      "volume_ml": 3.3,
+      "mass_g": 3.6,
+      "calories": 3.6,
+      "protein": 0.2,
+      "carbs": 0.4,
+      "fat": 0.1,
+      "confidence": 0.7482,
+      "class_label": "rice",
+      "class_confidence": 0.4673,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.6665,
+          "raw_similarity": 0.006
+        },
+        {
+          "label": "dal tadka",
+          "confidence": 0.3335,
+          "raw_similarity": -0.0805
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4673,
+      "segmentation_confidence": 0.958,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7318
+}

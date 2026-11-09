@@ -24,7 +24,9 @@ async def estimate_portion(
     image: UploadFile = File(...),
     expected_items: str = Form(None),
     plate_profile: str = Form(None),
+    meal_type: str = Form(None),
     debug: bool = Form(True),
+    use_open_vocab: bool = Form(True),
 ):
     """
     Estimate food mass from a plate image.
@@ -32,27 +34,18 @@ async def estimate_portion(
     - **image**: JPEG/PNG of the mess plate
     - **expected_items**: comma-separated food names (optional, for labeling)
     - **plate_profile**: plate type key (optional, defaults to standard_mess_thali)
+    - **meal_type**: meal slot ('breakfast', 'lunch', 'snacks', 'dinner')
     - **debug**: when true, saves ALL intermediate pipeline outputs to
       `outputs/<run_id>/` and generates an HTML report
-
-    Returns:
-    ```json
-    {
-        "food_items": [
-            {"name": "dal", "volume_ml": 120.5, "mass_g": 126.5},
-            ...
-        ],
-        "confidence": 0.82,
-        "_debug": { "run_id": "...", "run_dir": "...", "report": "..." }
-    }
-    ```
     """
     items_list = None
-    if expected_items:
-        items_list = [item.strip() for item in expected_items.split(",") if item.strip()]
+    if expected_items and expected_items.strip().lower() not in ("none", "null", "undefined", ""):
+        items_list = [item.strip() for item in expected_items.split(",") if item.strip() and item.strip().lower() not in ("none", "null")]
+        if not items_list:
+            items_list = None
 
     contents = await image.read()
-    img_hash = hashlib.sha256(contents).hexdigest() + "_" + str(expected_items)
+    img_hash = hashlib.sha256(contents).hexdigest() + "_" + str(expected_items) + "_" + str(plate_profile) + "_" + str(meal_type)
 
     global _last_cv_result, _last_cv_hash
     if _last_cv_hash == img_hash and _last_cv_result is not None:
@@ -70,7 +63,9 @@ async def estimate_portion(
             image_bgr=img_bgr,
             expected_items=items_list,
             plate_profile=plate_profile,
+            meal_type=meal_type,
             debug=debug,
+            use_open_vocab=use_open_vocab,
         )
         # #7 — Quality gate failure is returned as a 422 with a user-friendly message
         if result.get("error_type") == "image_quality":

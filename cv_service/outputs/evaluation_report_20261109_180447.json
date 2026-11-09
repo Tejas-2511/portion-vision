@@ -1,0 +1,98 @@
+[
+  {
+    "case_id": 1,
+    "description": "Thali with staple dishes, sliced cucumber, pickle, and cutlery",
+    "image": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20260406_200944_def9be09\\input\\original.png",
+    "menu": [
+      "steamed rice",
+      "dal palak",
+      "chapati"
+    ],
+    "v42_results": {
+      "total_retained_food_items": 12,
+      "recognized_items": [
+        "steamed rice",
+        "steamed rice"
+      ],
+      "unlisted_items": [
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "curry",
+        "curry",
+        "cucumber",
+        "cucumber",
+        "curry"
+      ],
+      "uncertain_items": [
+        "cucumber",
+        "unlisted food"
+      ],
+      "cucumber_salad_detections": 6,
+      "pickle_detections": 0,
+      "spoon_false_positives": 0,
+      "table_false_positives": 0,
+      "non_food_false_positive_rate": 0.0,
+      "avg_confidence": 0.774,
+      "latency_s": 24.04
+    }
+  },
+  {
+    "case_id": 2,
+    "description": "Constrained 2-item menu with unlisted salad, sides, and metallic dividers",
+    "image": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20260410_030528_3ffeada1\\input\\original.png",
+    "menu": [
+      "rice",
+      "dal tadka"
+    ],
+    "v42_results": {
+      "total_retained_food_items": 33,
+      "recognized_items": [
+        "rice",
+        "dal tadka",
+        "dal tadka",
+        "dal tadka",
+        "dal tadka",
+        "dal tadka",
+        "dal tadka"
+      ],
+      "unlisted_items": [
+        "paneer",
+        "cucumber",
+        "cucumber",
+        "paneer",
+        "paneer",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "paneer",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "cucumber"
+      ],
+      "uncertain_items": [
+        "cucumber",
+        "cucumber",
+        "cucumber",
+        "unlisted food"
+      ],
+      "cucumber_salad_detections": 21,
+      "pickle_detections": 0,
+      "spoon_false_positives": 0,
+      "table_false_positives": 0,
+      "non_food_false_positive_rate": 0.0,
+      "avg_confidence": 0.731,
+      "latency_s": 27.6
+    }
+  }
+]

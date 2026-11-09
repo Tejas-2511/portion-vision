@@ -1,0 +1,14 @@
+{
+  "item_id": "curry_8",
+  "area_pixels": 53282,
+  "estimated_height_cm": 0.375,
+  "volume_estimate_ml": 20.3,
+  "density": 1.11,
+  "mass_g": 22.5,
+  "class_label": "curry",
+  "class_confidence": 0.7734,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8044,
+  "prior_applied": true
+}

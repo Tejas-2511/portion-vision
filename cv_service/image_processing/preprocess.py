@@ -197,9 +197,14 @@ def process_image(
             largest = max(valid_contours, key=cv2.contourArea)
             epsilon = 0.02 * cv2.arcLength(largest, True)
             approx = cv2.approxPolyDP(largest, epsilon, True)
-            if len(approx) == 4:
-                output = _four_point_transform(enhanced, approx.reshape(4, 2))   # fixed: warp enhanced
-                warped = True
+            if len(approx) == 4 and cv2.isContourConvex(approx):
+                try:
+                    warped_img = _four_point_transform(enhanced, approx.reshape(4, 2))
+                    if warped_img.shape[0] >= 100 and warped_img.shape[1] >= 100:
+                        output = warped_img
+                        warped = True
+                except cv2.error:
+                    pass
 
     elapsed = time.perf_counter() - t0
 
@@ -250,6 +255,9 @@ def _four_point_transform(image: np.ndarray, pts: np.ndarray) -> np.ndarray:
         np.linalg.norm(tr - br),
         np.linalg.norm(tl - bl),
     ))
+
+    if w < 100 or h < 100:
+        return image
 
     dst = np.array([
         [0, 0],

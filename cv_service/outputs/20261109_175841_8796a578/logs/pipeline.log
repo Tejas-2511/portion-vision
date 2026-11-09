@@ -1,0 +1,21 @@
+2026-11-09 17:58:41,101 │ INFO │ Run started — debug=False, id=20261109_175841_8796a578
+2026-11-09 17:58:41,282 │ INFO │ [input] Saved image → original.png
+2026-11-09 17:58:41,283 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-09 17:58:41,283 │ INFO │ [Input] Original image saved │ params={'resolution': '1600x1204'} │ time=0.1818s │ output=original.png
+2026-11-09 17:58:41,283 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-09 17:58:41,392 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 351.14, 'tilt_deg': 25.0}
+2026-11-09 17:58:41,562 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x770'} │ time=0.2801s
+2026-11-09 17:58:41,564 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-09 17:58:41,582 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.03812, 'method': 'bbox'}
+2026-11-09 17:58:41,582 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03812, 'pixel_area_cm2': 0.00145309, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0183s
+2026-11-09 17:58:41,582 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-11-09 17:59:12,096 │ INFO │ [Depth Estimation] Complete │ time=30.5133s
+2026-11-09 17:59:12,096 │ INFO │ [Pipeline] Step 4–6 — SAM 3 Food Identification & Segmentation
+2026-11-09 17:59:41,367 │ INFO │ [SAM3] Identified 13 food items (2 recognized, 8 unlisted, 3 uncertain) │ time=29.2712s
+2026-11-09 17:59:41,368 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-11-09 17:59:41,400 │ INFO │ [Volume Estimation] Computed mass for 13 items │ params={'total_items': 13} │ time=0.0331s
+2026-11-09 17:59:41,536 │ INFO │ [volume] Saved image → 01_final_annotated.png
+2026-11-09 17:59:41,537 │ INFO │ [volume] Saved JSON → results.json
+2026-11-09 17:59:41,537 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 13, 'avg_confidence': 0.7325, 'scale_method': 'bbox'} │ time=60.4478s
+2026-11-09 17:59:41,538 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-09 17:59:41,590 │ INFO │ HTML report generated → report.html

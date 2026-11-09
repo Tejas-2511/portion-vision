@@ -1,0 +1,432 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.7726,
+      "identification_confidence": 0.7726,
+      "segmentation_confidence": 0.7726,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        51,
+        529,
+        720,
+        599
+      ],
+      "area_pixels": 282332,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.7726,
+          "raw_similarity": 0.7726
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\00_steamed_rice_0.77.png",
+      "sam3_raw_query": "steamed rice",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.4496,
+      "identification_confidence": 0.4496,
+      "segmentation_confidence": 0.4496,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1136,
+        628,
+        79,
+        66
+      ],
+      "area_pixels": 3257,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.4496,
+          "raw_similarity": 0.4496
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\01_steamed_rice_0.45.png",
+      "sam3_raw_query": "steamed rice",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.915,
+      "identification_confidence": 0.915,
+      "segmentation_confidence": 0.915,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1269,
+        337,
+        130,
+        122
+      ],
+      "area_pixels": 11716,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.915,
+          "raw_similarity": 0.915
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\02_cucumber_0.91.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.9147,
+      "identification_confidence": 0.9147,
+      "segmentation_confidence": 0.9147,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1119,
+        121,
+        145,
+        158
+      ],
+      "area_pixels": 17932,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9147,
+          "raw_similarity": 0.9147
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\03_cucumber_0.91.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.9014,
+      "identification_confidence": 0.9014,
+      "segmentation_confidence": 0.9014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1218,
+        217,
+        124,
+        135
+      ],
+      "area_pixels": 12466,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9014,
+          "raw_similarity": 0.9014
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\04_cucumber_0.90.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "curry",
+      "food_name": "curry",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.887,
+      "identification_confidence": 0.887,
+      "segmentation_confidence": 0.887,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        536,
+        114,
+        437,
+        385
+      ],
+      "area_pixels": 131513,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.887,
+          "raw_similarity": 0.887
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\05_curry_0.89.png",
+      "sam3_raw_query": "curry",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "curry",
+      "food_name": "curry",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.8861,
+      "identification_confidence": 0.8861,
+      "segmentation_confidence": 0.8861,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        89,
+        106,
+        437,
+        383
+      ],
+      "area_pixels": 133130,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.8861,
+          "raw_similarity": 0.8861
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\06_curry_0.89.png",
+      "sam3_raw_query": "curry",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.8821,
+      "identification_confidence": 0.8821,
+      "segmentation_confidence": 0.8821,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1054,
+        262,
+        158,
+        214
+      ],
+      "area_pixels": 22841,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8821,
+          "raw_similarity": 0.8821
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\07_cucumber_0.88.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.8657,
+      "identification_confidence": 0.8657,
+      "segmentation_confidence": 0.8657,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1186,
+        346,
+        94,
+        121
+      ],
+      "area_pixels": 6773,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8657,
+          "raw_similarity": 0.8657
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\08_cucumber_0.87.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "curry",
+      "food_name": "curry",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.6569,
+      "identification_confidence": 0.6569,
+      "segmentation_confidence": 0.6569,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        967,
+        82,
+        74,
+        66
+      ],
+      "area_pixels": 3549,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.6569,
+          "raw_similarity": 0.6569
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\09_curry_0.66.png",
+      "sam3_raw_query": "curry",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.4611,
+      "identification_confidence": 0.4611,
+      "segmentation_confidence": 0.4611,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1260,
+        146,
+        77,
+        81
+      ],
+      "area_pixels": 3926,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.4611,
+          "raw_similarity": 0.4611
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\10_cucumber_0.46.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "unlisted food",
+      "food_name": "unlisted food",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.692,
+      "identification_confidence": 0.692,
+      "segmentation_confidence": 0.692,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1022,
+        119,
+        377,
+        365
+      ],
+      "area_pixels": 84695,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "unlisted food",
+          "confidence": 0.692,
+          "raw_similarity": 0.692
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261109_180224_sam3\\crops\\11_unlisted_food_0.69.png",
+      "sam3_raw_query": "food",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    }
+  ],
+  "image_dimensions": [
+    1600,
+    1204
+  ],
+  "total_items": 12,
+  "recognized_count": 2,
+  "unlisted_count": 8,
+  "uncertain_count": 2,
+  "elapsed_seconds": 24.398,
+  "diagnostics": {
+    "pipeline_version": "v4.3_sam3_streamlined",
+    "timings": {
+      "total_pipeline_s": 24.398
+    },
+    "vram_mb": {
+      "start": 0.0,
+      "end": 3418.76
+    },
+    "device": "cuda"
+  }
+}

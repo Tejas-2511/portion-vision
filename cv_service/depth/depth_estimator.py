@@ -27,79 +27,491 @@ _depth_device    = None
 # ── Food-specific height priors (min_cm, max_cm) ─────────────────────────────
 # Used by apply_food_height_prior() to clamp and blend Depth Anything output.
 FOOD_HEIGHT_PRIORS: dict[str, tuple[float, float]] = {
-    # Flat / thin items
-    "roti":     (0.4, 1.5),
-    "chapati":  (0.4, 1.5),
-    "naan":     (0.5, 1.8),
-    "paratha":  (0.5, 2.0),
-    "dosa":     (0.3, 0.8),
-    "papad":    (0.2, 0.5),
-    # Moderate mounds
-    "rice":     (1.5, 4.5),
-    "sada rice":(1.5, 4.5),
-    "steam rice":(1.5, 4.0),
-    "jeera rice":(1.5, 4.0),
-    "fried rice":(1.5, 4.0),
-    "biryani":  (2.0, 5.0),
-    "pulao":    (1.5, 4.5),
-    "khichdi":  (2.0, 5.0),
-    "upma":     (2.0, 4.5),
-    "poha":     (1.5, 3.5),
-    # Liquid / semi-liquid
-    "dal":      (1.5, 3.5),
-    "dal fry":  (1.5, 3.5),
-    "dal tadka":(1.5, 3.5),
-    "dal makhani":(1.5, 3.5),
-    "dal palak":(1.5, 3.5),
-    "sambar":   (1.5, 3.0),
-    "rasam":    (1.0, 2.5),
-    "rajma":    (2.0, 4.0),
-    "chole":    (2.0, 4.0),
-    "chana":    (2.0, 4.0),
-    "raita":    (1.5, 3.0),
-    "curd":     (1.5, 3.0),
-    # Sabzis / curries
-    "sabzi":    (2.0, 5.0),
-    "sabji":    (2.0, 5.0),
-    "aloo":     (2.0, 5.0),
-    "gobi":     (2.0, 4.5),
-    "bhindi":   (2.0, 4.5),
-    "baingan":  (2.0, 4.5),
-    "mixed veg":(2.0, 4.5),
-    "chicken curry":(2.5, 5.5),
-    "chicken":  (2.5, 5.0),
-    "egg curry":(2.0, 4.5),
-    "paneer":   (2.5, 5.0),
-    "mutton":   (2.5, 5.5),
-    "fish curry":(2.0, 4.5),
-    # Sweets / misc
-    "halwa":    (2.0, 4.0),
-    "kheer":    (1.5, 3.5),
-    "gulab jamun":(3.0, 5.5),
-    "salad":    (1.0, 3.0),
-    "chutney":  (0.5, 2.0),
-    "tomato chutney": (0.5, 2.0),
-    "pickle":   (0.5, 2.0),
-    # Additional items that appear on typical mess menus
-    "aloo capsicum":  (2.0, 5.0),
-    "aloo gobi":      (2.0, 4.5),
-    "dal amritsari":  (1.5, 3.5),
+    "aam panna": (1.0, 3.5),
+    "achar": (0.5, 2.0),
+    "achari kaddu": (0.5, 2.0),
+    "aloo": (2.0, 5.0),
+    "aloo bhujia": (2.0, 4.5),
+    "aloo bonda": (1.5, 4.5),
+    "aloo capsicum": (2.0, 5.0),
+    "aloo gobi": (2.0, 4.5),
+    "aloo jeera": (2.0, 4.5),
+    "aloo matar": (2.0, 4.5),
+    "aloo methi": (2.0, 4.5),
+    "aloo palak": (2.0, 4.5),
+    "aloo papdi chaat": (1.5, 4.5),
+    "aloo paratha": (0.5, 2.0),
+    "aloo poori": (0.4, 1.8),
+    "aloo pyaaz": (2.0, 4.5),
+    "aloo sem phali": (2.0, 4.5),
+    "aloo tamatar": (2.0, 4.5),
+    "aloo tikki": (1.5, 4.5),
+    "anda curry": (2.0, 5.0),
+    "appam": (0.3, 0.8),
+    "apple": (1.5, 4.5),
+    "apple slices": (1.5, 4.5),
+    "arbi masala": (2.0, 4.5),
+    "arhar dal": (1.5, 3.5),
+    "avial": (2.0, 4.5),
+    "badam halwa": (1.5, 4.0),
+    "badam milk": (1.0, 3.5),
+    "bagara rice": (1.5, 4.5),
+    "baingan": (2.0, 4.5),
+    "baingan bharta": (2.0, 4.5),
+    "baingan masala": (2.0, 4.5),
+    "banana": (1.5, 4.5),
+    "banana cake": (1.5, 3.5),
+    "banana milkshake": (1.0, 3.5),
+    "barfi": (1.0, 2.5),
+    "basundi": (1.5, 4.0),
+    "beans poriyal": (2.0, 4.5),
+    "besan cheela": (1.5, 4.5),
+    "besan laddu": (2.5, 5.5),
+    "bhaji": (2.0, 4.5),
+    "bhature": (0.4, 1.8),
+    "bhel puri": (1.5, 4.5),
+    "bhindi": (2.0, 4.5),
+    "bhindi fry": (2.0, 4.5),
+    "bhindi masala": (2.0, 4.5),
+    "biresra kadhi": (1.5, 3.5),
+    "biryani": (2.0, 5.0),
+    "biscuit": (1.5, 4.5),
+    "bisi bele bath": (1.5, 4.5),
+    "black chana": (2.0, 4.5),
+    "black chana masala": (2.0, 4.5),
+    "black masoor dal": (1.5, 3.5),
+    "black urad dal": (1.5, 3.5),
+    "boiled egg": (2.5, 5.0),
+    "boondi": (1.5, 4.5),
+    "boondi raita": (1.5, 3.0),
+    "bornvita": (1.0, 3.5),
+    "bournvita milk": (1.0, 3.5),
+    "bread": (1.5, 3.5),
+    "bread butter": (0.4, 1.8),
+    "bread jam": (0.4, 1.8),
+    "bread omelette": (0.4, 1.8),
+    "bread pakoda": (0.4, 1.8),
+    "bread toast": (0.4, 1.8),
+    "brownie": (1.5, 3.5),
+    "butter": (0.5, 2.0),
+    "butter chicken": (2.0, 5.0),
+    "butter milk": (1.0, 3.5),
+    "butter naan": (0.4, 1.8),
+    "cabbage carrot": (2.0, 4.5),
+    "cabbage matar": (2.0, 4.5),
+    "cabbage poriyal": (2.0, 4.5),
+    "cabbage sabzi": (2.0, 5.0),
+    "cake": (1.5, 3.5),
+    "carrot beans poriyal": (2.0, 4.5),
+    "carrot capsicum": (2.0, 4.5),
+    "chaap makhani": (2.0, 4.5),
+    "chaap masala": (2.0, 4.5),
+    "chaas": (1.0, 3.5),
+    "chana": (2.0, 4.0),
+    "chana curry": (2.0, 5.0),
+    "chana dal": (1.5, 3.5),
+    "chana dal burfi": (1.5, 3.5),
+    "chana dal sabzi": (1.5, 3.5),
+    "chana dal tadka": (1.5, 3.5),
+    "chana masala": (2.0, 4.5),
+    "chapati": (0.4, 1.5),
+    "chicken": (2.5, 5.0),
+    "chicken biryani": (1.5, 4.5),
+    "chicken chettinad": (2.0, 5.0),
+    "chicken curry": (2.5, 5.5),
+    "chicken do pyaza": (2.0, 5.0),
+    "chicken fried rice": (1.5, 4.5),
+    "chicken korma": (2.0, 5.0),
+    "chicken masala": (2.0, 5.0),
+    "chicken momos": (2.0, 5.0),
+    "chicken roll": (2.0, 5.0),
+    "chicken soup": (2.0, 5.0),
+    "chicken tikka": (2.0, 5.0),
+    "chikoo": (1.5, 4.5),
+    "chilka moong dal": (1.5, 3.5),
+    "chilli chicken": (2.0, 5.0),
+    "chilli gobi": (1.5, 4.5),
+    "chilli paneer": (2.0, 5.0),
+    "chitranna": (1.5, 4.5),
+    "chocolate brownie": (1.5, 3.5),
+    "chole": (2.0, 4.0),
+    "chole bhature": (2.0, 5.0),
+    "chole masala": (2.0, 5.0),
+    "chole rice": (1.5, 4.5),
+    "chutney": (0.5, 2.0),
+    "coconut burfi": (1.5, 4.0),
+    "coconut chutney": (0.5, 2.0),
+    "coconut laddu": (2.5, 5.5),
+    "coconut rice": (1.5, 4.5),
+    "coffee": (1.0, 3.5),
+    "cold milk": (1.0, 3.5),
+    "corn capsicum": (2.0, 4.5),
+    "corn chaat": (1.5, 4.5),
+    "corn palak": (2.0, 4.5),
+    "corn pulao": (1.5, 4.5),
+    "cornfalkes with hot milk": (1.0, 3.5),
+    "cornflakes": (1.5, 4.5),
+    "cornflakes with hot milk": (1.0, 3.5),
+    "cucumber salad": (0.8, 2.5),
+    "curd": (1.5, 3.0),
+    "curd rice": (1.5, 3.0),
+    "curd vada": (1.5, 3.0),
+    "custard": (1.5, 4.0),
+    "dal": (1.5, 3.5),
+    "dal amritsari": (1.5, 3.5),
+    "dal banjara": (1.5, 3.5),
+    "dal curry": (1.5, 3.5),
+    "dal dakshani": (1.5, 3.5),
+    "dal fry": (1.5, 3.5),
+    "dal khichdi": (1.5, 3.5),
+    "dal makhani": (1.5, 3.5),
+    "dal pakoda": (1.5, 3.5),
+    "dal palak": (1.5, 3.5),
+    "dal panchmail": (1.5, 3.5),
+    "dal panchratan": (1.5, 3.5),
+    "dal rice": (1.5, 3.5),
+    "dal tadka": (1.5, 3.5),
     "dal vada curry": (2.0, 4.5),
-    "paneer do pyaza":      (2.5, 5.0),
+    "daliya": (1.5, 3.5),
+    "dhokla": (1.5, 4.5),
+    "dosa": (0.3, 0.8),
+    "dum aloo": (2.0, 4.5),
+    "dum aloo kashmiri": (2.0, 4.5),
+    "egg": (3.0, 5.5),
+    "egg bhurji": (2.5, 5.0),
+    "egg biryani": (1.5, 4.5),
+    "egg curry": (2.0, 4.5),
+    "egg fried rice": (1.5, 4.5),
+    "egg keema masala": (2.5, 5.0),
+    "egg masala": (2.5, 5.0),
+    "egg methi keema masala": (2.5, 5.0),
+    "egg puff": (2.5, 5.0),
+    "egg roll": (2.5, 5.0),
+    "fish curry": (2.0, 4.5),
+    "fish curry rice": (1.5, 4.5),
+    "fish fry": (2.0, 5.0),
+    "flavored milk": (1.0, 3.5),
+    "fried chilli": (0.5, 2.0),
+    "fried rice": (1.5, 4.0),
+    "fruit custard": (1.5, 4.0),
+    "fruit salad": (0.8, 2.5),
+    "fryum": (0.2, 0.5),
+    "gajar halwa": (1.5, 4.0),
+    "gajar matar": (2.0, 4.5),
+    "gajar matar sabzi": (2.0, 5.0),
+    "garlic chutney": (0.5, 2.0),
+    "garlic khichdi": (1.5, 4.5),
+    "garlic naan": (0.4, 1.8),
+    "ghee": (0.5, 2.0),
+    "ghee rice": (1.5, 4.5),
+    "gobhi aloo": (2.0, 4.5),
+    "gobhi masala": (2.0, 4.5),
+    "gobhi matar": (2.0, 4.5),
+    "gobi": (2.0, 4.5),
+    "gobi manchurian": (1.5, 4.5),
+    "gobi paratha": (0.5, 2.0),
+    "grapes": (1.5, 4.5),
+    "green chilli fry": (0.5, 2.0),
+    "green chutney": (0.5, 2.0),
+    "green moong dal": (1.5, 3.5),
+    "green moong dal khichdi": (1.5, 3.5),
+    "green moong dal tadka": (1.5, 3.5),
+    "green peas pulao": (1.5, 4.5),
+    "green salad": (0.8, 2.5),
+    "grilled sandwich": (1.5, 4.5),
+    "guava": (1.5, 4.5),
+    "gujiya": (1.5, 4.0),
+    "gulab jamun": (3.0, 5.5),
+    "gunpowder podi": (0.5, 2.0),
+    "gutta curry": (2.0, 5.0),
+    "halwa": (2.0, 4.0),
+    "hot and sour soup": (1.0, 3.5),
+    "hot milk": (1.0, 3.5),
+    "ice cream": (1.5, 4.0),
+    "ice tea": (1.0, 3.5),
+    "idli": (3.0, 5.5),
+    "jal jeera": (1.0, 3.5),
+    "jalebi": (1.5, 4.0),
+    "jaljeera": (1.0, 3.5),
+    "jam": (0.5, 2.0),
+    "jeera pulao": (1.5, 4.5),
+    "jeera rice": (1.5, 4.0),
+    "kabuli chana": (2.0, 4.5),
+    "kabuli chana chaat": (0.8, 2.5),
+    "kachori": (1.5, 4.5),
+    "kaddu sabzi": (2.0, 5.0),
+    "kadhai chicken": (2.0, 5.0),
+    "kadhai paneer": (2.0, 5.0),
+    "kadhai veg": (2.0, 4.5),
+    "kadhi chawal": (1.5, 3.5),
+    "kadhi pakoda": (1.5, 3.5),
+    "kadhi pakora": (1.5, 3.5),
+    "kaju katli": (1.5, 4.0),
+    "kalakand": (1.5, 4.0),
+    "karela fry": (2.0, 4.5),
+    "karela masala": (2.0, 4.5),
+    "keema masala": (2.0, 4.5),
+    "kesar phirni": (1.5, 4.0),
+    "kesari bhat": (1.5, 4.0),
+    "kesariya thandai": (1.0, 3.5),
+    "khandvi": (1.5, 4.5),
+    "khatta meetha kaddu": (2.0, 4.5),
+    "khatti dal": (1.5, 3.5),
+    "kheer": (1.5, 3.5),
+    "khichdi": (2.0, 5.0),
+    "kofta": (2.5, 5.0),
+    "kootu": (2.0, 4.5),
+    "kulcha": (0.5, 2.0),
+    "laddu": (3.5, 6.0),
+    "lahsuni dal": (1.5, 3.5),
+    "langarwali dal": (1.5, 3.5),
+    "lassi": (1.5, 4.0),
+    "lauki chana": (2.0, 4.5),
+    "lauki chana dal": (1.5, 3.5),
+    "lauki kofta curry": (2.0, 5.0),
+    "lauki raita": (1.5, 3.0),
+    "lauki sabzi": (2.0, 5.0),
+    "lemon pickle": (0.5, 2.0),
+    "lemon rice": (1.5, 4.5),
+    "lemon water": (1.0, 3.5),
+    "lobia dal": (1.5, 3.5),
+    "lobiya masala": (2.0, 4.5),
+    "luchi": (0.4, 1.8),
+    "macaroni": (1.5, 4.5),
+    "maggi": (1.5, 4.5),
+    "malai kofta": (2.0, 4.5),
+    "malpua": (1.5, 4.0),
+    "manchow soup": (1.0, 3.5),
+    "manchurian": (1.5, 4.5),
+    "mango": (1.5, 4.5),
+    "mango lassi": (1.0, 3.5),
+    "mango pickle": (0.5, 2.0),
+    "mangoda": (1.5, 4.5),
+    "masala bhat": (1.5, 4.5),
+    "masala chai": (1.0, 3.5),
+    "masala dosa": (0.3, 0.8),
+    "masala puri": (1.5, 4.5),
+    "masala rice": (1.5, 4.5),
+    "masoor dal": (1.5, 3.5),
+    "masoor dal tadka": (1.5, 3.5),
+    "matar mushroom": (2.0, 4.5),
+    "matar mushroom masala": (2.0, 4.5),
+    "matar paneer": (2.0, 5.0),
+    "matar sabzi": (2.0, 5.0),
+    "medu vada": (2.5, 5.0),
+    "methi aloo": (2.0, 4.5),
+    "methi dal": (1.5, 3.5),
+    "methi matar chaman": (2.0, 4.5),
+    "methi rice": (1.5, 4.5),
+    "methi thepla": (0.4, 1.8),
+    "milk": (1.0, 3.0),
+    "mini idli": (2.5, 5.0),
+    "mint chutney": (0.5, 2.0),
+    "mirchi bajji": (1.5, 4.5),
+    "misal pav": (1.5, 4.5),
+    "missi roti": (0.4, 1.8),
+    "mix bhajiya": (1.5, 4.5),
+    "mix dal": (1.5, 3.5),
+    "mix dal tadka": (1.5, 3.5),
+    "mix veg": (2.0, 4.5),
+    "mixed pickle": (0.5, 2.0),
+    "mixed veg": (2.0, 4.5),
+    "mixed veg soup": (1.0, 3.5),
+    "mixed vegetable curry": (2.0, 5.0),
+    "moong dal cheela": (1.5, 3.5),
+    "moong dal halwa": (1.5, 3.5),
+    "moong dal khichdi": (1.5, 3.5),
+    "moong dal tadka": (1.5, 3.5),
+    "mosambi": (1.5, 4.5),
+    "moti chur ke laddu": (2.5, 5.5),
+    "moti rice": (1.5, 4.5),
+    "murgh adraki": (2.0, 4.5),
+    "murgh hydrabadi curry": (2.0, 5.0),
+    "murgh saag wala": (2.0, 4.5),
+    "mushroom masala": (2.0, 4.5),
+    "muskmelon": (1.5, 4.5),
+    "mutton": (2.5, 5.5),
+    "mutton biryani": (1.5, 4.5),
+    "mutton curry": (2.0, 5.0),
+    "mysore bonda": (1.5, 4.5),
+    "mysore pak": (1.5, 4.0),
+    "naan": (0.5, 1.8),
+    "namkeen": (1.5, 4.5),
+    "nimbu pani": (1.0, 3.5),
+    "noodles": (1.5, 4.5),
+    "oats": (2.0, 4.5),
+    "oats porridge": (1.5, 3.5),
+    "omelette": (0.5, 2.0),
+    "onion chutney": (0.5, 2.0),
+    "onion dosa": (0.3, 0.8),
+    "onion kadhi": (1.5, 3.5),
+    "onion pakoda": (1.5, 4.5),
+    "onion pulao": (1.5, 4.5),
+    "onion rice": (1.5, 4.5),
+    "onion salad": (0.8, 2.5),
+    "orange": (1.5, 4.5),
+    "orange segments": (1.5, 4.5),
+    "palak black chana": (2.0, 4.5),
+    "palak chana dal": (1.5, 3.5),
+    "palak dal": (1.5, 3.5),
+    "palak paneer": (2.0, 5.0),
+    "palak poori": (0.4, 1.8),
+    "palak sabzi": (2.0, 5.0),
+    "paneer": (2.5, 5.0),
+    "paneer bhurji": (2.0, 5.0),
     "paneer butter masala": (2.5, 5.0),
-    "kofta":    (2.5, 5.0),
-    "poriyal":  (2.0, 4.0),
-    "bhaji":    (2.0, 4.5),
-    "egg":      (3.0, 5.5),   # boiled / fried egg
-    "idli":     (3.0, 5.5),   # cylindrical shape
-    "oats":     (2.0, 4.5),
-    "bread":    (1.5, 3.5),
-    "laddu":    (3.5, 6.0),
-    "barfi":    (1.0, 2.5),
-    "milk":     (1.0, 3.0),
-    "lassi":    (1.5, 4.0),
-    "chaas":    (1.0, 3.5),
-    "mix veg":  (2.0, 4.5),   # alternate spelling
+    "paneer chat pata": (2.0, 5.0),
+    "paneer do payza": (2.0, 5.0),
+    "paneer do pyaza": (2.5, 5.0),
+    "paneer handi": (2.0, 5.0),
+    "paneer makhan wala": (2.0, 5.0),
+    "paneer paratha": (0.5, 2.0),
+    "paneer puff": (2.0, 5.0),
+    "paneer tikka": (2.0, 5.0),
+    "paneer tikka masala": (2.0, 5.0),
+    "pani poori": (1.5, 4.5),
+    "pani puri": (1.5, 4.5),
+    "papad": (0.2, 0.5),
+    "papad mangodi": (0.2, 0.5),
+    "papaya": (1.5, 4.5),
+    "papaya slices": (1.5, 4.5),
+    "papdi chaat": (1.5, 4.5),
+    "paratha": (0.5, 2.0),
+    "parwal sabzi": (2.0, 5.0),
+    "pasta": (1.5, 4.5),
+    "patiyala murgh": (2.0, 4.5),
+    "pav": (0.4, 1.8),
+    "pav bhaji": (1.5, 4.5),
+    "payasam": (1.5, 4.0),
+    "peanut chutney": (0.5, 2.0),
+    "pear": (1.5, 4.5),
+    "pesarattu": (2.0, 4.5),
+    "phirni": (1.5, 4.0),
+    "phulka": (0.4, 1.8),
+    "pickle": (0.5, 2.0),
+    "pineapple": (1.5, 4.5),
+    "pineapple halwa": (1.5, 4.0),
+    "pineapple slices": (1.5, 4.5),
+    "plain dosa": (0.3, 0.8),
+    "plain rice": (1.5, 4.5),
+    "poha": (1.5, 3.5),
+    "pomegranate": (1.5, 4.5),
+    "pomegranate seeds": (1.5, 4.5),
+    "pongal": (1.5, 4.5),
+    "poori": (0.4, 1.8),
+    "poriyal": (2.0, 4.0),
+    "porridge": (1.5, 3.5),
+    "potato chips": (1.5, 4.5),
+    "pulao": (1.5, 4.5),
+    "pulihora": (1.5, 4.5),
+    "pumpkin sabzi": (2.0, 5.0),
+    "puri bhaji": (1.5, 4.5),
+    "puttu": (1.5, 4.5),
+    "rabdi": (1.5, 4.0),
+    "rabdi boondi": (1.5, 4.0),
+    "raita": (1.5, 3.0),
+    "rajasthani kadhi": (1.5, 3.5),
+    "rajma": (2.0, 4.0),
+    "rajma chawal": (2.0, 5.0),
+    "rajma masala": (2.0, 5.0),
+    "ras malai": (1.5, 4.0),
+    "rasam": (1.0, 2.5),
+    "rasgulla": (2.5, 5.5),
+    "rava dosa": (0.3, 0.8),
+    "rava idli": (2.5, 5.0),
+    "rava kesari": (1.5, 4.0),
+    "rava upma": (1.5, 4.5),
+    "red masoor dal tadka": (1.5, 3.5),
+    "rice": (1.5, 4.5),
+    "rice kheer": (1.5, 4.5),
+    "rooh afza": (1.0, 3.5),
+    "roti": (0.4, 1.5),
+    "rumali roti": (0.4, 1.8),
+    "sabji": (2.0, 5.0),
+    "sabudana kheer": (1.5, 4.0),
+    "sabudana khichdi": (1.5, 4.5),
+    "sabzi": (2.0, 5.0),
+    "sada rice": (1.5, 4.5),
+    "sakkara pongal": (1.5, 4.0),
+    "salad": (1.0, 3.0),
+    "sambar": (1.5, 3.0),
+    "sambar rice": (1.5, 3.5),
+    "sambar vada": (1.5, 3.5),
+    "sambhar": (1.5, 3.5),
+    "samosa": (2.5, 5.0),
+    "sandesh": (1.5, 4.0),
+    "scrambled egg": (2.5, 5.0),
+    "sem fhali": (2.0, 4.5),
+    "semiya payasam": (1.5, 4.0),
+    "semiya upma": (1.5, 4.5),
+    "set dosa": (0.3, 0.8),
+    "sev puri": (1.5, 4.5),
+    "sev tamatar": (2.0, 4.5),
+    "sev tamatar sabzi": (2.0, 5.0),
+    "sevai kheer": (1.5, 4.0),
+    "sewai kheer": (1.5, 4.0),
+    "shahi paneer": (2.0, 5.0),
+    "shakar para": (1.5, 4.0),
+    "sheera": (1.5, 4.0),
+    "shimla mirch sabzi": (2.0, 5.0),
+    "shrikhand": (1.5, 4.0),
+    "sindhi dal": (1.5, 3.5),
+    "sitaphal": (1.5, 4.5),
+    "smoked dal": (1.5, 3.5),
+    "soya chaap masala": (2.0, 4.5),
+    "soya chunk curry": (2.0, 5.0),
+    "soya masala": (2.0, 4.5),
+    "spring roll": (1.5, 4.5),
+    "sprouts salad": (0.8, 2.5),
+    "steam rice": (1.5, 4.0),
+    "steamed rice": (1.5, 4.5),
+    "subzi miloni": (2.0, 4.5),
+    "suji halwa": (1.5, 4.0),
+    "sweet bun": (1.5, 4.5),
+    "sweet corn soup": (1.0, 3.5),
+    "sweet daliya": (1.5, 3.5),
+    "sweet lassi": (1.0, 3.5),
+    "tamarind chutney": (0.5, 2.0),
+    "tamarind rice": (1.5, 4.5),
+    "tandoori chicken": (2.0, 5.0),
+    "tandoori roti": (0.4, 1.8),
+    "tea": (1.0, 3.5),
+    "tea/coffee": (1.0, 3.5),
+    "thandai": (1.0, 3.5),
+    "tinda masala": (2.0, 4.5),
+    "tomato chilli chutney": (0.5, 2.0),
+    "tomato chutney": (0.5, 2.0),
+    "tomato dal fry": (0.8, 2.5),
+    "tomato pappu": (0.8, 2.5),
+    "tomato rice": (0.8, 2.5),
+    "tomato soup": (0.8, 2.5),
+    "toor dal tadka": (1.5, 3.5),
+    "tori sabzi": (2.0, 5.0),
+    "upma": (2.0, 4.5),
+    "uttapam": (2.0, 4.5),
+    "vada pav": (2.5, 5.0),
+    "vangi bath": (1.5, 4.5),
+    "veg biryani": (1.5, 4.5),
+    "veg cutlet": (2.5, 5.0),
+    "veg fried rice": (1.5, 4.5),
+    "veg hariyali": (2.0, 4.5),
+    "veg kofta curry": (2.0, 5.0),
+    "veg kolhapuri": (2.0, 4.5),
+    "veg momos": (1.5, 4.5),
+    "veg paratha": (0.5, 2.0),
+    "veg pongal": (1.5, 4.5),
+    "veg puff": (1.5, 4.5),
+    "veg pulao": (1.5, 4.5),
+    "veg raita": (1.5, 3.0),
+    "veg sandwich": (1.5, 4.5),
+    "veg upma": (1.5, 4.5),
+    "vegetable chettinad": (2.0, 4.5),
+    "vegetable pulao": (1.5, 4.5),
+    "watermelon": (1.5, 4.5),
+    "watermelon slices": (1.5, 4.5),
+    "white matar curry": (2.0, 5.0),
+    "yellow dal": (1.5, 3.5),
+    "yellow moong dal": (1.5, 3.5),
 }
 
 # Blending weights for hybrid depth
@@ -221,36 +633,38 @@ def apply_food_height_prior(
                 break
 
     if prior is None:
-        # No known prior — scale relative map to a generic 0–50 cm range
-        return (height_map * 5.0).astype(np.float32)
+        # No known prior — scale relative map to a generic 0–5 cm range
+        return (height_map * 3.5).astype(np.float32)
 
     min_h, max_h = prior
-    prior_mid = (min_h + max_h) / 2.0
-    height_range = max_h - min_h
-
-    # Map relative [0,1] depth to the food's cm range, then blend with midpoint
-    depth_in_cm = min_h + height_map * height_range   # scale into [min_h, max_h]
-    fused = alpha * depth_in_cm + beta * prior_mid
-    clamped = np.clip(fused, min_h, max_h)
+    # Dynamic continuous scaling:
+    # If the relative depth indicates a low profile, don't artificially force it to midpoint.
+    # Scale from near 0 up to max_h, blending with physiological prior limits.
+    scaled_height = height_map * max_h
+    prior_clipped = np.clip(scaled_height, min_h * 0.5, max_h)
+    fused = alpha * scaled_height + beta * prior_clipped
+    clamped = np.clip(fused, 0.1, max_h)
     return clamped.astype(np.float32)
 
 
 def calibrate_scale_from_ellipse(
     image_bgr: np.ndarray,
     known_diameter_cm: float = _PLATE_DIAMETER_CM,
+    plate_profile: dict | None = None,
 ) -> float | None:
     """
-    Enhancement #4 — Estimate cm-per-pixel scale by fitting an ellipse to the
-    detected plate rim.
+    Enhancement #4 — Estimate cm-per-pixel scale by fitting an ellipse to:
+      1. Circular compartment wells (for multi-compartment trays), OR
+      2. The outer plate rim (for circular thalis/plates).
 
+    Avoids applying circular 26cm diameter to rectangular trays.
     Returns cm_per_pixel if a credible ellipse is found, else None.
-    Falls back gracefully to the bbox-based compute_scale() in detection.py.
     """
     gray    = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (7, 7), 0)
     edges   = cv2.Canny(blurred, 30, 100)
 
-    # Dilate to close small gaps in the plate rim
+    # Dilate to close small gaps in the plate/well rim
     kernel  = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
     dilated = cv2.dilate(edges, kernel, iterations=2)
 
@@ -260,41 +674,68 @@ def calibrate_scale_from_ellipse(
 
     h, w = image_bgr.shape[:2]
     img_area = h * w
+    aspect_image = max(h, w) / max(min(h, w), 1)
 
-    # Look for the contour that looks like the plate boundary
+    # Check if plate profile is rectangular (e.g. aspect ratio > 1.15)
+    is_rectangular_tray = False
+    well_diameter_cm = None
+
+    if plate_profile:
+        pw = plate_profile.get("outer_width_cm", 30.0)
+        ph = plate_profile.get("outer_height_cm", 30.0)
+        if abs(pw - ph) > 3.0 or aspect_image > 1.20:
+            is_rectangular_tray = True
+        # Look for circular wells in profile (width == height)
+        for comp in plate_profile.get("compartments", []):
+            cw, ch = comp.get("width_cm", 0), comp.get("height_cm", 0)
+            if abs(cw - ch) < 1.0 and 8.0 <= cw <= 15.0:
+                well_diameter_cm = (cw + ch) / 2.0
+                break
+    elif aspect_image > 1.25:
+        is_rectangular_tray = True
+        well_diameter_cm = 12.0  # standard circular well in Indian mess tray
+
     best_cm_per_px = None
-    best_area      = 0
+    best_score     = 0.0
 
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        # Must be a large-ish region (at least 10 % of frame, not the whole frame)
-        if area < img_area * 0.10 or area > img_area * 0.95:
-            continue
         if len(cnt) < 5:
-            continue   # fitEllipse needs ≥5 points
+            continue
 
         try:
             (cx, cy), (major, minor), angle = cv2.fitEllipse(cnt)
-            # Sanity: ellipse axes must be reasonably similar (plate is near-round)
             if minor < 1e-3:
                 continue
             aspect = major / minor
-            if aspect > 2.0:
-                continue  # too elongated — not a plate
-            # Use average axis as diameter estimate
-            avg_axis_px = (major + minor) / 2.0
-            cm_per_px   = known_diameter_cm / avg_axis_px
+            if aspect > 1.35:  # must be reasonably circular
+                continue
 
-            if area > best_area:
-                best_area      = area
-                best_cm_per_px = cm_per_px
+            avg_axis_px = (major + minor) / 2.0
+
+            if is_rectangular_tray and well_diameter_cm:
+                # Target circular wells (typically 3% to 25% of image area)
+                if img_area * 0.03 <= area <= img_area * 0.30:
+                    cm_per_px = well_diameter_cm / avg_axis_px
+                    score = area / (aspect * aspect)
+                    if score > best_score:
+                        best_score = score
+                        best_cm_per_px = cm_per_px
+            elif not is_rectangular_tray:
+                # Target outer plate rim for round plates (15% to 92% of frame)
+                if img_area * 0.15 <= area <= img_area * 0.92:
+                    cm_per_px = known_diameter_cm / avg_axis_px
+                    score = area
+                    if score > best_score:
+                        best_score = score
+                        best_cm_per_px = cm_per_px
 
         except cv2.error:
             continue
 
     if best_cm_per_px is not None:
-        logger.info(f"Ellipse scale calibration: {best_cm_per_px:.5f} cm/px "
-                    f"(plate diameter assumed {known_diameter_cm} cm)")
+        target_name = f"circular well ({well_diameter_cm}cm)" if (is_rectangular_tray and well_diameter_cm) else f"plate rim ({known_diameter_cm}cm)"
+        logger.info(f"Ellipse scale calibration: {best_cm_per_px:.5f} cm/px [target={target_name}]")
     return best_cm_per_px
 
 

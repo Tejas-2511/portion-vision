@@ -1,0 +1,463 @@
+{
+  "source_image": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261030_205925_3e0bfb0f\\input\\original.png",
+  "menu_items": [
+    "steamed rice",
+    "dal palak",
+    "chapati"
+  ],
+  "image_dimensions": [
+    1600,
+    1204
+  ],
+  "total_items": 12,
+  "recognized_count": 3,
+  "unlisted_count": 9,
+  "uncertain_count": 0,
+  "elapsed_seconds": 104.814,
+  "food_items": [
+    {
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "confidence": 0.7771,
+      "mask": null,
+      "bounding_box": [
+        49,
+        527,
+        732,
+        604
+      ],
+      "area_pixels": 283610,
+      "identification_status": "recognized",
+      "top_k_alternatives": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.5865,
+          "raw_similarity": 0.122
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2186,
+          "raw_similarity": 0.0429
+        },
+        {
+          "label": "chutney",
+          "confidence": 0.1949,
+          "raw_similarity": 0.0322
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 283610,
+      "crop_path": "crops\\item_01_steamed_rice.png"
+    },
+    {
+      "food_name": "chutney",
+      "menu_match": false,
+      "confidence": 0.7204,
+      "mask": null,
+      "bounding_box": [
+        88,
+        105,
+        440,
+        386
+      ],
+      "area_pixels": 133768,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "chutney",
+          "confidence": 0.4139,
+          "raw_similarity": 0.1154
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.297,
+          "raw_similarity": 0.0845
+        },
+        {
+          "label": "paneer curry",
+          "confidence": 0.2891,
+          "raw_similarity": 0.0788
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 133768,
+      "crop_path": "crops\\item_02_chutney.png"
+    },
+    {
+      "food_name": "veg sabzi",
+      "menu_match": false,
+      "confidence": 0.6514,
+      "mask": null,
+      "bounding_box": [
+        536,
+        114,
+        439,
+        386
+      ],
+      "area_pixels": 131825,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "veg sabzi",
+          "confidence": 0.3415,
+          "raw_similarity": 0.0898
+        },
+        {
+          "label": "paneer curry",
+          "confidence": 0.3376,
+          "raw_similarity": 0.0888
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.3209,
+          "raw_similarity": 0.0832
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 131825,
+      "crop_path": "crops\\item_03_veg_sabzi.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.7661,
+      "mask": null,
+      "bounding_box": [
+        1054,
+        262,
+        147,
+        197
+      ],
+      "area_pixels": 20767,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.5116,
+          "raw_similarity": 0.1206
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.2712,
+          "raw_similarity": 0.0522
+        },
+        {
+          "label": "sweet",
+          "confidence": 0.2172,
+          "raw_similarity": 0.0548
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 20767,
+      "crop_path": "crops\\item_04_pickle.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.6127,
+      "mask": null,
+      "bounding_box": [
+        840,
+        752,
+        357,
+        362
+      ],
+      "area_pixels": 19937,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.3914,
+          "raw_similarity": 0.0446
+        },
+        {
+          "label": "sweet",
+          "confidence": 0.3224,
+          "raw_similarity": 0.0203
+        },
+        {
+          "label": "chutney",
+          "confidence": 0.2862,
+          "raw_similarity": 0.0054
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 19937,
+      "crop_path": "crops\\item_05_pickle.png"
+    },
+    {
+      "food_name": "chapati",
+      "menu_match": true,
+      "confidence": 0.6168,
+      "mask": null,
+      "bounding_box": [
+        714,
+        614,
+        163,
+        165
+      ],
+      "area_pixels": 18878,
+      "identification_status": "recognized",
+      "top_k_alternatives": [
+        {
+          "label": "papad",
+          "confidence": 0.3892,
+          "raw_similarity": 0.0532
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3264,
+          "raw_similarity": 0.0401
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2843,
+          "raw_similarity": 0.0498
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 18878,
+      "crop_path": "crops\\item_06_chapati.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.7641,
+      "mask": null,
+      "bounding_box": [
+        1119,
+        121,
+        146,
+        160
+      ],
+      "area_pixels": 17561,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.5009,
+          "raw_similarity": 0.1197
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.285,
+          "raw_similarity": 0.057
+        },
+        {
+          "label": "chutney",
+          "confidence": 0.2141,
+          "raw_similarity": 0.0406
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 17561,
+      "crop_path": "crops\\item_07_pickle.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.7675,
+      "mask": null,
+      "bounding_box": [
+        1218,
+        216,
+        124,
+        134
+      ],
+      "area_pixels": 12261,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.5022,
+          "raw_similarity": 0.1169
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.2676,
+          "raw_similarity": 0.0494
+        },
+        {
+          "label": "sweet",
+          "confidence": 0.2302,
+          "raw_similarity": 0.0593
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 12261,
+      "crop_path": "crops\\item_08_pickle.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.7676,
+      "mask": null,
+      "bounding_box": [
+        1268,
+        337,
+        132,
+        124
+      ],
+      "area_pixels": 11764,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.5007,
+          "raw_similarity": 0.1216
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.2814,
+          "raw_similarity": 0.0576
+        },
+        {
+          "label": "papad",
+          "confidence": 0.2179,
+          "raw_similarity": 0.05
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 11764,
+      "crop_path": "crops\\item_09_pickle.png"
+    },
+    {
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "confidence": 0.5839,
+      "mask": null,
+      "bounding_box": [
+        559,
+        0,
+        198,
+        63
+      ],
+      "area_pixels": 11632,
+      "identification_status": "recognized",
+      "top_k_alternatives": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3651,
+          "raw_similarity": 0.0479
+        },
+        {
+          "label": "curd",
+          "confidence": 0.365,
+          "raw_similarity": 0.0459
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2699,
+          "raw_similarity": 0.0333
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 11632,
+      "crop_path": "crops\\item_10_steamed_rice.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.6668,
+      "mask": null,
+      "bounding_box": [
+        1339,
+        223,
+        87,
+        139
+      ],
+      "area_pixels": 7671,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.4631,
+          "raw_similarity": 0.0691
+        },
+        {
+          "label": "sweet",
+          "confidence": 0.285,
+          "raw_similarity": 0.032
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.2519,
+          "raw_similarity": 0.0105
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 7671,
+      "crop_path": "crops\\item_11_pickle.png"
+    },
+    {
+      "food_name": "pickle",
+      "menu_match": false,
+      "confidence": 0.7398,
+      "mask": null,
+      "bounding_box": [
+        1177,
+        345,
+        104,
+        128
+      ],
+      "area_pixels": 7068,
+      "identification_status": "unlisted",
+      "top_k_alternatives": [
+        {
+          "label": "pickle",
+          "confidence": 0.4937,
+          "raw_similarity": 0.1059
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.2728,
+          "raw_similarity": 0.043
+        },
+        {
+          "label": "sweet",
+          "confidence": 0.2336,
+          "raw_similarity": 0.0486
+        }
+      ],
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 7068,
+      "crop_path": "crops\\item_12_pickle.png"
+    }
+  ]
+}

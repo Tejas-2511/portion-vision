@@ -1,0 +1,11 @@
+2026-11-09 17:56:59,268 │ INFO │ Run started — debug=False, id=20261109_175659_8c19c8cb
+2026-11-09 17:56:59,355 │ INFO │ [input] Saved image → original.png
+2026-11-09 17:56:59,356 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-09 17:56:59,357 │ INFO │ [Input] Original image saved │ params={'resolution': '1600x1204'} │ time=0.0884s │ output=original.png
+2026-11-09 17:56:59,357 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-09 17:56:59,460 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 351.14, 'tilt_deg': 25.0}
+2026-11-09 17:56:59,631 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x770'} │ time=0.2739s
+2026-11-09 17:56:59,631 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-09 17:56:59,663 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.03812, 'method': 'bbox'}
+2026-11-09 17:56:59,663 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03812, 'pixel_area_cm2': 0.00145309, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0175s
+2026-11-09 17:56:59,663 │ INFO │ [Pipeline] Step 3 — Depth Estimation

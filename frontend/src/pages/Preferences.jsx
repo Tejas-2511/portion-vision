@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useApp } from "../hooks/useApp";
 import { validateProfileData } from "../utils/validation";
 import ErrorMessage from "../components/ErrorMessage";
+import api from "../services/api";
 
 // Preferences page - User profile and health metrics management
 export default function Preferences() {
@@ -23,12 +24,31 @@ export default function Preferences() {
   const [fatPct, setFatPct] = useState(30);
   const [proteinPct, setProteinPct] = useState(20);
   const [isManualMacros, setIsManualMacros] = useState(false);
+  const [plateProfile, setPlateProfile] = useState("mess_tray_5comp");
 
   const [bmi, setBmi] = useState("To be calculated...");
   const [calories, setCalories] = useState("To be calculated...");
   const [protein, setProtein] = useState("To be calculated...");
 
   const [validationError, setValidationError] = useState(null);
+  const [allowDbUpdate, setAllowDbUpdate] = useState(false);
+
+  useEffect(() => {
+    api.getOcrDbUpdateSetting()
+      .then(res => setAllowDbUpdate(Boolean(res?.allowOcrDbUpdate)))
+      .catch(err => console.warn("Failed to load OCR DB setting:", err));
+  }, []);
+
+  async function handleToggleDbUpdate(e) {
+    const val = e.target.checked;
+    setAllowDbUpdate(val);
+    try {
+      await api.setOcrDbUpdateSetting(val);
+    } catch (err) {
+      console.error("Failed to update OCR DB setting:", err);
+      setAllowDbUpdate(!val);
+    }
+  }
 
   // Load saved profile on page load
   useEffect(() => {
@@ -47,6 +67,7 @@ export default function Preferences() {
       setProteinPct(userProfile.proteinPct || 20);
       setCarbsPct(userProfile.carbsPct || 50);
       setFatPct(userProfile.fatPct || 30);
+      setPlateProfile(userProfile.plateProfile || "mess_tray_5comp");
     }
   }, [userProfile]);
 
@@ -131,6 +152,7 @@ export default function Preferences() {
     // Save to context using the definitive values
     const userData = {
       name, age, height, weight, gender, activityLevel, goalType, dietPreference,
+      plateProfile: plateProfile || "mess_tray_5comp",
       bmi: bmiVal.toFixed(2),
       calories: Math.round(calorieReq),
       protein: Math.round((calorieReq * (finalProteinPct / 100)) / 4),
@@ -243,6 +265,20 @@ export default function Preferences() {
             <option>Vegan</option>
           </select>
 
+          <div>
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-1 block">Plate / Mess Tray Type</label>
+            <select
+              value={plateProfile}
+              onChange={(e) => setPlateProfile(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm font-medium text-slate-700"
+            >
+              <option value="mess_tray_5comp">5-Compartment Mess Tray (1 Large, 3 Round Wells, 1 Small)</option>
+              <option value="standard_mess_thali">6-Compartment Stainless Thali (3 Top, 2 Large Bottom)</option>
+              <option value="4_compartment_plate">4-Compartment Rectangular Tray (4 Quadrants)</option>
+              <option value="round_thali">Standard Round Plate / Thali (Circular 26cm)</option>
+            </select>
+          </div>
+
           <div className="pt-2">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-3">Macro Distribution (%)</p>
             <div className="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -279,6 +315,25 @@ export default function Preferences() {
                 <p className="text-[9px] text-slate-400 italic">
                     Total: {parseInt(proteinPct || 0) + parseInt(carbsPct || 0) + parseInt(fatPct || 0)}% (Aim for exactly 100% for best results).
                 </p>
+            </div>
+          </div>
+
+          {/* Food Database Auto-Update Setting */}
+          <div className="pt-2">
+            <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+              <div>
+                <p className="text-xs font-bold text-slate-700">Update Food Database from Menus</p>
+                <p className="text-[10px] text-slate-400">Save newly scanned menu items permanently to database</p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={allowDbUpdate}
+                  onChange={handleToggleDbUpdate}
+                  className="sr-only peer"
+                />
+                <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+              </label>
             </div>
           </div>
 

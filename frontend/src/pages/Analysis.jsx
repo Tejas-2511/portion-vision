@@ -12,6 +12,9 @@ export default function Analysis() {
   const { imageFile, imagePreview } = location.state || {};
   const { userProfile, loading: profileLoading } = useApp();
   const [recommendation, setRecommendation] = useState(null);
+  const [selectedMeal, setSelectedMeal] = useState(
+    location.state?.mealType || inferMealType()
+  );
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [analyzingPlate, setAnalyzingPlate] = useState(false);
@@ -29,8 +32,8 @@ export default function Analysis() {
       if (userProfile) {
         setLoading(true);
         try {
-          const mealType = location.state?.mealType || inferMealType();
-          const data = await api.getRecommendations(userProfile, mealType);
+          const initialMeal = selectedMeal || location.state?.mealType || inferMealType();
+          const data = await api.getRecommendations(userProfile, initialMeal);
           if (data && data.recommendedPlate) {
             currentRec = data;
             setRecommendation(data);
@@ -42,20 +45,41 @@ export default function Analysis() {
         }
       }
 
-      await analyzeCapturedPlate(currentRec);
+      await analyzeCapturedPlate(currentRec, selectedMeal);
     }
 
     runFlow();
   }, [profileLoading, userProfile, imageFile]);
 
-  async function analyzeCapturedPlate(recData) {
+  async function handleMealSelect(mealId) {
+    if (mealId === selectedMeal || analyzingPlate) return;
+    setSelectedMeal(mealId);
+    setLoading(true);
+    let newRec = null;
+    try {
+      if (userProfile) {
+        newRec = await api.getRecommendations(userProfile, mealId);
+        if (newRec && newRec.recommendedPlate) {
+          setRecommendation(newRec);
+        }
+      }
+    } catch (err) {
+      console.warn("Failed to update recommendation on meal select:", err);
+    } finally {
+      setLoading(false);
+    }
+    await analyzeCapturedPlate(newRec, mealId);
+  }
+
+  async function analyzeCapturedPlate(recData = null, mealTypeOverride = null) {
     if (!imageFile) return;
 
     setAnalyzingPlate(true);
     setAnalysisError(null);
-    console.log("Starting plate analysis...");
+    console.log("Starting plate portion analysis...");
     try {
-      const activeRec = recData || recommendation;
+      // Guard against React SyntheticEvent being passed when used directly as an onClick handler
+      const activeRec = (recData && typeof recData === 'object' && !recData.nativeEvent) ? recData : recommendation;
       let expectedItemsStr = '';
       if (activeRec && activeRec.recommendedPlate) {
         const expectedItemsArray = [
@@ -65,7 +89,9 @@ export default function Analysis() {
         expectedItemsStr = expectedItemsArray.join(',');
       }
 
-      const result = await api.analyzePlate(imageFile, expectedItemsStr);
+      const plateProfile = location.state?.plateProfile || userProfile?.plateProfile || '';
+      const activeMeal = mealTypeOverride || selectedMeal || location.state?.mealType || inferMealType();
+      const result = await api.analyzePlate(imageFile, expectedItemsStr, plateProfile, activeMeal);
       setAnalysisResult(result);
     } catch (err) {
       console.error("Failed to analyze plate:", err);
@@ -111,6 +137,37 @@ export default function Analysis() {
       </div>
 
       <div className="mx-auto max-w-lg space-y-6 p-6">
+
+        {/* Meal Type Selector Bar */}
+        <div className="rounded-2xl bg-white p-3.5 shadow-sm border border-slate-100">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Meal Selection</span>
+            <span className="text-xs text-slate-400">Tap to change meal slot</span>
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { id: 'breakfast', label: 'Breakfast', icon: '🌅' },
+              { id: 'lunch', label: 'Lunch', icon: '🍛' },
+              { id: 'snacks', label: 'Snacks', icon: '☕' },
+              { id: 'dinner', label: 'Dinner', icon: '🌙' },
+            ].map(m => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => handleMealSelect(m.id)}
+                disabled={analyzingPlate}
+                className={`py-2 px-1 rounded-xl text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all ${
+                  selectedMeal === m.id
+                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200 ring-2 ring-emerald-500'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                <span className="text-base">{m.icon}</span>
+                <span>{m.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Card 1 - Recommended Portion */}
         <RecommendationCard
@@ -273,6 +330,17 @@ export default function Analysis() {
                               ></div>
                             </div>
                           )}
+
+                          {food.top_k && food.top_k.length > 1 && (
+                            <div className="mt-2.5 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-[10px] text-slate-400">
+                              <span className="font-bold text-slate-500">Alternatives:</span>
+                              {food.top_k.slice(1, 3).map((alt, aIdx) => (
+                                <span key={aIdx} className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">
+                                  {alt.label} ({Math.round(alt.confidence * 100)}%)
+                                </span>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -294,16 +362,31 @@ export default function Analysis() {
               No food items detected. Try a clearer photo.
             </div>
           ) : analysisError ? (
-            <div className="flex flex-col gap-2 items-center justify-center rounded-xl bg-rose-50 p-6 text-center">
-              <div className="text-rose-600 font-bold">Analysis Failed</div>
-              <p className="text-sm text-rose-500 mb-2">{analysisError}</p>
-              <button 
-                onClick={analyzeCapturedPlate}
-                className="text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-600 px-4 py-2 rounded-full hover:bg-rose-200 transition-colors"
-              >
-                Try Again
-              </button>
-            </div>
+            (() => {
+              const isQualityIssue = /blur|tilt|angle|steep|steady|focus|clearer/i.test(analysisError);
+              return (
+                <div className={`flex flex-col gap-3 items-center justify-center rounded-xl p-6 text-center ${isQualityIssue ? 'bg-amber-50 border border-amber-200' : 'bg-rose-50 border border-rose-200'}`}>
+                  <div className={`font-bold flex items-center gap-1.5 ${isQualityIssue ? 'text-amber-800' : 'text-rose-600'}`}>
+                    <span>{isQualityIssue ? '⚠️ Photo Quality Tip' : '❌ Analysis Failed'}</span>
+                  </div>
+                  <p className={`text-sm max-w-sm ${isQualityIssue ? 'text-amber-700 font-medium' : 'text-rose-600'}`}>{analysisError}</p>
+                  <div className="flex items-center gap-3 mt-1">
+                    <button
+                      onClick={() => navigate("/plate", { state: { mealType: location.state?.mealType } })}
+                      className="text-xs font-bold uppercase tracking-wider bg-emerald-600 text-white px-5 py-2.5 rounded-full shadow-sm hover:bg-emerald-700 transition-all active:scale-95"
+                    >
+                      📸 Retake Photo
+                    </button>
+                    <button 
+                      onClick={() => analyzeCapturedPlate(recommendation)}
+                      className="text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-4 py-2.5 rounded-full hover:bg-slate-200 transition-colors"
+                    >
+                      Retry
+                    </button>
+                  </div>
+                </div>
+              );
+            })()
           ) : (
             <div className="flex h-32 items-center justify-center rounded-xl bg-slate-100 text-slate-500 font-medium text-center px-4">
               Capture a photo to start AI portion analysis.

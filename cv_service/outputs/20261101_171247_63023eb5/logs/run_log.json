@@ -1,0 +1,149 @@
+[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "1600x1204"
+    },
+    "elapsed_s": 0.0885,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-01T17:12:47.519712"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.519799"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 351.14,
+      "tilt_deg": 25.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.624794"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Complete",
+    "params": {
+      "output_size": "1024x770"
+    },
+    "elapsed_s": 0.3625,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.882423"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 2 — Compartments & Scale",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.882632"
+  },
+  {
+    "step": "Scale Calibration",
+    "message": "Fallback to bbox-based calibration",
+    "params": {
+      "cm_per_pixel": 0.03559,
+      "method": "bbox"
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.914623"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Scale computed",
+    "params": {
+      "cm_per_pixel": 0.03559,
+      "pixel_area_cm2": 0.00126671,
+      "compartments": 0,
+      "scale_confidence": 0.7
+    },
+    "elapsed_s": 0.032,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.914807"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 3 — Depth Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:47.914875"
+  },
+  {
+    "step": "Depth Estimation",
+    "message": "Complete",
+    "params": {},
+    "elapsed_s": 5.0693,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:52.984226"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 4–6 — Open-World Discovery, SAM Segmentation & Verification",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:12:52.984425"
+  },
+  {
+    "step": "OpenVocab",
+    "message": "Identified 21 food items (4 recognized, 13 unlisted, 4 uncertain)",
+    "params": {},
+    "elapsed_s": 36.8037,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:13:29.788194"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 7 — Volume & Mass Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:13:29.788460"
+  },
+  {
+    "step": "Volume Estimation",
+    "message": "Computed mass for 21 items",
+    "params": {
+      "total_items": 21
+    },
+    "elapsed_s": 0.1019,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:13:29.890464"
+  },
+  {
+    "step": "Pipeline",
+    "message": "✅ Pipeline complete",
+    "params": {
+      "total_food_items": 21,
+      "avg_confidence": 0.7261,
+      "scale_method": "bbox"
+    },
+    "elapsed_s": 42.6934,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:13:30.118979"
+  }
+]

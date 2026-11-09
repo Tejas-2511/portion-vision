@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261109_175841_8796a578</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261109_175841_8796a578</code> &nbsp;│&nbsp; Debug: <code>False</code> &nbsp;│&nbsp; Files saved: <code>5</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "1600x1204",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "steamed rice",
+    "dal palak",
+    "chapati"
+  ],
+  "plate_profile": "5_compartment",
+  "debug": false
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_final_annotated.png</span><br><img src='volume/01_final_annotated.png' alt='01_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 196.3,
+      "mass_g": 211.4,
+      "calories": 274.8,
+      "protein": 5.7,
+      "carbs": 59.2,
+      "fat": 0.6,
+      "confidence": 0.8149,
+      "class_label": "steamed rice",
+      "class_confidence": 0.7938,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.7938,
+          "raw_similarity": 0.7938
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.7938,
+      "segmentation_confidence": 0.7938,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 0.4,
+      "mass_g": 0.4,
+      "calories": 0.5,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6025,
+      "class_label": "steamed rice",
+      "class_confidence": 0.4339,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.4339,
+          "raw_similarity": 0.4339
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.4339,
+      "segmentation_confidence": 0.4339,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.4,
+      "mass_g": 0.3,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.8153,
+      "class_label": "cucumber",
+      "class_confidence": 0.9174,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+    </pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "1600x1204"
+    },
+    "elapsed_s": 0.1818,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-09T17:58:41.283389"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.283389"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 351.14,
+      "tilt_deg": 25.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.392140"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Complete",
+    "params": {
+      "output_size": "1024x770"
+    },
+    "elapsed_s": 0.2801,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.562934"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 2 — Compartments & Scale",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.564045"
+  },
+  {
+    "step": "Scale Calibration",
+    "message": "Fallback to bbox-based calibration",
+    "params": {
+      "cm_per_pixel": 0.03812,
+      "method": "bbox"
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.582111"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Scale computed",
+    "params": {
+      "cm_per_pixel": 0.03812,
+      "pixel_area_cm2": 0.00145309,
+      "compartments": 0,
+      "scale_confidence": 0.7
+    },
+    "elapsed_s": 0.0183,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-09T17:58:41.582111"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 3 — Depth Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "times</pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "1600x1204"}</td><td>0.1818s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 351.14, "tilt_deg": 25.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x770"}</td><td>0.2801s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.03812, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.03812, "pixel_area_cm2": 0.00145309, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0183s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>30.5133s</td></tr>
+<tr><td>Pipeline</td><td>Step 4–6 — SAM 3 Food Identification & Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>SAM3</td><td>Identified 13 food items (2 recognized, 8 unlisted, 3 uncertain)</td><td>—</td><td>29.2712s</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 13 items</td><td>{"total_items": 13}</td><td>0.0331s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 13, "avg_confidence": 0.7325, "scale_method": "bbox"}</td><td>60.4478s</td></tr>
+</table></body></html>

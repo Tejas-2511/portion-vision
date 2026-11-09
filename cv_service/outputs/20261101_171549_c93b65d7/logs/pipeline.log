@@ -1,0 +1,24 @@
+2026-11-01 17:15:49,349 │ INFO │ Run started — debug=False, id=20261101_171549_c93b65d7
+2026-11-01 17:15:49,531 │ INFO │ [input] Saved image → original.png
+2026-11-01 17:15:49,536 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-01 17:15:49,536 │ INFO │ [Input] Original image saved │ params={'resolution': '1600x1204'} │ time=0.1863s │ output=original.png
+2026-11-01 17:15:49,536 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-01 17:15:49,767 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 351.14, 'tilt_deg': 25.0}
+2026-11-01 17:15:50,161 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x770'} │ time=0.6253s
+2026-11-01 17:15:50,162 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-01 17:15:50,201 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.03559, 'method': 'bbox'}
+2026-11-01 17:15:50,201 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03559, 'pixel_area_cm2': 0.00126671, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0364s
+2026-11-01 17:15:50,201 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-11-01 17:15:59,938 │ INFO │ [Depth Estimation] Complete │ time=9.7367s
+2026-11-01 17:15:59,938 │ INFO │ [Pipeline] Step 4 — Segmentation
+2026-11-01 17:20:08,970 │ INFO │ [Segmentation] 11 food items found │ time=249.0313s
+2026-11-01 17:20:08,970 │ INFO │ [Pipeline] Step 5 — Food Classification (OCR-constrained)
+2026-11-01 17:20:11,309 │ INFO │ [Classification] Complete │ params={'n_items': 11, 'ocr_labels_used': True} │ time=2.3391s
+2026-11-01 17:20:11,309 │ INFO │ [Pipeline] Step 6 — Hungarian Label Assignment
+2026-11-01 17:20:11,346 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-11-01 17:20:11,419 │ INFO │ [Volume Estimation] Computed mass for 11 items │ params={'total_items': 11} │ time=0.0728s
+2026-11-01 17:20:11,577 │ INFO │ [volume] Saved image → 01_final_annotated.png
+2026-11-01 17:20:11,579 │ INFO │ [volume] Saved JSON → results.json
+2026-11-01 17:20:11,580 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 11, 'avg_confidence': 0.7061, 'scale_method': 'bbox'} │ time=262.2424s
+2026-11-01 17:20:11,581 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-01 17:20:11,643 │ INFO │ HTML report generated → report.html

@@ -1,0 +1,21 @@
+2026-11-01 17:20:11,649 │ INFO │ Run started — debug=False, id=20261101_172011_afafec41
+2026-11-01 17:20:11,808 │ INFO │ [input] Saved image → original.png
+2026-11-01 17:20:11,809 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-01 17:20:11,809 │ INFO │ [Input] Original image saved │ params={'resolution': '1600x1204'} │ time=0.1595s │ output=original.png
+2026-11-01 17:20:11,809 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-01 17:20:11,912 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 351.14, 'tilt_deg': 25.0}
+2026-11-01 17:20:11,957 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x770'} │ time=0.1482s
+2026-11-01 17:20:11,957 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-01 17:20:11,975 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.03559, 'method': 'bbox'}
+2026-11-01 17:20:11,975 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03559, 'pixel_area_cm2': 0.00126671, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0165s
+2026-11-01 17:20:11,975 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-11-01 17:20:13,034 │ INFO │ [Depth Estimation] Complete │ time=1.0588s
+2026-11-01 17:20:13,034 │ INFO │ [Pipeline] Step 4–6 — Open-World Discovery, SAM Segmentation & Verification
+2026-11-01 17:21:00,829 │ INFO │ [OpenVocab] Identified 21 food items (4 recognized, 13 unlisted, 4 uncertain) │ time=47.7951s
+2026-11-01 17:21:00,829 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-11-01 17:21:00,929 │ INFO │ [Volume Estimation] Computed mass for 21 items │ params={'total_items': 21} │ time=0.0999s
+2026-11-01 17:21:01,125 │ INFO │ [volume] Saved image → 01_final_annotated.png
+2026-11-01 17:21:01,127 │ INFO │ [volume] Saved JSON → results.json
+2026-11-01 17:21:01,127 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 21, 'avg_confidence': 0.7236, 'scale_method': 'bbox'} │ time=49.4827s
+2026-11-01 17:21:01,128 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-01 17:21:01,174 │ INFO │ HTML report generated → report.html

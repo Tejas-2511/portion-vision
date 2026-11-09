@@ -1,0 +1,179 @@
+[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "4080x1840"
+    },
+    "elapsed_s": 0.3878,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-01T17:21:01.837078"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:01.837147"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 111.85,
+      "tilt_deg": 3.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.023175"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Complete",
+    "params": {
+      "output_size": "1024x461"
+    },
+    "elapsed_s": 0.2105,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.047755"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 2 — Compartments & Scale",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.048024"
+  },
+  {
+    "step": "Scale Calibration",
+    "message": "Fallback to bbox-based calibration",
+    "params": {
+      "cm_per_pixel": 0.04469,
+      "method": "bbox"
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.058475"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Scale computed",
+    "params": {
+      "cm_per_pixel": 0.04469,
+      "pixel_area_cm2": 0.00199746,
+      "compartments": 0,
+      "scale_confidence": 0.7
+    },
+    "elapsed_s": 0.0085,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.058655"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 3 — Depth Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:02.058724"
+  },
+  {
+    "step": "Depth Estimation",
+    "message": "Complete",
+    "params": {},
+    "elapsed_s": 1.3597,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:03.418475"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 4 — Segmentation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:21:03.418684"
+  },
+  {
+    "step": "Segmentation",
+    "message": "13 food items found",
+    "params": {},
+    "elapsed_s": 74.0785,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:17.497218"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 5 — Food Classification (OCR-constrained)",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:17.497497"
+  },
+  {
+    "step": "Classification",
+    "message": "Complete",
+    "params": {
+      "n_items": 13,
+      "ocr_labels_used": true
+    },
+    "elapsed_s": 5.8049,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:23.302523"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 6 — Hungarian Label Assignment",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:23.302700"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 7 — Volume & Mass Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:23.328067"
+  },
+  {
+    "step": "Volume Estimation",
+    "message": "Computed mass for 13 items",
+    "params": {
+      "total_items": 13
+    },
+    "elapsed_s": 0.0288,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:23.357058"
+  },
+  {
+    "step": "Pipeline",
+    "message": "✅ Pipeline complete",
+    "params": {
+      "total_food_items": 13,
+      "avg_confidence": 0.7318,
+      "scale_method": "bbox"
+    },
+    "elapsed_s": 82.0046,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-01T17:22:23.447811"
+  }
+]

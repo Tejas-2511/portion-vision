@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261030_205925_3e0bfb0f</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261030_205925_3e0bfb0f</code> &nbsp;│&nbsp; Debug: <code>False</code> &nbsp;│&nbsp; Files saved: <code>5</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "1600x1204",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": null,
+  "plate_profile": null,
+  "debug": false
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_final_annotated.png</span><br><img src='volume/01_final_annotated.png' alt='01_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 172.0,
+      "mass_g": 185.6,
+      "calories": 241.3,
+      "protein": 5.0,
+      "carbs": 52.0,
+      "fat": 0.6,
+      "confidence": 0.7651,
+      "class_label": "steamed rice",
+      "class_confidence": 0.5212
+    },
+    {
+      "name": "apple",
+      "volume_ml": 5.1,
+      "mass_g": 4.1,
+      "calories": 4.1,
+      "protein": 0.1,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.6771,
+      "class_label": "apple",
+      "class_confidence": 0.4195
+    },
+    {
+      "name": "chutney",
+      "volume_ml": 5.6,
+      "mass_g": 5.9,
+      "calories": 5.9,
+      "protein": 0.1,
+      "carbs": 0.9,
+      "fat": 0.2,
+      "confidence": 0.7809,
+      "class_label": "chutney",
+      "class_confidence": 0.5373
+    },
+    {
+      "name": "chicken curry",
+      "volume_ml": 20.6,
+      "mass_g": 22.8,
+      "calories": 32.0,
+      "protein": 3.4,
+      "carbs": 0.9,
+      "fat": 1.8,
+      "confidence": 0.7539,
+      "class_label": "chicken curry",
+      "class_confidence": 0.4686
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.9,
+      "mass_g": 1.0,
+      "calories": 1.2,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.792,
+      "class_label": "pickle",
+      "class_confidence": 0.5953
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.8,
+      "mass_g": 0.9,
+      "calories": 1.1,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.7043,
+      "class_label": "pickle",
+      "class_confidence": 0.3771
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 12.3,
+      "mass_g": 13.6,
+      "calories": 16.3,
+      "protein": 0.1,
+      "carbs": 1.4,
+      "fat": 1.4,
+      "confidence": 0.7144,
+      "class_label": "pickle",
+      "class_confidence": 0.3955
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.7,
+      "mass_g": 0.8,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+   </pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "1600x1204"
+    },
+    "elapsed_s": 0.1749,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-10-30T20:59:26.020083"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 â€” Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.020250"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 351.14,
+      "tilt_deg": 25.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.240619"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Complete",
+    "params": {
+      "output_size": "1024x770"
+    },
+    "elapsed_s": 0.5913,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.611687"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 2 â€” Compartments & Scale",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.612000"
+  },
+  {
+    "step": "Scale Calibration",
+    "message": "Fallback to bbox-based calibration",
+    "params": {
+      "cm_per_pixel": 0.03559,
+      "method": "bbox"
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.652932"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Scale computed",
+    "params": {
+      "cm_per_pixel": 0.03559,
+      "pixel_area_cm2": 0.00126671,
+      "compartments": 0,
+      "scale_confidence": 0.7
+    },
+    "elapsed_s": 0.0409,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-10-30T20:59:26.653222"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 3 â€” Depth Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    </pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "1600x1204"}</td><td>0.1749s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 351.14, "tilt_deg": 25.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x770"}</td><td>0.5913s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.03559, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.03559, "pixel_area_cm2": 0.00126671, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0409s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>8.9409s</td></tr>
+<tr><td>Pipeline</td><td>Step 4 — Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>Segmentation</td><td>11 food items found</td><td>—</td><td>202.1799s</td></tr>
+<tr><td>Pipeline</td><td>Step 5 — Food Classification (OCR-constrained)</td><td>—</td><td>—</td></tr>
+<tr><td>Classification</td><td>Complete</td><td>{"n_items": 11, "ocr_labels_used": false}</td><td>24.5808s</td></tr>
+<tr><td>Pipeline</td><td>Step 6 — Hungarian Label Assignment</td><td>—</td><td>—</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 11 items</td><td>{"total_items": 11}</td><td>0.1600s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 11, "avg_confidence": 0.7505, "scale_method": "bbox"}</td><td>237.0400s</td></tr>
+</table></body></html>

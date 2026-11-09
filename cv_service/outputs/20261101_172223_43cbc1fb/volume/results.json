@@ -1,0 +1,1166 @@
+{
+  "food_items": [
+    {
+      "name": "unknown condiment",
+      "volume_ml": 8.2,
+      "mass_g": 8.2,
+      "calories": 8.2,
+      "protein": 0.2,
+      "carbs": 1.2,
+      "fat": 0.2,
+      "confidence": 0.6321,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3221,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.26,
+          "raw_similarity": 0.0312
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2517,
+          "raw_similarity": 0.0378
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2451,
+          "raw_similarity": 0.0244
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2432,
+          "raw_similarity": 0.0335
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3221,
+      "segmentation_confidence": 0.9438,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown food",
+      "volume_ml": 4.1,
+      "mass_g": 4.1,
+      "calories": 4.1,
+      "protein": 0.1,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.6481,
+      "class_label": "unknown food",
+      "class_confidence": 0.3407,
+      "top_k": [
+        {
+          "label": "banana",
+          "confidence": 0.2562,
+          "raw_similarity": 0.0298
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2508,
+          "raw_similarity": 0.0202
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2504,
+          "raw_similarity": 0.0269
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2426,
+          "raw_similarity": 0.023
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3407,
+      "segmentation_confidence": 0.9863,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "rice",
+      "volume_ml": 73.2,
+      "mass_g": 77.0,
+      "calories": 100.1,
+      "protein": 2.1,
+      "carbs": 21.6,
+      "fat": 0.2,
+      "confidence": 0.7381,
+      "class_label": "rice",
+      "class_confidence": 0.4608,
+      "top_k": [
+        {
+          "label": "rice",
+          "confidence": 0.3038,
+          "raw_similarity": 0.1075
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.3025,
+          "raw_similarity": 0.107
+        },
+        {
+          "label": "jeera rice",
+          "confidence": 0.219,
+          "raw_similarity": 0.0666
+        },
+        {
+          "label": "khichdi",
+          "confidence": 0.1747,
+          "raw_similarity": 0.0384
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "rice",
+      "identification_confidence": 0.4608,
+      "segmentation_confidence": 0.9203,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 5.1,
+      "mass_g": 5.1,
+      "calories": 5.1,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.2,
+      "confidence": 0.6667,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.4079,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2577,
+          "raw_similarity": 0.0765
+        },
+        {
+          "label": "palak paneer",
+          "confidence": 0.2537,
+          "raw_similarity": 0.0745
+        },
+        {
+          "label": "matar paneer",
+          "confidence": 0.2453,
+          "raw_similarity": 0.0574
+        },
+        {
+          "label": "chutney",
+          "confidence": 0.2433,
+          "raw_similarity": 0.0693
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4079,
+      "segmentation_confidence": 0.9228,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown food",
+      "volume_ml": 6.2,
+      "mass_g": 6.2,
+      "calories": 6.2,
+      "protein": 0.2,
+      "carbs": 0.9,
+      "fat": 0.2,
+      "confidence": 0.6621,
+      "class_label": "unknown food",
+      "class_confidence": 0.3794,
+      "top_k": [
+        {
+          "label": "papad",
+          "confidence": 0.2645,
+          "raw_similarity": 0.063
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2522,
+          "raw_similarity": 0.0686
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2495,
+          "raw_similarity": 0.0672
+        },
+        {
+          "label": "dal makhani",
+          "confidence": 0.2339,
+          "raw_similarity": 0.0592
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3794,
+      "segmentation_confidence": 0.9648,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 1.2,
+      "mass_g": 1.2,
+      "calories": 1.2,
+      "protein": 0.0,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6341,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3244,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2629,
+          "raw_similarity": 0.0252
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2507,
+          "raw_similarity": 0.0193
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2455,
+          "raw_similarity": 0.0166
+        },
+        {
+          "label": "dal",
+          "confidence": 0.241,
+          "raw_similarity": 0.0101
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3244,
+      "segmentation_confidence": 0.9495,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 1.6,
+      "mass_g": 1.6,
+      "calories": 1.6,
+      "protein": 0.0,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6392,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3451,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2691,
+          "raw_similarity": 0.0364
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2562,
+          "raw_similarity": 0.0303
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2421,
+          "raw_similarity": 0.0232
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2326,
+          "raw_similarity": 0.0182
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3451,
+      "segmentation_confidence": 0.9212,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 4.3,
+      "mass_g": 4.8,
+      "calories": 5.7,
+      "protein": 0.0,
+      "carbs": 0.5,
+      "fat": 0.5,
+      "confidence": 0.7864,
+      "class_label": "pickle",
+      "class_confidence": 0.5573,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.3277,
+          "raw_similarity": 0.1062
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2277,
+          "raw_similarity": 0.0607
+        },
+        {
+          "label": "cucumber salad",
+          "confidence": 0.2264,
+          "raw_similarity": 0.0599
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2182,
+          "raw_similarity": 0.0554
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.5573,
+      "segmentation_confidence": 0.9806,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 1.6,
+      "mass_g": 1.8,
+      "calories": 2.2,
+      "protein": 0.0,
+      "carbs": 0.2,
+      "fat": 0.2,
+      "confidence": 0.7263,
+      "class_label": "pickle",
+      "class_confidence": 0.4087,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2939,
+          "raw_similarity": 0.0508
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2439,
+          "raw_similarity": 0.0275
+        },
+        {
+          "label": "egg curry",
+          "confidence": 0.2313,
+          "raw_similarity": 0.0149
+        },
+        {
+          "label": "chole",
+          "confidence": 0.2309,
+          "raw_similarity": 0.0206
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4087,
+      "segmentation_confidence": 0.9728,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 1.0,
+      "mass_g": 1.1,
+      "calories": 1.3,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.7368,
+      "class_label": "pickle",
+      "class_confidence": 0.4418,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.3445,
+          "raw_similarity": 0.0594
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2279,
+          "raw_similarity": 0.028
+        },
+        {
+          "label": "dal",
+          "confidence": 0.221,
+          "raw_similarity": 0.0242
+        },
+        {
+          "label": "chutney",
+          "confidence": 0.2066,
+          "raw_similarity": 0.0118
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4418,
+      "segmentation_confidence": 0.9529,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 0.2,
+      "mass_g": 0.2,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6391,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3351,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2832,
+          "raw_similarity": 0.0167
+        },
+        {
+          "label": "orange",
+          "confidence": 0.2458,
+          "raw_similarity": -0.001
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2432,
+          "raw_similarity": -0.0023
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2278,
+          "raw_similarity": -0.0105
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3351,
+      "segmentation_confidence": 0.9482,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 4.4,
+      "mass_g": 4.9,
+      "calories": 5.8,
+      "protein": 0.0,
+      "carbs": 0.5,
+      "fat": 0.5,
+      "confidence": 0.7613,
+      "class_label": "pickle",
+      "class_confidence": 0.4912,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2964,
+          "raw_similarity": 0.0905
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2363,
+          "raw_similarity": 0.0621
+        },
+        {
+          "label": "cucumber salad",
+          "confidence": 0.2345,
+          "raw_similarity": 0.0612
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2328,
+          "raw_similarity": 0.0602
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4912,
+      "segmentation_confidence": 0.9767,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 3.5,
+      "mass_g": 3.9,
+      "calories": 4.6,
+      "protein": 0.0,
+      "carbs": 0.4,
+      "fat": 0.4,
+      "confidence": 0.7828,
+      "class_label": "pickle",
+      "class_confidence": 0.5482,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.3368,
+          "raw_similarity": 0.0962
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2265,
+          "raw_similarity": 0.0467
+        },
+        {
+          "label": "cucumber salad",
+          "confidence": 0.2259,
+          "raw_similarity": 0.0463
+        },
+        {
+          "label": "grapes",
+          "confidence": 0.2108,
+          "raw_similarity": 0.0376
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.5482,
+      "segmentation_confidence": 0.9787,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 5.9,
+      "mass_g": 6.5,
+      "calories": 7.8,
+      "protein": 0.1,
+      "carbs": 0.7,
+      "fat": 0.7,
+      "confidence": 0.7211,
+      "class_label": "pickle",
+      "class_confidence": 0.4057,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.3226,
+          "raw_similarity": 0.0469
+        },
+        {
+          "label": "chole",
+          "confidence": 0.2321,
+          "raw_similarity": 0.0219
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2243,
+          "raw_similarity": 0.0176
+        },
+        {
+          "label": "dal",
+          "confidence": 0.221,
+          "raw_similarity": 0.0157
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4057,
+      "segmentation_confidence": 0.9519,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown food",
+      "volume_ml": 0.2,
+      "mass_g": 0.2,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6533,
+      "class_label": "unknown food",
+      "class_confidence": 0.3623,
+      "top_k": [
+        {
+          "label": "cake",
+          "confidence": 0.2703,
+          "raw_similarity": 0.0392
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2652,
+          "raw_similarity": 0.0274
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2337,
+          "raw_similarity": 0.021
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2308,
+          "raw_similarity": 0.0195
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3623,
+      "segmentation_confidence": 0.9574,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 1.5,
+      "mass_g": 1.5,
+      "calories": 1.5,
+      "protein": 0.0,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6318,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.31,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2628,
+          "raw_similarity": 0.0244
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2565,
+          "raw_similarity": 0.0297
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2438,
+          "raw_similarity": 0.0369
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2368,
+          "raw_similarity": 0.0197
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.31,
+      "segmentation_confidence": 0.979,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown curry",
+      "volume_ml": 0.2,
+      "mass_g": 0.2,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6177,
+      "class_label": "unknown curry",
+      "class_confidence": 0.301,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.2615,
+          "raw_similarity": 0.0195
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2511,
+          "raw_similarity": 0.0225
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2487,
+          "raw_similarity": 0.0213
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2387,
+          "raw_similarity": 0.0161
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": true,
+      "matched_menu_item": "dal tadka",
+      "identification_confidence": 0.301,
+      "segmentation_confidence": 0.9214,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.92,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 3.5,
+      "mass_g": 3.8,
+      "calories": 4.6,
+      "protein": 0.0,
+      "carbs": 0.4,
+      "fat": 0.4,
+      "confidence": 0.7328,
+      "class_label": "pickle",
+      "class_confidence": 0.4285,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2925,
+          "raw_similarity": 0.0601
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2401,
+          "raw_similarity": 0.0354
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2373,
+          "raw_similarity": 0.0339
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2302,
+          "raw_similarity": 0.0301
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4285,
+      "segmentation_confidence": 0.9614,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 2.4,
+      "mass_g": 2.6,
+      "calories": 3.1,
+      "protein": 0.0,
+      "carbs": 0.3,
+      "fat": 0.3,
+      "confidence": 0.7353,
+      "class_label": "pickle",
+      "class_confidence": 0.4376,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2888,
+          "raw_similarity": 0.0702
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2449,
+          "raw_similarity": 0.0496
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2366,
+          "raw_similarity": 0.0453
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2296,
+          "raw_similarity": 0.0415
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4376,
+      "segmentation_confidence": 0.9544,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.5,
+      "mass_g": 0.5,
+      "calories": 0.6,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7067,
+      "class_label": "pickle",
+      "class_confidence": 0.3662,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2939,
+          "raw_similarity": 0.044
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2415,
+          "raw_similarity": 0.0345
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2353,
+          "raw_similarity": 0.0313
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2293,
+          "raw_similarity": 0.028
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3662,
+      "segmentation_confidence": 0.9728,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown food",
+      "volume_ml": 0.1,
+      "mass_g": 0.1,
+      "calories": 0.1,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6283,
+      "class_label": "unknown food",
+      "class_confidence": 0.3138,
+      "top_k": [
+        {
+          "label": "papad",
+          "confidence": 0.2722,
+          "raw_similarity": 0.0265
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2462,
+          "raw_similarity": 0.0318
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2428,
+          "raw_similarity": 0.0213
+        },
+        {
+          "label": "pickle",
+          "confidence": 0.2388,
+          "raw_similarity": 0.0209
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3138,
+      "segmentation_confidence": 0.9457,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 4.3,
+      "mass_g": 4.3,
+      "calories": 4.3,
+      "protein": 0.1,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.6455,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3382,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2653,
+          "raw_similarity": 0.0401
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2652,
+          "raw_similarity": 0.04
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2356,
+          "raw_similarity": 0.0252
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2339,
+          "raw_similarity": 0.0243
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3382,
+      "segmentation_confidence": 0.9779,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unknown condiment",
+      "volume_ml": 0.3,
+      "mass_g": 0.3,
+      "calories": 0.3,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6436,
+      "class_label": "unknown condiment",
+      "class_confidence": 0.3399,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2793,
+          "raw_similarity": 0.0385
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2472,
+          "raw_similarity": 0.0365
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2439,
+          "raw_similarity": 0.0347
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2297,
+          "raw_similarity": 0.0273
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3399,
+      "segmentation_confidence": 0.9614,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.3,
+      "mass_g": 0.3,
+      "calories": 0.4,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.709,
+      "class_label": "pickle",
+      "class_confidence": 0.3723,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2996,
+          "raw_similarity": 0.038
+        },
+        {
+          "label": "rice",
+          "confidence": 0.2353,
+          "raw_similarity": 0.0208
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2328,
+          "raw_similarity": 0.0194
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2323,
+          "raw_similarity": 0.0191
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3723,
+      "segmentation_confidence": 0.9696,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.2,
+      "mass_g": 0.2,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7227,
+      "class_label": "pickle",
+      "class_confidence": 0.3955,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2829,
+          "raw_similarity": 0.05
+        },
+        {
+          "label": "laddu",
+          "confidence": 0.2451,
+          "raw_similarity": 0.032
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2361,
+          "raw_similarity": 0.0274
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2359,
+          "raw_similarity": 0.0273
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3955,
+      "segmentation_confidence": 0.9855,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.1,
+      "mass_g": 0.1,
+      "calories": 0.1,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.703,
+      "class_label": "pickle",
+      "class_confidence": 0.3637,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.2894,
+          "raw_similarity": 0.0485
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.244,
+          "raw_similarity": 0.0437
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2386,
+          "raw_similarity": 0.0409
+        },
+        {
+          "label": "roti",
+          "confidence": 0.2281,
+          "raw_similarity": 0.0298
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3637,
+      "segmentation_confidence": 0.9592,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.8,
+      "mass_g": 0.9,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.7554,
+      "class_label": "pickle",
+      "class_confidence": 0.4755,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.3272,
+          "raw_similarity": 0.0617
+        },
+        {
+          "label": "dal",
+          "confidence": 0.2288,
+          "raw_similarity": 0.0169
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2233,
+          "raw_similarity": 0.0139
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2207,
+          "raw_similarity": 0.0124
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4755,
+      "segmentation_confidence": 0.9781,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.6911
+}

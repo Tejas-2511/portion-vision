@@ -10,8 +10,12 @@ const crypto = require("crypto");
 
 const Database = require("./utils/db");
 const { normalizeFoodName } = require("./utils/normalize");
-const { fuzzyMatchFood, levenshteinDistance } = require("./utils/fuzzyMatch");
+const { findBestFoodMatch, calculateSimilarity } = require("./utils/fuzzyMatch");
 const { recommendPlate, getFallbackDetails } = require("./portion_recommender");
+
+// Global configuration: whether OCR auto-updates foodDatabase.json
+// Can be controlled via environment variable ALLOW_OCR_DB_UPDATE (default: false to preserve database integrity)
+let globalAllowOcrDbUpdate = process.env.ALLOW_OCR_DB_UPDATE === 'true';
 
 const app = express();
 
@@ -65,6 +69,23 @@ app.get('/health', (req, res) => {
     res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
+// Settings: OCR Database auto-update toggle
+app.get('/api/settings/ocr-db-update', (req, res) => {
+    res.json({
+        allowOcrDbUpdate: globalAllowOcrDbUpdate,
+        description: "Controls whether OCR menu scanning automatically saves unrecognized items to the permanent food database."
+    });
+});
+
+app.post('/api/settings/ocr-db-update', (req, res) => {
+    if (req.body && typeof req.body.enabled === 'boolean') {
+        globalAllowOcrDbUpdate = req.body.enabled;
+        console.log(`⚙️ Global OCR DB update setting changed to: ${globalAllowOcrDbUpdate}`);
+        return res.json({ success: true, allowOcrDbUpdate: globalAllowOcrDbUpdate });
+    }
+    res.status(400).json({ error: "Missing or invalid boolean 'enabled' field in request body." });
+});
+
 // ============================================
 // Food Database API Endpoints
 // ============================================
@@ -95,16 +116,16 @@ app.get('/api/foods/search', async (req, res) => {
             food.name && normalizeFoodName(food.name).includes(normalizedQuery)
         );
 
-        // Complement with fuzzy search if needed
+        // Complement with fuzzy search if needed using the unified fuzzy engine
         if (results.length < 5) {
             const fuzzyResults = foods
                 .filter(food => food.name && !results.some(r => r.name === food.name))
                 .map(food => ({
                     food,
-                    score: levenshteinDistance(normalizedQuery, normalizeFoodName(food.name))
+                    similarity: calculateSimilarity(normalizedQuery, food.name)
                 }))
-                .filter(item => item.score <= 3)
-                .sort((a, b) => a.score - b.score)
+                .filter(item => item.similarity >= 0.60)
+                .sort((a, b) => b.similarity - a.similarity)
                 .map(item => item.food);
 
             results = [...results, ...fuzzyResults].slice(0, 10);
@@ -249,23 +270,40 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
         const menuItems = parseMenuText(text);
         console.log(`📝 Parsed Items from OCR: [${menuItems.join(", ")}]`);
 
+        // Check if database updating is enabled for this request:
+        // 1. Explicit request body flag `updateDatabase` (boolean or 'true'/'false')
+        // 2. Query param `update_db`
+        // 3. Fallback to server setting `globalAllowOcrDbUpdate`
+        let allowDbUpdate = globalAllowOcrDbUpdate;
+        if (req.body && req.body.updateDatabase !== undefined) {
+            allowDbUpdate = req.body.updateDatabase === true || req.body.updateDatabase === 'true' || req.body.updateDatabase === '1';
+        } else if (req.query && req.query.update_db !== undefined) {
+            allowDbUpdate = req.query.update_db === 'true' || req.query.update_db === '1';
+        }
+
+        console.log(`⚙️ OCR Database Update Mode: ${allowDbUpdate ? 'ENABLED (unrecognized items will be saved)' : 'DISABLED (database is read-only)'}`);
+
         // Sync with Food Database
         let foodDatabase = await Database.getFoods();
-        const getCompareKey = (name) => (name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
-
         const cleanedMenuItems = [];
         let addedCount = 0;
+        let matchedCount = 0;
 
-        console.log("🔍 Checking items against Food Database...");
+        console.log("🔍 Checking OCR items against Food Database with fuzzy matching...");
         for (const itemName of menuItems) {
-            const compareKey = getCompareKey(itemName);
-            const existing = foodDatabase.find(f => getCompareKey(f.name) === compareKey);
+            // 1. Try fuzzy match with similarity scoring & synonym expansion (e.g. roti/chapati, sambhar/sambar)
+            const matchResult = findBestFoodMatch(itemName, foodDatabase, 0.65);
 
-            if (!existing) {
-                console.log(`   ➕ ADDING NEW ITEM: "${itemName}" (Creating fallback nutrition)`);
+            if (matchResult && matchResult.food) {
+                const existing = matchResult.food;
+                matchedCount++;
+                console.log(`   ✅ FUZZY MATCHED: "${itemName}" -> "${existing.name}" (confidence: ${(matchResult.score * 100).toFixed(0)}%, matchType: ${matchResult.type})`);
+                cleanedMenuItems.push(existing.name);
+            } else {
+                console.log(`   ❓ NO MATCH FOUND FOR: "${itemName}" (generating fallback nutrition)`);
                 const fallback = getFallbackDetails(itemName);
                 const newItem = {
-                    id: itemName.toLowerCase().replace(/\s+/g, '_'),
+                    id: itemName.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '') || `item_${Date.now()}`,
                     name: itemName,
                     veg: fallback.veg !== undefined ? fallback.veg : true,
                     dish_type: fallback.dish_type || 'sabji',
@@ -282,16 +320,20 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
                     meal_role: fallback.meal_role || 'single',
                     tags: fallback.tags || []
                 };
-                foodDatabase.push(newItem);
-                addedCount++;
+
                 cleanedMenuItems.push(itemName);
-            } else {
-                console.log(`   ✅ FOUND IN DB: "${existing.name}"`);
-                cleanedMenuItems.push(existing.name);
+
+                if (allowDbUpdate) {
+                    console.log(`   ➕ ADDING NEW ITEM TO DB: "${itemName}"`);
+                    foodDatabase.push(newItem);
+                    addedCount++;
+                } else {
+                    console.log(`   🛡️ DB UPDATE OFF: "${itemName}" will use fallback nutrition for this session without saving to database.`);
+                }
             }
         }
 
-        if (addedCount > 0) {
+        if (allowDbUpdate && addedCount > 0) {
             console.log(`💾 Saved ${addedCount} new items to the Food Database.`);
             foodDatabase.sort((a, b) => a.name.localeCompare(b.name));
             await Database.saveFoods(foodDatabase);
@@ -301,7 +343,11 @@ app.post("/ocr", upload.single("image"), async (req, res) => {
             date: new Date().toISOString(),
             items: cleanedMenuItems.sort(),
             text,
-            confidence: Math.round(confidence)
+            confidence: Math.round(confidence),
+            dbUpdateEnabled: allowDbUpdate,
+            dbUpdated: allowDbUpdate && addedCount > 0,
+            addedCount: allowDbUpdate ? addedCount : 0,
+            matchedCount: matchedCount
         };
 
         await Database.saveMenu(resultData);
@@ -330,13 +376,15 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
         return res.status(400).json({ error: "No image uploaded" });
     }
 
-    const { expectedItems } = req.body;
+    const { expectedItems, plateProfile, mealType } = req.body;
+    const requestedProfile = plateProfile || req.body.plate_profile || '';
+    const requestedMeal = mealType || req.body.meal_type || '';
     let originalPath = req.file.path;
 
     try {
         const fileBuffer = fs.readFileSync(originalPath);
         const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
-        const reqKey = `${hash}_${expectedItems || ''}`;
+        const reqKey = `${hash}_${expectedItems || ''}_${requestedProfile}_${requestedMeal}`;
 
         // 1. If we already computed results for this image within the last 15 minutes, return immediately
         const cached = cvResultCache.get(reqKey);
@@ -371,13 +419,20 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
         // Union of menu items and any recommendation items sent by the client
         const mergedSet = new Set([...menuItems, ...clientItems]);
         const mergedItems = [...mergedSet].filter(Boolean);
-        console.log(`[analyze-plate] CV expected_items: [${mergedItems.join(', ')}]`);
+        console.log(`[analyze-plate] CV expected_items: [${mergedItems.join(', ')}], meal: '${requestedMeal || 'auto'}', profile: '${requestedProfile || 'default'}'`);
 
         const form = new FormData();
         form.append("image", fs.createReadStream(originalPath));
         if (mergedItems.length > 0) {
             form.append("expected_items", mergedItems.join(','));
         }
+        if (requestedProfile) {
+            form.append("plate_profile", requestedProfile);
+        }
+        if (requestedMeal) {
+            form.append("meal_type", requestedMeal);
+        }
+        form.append("debug", "true");
 
         activeCvKey = reqKey;
         activeCvPromise = axios.post("http://127.0.0.1:8000/estimate-portion", form, {

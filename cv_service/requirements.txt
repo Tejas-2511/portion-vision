@@ -8,20 +8,15 @@ opencv-python-headless
 numpy
 Pillow
 
-# ML / PyTorch
+# ML / PyTorch & Transformers
 torch
 torchvision
-
-# Segment Anything (Full SAM - installed from GitHub)
-segment-anything @ git+https://github.com/facebookresearch/segment-anything.git
-
-# Depth estimation (Depth Anything via huggingface transformers)
-timm
 transformers
-
-
-
-# Optimal assignment (Hungarian algorithm)
+tokenizers
+timm
+einops
 scipy
+huggingface_hub
 
-# OCR is handled by Tesseract.js in the Node.js backend — no Python OCR deps needed
+# Meta SAM 3 (installed from local repo or git: SAM3/sam3)
+# Depth estimation (Depth Anything V2 Small via HuggingFace transformers)

@@ -1,18 +1,16 @@
 """
 End-to-end mass estimation pipeline.
 
-Orchestrates all enhancements:
+Orchestrates all vision pipeline stages:
 
-  #1  Hybrid depth (Depth Anything + food geometric priors)
-  #2  Food classification via MobileNetV3
-  #3  OCR→CV fusion (OCR labels constrain classifier)
-  #4  Ellipse-based scale calibration
-  #5  Depth smoothing (inside depth_estimator.estimate_depth)
-  #6  Dynamic density mapping
-  #7  Input quality gate (inside preprocess.process_image)
-  #8  Per-compartment SAM segmentation
-  #9  Hungarian algorithm optimal mask↔label assignment
-  #10 Composite confidence score
+  #1  SAM 3 unified open-vocabulary food identification and instance segmentation
+  #2  Depth Anything monocular depth estimation
+  #3  Ellipse-based scale calibration (px -> cm)
+  #4  Hybrid depth reconstruction (Depth Anything + food geometric priors)
+  #5  Voxel-based 3D food volume calculation
+  #6  Dynamic density mapping (g/cm³)
+  #7  Composite confidence scoring
+  #8  Nutritional macronutrient calculation (calories, protein, carbs, fats)
 
 When debug=True, creates a timestamped run directory and saves every
 intermediate image, NumPy array, and a final HTML report.
@@ -20,8 +18,10 @@ intermediate image, NumPy array, and a final HTML report.
 
 from __future__ import annotations
 
+import os
 import time
 import logging
+import re
 import cv2
 import numpy as np
 
@@ -32,10 +32,6 @@ from image_processing.detection import (
     compute_scale,
     match_compartments_to_profile,
 )
-from segmentation.sam_segmenter import (
-    segment_per_compartment_sam,
-    segment_full_image_sam,
-)
 from depth.depth_estimator import (
     estimate_depth,
     normalize_depth_to_plate,
@@ -44,11 +40,73 @@ from depth.depth_estimator import (
     calibrate_scale_from_ellipse,
     FOOD_HEIGHT_PRIORS,
 )
-from classification.classifier import classify_mask_region
-from config.density_map import get_density, get_dynamic_density
+from config.synonym_map import SYNONYM_GROUPS
+from config.density_map import get_dynamic_density
 from config.macro_map import get_macros
+from config.plate_config import get_plate_profile
 
 logger = logging.getLogger(__name__)
+
+
+# ── Food Geometric Archetype Helpers ──────────────────────────────────────────
+
+def _is_planar_food(food_name: str) -> bool:
+    f = food_name.lower()
+    return any(k in f for k in ["roti", "chapati", "phulka", "naan", "paratha", "papad", "dosa", "puri", "bhatura", "bread"])
+
+
+def _is_liquid_food(food_name: str) -> bool:
+    f = food_name.lower()
+    return any(k in f for k in ["dal", "daal", "sambar", "rasam", "curd", "dahi", "raita", "kheer", "soup"])
+
+
+def _is_mound_food(food_name: str) -> bool:
+    f = food_name.lower()
+    return any(k in f for k in ["rice", "biryani", "pulao", "khichdi", "poha", "upma", "chawal"])
+
+
+def _get_planar_thickness_cm(food_name: str) -> float:
+    f = food_name.lower()
+    if "papad" in f:
+        return 0.15
+    if any(k in f for k in ["paratha", "naan", "bhatura"]):
+        return 0.38
+    return 0.25  # standard Indian chapati / roti thickness
+
+
+# ── Fuzzy & Synonym Matching Helper ──────────────────────────────────────────
+
+def _is_label_match(expected_name: str, class_label: str) -> tuple[bool, float]:
+    """
+    Checks if an expected item matches a classifier label using:
+    1. Exact or substring match (e.g. 'rice' in 'jeera rice')
+    2. Token set overlap (e.g. 'aloo gobi' & 'gobi masala')
+    3. Canonical Indian food synonym clusters from classifier.SYNONYM_GROUPS
+    Returns (is_match, match_affinity_multiplier)
+    """
+    e = expected_name.lower().strip()
+    d = class_label.lower().strip()
+    if not e or not d:
+        return False, 0.0
+
+    if e == d:
+        return True, 1.0
+
+    if e in d or d in e:
+        return True, 0.95
+
+    # Check token overlap
+    e_tokens = set(re.findall(r"\w+", e))
+    d_tokens = set(re.findall(r"\w+", d))
+    if e_tokens and d_tokens and (e_tokens & d_tokens):
+        return True, 0.85
+
+    # Check unified synonym groups
+    for group in SYNONYM_GROUPS:
+        if any(term in e for term in group) and any(term in d for term in group):
+            return True, 0.75
+
+    return False, 0.0
 
 
 # ── Hungarian assignment helper ───────────────────────────────────────────────
@@ -56,7 +114,7 @@ logger = logging.getLogger(__name__)
 def _hungarian_assign(
     food_masks: list[dict],
     expected_items: list[str],
-    compartments: list[dict],
+    compartments: list[dict] | None = None,
 ) -> tuple[list[dict], list[str]]:
     """
     Enhancement #9 — Optimal mask ↔ expected-item assignment.
@@ -87,12 +145,18 @@ def _hungarian_assign(
 
     def _get_category(food_name: str) -> str:
         f = food_name.lower()
-        if any(k in f for k in ["chapati", "roti", "naan", "paratha", "flatbread", "phulka", "bread"]):
+        if any(k in f for k in ["chapati", "roti", "naan", "paratha", "flatbread", "phulka", "bread", "idli", "dosa", "poha", "upma", "puri", "bhatura", "thepla", "vada", "uttapam"]):
             return "bread"
         if any(k in f for k in ["rice", "biryani", "pulao", "khichdi"]):
             return "rice"
-        if any(k in f for k in ["dal", "daal", "sambar", "curry", "veg", "sabzi", "sabji", "paneer", "chole", "rajma", "gobi", "aloo"]):
+        if any(k in f for k in ["dal", "daal", "sambar", "curry", "veg", "sabzi", "sabji", "paneer", "chole", "rajma", "gobi", "aloo", "bhindi", "rasam"]):
             return "curry"
+        if any(k in f for k in ["samosa", "pakoda", "cutlet", "bonda", "chaat", "snack"]):
+            return "snack"
+        if any(k in f for k in ["halwa", "gulab jamun", "kheer", "payasam", "jalebi", "laddu", "barfi", "sweet", "dessert"]):
+            return "sweet"
+        if any(k in f for k in ["banana", "apple", "papaya", "watermelon", "orange", "fruit"]):
+            return "fruit"
         return "side"
 
     for i, mask_data in enumerate(food_masks):
@@ -111,14 +175,18 @@ def _hungarian_assign(
             class_conf     = mask_data.get("class_conf",  0.0)
             cat            = _get_category(expected)
 
-            # Component 1: Classifier label match
-            if expected_lower in class_label or class_label in expected_lower:
-                c -= class_conf * 3.0
+            # Component 1: Classifier label match with fuzzy & synonym support
+            is_match, match_affinity = _is_label_match(expected_lower, class_label)
+            if is_match:
+                c -= class_conf * 3.0 * match_affinity
             else:
                 c += (1.0 - class_conf) * 1.5
 
-            # Component 2: Food Category & Area affinity
-            if area > 45000:
+            # Component 2: Food Category & Relative Area affinity (resolution-independent)
+            total_plate_area = float(mask_h * mask_w)
+            area_frac = area / max(total_plate_area, 1.0)
+
+            if area_frac > 0.075:
                 # Large area (>7.5% of plate) — main carb base (roti or rice)
                 if cat in ["bread", "rice"]:
                     c -= 3.0
@@ -129,14 +197,14 @@ def _hungarian_assign(
                         c -= 1.5
                 else:
                     c += 5.0
-            elif 18000 <= area <= 45000:
-                # Medium area — well-sized curry, dal, or sabzi
+            elif 0.025 <= area_frac <= 0.075:
+                # Medium area (2.5% to 7.5%) — well-sized curry, dal, or sabzi
                 if cat == "curry":
                     c -= 2.0
                 else:
                     c += 2.5
             else:
-                # Small area (<18,000 px) — side, chutney, dessert, or salad
+                # Small area (<2.5% of plate) — side, chutney, dessert, or salad
                 if cat == "side":
                     c -= 2.5
                 elif cat in ["bread", "rice"]:
@@ -166,18 +234,44 @@ def _hungarian_assign(
             cost[i, j] = c
 
     row_ind, col_ind = linear_sum_assignment(cost)
+    hungarian_mapping = {r: c for r, c in zip(row_ind, col_ind)}
 
-    matched_pairs = [
-        (r, c) for r, c in zip(row_ind, col_ind)
-        if r < n_masks and c < n_items
-    ]
-    # Sort matched pairs by mask area descending
-    matched_pairs.sort(key=lambda p: food_masks[p[0]]["area"], reverse=True)
+    # Natural multi-portion staples where duplicates are very common on mess plates
+    NATURAL_DUPLICATE_CATEGORIES = {"bread", "rice", "curry", "snack", "fruit"}
 
-    selected_masks = [food_masks[r] for r, c in matched_pairs]
-    labels         = [expected_items[c] for r, c in matched_pairs]
+    assigned_labels = []
+    for i, mask_data in enumerate(food_masks):
+        class_label = mask_data.get("class_label", "").lower()
+        class_conf = mask_data.get("class_conf", 0.0)
 
-    return selected_masks, labels
+        # 1. Best unconstrained candidate index for this mask
+        best_j = int(np.argmin(cost[i, :n_items])) if n_items > 0 else -1
+        best_label = expected_items[best_j] if best_j >= 0 else (class_label or "unknown")
+        best_cost = cost[i, best_j] if best_j >= 0 else 0.0
+
+        # 2. Hungarian unique matching candidate
+        h_j = hungarian_mapping.get(i, -1)
+        h_label = expected_items[h_j] if (0 <= h_j < n_items) else best_label
+        h_cost = cost[i, h_j] if (0 <= h_j < n_items) else best_cost
+
+        # 3. Determine if forcing uniqueness produces a severe mismatch
+        h_cat = _get_category(h_label)
+        best_cat = _get_category(best_label)
+        cost_diff = h_cost - best_cost
+
+        # If forcing uniqueness tries to turn a second portion of bread/curry into a mismatched item,
+        # or if the classifier has high confidence (>0.50) matching the best label, allow the duplicate!
+        if best_cat in NATURAL_DUPLICATE_CATEGORIES and cost_diff > 1.8:
+            chosen_label = best_label
+        elif class_conf >= 0.50 and _is_label_match(best_label, class_label)[0]:
+            chosen_label = best_label
+        else:
+            chosen_label = h_label
+
+        assigned_labels.append(chosen_label)
+
+    # Return all masks and their assigned labels (never drop detected masks)
+    return food_masks, assigned_labels
 
 
 def _greedy_assign(
@@ -221,7 +315,9 @@ def estimate_food_mass(
     image_bgr: np.ndarray,
     expected_items: list[str] = None,
     plate_profile: str = None,
-    debug: bool = False,
+    meal_type: str = None,
+    debug: bool = True,
+    use_open_vocab: bool = True,
 ) -> dict:
     """
     Full enhanced pipeline:
@@ -310,8 +406,8 @@ def estimate_food_mass(
     cm_per_pixel     = compute_scale(raw_compartments, top_down.shape, plate_profile)
     scale_confidence = 0.70   # default: bbox-based calibration
 
-    # #4 — Try ellipse-based calibration for higher accuracy
-    ellipse_scale = calibrate_scale_from_ellipse(top_down)
+    # #4 — Try ellipse-based calibration for higher accuracy (with profile support)
+    ellipse_scale = calibrate_scale_from_ellipse(top_down, plate_profile=get_plate_profile(plate_profile))
     if ellipse_scale is not None:
         cm_per_pixel     = ellipse_scale
         scale_confidence = 1.00
@@ -361,73 +457,68 @@ def estimate_food_mass(
 
     ctx.log("Depth Estimation", "Complete", elapsed=time.perf_counter() - t0)
 
-    # ── Step 4: Segmentation ──────────────────────────────────────────────────
-    ctx.log("Pipeline", "Step 4 — Segmentation")
+    # ── SAM 3 Food Identification & Concept Segmentation ─────────────────
+    ctx.log("Pipeline", "Step 4–6 — SAM 3 Food Identification & Segmentation")
     t0 = time.perf_counter()
+    from open_vocab.pipeline import OpenVocabFoodSegmenter
+    ov_segmenter = OpenVocabFoodSegmenter()
+    seg_output_dir = os.path.join(ctx.run_dir, "segmentation") if (ctx and ctx.run_dir) else None
+    ov_res = ov_segmenter.process_plate(
+        image_bgr=top_down,
+        menu_items=expected_items,
+        compartments=compartments,
+        meal_type=meal_type or "lunch",
+        output_dir=seg_output_dir,
+    )
+    verified_items = ov_res.get("food_items", [])
+    ctx.log("SAM3", f"Identified {len(verified_items)} food items "
+                    f"({ov_res.get('recognized_count', 0)} recognized, "
+                    f"{ov_res.get('unlisted_count', 0)} unlisted, "
+                    f"{ov_res.get('uncertain_count', 0)} uncertain)",
+            output_file="segmentation/01_sam3_segmentation_overlay.png" if seg_output_dir else None,
+            elapsed=time.perf_counter() - t0)
 
-    # Use Full-image SAM mask generator to obtain smooth, natural food contours
-    # without rectangular bounding-box cropping artifacts.
-    food_masks = segment_full_image_sam(top_down, ctx=ctx)
-
-    if not food_masks:
-        ctx.log("Segmentation", "No food items detected",
-                elapsed=time.perf_counter() - t0)
+    if not verified_items:
         result = {"food_items": [], "confidence": 0.0}
         ctx.save_json("volume", "results.json", result)
         ctx.generate_report()
         return result
 
-    ctx.log("Segmentation", f"{len(food_masks)} food items found",
-            elapsed=time.perf_counter() - t0)
-
-    # Sort masks by area (largest first)
-    food_masks = sorted(food_masks, key=lambda m: m["area"], reverse=True)
-
-    # ── Step 5: Classification & OCR Fusion ──────────────────────────────────
-    ctx.log("Pipeline", "Step 5 — Food Classification (OCR-constrained)")
-    t0 = time.perf_counter()
-
-    for f_idx, item in enumerate(food_masks):
-        # Determine which compartment this mask belongs to
-        comp_label      = "unknown"
-        comp_max_vol    = 500   # default (ml)
-        max_overlap     = -1
+    food_masks = []
+    assigned_names = []
+    for it in verified_items:
+        m = it["mask"]
+        item_entry = {
+            "mask": m,
+            "area": int(it["area_pixels"]),
+            "score": float(it.get("segmentation_confidence", 0.90)),
+            "class_label": it["food_name"],
+            "class_conf": float(it.get("identification_confidence", it["confidence"])),
+            "class_top_k": it.get("top_k", []),
+            "identification_status": it.get("identification_status", "uncertain"),
+            "menu_match": it.get("menu_match", False),
+            "matched_menu_item": it.get("matched_menu_item"),
+            "identification_confidence": float(it.get("identification_confidence", 0.0)),
+            "segmentation_confidence": float(it.get("segmentation_confidence", 0.90)),
+            "association_confidence": float(it.get("association_confidence", 0.0)),
+            "menu_match_confidence": float(it.get("menu_match_confidence", 0.0)),
+        }
+        # Assign compartment overlap
+        comp_label = "unknown"
+        comp_max_vol = 500
+        max_overlap = -1
         for comp in compartments:
             cx2, cy2, cw2, ch2 = comp["bbox"]
-            overlap = np.sum(item["mask"][cy2:cy2+ch2, cx2:cx2+cw2])
+            overlap = np.sum(m[cy2:cy2+ch2, cx2:cx2+cw2])
             if overlap > max_overlap:
-                max_overlap  = overlap
-                comp_label   = comp["label"]
+                max_overlap = overlap
+                comp_label = comp["label"]
                 comp_max_vol = comp.get("max_volume_ml", 500)
+        item_entry["comp_label"] = comp_label
+        item_entry["comp_max_volume_ml"] = comp_max_vol
 
-        item["comp_label"]         = comp_label
-        item["comp_max_volume_ml"] = comp_max_vol
-
-        # #2/#3 — Classify with OCR label constraint
-        cls_result           = classify_mask_region(
-            top_down, item["mask"],
-            allowed_labels=expected_items,
-            top_k=3,
-        )
-        item["class_label"] = cls_result["label"]
-        item["class_conf"]  = cls_result["confidence"]
-        item["class_top_k"] = cls_result["top_k"]
-
-    ctx.log("Classification", "Complete",
-            {"n_items": len(food_masks),
-             "ocr_labels_used": bool(expected_items)},
-            elapsed=time.perf_counter() - t0)
-
-    # ── Step 6: Optimal Assignment (Hungarian) ────────────────────────────────
-    ctx.log("Pipeline", "Step 6 — Hungarian Label Assignment")
-    if expected_items:
-        food_masks, assigned_names = _hungarian_assign(food_masks, expected_items, compartments)
-    else:
-        # No expected list — use classifier output directly
-        assigned_names = [
-            item.get("class_label", "unknown")
-            for item in food_masks
-        ]
+        food_masks.append(item_entry)
+        assigned_names.append(it["food_name"])
 
     # ── Step 7: Volume & Mass Estimation ─────────────────────────────────────
     ctx.log("Pipeline", "Step 7 — Volume & Mass Estimation")
@@ -452,20 +543,48 @@ def estimate_food_mass(
         well_offset = float(np.mean(well_depth_map[mask])) if mask.any() else 0.0
         pixel_heights = np.clip(food_heights_cm + well_offset, 0.05, 15.0)
 
-        # #5 — depth stability: 1.0 if prior was found, 0.75 otherwise
+        # Depth stability: 1.0 if prior was found, 0.75 otherwise
         food_key = food_name.strip().lower()
         has_prior = (food_key in FOOD_HEIGHT_PRIORS) or any(
             k in food_key or food_key in k for k in FOOD_HEIGHT_PRIORS
         )
-        # apply_food_height_prior now always maps into a valid range, so even
-        # foods without an explicit prior are more stable than before.
         depth_stability = 1.0 if has_prior else 0.75
 
-        volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2)
-
-        # Cap volume to the physical compartment capacity so depth over-estimates
-        # don't produce impossible results (e.g. 800 ml in a 150 ml well).
+        # ── Physical Geometric Volume Calculation ─────────────────────────
+        area_cm2 = float(np.sum(mask) * pixel_area_cm2)
         comp_max_vol = item.get("comp_max_volume_ml", 500)
+
+        if _is_planar_food(food_name):
+            # Planar archetype (roti/chapati): does NOT fill compartment depth.
+            # Volume = Surface Area × Calibrated Sheet Thickness × Layer Count.
+            unit_thickness = _get_planar_thickness_cm(food_name)
+            # Estimate stack layers from detected height above plate
+            layers = max(1.0, float(np.median(food_heights_cm)) / unit_thickness)
+            layers = min(layers, 3.5)  # stack limit
+            volume_ml = area_cm2 * unit_thickness * layers
+
+        elif _is_liquid_food(food_name):
+            # Liquid archetype (dal/sambar/curd): conforms to compartment well
+            # Liquid surface cannot rise significantly above the tray rim.
+            well_depth = max(well_offset, 1.5)
+            # Fill ratio derived from relative height near rim (typically 0.4 to 0.95)
+            fill_ratio = float(np.clip(0.40 + 0.55 * np.mean(pixel_heights_rel), 0.35, 1.0))
+            # Frustum taper factor for molded circular/rectangular wells ≈ 0.88
+            volume_ml = area_cm2 * (well_depth * fill_ratio) * 0.88
+
+        elif _is_mound_food(food_name):
+            # Mound archetype (rice/pulao): fills base well + curved dome above rim
+            base_vol = area_cm2 * (well_offset * 0.85)
+            # Smooth dome profile integration
+            mound_vol = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.80
+            volume_ml = base_vol + mound_vol
+
+        else:
+            # Chunk/curry archetype (sabzi/paneer/chicken):
+            # Discrete pieces leave air gaps; solid packing factor ≈ 0.80
+            volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2) * 0.80
+
+        # Cap volume to the physical compartment capacity
         volume_ml = min(volume_ml, comp_max_vol)
 
         # Extract mask crop for visual density analysis
@@ -510,6 +629,17 @@ def estimate_food_mass(
             "confidence":       round(conf, 4),
             "class_label":      item.get("class_label", "unknown"),
             "class_confidence": round(class_conf, 4),
+            "top_k":            item.get("class_top_k", []),
+            # --- Open-World Additive Verification Fields ---
+            "identification_status": item.get("identification_status", "uncertain"),
+            "menu_match":            item.get("menu_match", False),
+            "matched_menu_item":     item.get("matched_menu_item"),
+            "identification_confidence": item.get("identification_confidence", round(class_conf, 4)),
+            "segmentation_confidence":   item.get("segmentation_confidence", round(seg_score, 4)),
+            "association_confidence":    item.get("association_confidence", 0.0),
+            "menu_match_confidence":     item.get("menu_match_confidence", 0.0),
+            "depth_confidence":          depth_stability,
+            "scale_confidence":          scale_confidence,
         }
         food_items.append(food_item)
 

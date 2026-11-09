@@ -1,0 +1,369 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 196.3,
+      "mass_g": 211.4,
+      "calories": 274.8,
+      "protein": 5.7,
+      "carbs": 59.2,
+      "fat": 0.6,
+      "confidence": 0.8149,
+      "class_label": "steamed rice",
+      "class_confidence": 0.7938,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.7938,
+          "raw_similarity": 0.7938
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.7938,
+      "segmentation_confidence": 0.7938,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 0.4,
+      "mass_g": 0.4,
+      "calories": 0.5,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6025,
+      "class_label": "steamed rice",
+      "class_confidence": 0.4339,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.4339,
+          "raw_similarity": 0.4339
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.4339,
+      "segmentation_confidence": 0.4339,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.4,
+      "mass_g": 0.3,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.8153,
+      "class_label": "cucumber",
+      "class_confidence": 0.9174,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.9174,
+      "segmentation_confidence": 0.9174,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.7,
+      "mass_g": 0.4,
+      "calories": 0.1,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.8134,
+      "class_label": "cucumber",
+      "class_confidence": 0.9132,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9132,
+          "raw_similarity": 0.9132
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.9132,
+      "segmentation_confidence": 0.9132,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.3,
+      "mass_g": 0.2,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.809,
+      "class_label": "cucumber",
+      "class_confidence": 0.9032,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.9032,
+          "raw_similarity": 0.9032
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.9032,
+      "segmentation_confidence": 0.9032,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.8,
+      "mass_g": 0.5,
+      "calories": 0.1,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.801,
+      "class_label": "cucumber",
+      "class_confidence": 0.8855,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8855,
+          "raw_similarity": 0.8855
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.8855,
+      "segmentation_confidence": 0.8855,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.3,
+      "mass_g": 0.2,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7964,
+      "class_label": "cucumber",
+      "class_confidence": 0.8753,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8753,
+          "raw_similarity": 0.8753
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.8753,
+      "segmentation_confidence": 0.8753,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "curry",
+      "volume_ml": 23.2,
+      "mass_g": 25.8,
+      "calories": 36.1,
+      "protein": 3.9,
+      "carbs": 1.0,
+      "fat": 2.1,
+      "confidence": 0.8044,
+      "class_label": "curry",
+      "class_confidence": 0.7734,
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.7734,
+          "raw_similarity": 0.7734
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7734,
+      "segmentation_confidence": 0.7734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "curry",
+      "volume_ml": 24.0,
+      "mass_g": 26.7,
+      "calories": 37.3,
+      "protein": 4.0,
+      "carbs": 1.1,
+      "fat": 2.1,
+      "confidence": 0.8007,
+      "class_label": "curry",
+      "class_confidence": 0.7663,
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "curry",
+      "volume_ml": 0.6,
+      "mass_g": 0.7,
+      "calories": 1.0,
+      "protein": 0.1,
+      "carbs": 0.0,
+      "fat": 0.1,
+      "confidence": 0.659,
+      "class_label": "curry",
+      "class_confidence": 0.519,
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.519,
+          "raw_similarity": 0.519
+        }
+      ],
+      "identification_status": "unlisted",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.519,
+      "segmentation_confidence": 0.519,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.1,
+      "mass_g": 0.1,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.5828,
+      "class_label": "cucumber",
+      "class_confidence": 0.4688,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.4688,
+          "raw_similarity": 0.4688
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.4688,
+      "segmentation_confidence": 0.4688,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "cucumber",
+      "volume_ml": 0.2,
+      "mass_g": 0.1,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.5152,
+      "class_label": "cucumber",
+      "class_confidence": 0.3663,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.3663,
+          "raw_similarity": 0.3663
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3663,
+      "segmentation_confidence": 0.3663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unlisted food",
+      "volume_ml": 2.9,
+      "mass_g": 2.9,
+      "calories": 2.9,
+      "protein": 0.1,
+      "carbs": 0.4,
+      "fat": 0.1,
+      "confidence": 0.7081,
+      "class_label": "unlisted food",
+      "class_confidence": 0.6921,
+      "top_k": [
+        {
+          "label": "unlisted food",
+          "confidence": 0.6921,
+          "raw_similarity": 0.6921
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.6921,
+      "segmentation_confidence": 0.6921,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7325
+}

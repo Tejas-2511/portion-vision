@@ -1,0 +1,841 @@
+{
+  "source_image": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20260406_200944_def9be09\\input\\original.png",
+  "menu_items": [
+    "steamed rice",
+    "dal palak",
+    "chapati"
+  ],
+  "image_dimensions": [
+    1600,
+    1204
+  ],
+  "total_items": 16,
+  "recognized_count": 5,
+  "unlisted_count": 6,
+  "uncertain_count": 5,
+  "elapsed_seconds": 151.841,
+  "diagnostics": {
+    "timings": {
+      "discovery_s": 4.625,
+      "segmentation_s": 116.265,
+      "association_s": 6.246,
+      "verification_s": 24.704,
+      "total_pipeline_s": 151.84
+    },
+    "discovery_meta": {
+      "mode": "siglip_only",
+      "vlm_used": false,
+      "raw_vlm_output": null,
+      "device": "cpu",
+      "elapsed_seconds": 0.009,
+      "total_candidates": 75
+    },
+    "vram_mb": {
+      "start": 0.0,
+      "end": 0.0
+    },
+    "device": "cpu"
+  },
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.5818,
+      "identification_confidence": 0.548,
+      "segmentation_confidence": 0.954,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        49,
+        527,
+        732,
+        604
+      ],
+      "area_pixels": 283830,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3963,
+          "raw_similarity": 0.1223
+        },
+        {
+          "label": "jeera rice",
+          "confidence": 0.284,
+          "raw_similarity": 0.0942
+        },
+        {
+          "label": "khichdi",
+          "confidence": 0.1661,
+          "raw_similarity": 0.049
+        },
+        {
+          "label": "curd rice",
+          "confidence": 0.1536,
+          "raw_similarity": 0.0424
+        }
+      ],
+      "is_small_item": false,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 283830,
+      "crop_path": "crops\\item_01_steamed_rice.png"
+    },
+    {
+      "name": "unknown curry",
+      "food_name": "unknown curry",
+      "menu_match": true,
+      "matched_menu_item": "dal palak",
+      "confidence": 0.5215,
+      "identification_confidence": 0.4321,
+      "segmentation_confidence": 0.9904,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.85,
+      "mask": null,
+      "bounding_box": [
+        88,
+        105,
+        440,
+        386
+      ],
+      "area_pixels": 133847,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "dal makhani",
+          "confidence": 0.263,
+          "raw_similarity": 0.0913
+        },
+        {
+          "label": "sambar",
+          "confidence": 0.2607,
+          "raw_similarity": 0.0905
+        },
+        {
+          "label": "rasam",
+          "confidence": 0.2413,
+          "raw_similarity": 0.0836
+        },
+        {
+          "label": "yellow dal",
+          "confidence": 0.235,
+          "raw_similarity": 0.0813
+        }
+      ],
+      "is_small_item": false,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 133847,
+      "crop_path": "crops\\item_02_unknown_curry.png"
+    },
+    {
+      "name": "soya chunk curry",
+      "food_name": "soya chunk curry",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5373,
+      "identification_confidence": 0.4592,
+      "segmentation_confidence": 0.9884,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        535,
+        114,
+        440,
+        387
+      ],
+      "area_pixels": 132271,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "soya chunk curry",
+          "confidence": 0.2641,
+          "raw_similarity": 0.1068
+        },
+        {
+          "label": "chicken curry",
+          "confidence": 0.2627,
+          "raw_similarity": 0.1063
+        },
+        {
+          "label": "sambar",
+          "confidence": 0.2415,
+          "raw_similarity": 0.0975
+        },
+        {
+          "label": "yellow dal",
+          "confidence": 0.2317,
+          "raw_similarity": 0.0938
+        }
+      ],
+      "is_small_item": false,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 132271,
+      "crop_path": "crops\\item_03_soya_chunk_curry.png"
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5008,
+      "identification_confidence": 0.4045,
+      "segmentation_confidence": 0.9608,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1054,
+        262,
+        147,
+        197
+      ],
+      "area_pixels": 20964,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.3207,
+          "raw_similarity": 0.0583
+        },
+        {
+          "label": "fruit salad",
+          "confidence": 0.2512,
+          "raw_similarity": 0.043
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2161,
+          "raw_similarity": 0.0672
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.212,
+          "raw_similarity": 0.0648
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 20964,
+      "crop_path": "crops\\item_04_cucumber.png"
+    },
+    {
+      "name": "chapati",
+      "food_name": "chapati",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "confidence": 0.4866,
+      "identification_confidence": 0.3843,
+      "segmentation_confidence": 0.9492,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.76,
+      "mask": null,
+      "bounding_box": [
+        714,
+        614,
+        164,
+        166
+      ],
+      "area_pixels": 19264,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "papad",
+          "confidence": 0.2878,
+          "raw_similarity": 0.0562
+        },
+        {
+          "label": "phulka",
+          "confidence": 0.2593,
+          "raw_similarity": 0.0484
+        },
+        {
+          "label": "dal",
+          "confidence": 0.231,
+          "raw_similarity": 0.0471
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.2219,
+          "raw_similarity": 0.0368
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 19264,
+      "crop_path": "crops\\item_05_chapati.png"
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5509,
+      "identification_confidence": 0.4844,
+      "segmentation_confidence": 0.9812,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1119,
+        121,
+        146,
+        160
+      ],
+      "area_pixels": 17603,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.3874,
+          "raw_similarity": 0.076
+        },
+        {
+          "label": "cucumber salad",
+          "confidence": 0.2141,
+          "raw_similarity": 0.039
+        },
+        {
+          "label": "fruit salad",
+          "confidence": 0.2021,
+          "raw_similarity": 0.0354
+        },
+        {
+          "label": "green salad",
+          "confidence": 0.1964,
+          "raw_similarity": 0.0336
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 17603,
+      "crop_path": "crops\\item_06_cucumber.png"
+    },
+    {
+      "name": "unknown food",
+      "food_name": "unknown food",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.4696,
+      "identification_confidence": 0.3619,
+      "segmentation_confidence": 0.9285,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1218,
+        145,
+        124,
+        206
+      ],
+      "area_pixels": 16847,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.2691,
+          "raw_similarity": 0.0517
+        },
+        {
+          "label": "fruit salad",
+          "confidence": 0.2635,
+          "raw_similarity": 0.0504
+        },
+        {
+          "label": "lauki sabzi",
+          "confidence": 0.2395,
+          "raw_similarity": 0.0636
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2279,
+          "raw_similarity": 0.0825
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 16847,
+      "crop_path": "crops\\item_07_unknown_food.png"
+    },
+    {
+      "name": "cucumber",
+      "food_name": "cucumber",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5201,
+      "identification_confidence": 0.4321,
+      "segmentation_confidence": 0.98,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1268,
+        337,
+        132,
+        124
+      ],
+      "area_pixels": 11761,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.3333,
+          "raw_similarity": 0.0641
+        },
+        {
+          "label": "fruit salad",
+          "confidence": 0.2306,
+          "raw_similarity": 0.0411
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2217,
+          "raw_similarity": 0.0773
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2145,
+          "raw_similarity": 0.0732
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 11761,
+      "crop_path": "crops\\item_08_cucumber.png"
+    },
+    {
+      "name": "banana",
+      "food_name": "banana",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.4881,
+      "identification_confidence": 0.3846,
+      "segmentation_confidence": 0.9595,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1340,
+        222,
+        86,
+        142
+      ],
+      "area_pixels": 7635,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "banana",
+          "confidence": 0.2861,
+          "raw_similarity": 0.0469
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2528,
+          "raw_similarity": 0.0315
+        },
+        {
+          "label": "papaya",
+          "confidence": 0.2331,
+          "raw_similarity": 0.0213
+        },
+        {
+          "label": "apple",
+          "confidence": 0.228,
+          "raw_similarity": 0.0186
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 7635,
+      "crop_path": "crops\\item_09_banana.png"
+    },
+    {
+      "name": "unknown food",
+      "food_name": "unknown food",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5125,
+      "identification_confidence": 0.4247,
+      "segmentation_confidence": 0.9564,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1177,
+        345,
+        104,
+        128
+      ],
+      "area_pixels": 7061,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "aloo capsicum",
+          "confidence": 0.2615,
+          "raw_similarity": 0.0622
+        },
+        {
+          "label": "cucumber",
+          "confidence": 0.2516,
+          "raw_similarity": 0.0411
+        },
+        {
+          "label": "apple slices",
+          "confidence": 0.2515,
+          "raw_similarity": 0.0821
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2354,
+          "raw_similarity": 0.0738
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 7061,
+      "crop_path": "crops\\item_10_unknown_food.png"
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.5771,
+      "identification_confidence": 0.5372,
+      "segmentation_confidence": 0.9607,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        418,
+        526,
+        106,
+        90
+      ],
+      "area_pixels": 6055,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3632,
+          "raw_similarity": 0.1026
+        },
+        {
+          "label": "jeera rice",
+          "confidence": 0.2277,
+          "raw_similarity": 0.0633
+        },
+        {
+          "label": "curd rice",
+          "confidence": 0.2206,
+          "raw_similarity": 0.0606
+        },
+        {
+          "label": "phulka",
+          "confidence": 0.1885,
+          "raw_similarity": 0.0593
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 6055,
+      "crop_path": "crops\\item_11_steamed_rice.png"
+    },
+    {
+      "name": "unknown food",
+      "food_name": "unknown food",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.4775,
+      "identification_confidence": 0.365,
+      "segmentation_confidence": 0.9753,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1256,
+        144,
+        80,
+        77
+      ],
+      "area_pixels": 3718,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "papaya",
+          "confidence": 0.2685,
+          "raw_similarity": 0.0546
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2678,
+          "raw_similarity": 0.0543
+        },
+        {
+          "label": "pineapple",
+          "confidence": 0.2341,
+          "raw_similarity": 0.0375
+        },
+        {
+          "label": "banana",
+          "confidence": 0.2296,
+          "raw_similarity": 0.0351
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 3718,
+      "crop_path": "crops\\item_12_unknown_food.png"
+    },
+    {
+      "name": "dal palak",
+      "food_name": "dal palak",
+      "menu_match": true,
+      "matched_menu_item": "dal palak",
+      "confidence": 0.4935,
+      "identification_confidence": 0.3917,
+      "segmentation_confidence": 0.9666,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.92,
+      "mask": null,
+      "bounding_box": [
+        967,
+        84,
+        75,
+        65
+      ],
+      "area_pixels": 3412,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.2826,
+          "raw_similarity": 0.0698
+        },
+        {
+          "label": "papad",
+          "confidence": 0.2498,
+          "raw_similarity": 0.0704
+        },
+        {
+          "label": "roti",
+          "confidence": 0.234,
+          "raw_similarity": 0.0635
+        },
+        {
+          "label": "laddu",
+          "confidence": 0.2336,
+          "raw_similarity": 0.0749
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 3412,
+      "crop_path": "crops\\item_13_dal_palak.png"
+    },
+    {
+      "name": "unknown curry",
+      "food_name": "unknown curry",
+      "menu_match": true,
+      "matched_menu_item": "dal palak",
+      "confidence": 0.4498,
+      "identification_confidence": 0.3255,
+      "segmentation_confidence": 0.9658,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.92,
+      "mask": null,
+      "bounding_box": [
+        653,
+        309,
+        55,
+        57
+      ],
+      "area_pixels": 2410,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.262,
+          "raw_similarity": 0.033
+        },
+        {
+          "label": "laddu",
+          "confidence": 0.2519,
+          "raw_similarity": 0.0418
+        },
+        {
+          "label": "roti",
+          "confidence": 0.2437,
+          "raw_similarity": 0.0318
+        },
+        {
+          "label": "cake",
+          "confidence": 0.2425,
+          "raw_similarity": 0.0371
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 2410,
+      "crop_path": "crops\\item_14_unknown_curry.png"
+    },
+    {
+      "name": "banana",
+      "food_name": "banana",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.4949,
+      "identification_confidence": 0.4009,
+      "segmentation_confidence": 0.9328,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        1056,
+        127,
+        94,
+        65
+      ],
+      "area_pixels": 1991,
+      "identification_status": "unlisted",
+      "top_k": [
+        {
+          "label": "banana",
+          "confidence": 0.2911,
+          "raw_similarity": 0.0466
+        },
+        {
+          "label": "apple",
+          "confidence": 0.2417,
+          "raw_similarity": 0.0234
+        },
+        {
+          "label": "watermelon",
+          "confidence": 0.2376,
+          "raw_similarity": 0.0212
+        },
+        {
+          "label": "grapes",
+          "confidence": 0.2296,
+          "raw_similarity": 0.0169
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 1991,
+      "crop_path": "crops\\item_15_banana.png"
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.4808,
+      "identification_confidence": 0.3711,
+      "segmentation_confidence": 0.9705,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        665,
+        593,
+        44,
+        45
+      ],
+      "area_pixels": 1569,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.2678,
+          "raw_similarity": 0.0411
+        },
+        {
+          "label": "roti",
+          "confidence": 0.2489,
+          "raw_similarity": 0.027
+        },
+        {
+          "label": "cake",
+          "confidence": 0.242,
+          "raw_similarity": 0.0285
+        },
+        {
+          "label": "ice cream",
+          "confidence": 0.2413,
+          "raw_similarity": 0.0281
+        }
+      ],
+      "is_small_item": true,
+      "compartment_idx": null,
+      "mask_shape": [
+        1204,
+        1600
+      ],
+      "mask_nonzeros": 1569,
+      "crop_path": "crops\\item_16_steamed_rice.png"
+    }
+  ]
+}

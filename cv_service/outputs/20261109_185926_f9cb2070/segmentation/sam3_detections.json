@@ -1,0 +1,415 @@
+{
+  "total_items": 12,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.915,
+      "identification_confidence": 0.915,
+      "segmentation_confidence": 0.915,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1269,
+        337,
+        130,
+        122
+      ],
+      "area_pixels": 11716,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.915,
+          "raw_similarity": 0.915
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.9147,
+      "identification_confidence": 0.9147,
+      "segmentation_confidence": 0.9147,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1119,
+        121,
+        145,
+        158
+      ],
+      "area_pixels": 17932,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9147,
+          "raw_similarity": 0.9147
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.9014,
+      "identification_confidence": 0.9014,
+      "segmentation_confidence": 0.9014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1218,
+        217,
+        124,
+        135
+      ],
+      "area_pixels": 12466,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9014,
+          "raw_similarity": 0.9014
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8821,
+      "identification_confidence": 0.8821,
+      "segmentation_confidence": 0.8821,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1054,
+        262,
+        158,
+        214
+      ],
+      "area_pixels": 22841,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8821,
+          "raw_similarity": 0.8821
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8657,
+      "identification_confidence": 0.8657,
+      "segmentation_confidence": 0.8657,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1186,
+        346,
+        94,
+        121
+      ],
+      "area_pixels": 6773,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8657,
+          "raw_similarity": 0.8657
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.8565,
+      "identification_confidence": 0.8565,
+      "segmentation_confidence": 0.8565,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        536,
+        114,
+        436,
+        385
+      ],
+      "area_pixels": 131362,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8565,
+          "raw_similarity": 0.8565
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8411,
+      "identification_confidence": 0.8411,
+      "segmentation_confidence": 0.8411,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        50,
+        529,
+        716,
+        600
+      ],
+      "area_pixels": 281073,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8411,
+          "raw_similarity": 0.8411
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "rice",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "mix veg",
+      "food_name": "mix veg",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "confidence": 0.7101,
+      "identification_confidence": 0.7101,
+      "segmentation_confidence": 0.7101,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        89,
+        106,
+        437,
+        383
+      ],
+      "area_pixels": 132983,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.7101,
+          "raw_similarity": 0.7101
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "vegetable curry",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.7017,
+      "identification_confidence": 0.7017,
+      "segmentation_confidence": 0.7017,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1136,
+        629,
+        79,
+        65
+      ],
+      "area_pixels": 3200,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.7017,
+          "raw_similarity": 0.7017
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "white rice",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.6763,
+      "identification_confidence": 0.6763,
+      "segmentation_confidence": 0.6763,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        967,
+        82,
+        74,
+        67
+      ],
+      "area_pixels": 3555,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.6763,
+          "raw_similarity": 0.6763
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.4894,
+      "identification_confidence": 0.4894,
+      "segmentation_confidence": 0.4894,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1260,
+        146,
+        77,
+        81
+      ],
+      "area_pixels": 3897,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.4894,
+          "raw_similarity": 0.4894
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    },
+    {
+      "name": "mix veg",
+      "food_name": "mix veg",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "confidence": 0.4491,
+      "identification_confidence": 0.4491,
+      "segmentation_confidence": 0.4491,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1053,
+        120,
+        346,
+        358
+      ],
+      "area_pixels": 78021,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.4491,
+          "raw_similarity": 0.4491
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "mixed vegetables",
+      "mask_shape": [
+        1204,
+        1600
+      ]
+    }
+  ],
+  "elapsed_seconds": 13.484,
+  "timestamp": "2026-11-09T18:59:26.928853"
+}

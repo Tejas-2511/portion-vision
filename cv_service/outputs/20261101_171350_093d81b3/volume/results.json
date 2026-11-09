@@ -1,0 +1,423 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 172.0,
+      "mass_g": 185.6,
+      "calories": 241.3,
+      "protein": 5.0,
+      "carbs": 52.0,
+      "fat": 0.6,
+      "confidence": 0.8245,
+      "class_label": "steamed rice",
+      "class_confidence": 0.7029,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.6878,
+          "raw_similarity": 0.1206
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.18,
+          "raw_similarity": 0.0208
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.1323,
+          "raw_similarity": -0.0271
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7029,
+      "segmentation_confidence": 0.9393,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 27.4,
+      "mass_g": 23.1,
+      "calories": 60.1,
+      "protein": 1.8,
+      "carbs": 11.6,
+      "fat": 0.7,
+      "confidence": 0.7083,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3766,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.447,
+          "raw_similarity": 0.0363
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3337,
+          "raw_similarity": 0.0158
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2193,
+          "raw_similarity": -0.0285
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3766,
+      "segmentation_confidence": 0.9546,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 36.6,
+      "mass_g": 39.8,
+      "calories": 33.9,
+      "protein": 2.0,
+      "carbs": 4.4,
+      "fat": 0.8,
+      "confidence": 0.7321,
+      "class_label": "dal palak",
+      "class_confidence": 0.415,
+      "top_k": [
+        {
+          "label": "dal palak",
+          "confidence": 0.4419,
+          "raw_similarity": 0.062
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3354,
+          "raw_similarity": 0.045
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2227,
+          "raw_similarity": 0.0031
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.415,
+      "segmentation_confidence": 0.9889,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 36.2,
+      "mass_g": 39.3,
+      "calories": 33.4,
+      "protein": 2.0,
+      "carbs": 4.3,
+      "fat": 0.8,
+      "confidence": 0.7172,
+      "class_label": "dal palak",
+      "class_confidence": 0.3838,
+      "top_k": [
+        {
+          "label": "dal palak",
+          "confidence": 0.4039,
+          "raw_similarity": 0.0517
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3301,
+          "raw_similarity": 0.0405
+        },
+        {
+          "label": "steamed rice",
+          "confidence": 0.2661,
+          "raw_similarity": 0.0331
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3838,
+      "segmentation_confidence": 0.985,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 5.9,
+      "mass_g": 6.3,
+      "calories": 5.3,
+      "protein": 0.3,
+      "carbs": 0.7,
+      "fat": 0.1,
+      "confidence": 0.6777,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3191,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3879,
+          "raw_similarity": 0.0084
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3377,
+          "raw_similarity": -0.0089
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2744,
+          "raw_similarity": -0.0308
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3191,
+      "segmentation_confidence": 0.9442,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 5.4,
+      "mass_g": 5.8,
+      "calories": 4.9,
+      "protein": 0.3,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.704,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3763,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3806,
+          "raw_similarity": 0.0394
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3297,
+          "raw_similarity": 0.0214
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2898,
+          "raw_similarity": 0.0053
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3763,
+      "segmentation_confidence": 0.9323,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 10.8,
+      "mass_g": 11.5,
+      "calories": 9.7,
+      "protein": 0.6,
+      "carbs": 1.3,
+      "fat": 0.2,
+      "confidence": 0.6738,
+      "class_label": "steamed rice",
+      "class_confidence": 0.313,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3937,
+          "raw_similarity": 0.0077
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3491,
+          "raw_similarity": -0.0073
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2571,
+          "raw_similarity": -0.0455
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.313,
+      "segmentation_confidence": 0.9407,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 4.8,
+      "mass_g": 5.1,
+      "calories": 4.3,
+      "protein": 0.3,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.7011,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3514,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.4071,
+          "raw_similarity": 0.0032
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3392,
+          "raw_similarity": -0.033
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2537,
+          "raw_similarity": -0.0544
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3514,
+      "segmentation_confidence": 0.9821,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 4.5,
+      "mass_g": 4.8,
+      "calories": 4.1,
+      "protein": 0.2,
+      "carbs": 0.5,
+      "fat": 0.1,
+      "confidence": 0.6867,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3397,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3742,
+          "raw_similarity": 0.0205
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3275,
+          "raw_similarity": 0.0039
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2984,
+          "raw_similarity": -0.0077
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3397,
+      "segmentation_confidence": 0.9352,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 3.4,
+      "mass_g": 3.6,
+      "calories": 3.1,
+      "protein": 0.2,
+      "carbs": 0.4,
+      "fat": 0.1,
+      "confidence": 0.6829,
+      "class_label": "steamed rice",
+      "class_confidence": 0.3188,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.399,
+          "raw_similarity": 0.0097
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3458,
+          "raw_similarity": -0.0064
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2552,
+          "raw_similarity": -0.0415
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.3188,
+      "segmentation_confidence": 0.9744,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal palak",
+      "volume_ml": 2.3,
+      "mass_g": 2.5,
+      "calories": 2.1,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.6592,
+      "class_label": "steamed rice",
+      "class_confidence": 0.2918,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.3909,
+          "raw_similarity": 0.0001
+        },
+        {
+          "label": "chapati",
+          "confidence": 0.3503,
+          "raw_similarity": -0.0115
+        },
+        {
+          "label": "dal palak",
+          "confidence": 0.2588,
+          "raw_similarity": -0.0514
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.2918,
+      "segmentation_confidence": 0.9244,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7061
+}

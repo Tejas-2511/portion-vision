@@ -69,16 +69,36 @@ class ApiService {
     /**
      * Upload menu image for OCR processing
      * @param {File} file - Image file to upload
-     * @returns {Promise<{items: string[], date: string}>}
+     * @param {boolean} updateDatabase - Whether to update the food database with unrecognized items
+     * @returns {Promise<{items: string[], date: string, dbUpdateEnabled: boolean, dbUpdated: boolean, addedCount: number}>}
      */
-    async uploadMenuImage(file) {
+    async uploadMenuImage(file, updateDatabase = false) {
         const formData = new FormData();
         formData.append('image', file);
+        formData.append('updateDatabase', String(Boolean(updateDatabase)));
 
         return this.request('/ocr', {
             method: 'POST',
             body: formData,
             // Don't set Content-Type header - let browser set it for FormData
+        });
+    }
+
+    /**
+     * Get OCR database auto-update setting
+     */
+    async getOcrDbUpdateSetting() {
+        return this.request('/api/settings/ocr-db-update');
+    }
+
+    /**
+     * Set OCR database auto-update setting
+     */
+    async setOcrDbUpdateSetting(enabled) {
+        return this.request('/api/settings/ocr-db-update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ enabled: Boolean(enabled) })
         });
     }
 
@@ -136,8 +156,8 @@ class ApiService {
      * @param {string} expectedItems - Comma-separated list of expected items
      * @returns {Promise<{food_items: Array<{name: string, volume_ml: number, mass_g: number}>, confidence: number}>}
      */
-    async analyzePlate(file, expectedItems = '') {
-        const fileKey = file ? `${file.name}_${file.size}_${file.lastModified}_${expectedItems}` : null;
+    async analyzePlate(file, expectedItems = '', plateProfile = '', mealType = '') {
+        const fileKey = file ? `${file.name}_${file.size}_${file.lastModified}_${expectedItems}_${plateProfile}_${mealType}` : null;
 
         // 1. If we already have the completed result for this exact image and items, return it immediately
         if (fileKey && this._lastPlateKey === fileKey && this._lastPlateResult) {
@@ -155,6 +175,12 @@ class ApiService {
         formData.append('image', file);
         if (expectedItems) {
             formData.append('expectedItems', expectedItems);
+        }
+        if (plateProfile) {
+            formData.append('plateProfile', plateProfile);
+        }
+        if (mealType) {
+            formData.append('mealType', mealType);
         }
 
         const reqPromise = this.request('/api/analyze-plate', {

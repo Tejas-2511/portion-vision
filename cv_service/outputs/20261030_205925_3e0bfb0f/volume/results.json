@@ -1,0 +1,137 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 172.0,
+      "mass_g": 185.6,
+      "calories": 241.3,
+      "protein": 5.0,
+      "carbs": 52.0,
+      "fat": 0.6,
+      "confidence": 0.7651,
+      "class_label": "steamed rice",
+      "class_confidence": 0.5212
+    },
+    {
+      "name": "apple",
+      "volume_ml": 5.1,
+      "mass_g": 4.1,
+      "calories": 4.1,
+      "protein": 0.1,
+      "carbs": 0.6,
+      "fat": 0.1,
+      "confidence": 0.6771,
+      "class_label": "apple",
+      "class_confidence": 0.4195
+    },
+    {
+      "name": "chutney",
+      "volume_ml": 5.6,
+      "mass_g": 5.9,
+      "calories": 5.9,
+      "protein": 0.1,
+      "carbs": 0.9,
+      "fat": 0.2,
+      "confidence": 0.7809,
+      "class_label": "chutney",
+      "class_confidence": 0.5373
+    },
+    {
+      "name": "chicken curry",
+      "volume_ml": 20.6,
+      "mass_g": 22.8,
+      "calories": 32.0,
+      "protein": 3.4,
+      "carbs": 0.9,
+      "fat": 1.8,
+      "confidence": 0.7539,
+      "class_label": "chicken curry",
+      "class_confidence": 0.4686
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.9,
+      "mass_g": 1.0,
+      "calories": 1.2,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.792,
+      "class_label": "pickle",
+      "class_confidence": 0.5953
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.8,
+      "mass_g": 0.9,
+      "calories": 1.1,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.7043,
+      "class_label": "pickle",
+      "class_confidence": 0.3771
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 12.3,
+      "mass_g": 13.6,
+      "calories": 16.3,
+      "protein": 0.1,
+      "carbs": 1.4,
+      "fat": 1.4,
+      "confidence": 0.7144,
+      "class_label": "pickle",
+      "class_confidence": 0.3955
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.7,
+      "mass_g": 0.8,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.789,
+      "class_label": "pickle",
+      "class_confidence": 0.5636
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.7,
+      "mass_g": 0.7,
+      "calories": 0.9,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.7743,
+      "class_label": "pickle",
+      "class_confidence": 0.5491
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.6,
+      "mass_g": 0.7,
+      "calories": 0.8,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.1,
+      "confidence": 0.791,
+      "class_label": "pickle",
+      "class_confidence": 0.574
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 0.4,
+      "mass_g": 0.4,
+      "calories": 0.5,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7134,
+      "class_label": "pickle",
+      "class_confidence": 0.4002
+    }
+  ],
+  "confidence": 0.7505
+}

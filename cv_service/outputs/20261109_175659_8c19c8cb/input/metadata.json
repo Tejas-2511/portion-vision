@@ -1,0 +1,12 @@
+{
+  "resolution": "1600x1204",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "steamed rice",
+    "dal palak",
+    "chapati"
+  ],
+  "plate_profile": "5_compartment",
+  "debug": false
+}
