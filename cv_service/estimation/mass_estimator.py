@@ -3,14 +3,16 @@ End-to-end mass estimation pipeline.
 
 Orchestrates all vision pipeline stages:
 
-  #1  SAM 3 unified open-vocabulary food identification and instance segmentation
-  #2  Depth Anything monocular depth estimation
+  #1  Meta SAM 3 unified open-vocabulary food identification and instance segmentation
+  #2  Depth Anything 3 (DA3METRIC-LARGE) physical metric depth estimation
   #3  Ellipse-based scale calibration (px -> cm)
-  #4  Hybrid depth reconstruction (Depth Anything + food geometric priors)
-  #5  Voxel-based 3D food volume calculation
-  #6  Dynamic density mapping (g/cm³)
-  #7  Composite confidence scoring
-  #8  Nutritional macronutrient calculation (calories, protein, carbs, fats)
+  #4  2D Planar Surface Normal Fitting (tilt-invariant baseline zeroing)
+  #5  Hybrid depth reconstruction (DA3 metric depth + 486 food geometric priors)
+  #6  5-Archetype volumetric voxel integration (planar, salad, liquid, mound, chunk)
+  #7  Multi-instance canonical dish aggregation (unified items + piece count badges)
+  #8  Multi-spectral dynamic density mapping (g/cm³) via HSV & Laplacian texture
+  #9  Composite confidence scoring (segmentation, classification, depth, scale)
+  #10 Nutritional macronutrient calculation (calories, protein, carbs, fats)
 
 When debug=True, creates a timestamped run directory and saves every
 intermediate image, NumPy array, and a final HTML report.
@@ -22,6 +24,7 @@ import os
 import time
 import logging
 import re
+from typing import Any
 import cv2
 import numpy as np
 
@@ -72,6 +75,22 @@ def _get_planar_thickness_cm(food_name: str) -> float:
     if any(k in f for k in ["paratha", "naan", "bhatura"]):
         return 0.38
     return 0.25  # standard Indian chapati / roti thickness
+
+
+def _is_sliced_salad_food(food_name: str) -> bool:
+    f = food_name.lower()
+    return any(k in f for k in ["cucumber", "salad", "tomato", "onion", "beetroot", "kachumber"])
+
+
+def _get_salad_slice_thickness_cm(food_name: str) -> float:
+    f = food_name.lower()
+    if "cucumber" in f:
+        return 0.55  # calibrated 5.5mm cucumber slice
+    if "tomato" in f:
+        return 0.60
+    if "onion" in f:
+        return 0.45
+    return 0.50
 
 
 # ── Fuzzy & Synonym Matching Helper ──────────────────────────────────────────
@@ -563,26 +582,35 @@ def estimate_food_mass(
             layers = min(layers, 3.5)  # stack limit
             volume_ml = area_cm2 * unit_thickness * layers
 
+        elif _is_sliced_salad_food(food_name):
+            # Salad slice archetype (cucumber/tomato/onion/salad slices):
+            # Discrete planar slices laid flat. Monocular depth often sees them as flat.
+            # Physical Volume = Area × Calibrated Slice Thickness (0.45 - 0.60 cm)
+            slice_thickness = _get_salad_slice_thickness_cm(food_name)
+            eff_height = max(slice_thickness, float(np.median(pixel_heights)))
+            eff_height = min(eff_height, 2.5)  # multi-slice stack cap
+            volume_ml = area_cm2 * eff_height
+
         elif _is_liquid_food(food_name):
             # Liquid archetype (dal/sambar/curd): conforms to compartment well
             # Liquid surface cannot rise significantly above the tray rim.
-            well_depth = max(well_offset, 1.5)
-            # Fill ratio derived from relative height near rim (typically 0.4 to 0.95)
-            fill_ratio = float(np.clip(0.40 + 0.55 * np.mean(pixel_heights_rel), 0.35, 1.0))
+            well_depth = max(well_offset, 2.0)
+            avg_h = float(np.mean(food_heights_cm))
+            fill_ratio = float(np.clip(0.50 + 0.30 * (avg_h / well_depth), 0.40, 0.98))
             # Frustum taper factor for molded circular/rectangular wells ≈ 0.88
             volume_ml = area_cm2 * (well_depth * fill_ratio) * 0.88
 
         elif _is_mound_food(food_name):
             # Mound archetype (rice/pulao): fills base well + curved dome above rim
             base_vol = area_cm2 * (well_offset * 0.85)
-            # Smooth dome profile integration
-            mound_vol = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.80
+            # Smooth dome profile integration with bulk packing factor (0.85)
+            mound_vol = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.85
             volume_ml = base_vol + mound_vol
 
         else:
             # Chunk/curry archetype (sabzi/paneer/chicken):
-            # Discrete pieces leave air gaps; solid packing factor ≈ 0.80
-            volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2) * 0.80
+            # Discrete pieces leave air gaps; solid packing factor ≈ 0.82
+            volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2) * 0.82
 
         # Cap volume to the physical compartment capacity
         volume_ml = min(volume_ml, comp_max_vol)
@@ -608,6 +636,13 @@ def estimate_food_mass(
         protein  = mass_g * m["protein"]
         carbs    = mass_g * m["carbs"]
         fat      = mass_g * m["fat"]
+
+        # Ensure macro consistency
+        macro_cals = (protein * 4.0) + (carbs * 4.0) + (fat * 9.0)
+        if macro_cals > calories:
+            calories = macro_cals
+        if mass_g >= 1.0 and calories < 1.0:
+            calories = 1.0
 
         # #10 — Composite confidence
         conf = _composite_confidence(
@@ -709,9 +744,35 @@ def estimate_food_mass(
     idx = ctx.next_index("volume")
     ctx.save_image("volume", f"{idx:02d}_final_annotated.png", annotated)
 
+    # ── Aggregate multiple detections of the same food item ──────────────────
+    # Combines multi-instance items (e.g. 5 cucumber slices, multiple bread pieces)
+    aggregated_items: dict[str, dict[str, Any]] = {}
+    for it in food_items:
+        key = it["name"].strip().lower()
+        if key not in aggregated_items:
+            item_copy = dict(it)
+            item_copy["instance_count"] = 1
+            aggregated_items[key] = item_copy
+        else:
+            agg = aggregated_items[key]
+            agg["volume_ml"] = round(agg["volume_ml"] + it["volume_ml"], 1)
+            agg["mass_g"] = round(agg["mass_g"] + it["mass_g"], 1)
+            agg["calories"] = round(agg["calories"] + it["calories"], 1)
+            agg["protein"] = round(agg["protein"] + it["protein"], 1)
+            agg["carbs"] = round(agg["carbs"] + it["carbs"], 1)
+            agg["fat"] = round(agg["fat"] + it["fat"], 1)
+            agg["confidence"] = max(agg["confidence"], it["confidence"])
+            agg["instance_count"] = agg.get("instance_count", 1) + 1
+
+    combined_list = list(aggregated_items.values())
+    # Omit negligible 0g micro-noise detections if substantial food items exist
+    substantial = [it for it in combined_list if it["mass_g"] >= 1.0 or it["calories"] >= 1.0]
+    final_food_items = substantial if substantial else combined_list
+
     # ── Results JSON ─────────────────────────────────────────────────────────
     result = {
-        "food_items": food_items,
+        "food_items": final_food_items,
+        "raw_detections": food_items,
         "confidence": round(avg_confidence, 4),
     }
     ctx.save_json("volume", "results.json", result)

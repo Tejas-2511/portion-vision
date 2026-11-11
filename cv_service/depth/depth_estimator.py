@@ -1,14 +1,16 @@
 """
-Monocular depth estimation using Depth Anything.
+Monocular depth estimation using Depth Anything 3 (DA3) Metric.
 
 Enhancements over baseline:
-  • #1  Hybrid depth — fuses Depth Anything output with per-food geometric priors
+  • #1  Hybrid depth — fuses Depth Anything 3 metric depth with 486 per-food geometric priors
   • #4  Ellipse-based scale calibration — fits an ellipse to the plate rim
         for a more accurate cm-per-pixel estimate
   • #5  Gaussian smoothing before returning the depth map to suppress noise
+  • #10 2D Planar Surface Normal Fitting — fits a continuous reference plane
+        Z_plate(x, y) = Ax + By + C to plate rim/dividers to eliminate camera tilt slant
 
-Produces a relative depth map and normalizes it so the plate surface
-is the zero-height baseline.
+Produces physical metric depth in meters, calibrated and planar-normalized so
+the plate surface is the exact zero-height baseline.
 """
 
 from __future__ import annotations
@@ -21,8 +23,14 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 # ── Lazy-loaded global model ─────────────────────────────────────────────────
-_depth_pipeline  = None
+_depth_model     = None
 _depth_device    = None
+_is_metric       = False
+
+
+def is_metric_depth() -> bool:
+    """Return whether the loaded depth model produces physical metric depth."""
+    return _is_metric
 
 # ── Food-specific height priors (min_cm, max_cm) ─────────────────────────────
 # Used by apply_food_height_prior() to clamp and blend Depth Anything output.
@@ -152,6 +160,7 @@ FOOD_HEIGHT_PRIORS: dict[str, tuple[float, float]] = {
     "cornfalkes with hot milk": (1.0, 3.5),
     "cornflakes": (1.5, 4.5),
     "cornflakes with hot milk": (1.0, 3.5),
+    "cucumber": (0.4, 1.2),
     "cucumber salad": (0.8, 2.5),
     "curd": (1.5, 3.0),
     "curd rice": (1.5, 3.0),
@@ -527,21 +536,42 @@ _PLATE_DIAMETER_CM = 26.0
 # ── Depth model ───────────────────────────────────────────────────────────────
 
 def _load_depth_model() -> None:
-    """Load Depth Anything model via transformers pipeline."""
-    global _depth_pipeline, _depth_device
+    """
+    Load Depth Anything 3 metric depth model.
+    Defaults to 'depth-anything/DA3METRIC-LARGE' for direct physical metric depth (meters).
+    Falls back gracefully to 'depth-anything/da3-small' or Depth Anything V2 if needed.
+    """
+    global _depth_model, _depth_device, _is_metric
 
-    if _depth_pipeline is not None:
+    if _depth_model is not None:
         return
 
-    from transformers import pipeline
     import torch
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    _depth_device = device
 
-    _depth_device = 0 if torch.cuda.is_available() else -1
-
-    # Depth Anything V2 small, state of the art relative depth
-    _depth_pipeline = pipeline("depth-estimation", model="depth-anything/Depth-Anything-V2-Small-hf", device=_depth_device)
-
-    logger.info(f"Depth Anything loaded on device factor {_depth_device}")
+    try:
+        from depth_anything_3.api import DepthAnything3
+        logger.info(f"Loading Depth Anything 3 (DA3METRIC-LARGE) on {device}...")
+        _depth_model = DepthAnything3.from_pretrained("depth-anything/DA3METRIC-LARGE").to(device)
+        _depth_model.eval()
+        _is_metric = True
+        logger.info("Depth Anything 3 Metric model loaded successfully.")
+    except Exception as err:
+        logger.warning(f"Could not load DA3METRIC-LARGE: {err}. Attempting da3-small...")
+        try:
+            from depth_anything_3.api import DepthAnything3
+            _depth_model = DepthAnything3.from_pretrained("depth-anything/da3-small").to(device)
+            _depth_model.eval()
+            _is_metric = False
+            logger.info("Depth Anything 3 Small model loaded successfully.")
+        except Exception as err2:
+            logger.warning(f"Could not load Depth Anything 3: {err2}. Falling back to Depth Anything V2 pipeline...")
+            from transformers import pipeline
+            dev_idx = 0 if device == "cuda" else -1
+            _depth_model = pipeline("depth-estimation", model="depth-anything/Depth-Anything-V2-Small-hf", device=dev_idx)
+            _is_metric = False
+            logger.info(f"Depth Anything V2 loaded on device factor {dev_idx}")
 
 
 def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
@@ -550,6 +580,8 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
 
     Returns a depth map (H, W) as float32.
     Higher values = closer to camera (i.e., taller objects).
+    When Depth Anything 3 Metric is active, the raw depth represents height-oriented
+    metric distance in centimeters (-Z * 100 cm).
 
     Enhancement #5: Gaussian smoothing is applied before returning to
     reduce per-pixel noise that would otherwise inflate volume estimates.
@@ -560,16 +592,36 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
     _load_depth_model()
 
     rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-    from PIL import Image
-    pil_img = Image.fromarray(rgb)
+    import torch
 
-    prediction = _depth_pipeline(pil_img)
-    # Use raw tensor for geometric precision, not the normalized 0-255 PIL image
-    pred_depth = prediction["predicted_depth"].squeeze().cpu().numpy()
+    if hasattr(_depth_model, "inference"):
+        # Depth Anything 3 API
+        with torch.inference_mode():
+            prediction = _depth_model.inference([rgb])
+        pred_depth = prediction.depth[0]  # Metric depth in meters (or relative for da3-small)
 
-    # Resize prediction to match input image dimensions
-    depth = cv2.resize(pred_depth, (image_bgr.shape[1], image_bgr.shape[0]))
-    depth = depth.astype(np.float32)
+        # Resize prediction to match input image dimensions
+        depth_m = cv2.resize(pred_depth, (image_bgr.shape[1], image_bgr.shape[0]), interpolation=cv2.INTER_LINEAR)
+        depth_m = depth_m.astype(np.float32)
+
+        if _is_metric:
+            # Metric depth: pred_depth is distance Z in meters from camera.
+            # Invert sign and convert to cm so higher value = closer to camera (cm).
+            depth = -(depth_m * 100.0)
+        else:
+            depth = -(depth_m * 100.0)
+
+        # Clear transient PyTorch VRAM to ensure SAM 3 has full headroom
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    else:
+        # Depth Anything V2 fallback pipeline
+        from PIL import Image
+        pil_img = Image.fromarray(rgb)
+        prediction = _depth_model(pil_img)
+        pred_depth = prediction["predicted_depth"].squeeze().cpu().numpy()
+        depth = cv2.resize(pred_depth, (image_bgr.shape[1], image_bgr.shape[0]))
+        depth = depth.astype(np.float32)
 
     # #5 — Smooth depth map before any downstream use
     depth = cv2.GaussianBlur(depth, (5, 5), 0)
@@ -591,6 +643,7 @@ def estimate_depth(image_bgr: np.ndarray, ctx=None) -> np.ndarray:
 
         ctx.log("Depth Estimation", "Depth Anything depth map computed (smoothed)",
                 {"device": str(_depth_device),
+                 "is_metric": _is_metric,
                  "shape": list(depth.shape),
                  "min": round(float(depth.min()), 3),
                  "max": round(float(depth.max()), 3)},
@@ -608,12 +661,14 @@ def apply_food_height_prior(
     """
     Enhancement #1 — Hybrid depth fusion with food-specific geometric priors.
 
-    IMPORTANT: `height_map` is expected to be a relative depth map normalised
-    to [0, 1] (0 = plate surface, 1 = maximum depth in the scene), NOT in cm.
-    This function maps it into the plausible cm range for the given food type.
+    When Depth Anything 3 Metric is active:
+      `height_map` is calibrated physical height in centimeters.
+      It is bounded and blended with the physiological prior range [min_h, max_h].
+    When in relative depth mode:
+      `height_map` is normalized to [0, 1] and mapped into plausible cm range.
 
     Args:
-        height_map:  Per-pixel relative depth in [0, 1] (float32 array).
+        height_map:  Per-pixel height (cm if metric, or [0, 1] relative).
         food_label:  Canonical food name (must match keys in FOOD_HEIGHT_PRIORS).
         alpha:       Weight for depth-derived height (default 0.70).
         beta:        Weight for prior mid-point (default 0.30).
@@ -632,19 +687,30 @@ def apply_food_height_prior(
                 prior = v
                 break
 
-    if prior is None:
-        # No known prior — scale relative map to a generic 0–5 cm range
-        return (height_map * 3.5).astype(np.float32)
+    if _is_metric:
+        # ── Physical Metric Depth Fusion ──
+        if prior is None:
+            return np.clip(height_map, 0.2, 5.0).astype(np.float32)
 
-    min_h, max_h = prior
-    # Dynamic continuous scaling:
-    # If the relative depth indicates a low profile, don't artificially force it to midpoint.
-    # Scale from near 0 up to max_h, blending with physiological prior limits.
-    scaled_height = height_map * max_h
-    prior_clipped = np.clip(scaled_height, min_h * 0.5, max_h)
-    fused = alpha * scaled_height + beta * prior_clipped
-    clamped = np.clip(fused, 0.1, max_h)
-    return clamped.astype(np.float32)
+        min_h, max_h = prior
+        # Bounded measured metric height in centimeters
+        bounded_measured = np.clip(height_map, min_h * 0.75, max_h * 1.25)
+        prior_mid = (min_h + max_h) / 2.0
+        fused = alpha * bounded_measured + beta * prior_mid
+        clamped = np.clip(fused, min_h * 0.5, max_h)
+        return clamped.astype(np.float32)
+    else:
+        # ── Relative Depth Mode ──
+        if prior is None:
+            # No known prior — scale relative map to a generic 0–5 cm range
+            return (height_map * 3.5).astype(np.float32)
+
+        min_h, max_h = prior
+        scaled_height = height_map * max_h
+        prior_clipped = np.clip(scaled_height, min_h * 0.5, max_h)
+        fused = alpha * scaled_height + beta * prior_clipped
+        clamped = np.clip(fused, 0.1, max_h)
+        return clamped.astype(np.float32)
 
 
 def calibrate_scale_from_ellipse(
@@ -748,19 +814,65 @@ def normalize_depth_to_plate(
 ) -> np.ndarray:
     """
     Normalize the depth map relative to the plate surface.
-    Returns the difference in depth values from the baseline (dividers/rim).
+    Enhancement #10 — 2D Planar Surface Normal Fitting:
+    Fits a reference plane Z(x, y) = A*x + B*y + C to the plate surface / rim points.
+    This eliminates oblique camera perspective tilt across the plate so that
+    height = depth_map(x, y) - Z_plane(x, y) is globally zeroed to the true plate floor.
 
-    In Depth Anything, higher values = closer to camera.
+    In our height-oriented depth representation, higher values = closer to camera.
     """
     debug = ctx is not None and ctx.debug
     t0    = time.perf_counter()
 
-    if plate_mask is not None and plate_mask.any():
-        baseline = np.median(depth_map[plate_mask])
-    else:
-        baseline = np.median(depth_map)
+    H, W = depth_map.shape[:2]
 
-    height_map_rel = depth_map - baseline
+    # Identify candidate plate baseline pixels
+    if plate_mask is not None and plate_mask.any():
+        valid_mask = plate_mask.copy()
+    else:
+        # Fallback: outer border 8% of the frame representing rim / tray boundary
+        valid_mask = np.zeros((H, W), dtype=bool)
+        valid_mask[:int(H * 0.08), :] = True
+        valid_mask[int(H * 0.92):, :] = True
+        valid_mask[:, :int(W * 0.08)] = True
+        valid_mask[:, int(W * 0.92):] = True
+
+    # Filter out extreme depth outliers on rim points (e.g. background reflections)
+    pts_vals = depth_map[valid_mask]
+    if len(pts_vals) > 50:
+        p_low, p_high = np.percentile(pts_vals, [5, 90])
+        inlier_mask = valid_mask & (depth_map >= p_low) & (depth_map <= p_high)
+    else:
+        inlier_mask = valid_mask
+
+    y_coords, x_coords = np.where(inlier_mask)
+    fitted_plane = False
+    baseline_val = 0.0
+    height_map_rel = depth_map.copy()
+
+    if len(y_coords) >= 30:
+        try:
+            # Fit Z(x, y) = A*x + B*y + C using least squares
+            A_mat = np.column_stack([x_coords, y_coords, np.ones_like(x_coords, dtype=np.float32)])
+            z_obs = depth_map[y_coords, x_coords].astype(np.float32)
+            coeffs, _, rank, _ = np.linalg.lstsq(A_mat, z_obs, rcond=None)
+            if rank == 3:
+                A, B, C = coeffs
+                X_grid, Y_grid = np.meshgrid(np.arange(W, dtype=np.float32), np.arange(H, dtype=np.float32))
+                plane_surface = A * X_grid + B * Y_grid + C
+                height_map_rel = depth_map - plane_surface
+                baseline_val = float(np.median(plane_surface[inlier_mask]))
+                fitted_plane = True
+        except Exception as e:
+            logger.warning("Planar surface fitting failed, falling back to scalar median: %s", e)
+
+    if not fitted_plane:
+        # Scalar fallback
+        if plate_mask is not None and plate_mask.any():
+            baseline_val = float(np.median(depth_map[plate_mask]))
+        else:
+            baseline_val = float(np.percentile(depth_map, 25))
+        height_map_rel = depth_map - baseline_val
 
     elapsed = time.perf_counter() - t0
 
@@ -778,8 +890,10 @@ def normalize_depth_to_plate(
         fname = f"{idx:02d}_height_relative_colored.png"
         ctx.save_image("depth", fname, vis_colored)
 
-        ctx.log("Depth Normalization", "Baseline subtracted from depth",
-                {"baseline": round(float(baseline), 3)},
+        ctx.log("Depth Normalization", "Surface normal plane subtracted from depth",
+                {"baseline": round(float(baseline_val), 3),
+                 "fitted_plane": fitted_plane,
+                 "is_metric": _is_metric},
                 elapsed=elapsed, output_file=fname)
 
     return height_map_rel
@@ -793,42 +907,45 @@ def depth_to_cm(
     ctx=None,
 ) -> np.ndarray:
     """
-    Convert a normalised relative depth map to [0, 1] range.
-
-    Depth Anything produces disparity values with no fixed physical unit.
-    We cannot reliably convert them to cm without a physical reference object.
-    Instead we normalise the map to [0, 1] so that 0 = plate surface (baseline)
-    and 1 = tallest point detected in the scene.
-
-    `apply_food_height_prior()` then maps this [0, 1] range into the food's
-    real-world cm range using known geometric priors.
-
-    cm_per_pixel and image_width_px are retained as arguments so the function
-    signature stays compatible. They will be used once a calibrated depth model
-    is available.
+    Convert a normalised relative depth map to calibrated height in cm (or [0, 1] relative if uncalibrated).
     """
     debug = ctx is not None and ctx.debug
     t0    = time.perf_counter()
 
-    # Clamp negative values (food below the plate baseline is not physical)
-    clamped = np.clip(height_map_relative, 0, None)
-
-    # Normalise to [0, 1]
-    max_val = clamped.max()
-    if max_val > 1e-6:
-        normalised = clamped / max_val
+    if _is_metric:
+        # Depth Anything 3 Metric: height_map_relative is ALREADY in physical centimeters!
+        height_cm = np.clip(height_map_relative, 0.0, 15.0).astype(np.float32)
+        elapsed = time.perf_counter() - t0
+        if debug:
+            idx = ctx.next_index("depth")
+            ctx.save_npy("depth", f"{idx:02d}_height_metric_cm.npy", height_cm)
+            ctx.log("Depth Metric [cm]", "Metric depth height in cm directly computed",
+                    {"cm_per_pixel": round(cm_per_pixel, 5),
+                     "min_cm": round(float(height_cm.min()), 2),
+                     "max_cm": round(float(height_cm.max()), 2),
+                     "mean_cm": round(float(height_cm.mean()), 2)},
+                    elapsed=elapsed)
+        return height_cm
     else:
-        normalised = clamped
+        # Clamp negative values (food below the plate baseline is not physical)
+        clamped = np.clip(height_map_relative, 0, None)
 
-    elapsed = time.perf_counter() - t0
+        # Normalise to [0, 1]
+        max_val = clamped.max()
+        if max_val > 1e-6:
+            normalised = clamped / max_val
+        else:
+            normalised = clamped
 
-    if debug:
-        idx = ctx.next_index("depth")
-        ctx.save_npy("depth", f"{idx:02d}_height_normalised.npy", normalised.astype(np.float32))
-        ctx.log("Depth Normalised [0-1]", "Relative depth map normalised to [0,1]",
-                {"cm_per_pixel": round(cm_per_pixel, 5),
-                 "image_width_px": image_width_px,
-                 "max_raw_val": round(float(max_val), 4)},
-                elapsed=elapsed)
+        elapsed = time.perf_counter() - t0
 
-    return normalised.astype(np.float32)
+        if debug:
+            idx = ctx.next_index("depth")
+            ctx.save_npy("depth", f"{idx:02d}_height_normalised.npy", normalised.astype(np.float32))
+            ctx.log("Depth Normalised [0-1]", "Relative depth map normalised to [0,1]",
+                    {"cm_per_pixel": round(cm_per_pixel, 5),
+                     "image_width_px": image_width_px,
+                     "max_raw_val": round(float(max_val), 4)},
+                    elapsed=elapsed)
+
+        return normalised.astype(np.float32)

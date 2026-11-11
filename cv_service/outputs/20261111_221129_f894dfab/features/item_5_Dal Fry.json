@@ -1,0 +1,14 @@
+{
+  "item_id": "Dal Fry_5",
+  "area_pixels": 53211,
+  "estimated_height_cm": 1.538,
+  "volume_estimate_ml": 86.7,
+  "density": 1.087,
+  "mass_g": 94.2,
+  "class_label": "Dal Fry",
+  "class_confidence": 0.8794,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8578,
+  "prior_applied": true
+}

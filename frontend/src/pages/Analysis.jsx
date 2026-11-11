@@ -213,7 +213,63 @@ export default function Analysis() {
             </div>
           ) : analysisResult && analysisResult.food_items && analysisResult.food_items.length > 0 ? (
             (() => {
-              const totalDetectedCals = analysisResult.food_items.reduce((acc, f) => acc + f.calories, 0);
+              // Group and aggregate food items by canonical name
+              const combinedMap = new Map();
+              for (const it of analysisResult.food_items) {
+                const normName = (it.name || it.food_name || 'food').trim().toLowerCase();
+                if (!combinedMap.has(normName)) {
+                  combinedMap.set(normName, {
+                    ...it,
+                    name: it.name,
+                    volume_ml: Number(it.volume_ml) || 0,
+                    mass_g: Number(it.mass_g) || 0,
+                    calories: Number(it.calories) || 0,
+                    protein: Number(it.protein) || 0,
+                    carbs: Number(it.carbs) || 0,
+                    fat: Number(it.fat) || 0,
+                    confidence: Number(it.confidence) || 0,
+                    instance_count: it.instance_count || 1,
+                  });
+                } else {
+                  const existing = combinedMap.get(normName);
+                  existing.volume_ml += Number(it.volume_ml) || 0;
+                  existing.mass_g += Number(it.mass_g) || 0;
+                  existing.calories += Number(it.calories) || 0;
+                  existing.protein += Number(it.protein) || 0;
+                  existing.carbs += Number(it.carbs) || 0;
+                  existing.fat += Number(it.fat) || 0;
+                  existing.confidence = Math.max(existing.confidence, Number(it.confidence) || 0);
+                  existing.instance_count += (it.instance_count || 1);
+                }
+              }
+
+              let displayList = Array.from(combinedMap.values()).map(it => {
+                const mass = Math.round(it.mass_g * 10) / 10;
+                let cals = it.calories;
+                if (!cals || cals <= 0) {
+                  cals = (it.protein * 4) + (it.carbs * 4) + (it.fat * 9);
+                }
+                if (mass >= 1 && cals < 1) {
+                  cals = 1;
+                }
+                return {
+                  ...it,
+                  volume_ml: Math.max(0.5, Math.round(it.volume_ml * 10) / 10),
+                  mass_g: mass,
+                  calories: cals,
+                  protein: Math.round(it.protein * 10) / 10,
+                  carbs: Math.round(it.carbs * 10) / 10,
+                  fat: Math.round(it.fat * 10) / 10,
+                };
+              });
+
+              // Omit negligible 0g / <1 kcal noise detections if substantial food items exist
+              const significant = displayList.filter(it => it.mass_g >= 1 || it.calories >= 1);
+              if (significant.length > 0) {
+                displayList = significant;
+              }
+
+              const totalDetectedCals = displayList.reduce((acc, f) => acc + f.calories, 0);
               const targetMealCals = recommendation?.summary?.targetMealCalories || 0;
               const calDiff = totalDetectedCals - targetMealCals;
               const isPlateOver = targetMealCals > 0 && totalDetectedCals > targetMealCals * 1.1;
@@ -246,19 +302,19 @@ export default function Analysis() {
                     <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-50 relative">
                       <div className="text-center p-2 rounded-xl bg-blue-50/50">
                         <div className="text-sm font-bold text-blue-700">
-                          {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.protein, 0))}g
+                          {Math.round(displayList.reduce((acc, f) => acc + f.protein, 0))}g
                         </div>
                         <div className="text-[9px] text-blue-500 font-bold uppercase tracking-tighter">Protein</div>
                       </div>
                       <div className="text-center p-2 rounded-xl bg-orange-50/50">
                         <div className="text-sm font-bold text-orange-700">
-                          {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.carbs, 0))}g
+                          {Math.round(displayList.reduce((acc, f) => acc + f.carbs, 0))}g
                         </div>
                         <div className="text-[9px] text-orange-500 font-bold uppercase tracking-tighter">Carbs</div>
                       </div>
                       <div className="text-center p-2 rounded-xl bg-slate-50">
                         <div className="text-sm font-bold text-slate-700">
-                          {Math.round(analysisResult.food_items.reduce((acc, f) => acc + f.fat, 0))}g
+                          {Math.round(displayList.reduce((acc, f) => acc + f.fat, 0))}g
                         </div>
                         <div className="text-[9px] text-slate-500 font-bold uppercase tracking-tighter">Fat</div>
                       </div>
@@ -271,28 +327,37 @@ export default function Analysis() {
                   </div>
 
                   <div className="space-y-3">
-                    {analysisResult.food_items.map((food, idx) => {
+                    {displayList.map((food, idx) => {
                       const recGrams = getRecommendedGrams(food.name);
                       const actualGrams = Math.round(food.mass_g);
+                      const displayGrams = actualGrams === 0 && food.mass_g > 0 ? food.mass_g.toFixed(1) : actualGrams;
                       const isOver = recGrams && actualGrams > recGrams * 1.1;
                       const isUnder = recGrams && actualGrams < recGrams * 0.9;
+                      const displayCals = food.calories < 1 && food.calories > 0 ? food.calories.toFixed(1) : Math.round(food.calories);
 
                       return (
                         <div key={idx} className="flex flex-col rounded-xl bg-slate-50 p-4 border border-slate-100 shadow-sm">
                           <div className="flex justify-between items-start font-medium text-slate-700 capitalize mb-1">
-                            <span className="truncate pr-2 font-bold">{food.name.replace(/_/g, ' ')}</span>
-                            <span className="shrink-0 text-emerald-600 font-bold">{Math.round(food.calories)} kcal</span>
+                            <span className="truncate pr-2 font-bold flex items-center gap-1.5">
+                              {food.name.replace(/_/g, ' ')}
+                              {food.instance_count > 1 && (
+                                <span className="text-[10px] font-normal px-1.5 py-0.5 rounded-full bg-slate-200/70 text-slate-600">
+                                  {food.instance_count} pieces
+                                </span>
+                              )}
+                            </span>
+                            <span className="shrink-0 text-emerald-600 font-bold">{displayCals} kcal</span>
                           </div>
 
                           <div className="flex gap-2 mt-1 mb-3 flex-wrap">
                             <span className="text-[10px] font-semibold bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
-                              {food.protein}g protein
+                              {food.protein < 1 && food.protein > 0 ? food.protein.toFixed(1) : Math.round(food.protein)}g protein
                             </span>
                             <span className="text-[10px] font-semibold bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded">
-                              {food.carbs}g carbs
+                              {food.carbs < 1 && food.carbs > 0 ? food.carbs.toFixed(1) : Math.round(food.carbs)}g carbs
                             </span>
                             <span className="text-[10px] font-semibold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
-                              {food.fat}g fat
+                              {food.fat < 1 && food.fat > 0 ? food.fat.toFixed(1) : Math.round(food.fat)}g fat
                             </span>
                           </div>
 
@@ -300,7 +365,7 @@ export default function Analysis() {
                             <div>
                               <p className="text-xs text-slate-500">Detected Portion</p>
                               <p className={`text-lg font-bold ${isOver ? 'text-rose-500' : isUnder ? 'text-amber-500' : 'text-emerald-600'}`}>
-                                {actualGrams} <span className="text-xs font-normal">g</span>
+                                {displayGrams} <span className="text-xs font-normal">g</span>
                                 {recGrams && (
                                   <mark className={`ml-2 bg-transparent text-[10px] font-black uppercase ${actualGrams > recGrams ? 'text-rose-600' : 'text-emerald-600'}`}>
                                     ({actualGrams > recGrams ? '+' : ''}{actualGrams - recGrams}g)

@@ -1,0 +1,14 @@
+{
+  "item_id": "Cucumber_1",
+  "area_pixels": 7249,
+  "estimated_height_cm": 0.458,
+  "volume_estimate_ml": 5.1,
+  "density": 0.6,
+  "mass_g": 3.0,
+  "class_label": "Cucumber",
+  "class_confidence": 0.9174,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8761,
+  "prior_applied": true
+}

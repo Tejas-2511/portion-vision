@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261111_220325_d7b4b094</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261111_220325_d7b4b094</code> &nbsp;│&nbsp; Debug: <code>True</code> &nbsp;│&nbsp; Files saved: <code>35</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "1600x1204",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "Steamed Rice",
+    "Dal Fry",
+    "Curry",
+    "Cucumber"
+  ],
+  "plate_profile": null,
+  "debug": true
+}</pre></div>
+<h2>📁 preprocessing</h2>
+<div class='card'><span class='fname'>01_resized.png</span><br><img src='preprocessing/01_resized.png' alt='01_resized.png'></div>
+<div class='card'><span class='fname'>02_denoised.png</span><br><img src='preprocessing/02_denoised.png' alt='02_denoised.png'></div>
+<div class='card'><span class='fname'>03_color_normalized.png</span><br><img src='preprocessing/03_color_normalized.png' alt='03_color_normalized.png'></div>
+<div class='card'><span class='fname'>04_contrast_enhanced.png</span><br><img src='preprocessing/04_contrast_enhanced.png' alt='04_contrast_enhanced.png'></div>
+<div class='card'><span class='fname'>05_edges.png</span><br><img src='preprocessing/05_edges.png' alt='05_edges.png'></div>
+<div class='card'><span class='fname'>06_perspective_warp.png</span><br><img src='preprocessing/06_perspective_warp.png' alt='06_perspective_warp.png'></div>
+<h2>📁 compartments</h2>
+<div class='card'><span class='fname'>01_adaptive_threshold.png</span><br><img src='compartments/01_adaptive_threshold.png' alt='01_adaptive_threshold.png'></div>
+<div class='card'><span class='fname'>02_combined_edges.png</span><br><img src='compartments/02_combined_edges.png' alt='02_combined_edges.png'></div>
+<div class='card'><span class='fname'>03_compartments_overlay.png</span><br><img src='compartments/03_compartments_overlay.png' alt='03_compartments_overlay.png'></div>
+<h2>📁 depth</h2>
+<div class='card'><span class='fname'>01_raw_depth.npy</span></div>
+<div class='card'><span class='fname'>02_depth_normalized.png</span><br><img src='depth/02_depth_normalized.png' alt='02_depth_normalized.png'></div>
+<div class='card'><span class='fname'>03_depth_colored.png</span><br><img src='depth/03_depth_colored.png' alt='03_depth_colored.png'></div>
+<div class='card'><span class='fname'>04_height_relative.npy</span></div>
+<div class='card'><span class='fname'>05_height_relative_colored.png</span><br><img src='depth/05_height_relative_colored.png' alt='05_height_relative_colored.png'></div>
+<div class='card'><span class='fname'>06_height_metric_cm.npy</span></div>
+<h2>📁 features</h2>
+<div class='card'><span class='fname'>compartments.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[]</pre></div>
+<div class='card'><span class='fname'>item_1_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_1",
+  "area_pixels": 7249,
+  "estimated_height_cm": 0.84,
+  "volume_estimate_ml": 8.2,
+  "density": 0.6,
+  "mass_g": 4.9,
+  "class_label": "Cucumber",
+  "class_confidence": 0.9174,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8761,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_2_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_2",
+  "area_pixels": 4736,
+  "estimated_height_cm": 0.791,
+  "volume_estimate_ml": 4.2,
+  "density": 0.6,
+  "mass_g": 2.5,
+  "class_label": "Cucumber",
+  "class_confidence": 0.9135,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8742,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_3_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_3",
+  "area_pixels": 4993,
+  "estimated_height_cm": 0.45,
+  "volume_estimate_ml": 3.5,
+  "density": 0.6,
+  "mass_g": 2.1,
+  "class_label": "Cucumber",
+  "class_confidence": 0.9032,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8693,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_4_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_4",
+  "area_pixels": 9058,
+  "estimated_height_cm": 0.466,
+  "volume_estimate_ml": 6.3,
+  "density": 0.6,
+  "mass_g": 3.8,
+  "class_label": "Cucumber",
+  "class_confidence": 0.8855,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8607,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_5_Dal Fry.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Dal Fry_5",
+  "area_pixels": 53211,
+  "estimated_height_cm": 1.538,
+  "volume_estimate_ml": 35.7,
+  "density": 1.087,
+  "mass_g": 38.8,
+  "class_label": "Dal Fry",
+  "class_confidence": 0.8794,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8578,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_6_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_6",
+  "area_pixels": 2733,
+  "estimated_height_cm": 0.45,
+  "volume_estimate_ml": 1.9,
+  "density": 0.6,
+  "mass_g": 1.1,
+  "class_label": "Cucumber",
+  "class_confidence": 0.8783,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8572,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_7_Steamed Rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Steamed Rice_7",
+  "area_pixels": 115896,
+  "estimated_height_cm": 1.688,
+  "volume_estimate_ml": 198.2,
+  "density": 1.077,
+  "mass_g": 213.5,
+  "class_label": "Steamed Rice",
+  "class_confidence": 0.8549,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8457,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_8_Curry.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Curry_8",
+  "area_pixels": 54250,
+  "estimated_height_cm": 2.12,
+  "volume_estimate_ml": 116.6,
+  "density": 1.1,
+  "mass_g": 128.2,
+  "class_label": "Curry",
+  "class_confidence": 0.7663,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8007,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_9_Steamed Rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Steamed Rice_9",
+  "area_pixels": 1345,
+  "estimated_height_cm": 1.688,
+  "volume_estimate_ml": 2.3,
+  "density": 1.03,
+  "mass_g": 2.4,
+  "class_label": "Steamed Rice",
+  "class_confidence": 0.7034,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7671,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_10_Dal Fry.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Dal Fry_10",
+  "area_pixels": 1455,
+  "estimated_height_cm": 3.49,
+  "volume_estimate_ml": 2.4,
+  "density": 1.079,
+  "mass_g": 2.6,
+  "class_label": "Dal Fry",
+  "class_confidence": 0.6745,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7512,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_11_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_11",
+  "area_pixels": 1497,
+  "estimated_height_cm": 0.64,
+  "volume_estimate_ml": 1.0,
+  "density": 0.6,
+  "mass_g": 0.6,
+  "class_label": "Cucumber",
+  "class_confidence": 0.4953,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6437,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_12_Cucumber.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "Cucumber_12",
+  "area_pixels": 1179,
+  "estimated_height_cm": 0.665,
+  "volume_estimate_ml": 0.8,
+  "density": 0.6,
+  "mass_g": 0.5,
+  "class_label": "Cucumber",
+  "class_confidence": 0.3687,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.5554,
+  "prior_applied": true
+}</pre></div>
+<div class='card'><span class='fname'>item_13_unlisted food.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "unlisted food_13",
+  "area_pixels": 34018,
+  "estimated_height_cm": 0.545,
+  "volume_estimate_ml": 18.8,
+  "density": 1.0,
+  "mass_g": 18.8,
+  "class_label": "unlisted food",
+  "class_confidence": 0.6921,
+  "depth_stability": 0.75,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7081,
+  "prior_applied": false
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_height_map.png</span><br><img src='volume/01_height_map.png' alt='01_height_map.png'></div>
+<div class='card'><span class='fname'>02_final_annotated.png</span><br><img src='volume/02_final_annotated.png' alt='02_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "Cucumber",
+      "volume_ml": 25.9,
+      "mass_g": 15.5,
+      "calories": 5.2,
+      "protein": 0.0,
+      "carbs": 0.5,
+      "fat": 0.0,
+      "confidence": 0.8761,
+      "class_label": "Cucumber",
+      "class_confidence": 0.9174,
+      "top_k": [
+        {
+          "label": "Cucumber",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Cucumber",
+      "identification_confidence": 0.9174,
+      "segmentation_confidence": 0.9174,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "instance_count": 7
+    },
+    {
+      "name": "Dal Fry",
+      "volume_ml": 38.1,
+      "mass_g": 41.4,
+      "calories": 56.9,
+      "protein": 2.8,
+      "carbs": 7.7,
+      "fat": 1.7,
+      "confidence": 0.8578,
+      "class_label": "Dal Fry",
+      "class_confidence": 0.8794,
+      "top_k": [
+        {
+          "label": "Dal Fry",
+          "confidence": 0.8794,
+          "raw_similarity": 0.8794
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Dal Fry",
+      "identification_confidence": 0.8794,
+      "segmentation_confidence": 0.8794,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "instance_count": 2
+    },
+    {
+      "name": "Steamed Rice",
+      "volume_ml": 200.5,
+      "mass_g": 215.9,
+      "calories": 222.3,
+      "protein": 4.3,
+      "carbs": 48.5,
+      "fat": 0.0,
+      "confidence": 0.8457,
+      "class_label": "Steamed Rice",
+      "class_confidence": 0.8549,
+      "top_k": [
+        {
+          "label": "Steamed Rice",
+          "confidence": 0.8549,
+          "raw_similarity": 0.8549
+        }
+      ],
+      "identification_status": "recogni</pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "1600x1204"
+    },
+    "elapsed_s": 0.0916,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-11T22:03:25.823677"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-11T22:03:25.823677"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 351.14,
+      "tilt_deg": 25.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-11T22:03:25.927785"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "1600x1204",
+      "target_long_edge": 1024,
+      "scale": 0.64
+    },
+    "elapsed_s": 0.0009,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-11-11T22:03:25.972230"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0007,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-11-11T22:03:26.012983"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.149,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-11-11T22:03:26.216994"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.0096,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-11-11T22:03:26.280558"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": 0.0</pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "1600x1204"}</td><td>0.0916s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 351.14, "tilt_deg": 25.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Resize applied</td><td>{"original": "1600x1204", "target_long_edge": 1024, "scale": 0.64}</td><td>0.0009s</td></tr>
+<tr><td>Preprocessing</td><td>Gaussian blur applied</td><td>{"kernel": 5}</td><td>0.0007s</td></tr>
+<tr><td>Preprocessing</td><td>LAB color normalization applied</td><td>—</td><td>0.1490s</td></tr>
+<tr><td>Preprocessing</td><td>CLAHE contrast enhancement applied</td><td>{"clip_limit": 2.0, "tile_grid": "8x8"}</td><td>0.0096s</td></tr>
+<tr><td>Preprocessing</td><td>Canny edge detection</td><td>{"low": 50, "high": 150}</td><td>0.0185s</td></tr>
+<tr><td>Preprocessing</td><td>Warp skipped (no 4-pt contour)</td><td>{"warped": false}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x770"}</td><td>0.5312s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Detected 0 compartments</td><td>{"min_area_frac": 0.02, "max_area_frac": 0.9, "compartment_count": 0}</td><td>0.0101s</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.03559, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.03559, "pixel_area_cm2": 0.00126671, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0725s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Depth Anything depth map computed (smoothed)</td><td>{"device": "cuda", "is_metric": true, "shape": [770, 1024], "min": -90.211, "max": -47.537}</td><td>25.8692s</td></tr>
+<tr><td>Depth Normalization</td><td>Baseline subtracted from depth</td><td>{"baseline": -70.695, "is_metric": true}</td><td>0.0061s</td></tr>
+<tr><td>Depth Metric [cm]</td><td>Metric depth height in cm directly computed</td><td>{"cm_per_pixel": 0.03559, "min_cm": 0.0, "max_cm": 15.0, "mean_cm": 3.42}</td><td>0.0024s</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>25.9669s</td></tr>
+<tr><td>Pipeline</td><td>Step 4–6 — SAM 3 Food Identification & Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>SAM3</td><td>Identified 13 food items (12 recognized, 0 unlisted, 1 uncertain)</td><td>—</td><td>63.6366s</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 13 items</td><td>{"total_items": 13}</td><td>0.0966s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 13, "avg_confidence": 0.7898, "scale_method": "bbox"}</td><td>90.6907s</td></tr>
+</table></body></html>

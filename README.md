@@ -22,26 +22,36 @@ User photographs plate
         │
         ▼
  CV Pipeline (Python)
- ┌───────────────────────────────────────────────┐
- │ SAM 3 Open-Vocabulary Grounding & Segmentation│
- │   • Non-food rejection (spoons/cutlery = 0 FP)│
- │   • Prompt grounding (menu items + staples)   │
- │   • Specific-over-generic disambiguation      │
- │   • High-precision binary masks & RGBA crops  │
- └───────────────────────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────────┐
+ │ Meta SAM 3 Open-Vocabulary Grounding & Segmentation         │
+ │   • Non-food rejection (spoons/cutlery/surfaces = 0 FP)     │
+ │   • Prompt grounding (menu items + 37 Indian staples)       │
+ │   • Specific-over-generic disambiguation cascade            │
+ │   • High-precision binary masks & transparent RGBA crops    │
+ └─────────────────────────────────────────────────────────────┘
         │
         ▼
- Depth Estimation  (Depth Anything V2)
- + Geometric priors → volume (cm³)
+ ┌─────────────────────────────────────────────────────────────┐
+ │ Depth Anything 3 Metric + 2D Planar Surface Normal Fitting  │
+ │   • Physical Euclidean distance Z in meters (DA3METRIC)     │
+ │   • Plane fitting Z_plate(x, y) = Ax + By + C (tilt-zero)   │
+ │   • Continuous prior fusion H_fused = 0.7 H_meas + 0.3 H_mid│
+ └─────────────────────────────────────────────────────────────┘
         │
         ▼
- Mass Estimation   (density map)
+ ┌─────────────────────────────────────────────────────────────┐
+ │ 5-Archetype Volumetric Metrology & Dynamic Density          │
+ │   • Planar (rotis) & Salad Slices (0.55cm cucumber floor)   │
+ │   • Liquid well frustum, granular dome & chunky suspensions │
+ │   • Dynamic visual density ρ(HSV, Laplacian texture)        │
+ │   • Multi-instance canonical aggregation (unified cards)    │
+ └─────────────────────────────────────────────────────────────┘
         │
         ▼
- Nutrition Calculation
+ Nutrition Calculation & Macro Propagation (Calories/Protein/Carbs/Fat)
         │
         ▼
- Portion Gap Report shown to user
+ Portion Gap Report shown to user (Actual vs Target)
 ```
 
 ---
@@ -53,7 +63,7 @@ User photographs plate
 | **Frontend** | React 18 + Vite, Tailwind CSS, PWA |
 | **Backend** | Node.js / Express, Tesseract.js OCR |
 | **CV Service** | Python 3.12+, FastAPI, PyTorch |
-| **Models** | Meta SAM 3 (SAM 3.1), Depth Anything V2 |
+| **Models** | Meta SAM 3 (SAM 3.1), Depth Anything V3 (Metric) |
 
 ---
 
@@ -211,7 +221,7 @@ Model weights and checkpoints:
 | File | Size | Source |
 |------|------|--------|
 | `sam3.1_multiplex.pt` | ~3.2 GB | [Meta SAM 3](https://github.com/facebookresearch/sam3) / HuggingFace `facebook/sam3.1` |
-| Depth Anything V2 Small | ~400 MB | HuggingFace `depth-anything/Depth-Anything-V2-Small-hf` |
+| `DA3METRIC-LARGE` (Depth Anything 3) | ~1.3 GB | [ByteDance Depth Anything 3](https://github.com/ByteDance-Seed/Depth-Anything-3) / HuggingFace `depth-anything/DA3METRIC-LARGE` |
 
 ---
 
@@ -234,4 +244,4 @@ Model weights and checkpoints:
 
 ## License
 
-Academic/research use. Model weights are subject to their respective upstream licences (Meta SAM 3: Apache 2.0, Depth Anything V2: Apache 2.0).
+Academic/research use. Model weights are subject to their respective upstream licences (Meta SAM 3: Apache 2.0, Depth Anything 3: Apache 2.0).
