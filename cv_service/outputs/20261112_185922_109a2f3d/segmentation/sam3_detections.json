@@ -1,0 +1,391 @@
+{
+  "total_items": 8,
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.9365,
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        343,
+        220,
+        248,
+        333
+      ],
+      "area_pixels": 61293,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\00_steamed_rice_0.94.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9365,
+        "uncertainty": 0.0635,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "chapati",
+      "food_name": "chapati",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "confidence": 0.8793,
+      "identification_confidence": 0.8793,
+      "segmentation_confidence": 0.8793,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        105,
+        274,
+        269,
+        301
+      ],
+      "area_pixels": 66970,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8793,
+          "raw_similarity": 0.8793
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\01_chapati_0.88.png",
+      "sam3_raw_query": "whole wheat roti",
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8793,
+        "uncertainty": 0.1207,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "chapati",
+      "food_name": "chapati",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "confidence": 0.8044,
+      "identification_confidence": 0.8044,
+      "segmentation_confidence": 0.8044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        218,
+        250,
+        175,
+        254
+      ],
+      "area_pixels": 5180,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8044,
+          "raw_similarity": 0.8044
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\02_chapati_0.80.png",
+      "sam3_raw_query": "whole wheat roti",
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8044,
+        "uncertainty": 0.1956,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.8027,
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        373,
+        42,
+        191,
+        176
+      ],
+      "area_pixels": 26519,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\03_dal_0.80.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8027,
+        "uncertainty": 0.1973,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7994,
+      "identification_confidence": 0.7994,
+      "segmentation_confidence": 0.7994,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        150,
+        57,
+        190,
+        170
+      ],
+      "area_pixels": 25612,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7994,
+          "raw_similarity": 0.7994
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\04_dal_0.80.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7994,
+        "uncertainty": 0.2006,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7688,
+      "identification_confidence": 0.7688,
+      "segmentation_confidence": 0.7688,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        26,
+        193,
+        178
+      ],
+      "area_pixels": 27108,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7688,
+          "raw_similarity": 0.7688
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\05_dal_0.77.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7688,
+        "uncertainty": 0.2312,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "chapati",
+      "food_name": "chapati",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "confidence": 0.6035,
+      "identification_confidence": 0.6035,
+      "segmentation_confidence": 0.6035,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        88,
+        264,
+        171,
+        198
+      ],
+      "area_pixels": 5748,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.6035,
+          "raw_similarity": 0.6035
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\06_chapati_0.60.png",
+      "sam3_raw_query": "chapati bread",
+      "diagnostics": {
+        "original_sam3_query": "chapati bread",
+        "candidate_labels": [
+          "chapati bread"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.6035,
+        "uncertainty": 0.3965,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.4981,
+      "identification_confidence": 0.4981,
+      "segmentation_confidence": 0.4981,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        561,
+        11,
+        246,
+        219
+      ],
+      "area_pixels": 15289,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4981,
+          "raw_similarity": 0.4981
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_185922_109a2f3d\\segmentation\\crops\\07_dal_0.50.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4981,
+        "uncertainty": 0.5019,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 17.766,
+  "timestamp": "2026-11-12T18:59:41.519140"
+}

@@ -1,0 +1,443 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.7965,
+      "class_label": "green salad",
+      "class_confidence": 0.7582,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7582,
+          "raw_similarity": 0.7582
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7582,
+      "segmentation_confidence": 0.7582,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7582,
+        "uncertainty": 0.2418,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 111.8,
+      "mass_g": 120.0,
+      "calories": 85.9,
+      "protein": 8.4,
+      "carbs": 11.8,
+      "fat": 0.4,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 5
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.7965,
+      "class_label": "green salad",
+      "class_confidence": 0.7582,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7582,
+          "raw_similarity": 0.7582
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7582,
+      "segmentation_confidence": 0.7582,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7582,
+        "uncertainty": 0.2418,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 55.9,
+      "mass_g": 60.3,
+      "calories": 43.2,
+      "protein": 4.2,
+      "carbs": 6.0,
+      "fat": 0.2,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 49.1,
+      "mass_g": 52.5,
+      "calories": 37.6,
+      "protein": 3.7,
+      "carbs": 5.2,
+      "fat": 0.2,
+      "confidence": 0.7677,
+      "class_label": "dal",
+      "class_confidence": 0.7044,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 2.2,
+      "mass_g": 2.3,
+      "calories": 1.7,
+      "protein": 0.2,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6424,
+      "class_label": "dal",
+      "class_confidence": 0.4932,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4932,
+          "raw_similarity": 0.4932
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4932,
+      "segmentation_confidence": 0.4932,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4932,
+        "uncertainty": 0.5068,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 3.2,
+      "mass_g": 3.4,
+      "calories": 2.4,
+      "protein": 0.2,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.6293,
+      "class_label": "dal",
+      "class_confidence": 0.4734,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4734,
+          "raw_similarity": 0.4734
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4734,
+      "segmentation_confidence": 0.4734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4734,
+        "uncertainty": 0.5266,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 1.4,
+      "mass_g": 1.5,
+      "calories": 1.0,
+      "protein": 0.1,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6145,
+      "class_label": "dal",
+      "class_confidence": 0.4513,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4513,
+          "raw_similarity": 0.4513
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4513,
+      "segmentation_confidence": 0.4513,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4513,
+        "uncertainty": 0.5487,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7244
+}

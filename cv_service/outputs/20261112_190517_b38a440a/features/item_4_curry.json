@@ -1,0 +1,29 @@
+{
+  "item_id": "curry_4",
+  "area_pixels": 54250,
+  "estimated_height_cm": 2.102,
+  "volume_estimate_ml": 118.4,
+  "density": 1.1,
+  "mass_g": 130.3,
+  "class_label": "curry",
+  "class_confidence": 0.7663,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8007,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "curry",
+    "candidate_labels": [
+      "curry"
+    ],
+    "menu_matching_result": "curry",
+    "final_food_label": "curry",
+    "confidence": 0.7663,
+    "uncertainty": 0.2337,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_5",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

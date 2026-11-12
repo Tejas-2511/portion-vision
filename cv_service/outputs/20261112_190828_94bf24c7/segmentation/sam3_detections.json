@@ -1,0 +1,103 @@
+{
+  "total_items": 2,
+  "food_items": [
+    {
+      "name": "dal rice",
+      "food_name": "dal rice",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "confidence": 0.8779,
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        234,
+        239,
+        307,
+        216
+      ],
+      "area_pixels": 47984,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_190828_94bf24c7\\segmentation\\crops\\00_dal_rice_0.88.png",
+      "sam3_raw_query": "curry and rice",
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8679,
+      "identification_confidence": 0.8679,
+      "segmentation_confidence": 0.8679,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        569,
+        232,
+        156,
+        214
+      ],
+      "area_pixels": 21241,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8679,
+          "raw_similarity": 0.8679
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_190828_94bf24c7\\segmentation\\crops\\01_green_salad_0.87.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8679,
+        "uncertainty": 0.1321,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 28.371,
+  "timestamp": "2026-11-12T19:08:58.262184"
+}

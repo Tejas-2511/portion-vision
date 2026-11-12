@@ -60,12 +60,15 @@ def _is_planar_food(food_name: str) -> bool:
 
 def _is_liquid_food(food_name: str) -> bool:
     f = food_name.lower()
+    # Composite dishes with rice/khichdi form semi-solid mounds, not conformal liquids
+    if any(k in f for k in ["rice", "chawal", "khichdi", "biryani", "pulao"]):
+        return False
     return any(k in f for k in ["dal", "daal", "sambar", "rasam", "curd", "dahi", "raita", "kheer", "soup"])
 
 
 def _is_mound_food(food_name: str) -> bool:
     f = food_name.lower()
-    return any(k in f for k in ["rice", "biryani", "pulao", "khichdi", "poha", "upma", "chawal"])
+    return any(k in f for k in ["rice", "biryani", "pulao", "khichdi", "poha", "upma", "chawal", "dal rice", "dal chawal"])
 
 
 def _get_planar_thickness_cm(food_name: str) -> float:

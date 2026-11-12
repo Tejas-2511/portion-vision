@@ -1,0 +1,29 @@
+{
+  "item_id": "palak paneer_2",
+  "area_pixels": 1384,
+  "estimated_height_cm": 2.1,
+  "volume_estimate_ml": 4.8,
+  "density": 1.09,
+  "mass_g": 5.2,
+  "class_label": "palak paneer",
+  "class_confidence": 0.85,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8433,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.85,
+    "uncertainty": 0.15,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

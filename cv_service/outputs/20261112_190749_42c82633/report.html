@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261112_190749_42c82633</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261112_190749_42c82633</code> &nbsp;│&nbsp; Debug: <code>True</code> &nbsp;│&nbsp; Files saved: <code>27</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "3840x2160",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "dal",
+    "steamed rice",
+    "boiled lentil salad",
+    "pickle"
+  ],
+  "plate_profile": null,
+  "debug": true
+}</pre></div>
+<h2>📁 preprocessing</h2>
+<div class='card'><span class='fname'>01_resized.png</span><br><img src='preprocessing/01_resized.png' alt='01_resized.png'></div>
+<div class='card'><span class='fname'>02_denoised.png</span><br><img src='preprocessing/02_denoised.png' alt='02_denoised.png'></div>
+<div class='card'><span class='fname'>03_color_normalized.png</span><br><img src='preprocessing/03_color_normalized.png' alt='03_color_normalized.png'></div>
+<div class='card'><span class='fname'>04_contrast_enhanced.png</span><br><img src='preprocessing/04_contrast_enhanced.png' alt='04_contrast_enhanced.png'></div>
+<div class='card'><span class='fname'>05_edges.png</span><br><img src='preprocessing/05_edges.png' alt='05_edges.png'></div>
+<div class='card'><span class='fname'>06_perspective_warp.png</span><br><img src='preprocessing/06_perspective_warp.png' alt='06_perspective_warp.png'></div>
+<h2>📁 compartments</h2>
+<div class='card'><span class='fname'>01_adaptive_threshold.png</span><br><img src='compartments/01_adaptive_threshold.png' alt='01_adaptive_threshold.png'></div>
+<div class='card'><span class='fname'>02_combined_edges.png</span><br><img src='compartments/02_combined_edges.png' alt='02_combined_edges.png'></div>
+<div class='card'><span class='fname'>03_compartments_overlay.png</span><br><img src='compartments/03_compartments_overlay.png' alt='03_compartments_overlay.png'></div>
+<h2>📁 depth</h2>
+<div class='card'><span class='fname'>01_raw_depth.npy</span></div>
+<div class='card'><span class='fname'>02_depth_normalized.png</span><br><img src='depth/02_depth_normalized.png' alt='02_depth_normalized.png'></div>
+<div class='card'><span class='fname'>03_depth_colored.png</span><br><img src='depth/03_depth_colored.png' alt='03_depth_colored.png'></div>
+<div class='card'><span class='fname'>04_height_relative.npy</span></div>
+<div class='card'><span class='fname'>05_height_relative_colored.png</span><br><img src='depth/05_height_relative_colored.png' alt='05_height_relative_colored.png'></div>
+<div class='card'><span class='fname'>06_height_metric_cm.npy</span></div>
+<h2>📁 features</h2>
+<div class='card'><span class='fname'>compartments.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[]</pre></div>
+<div class='card'><span class='fname'>item_1_steamed rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "steamed rice_1",
+  "area_pixels": 39510,
+  "estimated_height_cm": 1.688,
+  "volume_estimate_ml": 94.4,
+  "density": 0.989,
+  "mass_g": 93.3,
+  "class_label": "steamed rice",
+  "class_confidence": 0.8598,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8482,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice",
+    "candidate_labels": [
+      "rice"
+    ],
+    "menu_matching_result": "steamed rice",
+    "final_food_label": "steamed rice",
+    "confidence": 0.8598,
+    "uncertainty": 0.1402,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_2_boiled lentil salad.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "boiled lentil salad_2",
+  "area_pixels": 35015,
+  "estimated_height_cm": 1.125,
+  "volume_estimate_ml": 65.6,
+  "density": 0.7,
+  "mass_g": 45.9,
+  "class_label": "boiled lentil salad",
+  "class_confidence": 0.8536,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8451,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "chana salad",
+    "candidate_labels": [
+      "chana salad"
+    ],
+    "menu_matching_result": "boiled lentil salad",
+    "final_food_label": "boiled lentil salad",
+    "confidence": 0.8536,
+    "uncertainty": 0.1464,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_3_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_3",
+  "area_pixels": 27440,
+  "estimated_height_cm": 1.606,
+  "volume_estimate_ml": 59.6,
+  "density": 1.085,
+  "mass_g": 64.7,
+  "class_label": "dal",
+  "class_confidence": 0.7953,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8157,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "brown dal",
+    "candidate_labels": [
+      "brown dal"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.7953,
+    "uncertainty": 0.2047,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_4_pickle.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "pickle_4",
+  "area_pixels": 6047,
+  "estimated_height_cm": 0.637,
+  "volume_estimate_ml": 5.3,
+  "density": 1.0,
+  "mass_g": 5.3,
+  "class_label": "pickle",
+  "class_confidence": 0.6754,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7517,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "indian pickle condiment",
+    "candidate_labels": [
+      "indian pickle condiment"
+    ],
+    "menu_matching_result": "pickle",
+    "final_food_label": "pickle",
+    "confidence": 0.6754,
+    "uncertainty": 0.3246,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_3",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_fused_height_map.npy</span></div>
+<div class='card'><span class='fname'>01_height_map.png</span><br><img src='volume/01_height_map.png' alt='01_height_map.png'></div>
+<div class='card'><span class='fname'>02_final_annotated.png</span><br><img src='volume/02_final_annotated.png' alt='02_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 94.4,
+      "mass_g": 93.3,
+      "calories": 121.3,
+      "protein": 2.5,
+      "carbs": 26.1,
+      "fat": 0.3,
+      "confidence": 0.8482,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8598,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "boiled lentil salad",
+      "volume_ml": 65.6,
+      "mass_g": 45.9,
+      "calories": 45.9,
+      "protein": 3.2,
+      "carbs": 6.9,
+      "fat": 0.5,
+      "confidence": 0.8451,
+      "class_label": "boiled lentil salad",
+      "class_confidence": 0.8536,
+      "top_k": [
+        {
+          "label": "boiled lentil salad",
+          "confidence": 0.8536,
+          "raw_similarity": 0.8536
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "boiled lentil salad",
+      "identification_confidence": 0.8536,
+      "segmentation_confidence": 0.8536,
+      "association_confidence": 1.0,
+      "menu_match_confi</pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "3840x2160"
+    },
+    "elapsed_s": 0.3565,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-12T19:07:50.126104"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:07:50.126104"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 178.62,
+      "tilt_deg": 45.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:07:50.446494"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "3840x2160",
+      "target_long_edge": 1024,
+      "scale": 0.2667
+    },
+    "elapsed_s": 0.0009,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-11-12T19:07:50.488256"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0009,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-11-12T19:07:50.522350"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.0174,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-11-12T19:07:50.575440"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.0042,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-11-12T19:07:50.613391"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": </pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "3840x2160"}</td><td>0.3565s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 178.62, "tilt_deg": 45.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Resize applied</td><td>{"original": "3840x2160", "target_long_edge": 1024, "scale": 0.2667}</td><td>0.0009s</td></tr>
+<tr><td>Preprocessing</td><td>Gaussian blur applied</td><td>{"kernel": 5}</td><td>0.0009s</td></tr>
+<tr><td>Preprocessing</td><td>LAB color normalization applied</td><td>—</td><td>0.0174s</td></tr>
+<tr><td>Preprocessing</td><td>CLAHE contrast enhancement applied</td><td>{"clip_limit": 2.0, "tile_grid": "8x8"}</td><td>0.0042s</td></tr>
+<tr><td>Preprocessing</td><td>Canny edge detection</td><td>{"low": 50, "high": 150}</td><td>0.0109s</td></tr>
+<tr><td>Preprocessing</td><td>Warp skipped (no 4-pt contour)</td><td>{"warped": false}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x576"}</td><td>0.5401s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Detected 0 compartments</td><td>{"min_area_frac": 0.02, "max_area_frac": 0.9, "compartment_count": 0}</td><td>0.0060s</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.04081, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.04081, "pixel_area_cm2": 0.00166536, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0544s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Depth Anything depth map computed (smoothed)</td><td>{"device": "cuda", "is_metric": true, "shape": [576, 1024], "min": -105.811, "max": -51.924}</td><td>0.9848s</td></tr>
+<tr><td>Depth Normalization</td><td>Surface normal plane subtracted from depth</td><td>{"baseline": -74.46, "fitted_plane": true, "is_metric": true}</td><td>0.0173s</td></tr>
+<tr><td>Depth Metric [cm]</td><td>Metric depth height in cm directly computed</td><td>{"cm_per_pixel": 0.04081, "min_cm": 0.0, "max_cm": 15.0, "mean_cm": 3.32}</td><td>0.0020s</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>1.0610s</td></tr>
+<tr><td>Pipeline</td><td>Step 4–6 — SAM 3 Food Identification & Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>SAM3</td><td>Identified 4 food items (4 recognized, 0 unlisted, 0 uncertain)</td><td>—</td><td>36.1744s</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 4 items</td><td>{"total_items": 4}</td><td>0.0195s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 4, "avg_confidence": 0.8152, "scale_method": "bbox"}</td><td>38.3485s</td></tr>
+</table></body></html>

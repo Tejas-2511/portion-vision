@@ -1,0 +1,533 @@
+{
+  "food_items": [
+    {
+      "name": "green salad",
+      "volume_ml": 35.1,
+      "mass_g": 21.0,
+      "calories": 6.3,
+      "protein": 0.3,
+      "carbs": 1.0,
+      "fat": 0.1,
+      "confidence": 0.8583,
+      "class_label": "green salad",
+      "class_confidence": 0.8805,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8805,
+          "raw_similarity": 0.8805
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8805,
+      "segmentation_confidence": 0.8805,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8805,
+        "uncertainty": 0.1195,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 6,
+        "decision_reason": "FRAGMENT_GROUPED_6_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 89.1,
+      "mass_g": 96.8,
+      "calories": 69.3,
+      "protein": 6.8,
+      "carbs": 9.7,
+      "fat": 0.4,
+      "confidence": 0.8578,
+      "class_label": "dal",
+      "class_confidence": 0.8794,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8794,
+          "raw_similarity": 0.8794
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8794,
+      "segmentation_confidence": 0.8794,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8794,
+        "uncertainty": 0.1206,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 2
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 213.0,
+      "mass_g": 208.0,
+      "calories": 270.5,
+      "protein": 5.7,
+      "carbs": 58.2,
+      "fat": 0.6,
+      "confidence": 0.8457,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8549,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8549,
+          "raw_similarity": 0.8549
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8549,
+      "segmentation_confidence": 0.8549,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8549,
+        "uncertainty": 0.1451,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 2
+    },
+    {
+      "name": "curry",
+      "volume_ml": 118.4,
+      "mass_g": 130.3,
+      "calories": 148.5,
+      "protein": 6.5,
+      "carbs": 13.0,
+      "fat": 7.8,
+      "confidence": 0.8007,
+      "class_label": "curry",
+      "class_confidence": 0.7663,
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "curry",
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "curry",
+        "final_food_label": "curry",
+        "confidence": 0.7663,
+        "uncertainty": 0.2337,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "curry",
+      "instance_count": 1
+    },
+    {
+      "name": "dal rice",
+      "volume_ml": 3.4,
+      "mass_g": 4.0,
+      "calories": 4.9,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.1,
+      "confidence": 0.6307,
+      "class_label": "dal rice",
+      "class_confidence": 0.4754,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.4754,
+          "raw_similarity": 0.4754
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.4754,
+      "segmentation_confidence": 0.4754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.4754,
+        "uncertainty": 0.5246,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal rice",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "green salad",
+      "volume_ml": 35.1,
+      "mass_g": 21.0,
+      "calories": 6.3,
+      "protein": 0.3,
+      "carbs": 1.0,
+      "fat": 0.1,
+      "confidence": 0.8583,
+      "class_label": "green salad",
+      "class_confidence": 0.8805,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8805,
+          "raw_similarity": 0.8805
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8805,
+      "segmentation_confidence": 0.8805,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8805,
+        "uncertainty": 0.1195,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 6,
+        "decision_reason": "FRAGMENT_GROUPED_6_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 86.7,
+      "mass_g": 94.2,
+      "calories": 67.5,
+      "protein": 6.6,
+      "carbs": 9.4,
+      "fat": 0.4,
+      "confidence": 0.8578,
+      "class_label": "dal",
+      "class_confidence": 0.8794,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8794,
+          "raw_similarity": 0.8794
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8794,
+      "segmentation_confidence": 0.8794,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8794,
+        "uncertainty": 0.1206,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 210.6,
+      "mass_g": 205.7,
+      "calories": 267.5,
+      "protein": 5.6,
+      "carbs": 57.6,
+      "fat": 0.6,
+      "confidence": 0.8457,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8549,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8549,
+          "raw_similarity": 0.8549
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8549,
+      "segmentation_confidence": 0.8549,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8549,
+        "uncertainty": 0.1451,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "curry",
+      "volume_ml": 118.4,
+      "mass_g": 130.3,
+      "calories": 148.5,
+      "protein": 6.5,
+      "carbs": 13.0,
+      "fat": 7.8,
+      "confidence": 0.8007,
+      "class_label": "curry",
+      "class_confidence": 0.7663,
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "curry",
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "curry",
+        "final_food_label": "curry",
+        "confidence": 0.7663,
+        "uncertainty": 0.2337,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 2.4,
+      "mass_g": 2.3,
+      "calories": 3.0,
+      "protein": 0.1,
+      "carbs": 0.6,
+      "fat": 0.0,
+      "confidence": 0.7671,
+      "class_label": "steamed rice",
+      "class_confidence": 0.7034,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.7034,
+          "raw_similarity": 0.7034
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.7034,
+      "segmentation_confidence": 0.7034,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "white rice",
+        "candidate_labels": [
+          "white rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.7034,
+        "uncertainty": 0.2966,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 2.4,
+      "mass_g": 2.6,
+      "calories": 1.8,
+      "protein": 0.2,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.7512,
+      "class_label": "dal",
+      "class_confidence": 0.6745,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.6745,
+          "raw_similarity": 0.6745
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.6745,
+      "segmentation_confidence": 0.6745,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.6745,
+        "uncertainty": 0.3255,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal rice",
+      "volume_ml": 3.4,
+      "mass_g": 4.0,
+      "calories": 4.9,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.1,
+      "confidence": 0.6307,
+      "class_label": "dal rice",
+      "class_confidence": 0.4754,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.4754,
+          "raw_similarity": 0.4754
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.4754,
+      "segmentation_confidence": 0.4754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.4754,
+        "uncertainty": 0.5246,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7874
+}

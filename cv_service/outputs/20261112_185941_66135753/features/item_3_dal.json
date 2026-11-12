@@ -1,0 +1,29 @@
+{
+  "item_id": "dal_3",
+  "area_pixels": 27440,
+  "estimated_height_cm": 1.606,
+  "volume_estimate_ml": 59.6,
+  "density": 1.085,
+  "mass_g": 64.7,
+  "class_label": "dal",
+  "class_confidence": 0.7953,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8157,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "brown dal",
+    "candidate_labels": [
+      "brown dal"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.7953,
+    "uncertainty": 0.2047,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

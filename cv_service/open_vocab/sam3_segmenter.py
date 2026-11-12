@@ -411,6 +411,17 @@ class Sam3FoodSegmenter:
                     )
                     continue
 
+            # Filter 1d: Area gate for composite main dishes (dal rice / dal chawal)
+            # A composite dish (curry poured over rice) forms a substantial plate portion (>= 10,000 px).
+            # Stray grains or tiny stains (< 10,000 px) must not be labeled as composite dal rice.
+            if canon_staple in {"dal rice", "dal chawal", "rice with dal"} or any(w in q for w in ["curry and rice", "rice with yellow dal", "rice and dal"]):
+                if f_area < 10000:
+                    logger.info(
+                        "[SAM3 Filter] Rejected composite dish '%s' (area=%d < 10000px) — cannot be a tiny fragment",
+                        f_det["query"], f_area,
+                    )
+                    continue
+
             # Filter 1b: Overlap with non-food anchors (spoons, cutlery)
             is_non_food = False
             for nf_det in non_food_detections:
@@ -513,25 +524,25 @@ class Sam3FoodSegmenter:
                     alt_key = alt_parent.lower() if alt_parent else None
                     if (alt_key and alt_key not in assigned_menu_items and 
                         _mask_iou(cand_mask, alt["mask"]) >= _DEDUP_IOU_THRESH and
-                        alt.get("score", 0) >= cand.get("score", 0) - 0.08):
+                        alt.get("score", 0) >= cand.get("score", 0) - 0.12):
                         has_alternative_menu_cand = True
                         break
                 if has_alternative_menu_cand:
                     continue
 
-            # If candidate is generic umbrella 'food' and already covered by specific food detections, drop it
-            if cand["query"].lower() in {"food", GENERIC_FALLBACK_QUERY}:
-                if kept:
-                    union_kept = np.zeros_like(cand_mask, dtype=bool)
-                    for ex in kept:
-                        union_kept |= ex["mask"]
-                    overlap_with_specific = float(np.logical_and(cand_mask, union_kept).sum()) / max(1.0, float(cand_mask.sum()))
-                    if overlap_with_specific >= 0.35:
-                        logger.info(
-                            "[SAM3 Dedup] Dropping generic fallback '%s' (conf=%.2f) — %.1f%% covered by specific food detections",
-                            cand["query"], cand["score"], overlap_with_specific * 100,
-                        )
-                        continue
+            # If candidate is significantly covered by higher-priority food detections, drop it
+            if kept:
+                union_kept = np.zeros_like(cand_mask, dtype=bool)
+                for ex in kept:
+                    union_kept |= ex["mask"]
+                overlap_with_kept = float(np.logical_and(cand_mask, union_kept).sum()) / max(1.0, float(cand_mask.sum()))
+                overlap_thresh = 0.35 if cand["query"].lower() in {"food", GENERIC_FALLBACK_QUERY} else 0.70
+                if overlap_with_kept >= overlap_thresh:
+                    logger.info(
+                        "[SAM3 Dedup] Dropping '%s' (conf=%.2f) — %.1f%% covered by higher-priority food detections",
+                        cand["query"], cand["score"], overlap_with_kept * 100,
+                    )
+                    continue
 
             duplicate = False
             for existing in kept:
@@ -630,12 +641,13 @@ class Sam3FoodSegmenter:
                 for alias in aliases:
                     food_queries.append((alias, "menu", m_clean, None))
 
-            # Composite dish inference: if menu contains both dal and rice, also query composite dal+rice
-            has_dal = any(any(d in m.lower() for d in ["dal", "daal", "sambar"]) for m in menu_items)
+            # Composite dish inference: if menu contains both dal/curry and rice, also query composite dal+rice
+            has_dal = any(any(d in m.lower() for d in ["dal", "daal", "sambar", "curry"]) for m in menu_items)
             has_rice = any(any(r in m.lower() for r in ["rice", "chawal"]) for m in menu_items)
             if has_dal and has_rice:
-                for alias in ["rice with yellow dal", "rice and dal"]:
-                    food_queries.append((alias, "menu", "dal rice", "dal rice"))
+                for alias in ["curry and rice", "rice with yellow dal", "rice and dal"]:
+                    if not any(alias.lower() == q.lower() for q, _, _, _ in food_queries):
+                        food_queries.append((alias, "menu", "dal rice", "dal rice"))
 
         # 2. Common Indian food staples (targeted discovery for speed & precision)
         if not menu_items:

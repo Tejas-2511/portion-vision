@@ -1,0 +1,151 @@
+{
+  "total_items": 3,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8867,
+      "identification_confidence": 0.8867,
+      "segmentation_confidence": 0.8867,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        2266,
+        926,
+        627,
+        860
+      ],
+      "area_pixels": 339863,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8867,
+          "raw_similarity": 0.8867
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8867,
+        "uncertainty": 0.1133,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.688,
+      "identification_confidence": 0.688,
+      "segmentation_confidence": 0.688,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1457,
+        1572,
+        110,
+        164
+      ],
+      "area_pixels": 12353,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.688,
+          "raw_similarity": 0.688
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": null,
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.688,
+        "uncertainty": 0.312,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ]
+    },
+    {
+      "name": "dal rice",
+      "food_name": "dal rice",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "confidence": 0.6691,
+      "identification_confidence": 0.6691,
+      "segmentation_confidence": 0.6691,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        934,
+        958,
+        1222,
+        860
+      ],
+      "area_pixels": 761515,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.6691,
+          "raw_similarity": 0.6691
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": null,
+      "sam3_raw_query": "rice with yellow dal",
+      "diagnostics": {
+        "original_sam3_query": "rice with yellow dal",
+        "candidate_labels": [
+          "rice with yellow dal"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.6691,
+        "uncertainty": 0.3309,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ]
+    }
+  ],
+  "elapsed_seconds": 73.402,
+  "timestamp": "2026-11-12T18:42:22.618042"
+}

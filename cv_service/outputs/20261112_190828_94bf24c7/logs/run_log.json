@@ -1,0 +1,275 @@
+[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "4080x1840"
+    },
+    "elapsed_s": 0.4024,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-12T19:08:28.681962"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:28.682481"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 303.23,
+      "tilt_deg": 3.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:28.942134"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "4080x1840",
+      "target_long_edge": 1024,
+      "scale": 0.251
+    },
+    "elapsed_s": 0.0008,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-11-12T19:08:28.970014"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0006,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-11-12T19:08:28.998485"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.0161,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-11-12T19:08:29.044592"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.0036,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-11-12T19:08:29.076191"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": 0.0068,
+    "input_file": null,
+    "output_file": "05_edges.png",
+    "timestamp": "2026-11-12T19:08:29.087240"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Warp skipped (no 4-pt contour)",
+    "params": {
+      "warped": false
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": "06_perspective_warp.png",
+    "timestamp": "2026-11-12T19:08:29.113837"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Complete",
+    "params": {
+      "output_size": "1024x461"
+    },
+    "elapsed_s": 0.4326,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.114903"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 2 — Compartments & Scale",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.114903"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Detected 0 compartments",
+    "params": {
+      "min_area_frac": 0.02,
+      "max_area_frac": 0.9,
+      "compartment_count": 0
+    },
+    "elapsed_s": 0.0049,
+    "input_file": null,
+    "output_file": "03_compartments_overlay.png",
+    "timestamp": "2026-11-12T19:08:29.152003"
+  },
+  {
+    "step": "Scale Calibration",
+    "message": "Ellipse-based calibration succeeded",
+    "params": {
+      "cm_per_pixel": 0.03747,
+      "method": "ellipse"
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.155568"
+  },
+  {
+    "step": "Compartment Detection",
+    "message": "Scale computed",
+    "params": {
+      "cm_per_pixel": 0.03747,
+      "pixel_area_cm2": 0.0014041,
+      "compartments": 0,
+      "scale_confidence": 1.0
+    },
+    "elapsed_s": 0.0405,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.155568"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 3 — Depth Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.156262"
+  },
+  {
+    "step": "Depth Estimation",
+    "message": "Depth Anything depth map computed (smoothed)",
+    "params": {
+      "device": "cuda",
+      "is_metric": true,
+      "shape": [
+        461,
+        1024
+      ],
+      "min": -106.648,
+      "max": -48.387
+    },
+    "elapsed_s": 0.6323,
+    "input_file": null,
+    "output_file": "03_depth_colored.png",
+    "timestamp": "2026-11-12T19:08:29.812601"
+  },
+  {
+    "step": "Depth Normalization",
+    "message": "Surface normal plane subtracted from depth",
+    "params": {
+      "baseline": -61.653,
+      "fitted_plane": true,
+      "is_metric": true
+    },
+    "elapsed_s": 0.0155,
+    "input_file": null,
+    "output_file": "05_height_relative_colored.png",
+    "timestamp": "2026-11-12T19:08:29.845567"
+  },
+  {
+    "step": "Depth Metric [cm]",
+    "message": "Metric depth height in cm directly computed",
+    "params": {
+      "cm_per_pixel": 0.03747,
+      "min_cm": 0.0,
+      "max_cm": 14.02,
+      "mean_cm": 3.0
+    },
+    "elapsed_s": 0.0018,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.851719"
+  },
+  {
+    "step": "Depth Estimation",
+    "message": "Complete",
+    "params": {},
+    "elapsed_s": 0.6953,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.851719"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 4–6 — SAM 3 Food Identification & Segmentation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:29.851719"
+  },
+  {
+    "step": "SAM3",
+    "message": "Identified 2 food items (2 recognized, 0 unlisted, 0 uncertain)",
+    "params": {},
+    "elapsed_s": 28.4114,
+    "input_file": null,
+    "output_file": "segmentation/01_sam3_segmentation_overlay.png",
+    "timestamp": "2026-11-12T19:08:58.263688"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 7 — Volume & Mass Estimation",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:58.263688"
+  },
+  {
+    "step": "Volume Estimation",
+    "message": "Computed mass for 2 items",
+    "params": {
+      "total_items": 2
+    },
+    "elapsed_s": 0.0082,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:58.272034"
+  },
+  {
+    "step": "Pipeline",
+    "message": "✅ Pipeline complete",
+    "params": {
+      "total_food_items": 2,
+      "avg_confidence": 0.9343,
+      "scale_method": "ellipse"
+    },
+    "elapsed_s": 30.0574,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T19:08:58.330062"
+  }
+]

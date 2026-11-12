@@ -1,0 +1,29 @@
+{
+  "item_id": "dal rice_6",
+  "area_pixels": 117644,
+  "estimated_height_cm": 1.538,
+  "volume_estimate_ml": 194.8,
+  "density": 1.124,
+  "mass_g": 218.9,
+  "class_label": "dal rice",
+  "class_confidence": 0.6111,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.715,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice mix",
+    "candidate_labels": [
+      "rice mix"
+    ],
+    "menu_matching_result": "dal rice",
+    "final_food_label": "dal rice",
+    "confidence": 0.6111,
+    "uncertainty": 0.3889,
+    "original_mask_id": "mask_05",
+    "grouped_instance_id": "inst_4",
+    "fragment_count": 2,
+    "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+  },
+  "fragment_count": 1
+}

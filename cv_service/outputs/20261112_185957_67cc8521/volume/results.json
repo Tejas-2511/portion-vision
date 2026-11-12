@@ -1,0 +1,183 @@
+{
+  "food_items": [
+    {
+      "name": "dal rice",
+      "volume_ml": 90.2,
+      "mass_g": 103.7,
+      "calories": 128.6,
+      "protein": 5.0,
+      "carbs": 20.7,
+      "fat": 2.5,
+      "confidence": 0.937,
+      "class_label": "dal rice",
+      "class_confidence": 0.8779,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal rice",
+      "instance_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 27.3,
+      "mass_g": 16.4,
+      "calories": 4.9,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.1,
+      "confidence": 0.9316,
+      "class_label": "green salad",
+      "class_confidence": 0.8679,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8679,
+          "raw_similarity": 0.8679
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8679,
+      "segmentation_confidence": 0.8679,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8679,
+        "uncertainty": 0.1321,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "dal rice",
+      "volume_ml": 90.2,
+      "mass_g": 103.7,
+      "calories": 128.6,
+      "protein": 5.0,
+      "carbs": 20.7,
+      "fat": 2.5,
+      "confidence": 0.937,
+      "class_label": "dal rice",
+      "class_confidence": 0.8779,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 27.3,
+      "mass_g": 16.4,
+      "calories": 4.9,
+      "protein": 0.2,
+      "carbs": 0.8,
+      "fat": 0.1,
+      "confidence": 0.9316,
+      "class_label": "green salad",
+      "class_confidence": 0.8679,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8679,
+          "raw_similarity": 0.8679
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8679,
+      "segmentation_confidence": 0.8679,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8679,
+        "uncertainty": 0.1321,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.9343
+}

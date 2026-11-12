@@ -129,15 +129,16 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "cucumber": ['cucumber', 'sliced cucumber'],
     "cucumber salad": ['cucumber', 'sliced cucumber', 'salad'],
     "curd": ['curd', 'dahi', 'plain yogurt', 'yogurt'],
+    "curry": ['curry', 'vegetable curry', 'indian curry', 'gravy curry'],
     "daal": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'lentil soup', 'cooked lentils', 'lentil dal'],
     "dal": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'lentil soup', 'cooked lentils', 'lentil dal', 'daal', 'dal fry', 'dal'],
     "dal fry": ['dal fry', 'dal tadka', 'yellow dal', 'dal'],
     "dal makhani": ['dal makhani', 'black dal', 'dal'],
     "dal palak": ['dal palak', 'spinach dal', 'green dal', 'dal'],
     "dal tadka": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'dal'],
-    "dal rice": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
-    "dal chawal": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
-    "dal + rice": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
+    "dal rice": ['curry and rice', 'rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'rice with curry'],
+    "dal chawal": ['curry and rice', 'rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'rice with curry'],
+    "dal + rice": ['curry and rice', 'rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'rice with curry'],
     "boiled lentil salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad', 'boiled lentil salad'],
     "sprout salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad'],
     "sprouts salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad'],
@@ -150,11 +151,11 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "gulab jamun": ['gulab jamun', 'brown sweet ball', 'sweet'],
     "idli": ['idli', 'steamed rice cake', 'idly'],
     "jeera rice": ['jeera rice', 'cumin rice', 'rice'],
-    "kadhai paneer": ['kadai paneer', 'paneer capsicum', 'paneer curry'],
+    "kadhai paneer": ['kadai paneer', 'paneer', 'paneer cubes', 'paneer capsicum', 'paneer curry'],
     "kadhi pakora": ['kadhi pakora', 'kadhi pakoda', 'yellow yogurt curry'],
     "khichdi": ['khichdi', 'dal khichdi', 'rice lentil porridge'],
     "kheer": ['rice kheer', 'kheer', 'sweet rice pudding'],
-    "matar paneer": ['matar paneer', 'paneer peas curry', 'cottage cheese'],
+    "matar paneer": ['matar paneer', 'paneer', 'paneer cubes', 'paneer peas curry', 'cottage cheese'],
     "mint chutney": ['mint chutney', 'green chutney', 'pudina chutney'],
     "mix veg": ['mixed vegetable curry', 'mix veg', 'vegetable curry', 'carrots peas beans'],
     "mixed veg": ['mixed vegetable curry', 'mix veg', 'vegetable curry', 'carrots peas beans'],
@@ -163,9 +164,9 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "omelette": ['omelette', 'egg omelette'],
     "onion salad": ['onion slices', 'sliced onion', 'salad'],
     "pakoda": ['onion pakoda', 'veg pakoda', 'fritter'],
-    "palak paneer": ['palak paneer', 'green curry', 'spinach curry', 'palak curry', 'saag paneer', 'spinach cottage cheese', 'paneer curry'],
+    "palak paneer": ['palak paneer', 'paneer', 'paneer cubes', 'green curry', 'spinach curry', 'palak curry', 'saag paneer', 'spinach cottage cheese', 'paneer curry'],
     "paneer": ['paneer curry', 'paneer butter masala', 'cottage cheese', 'paneer cubes'],
-    "paneer butter masala": ['paneer butter masala', 'paneer curry', 'cottage cheese curry'],
+    "paneer butter masala": ['paneer butter masala', 'paneer', 'paneer cubes', 'paneer curry', 'cottage cheese curry'],
     "papad": ['papad', 'papadum', 'crispy papad'],
     "paratha": ['paratha', 'aloo paratha', 'flatbread'],
     "phulka": ['phulka', 'roti', 'chapati', 'flatbread'],
@@ -184,7 +185,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "sambar": ['sambar soup', 'sambar', 'sambhar'],
     "sambhar": ['sambar soup', 'sambar', 'sambhar'],
     "samosa": ['samosa', 'potato samosa', 'snack'],
-    "shahi paneer": ['shahi paneer', 'paneer curry', 'cottage cheese curry'],
+    "shahi paneer": ['shahi paneer', 'paneer', 'paneer cubes', 'paneer curry', 'cottage cheese curry'],
     "sooji halwa": ['sooji halwa', 'halwa', 'sheera'],
     "steamed rice": ['steamed rice', 'white rice', 'rice', 'boiled rice'],
     "toor dal": ['toor dal', 'yellow dal', 'dal tadka'],
@@ -223,16 +224,17 @@ def find_menu_match(
 
     det_clean = detected_label.strip().lower()
 
-    # Rule 0: Umbrella / generic category terms must NEVER be forced into a menu dish!
-    if det_clean in GENERIC_FOOD_STOPWORDS or det_clean in {"food", "unlisted food", "unrecognized"}:
-        return None
-
     menu_clean = [m.strip() for m in menu_items if m and m.strip()]
 
-    # 1. Exact match (case-insensitive)
+    # 1. Exact match (case-insensitive) - e.g. if menu explicitly lists "curry" and detection is "curry"
     for m in menu_clean:
         if m.lower() == det_clean:
             return m
+
+    # Rule 0: Umbrella / generic category terms must NEVER be forced into a different menu dish!
+    # (e.g. generic 'curry' must not match 'palak paneer', 'gravy' must not match 'dal')
+    if det_clean in GENERIC_FOOD_STOPWORDS or det_clean in {"food", "unlisted food", "unrecognized"}:
+        return None
 
     # 2. Strict Culinary Equivalence Cluster Match
     for group in EQUIVALENT_DISH_SYNONYMS:
