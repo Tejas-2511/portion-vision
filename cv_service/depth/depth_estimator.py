@@ -694,10 +694,10 @@ def apply_food_height_prior(
 
         min_h, max_h = prior
         # Bounded measured metric height in centimeters
-        bounded_measured = np.clip(height_map, min_h * 0.75, max_h * 1.25)
+        bounded_measured = np.clip(height_map, min_h * 0.75, max_h * 1.5)
         prior_mid = (min_h + max_h) / 2.0
         fused = alpha * bounded_measured + beta * prior_mid
-        clamped = np.clip(fused, min_h * 0.5, max_h)
+        clamped = np.clip(fused, min_h * 0.5, max_h * 1.25)
         return clamped.astype(np.float32)
     else:
         # ── Relative Depth Mode ──

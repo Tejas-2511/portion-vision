@@ -1,0 +1,14 @@
+{
+  "item_id": "unlisted food_28",
+  "area_pixels": 2032,
+  "estimated_height_cm": 1.472,
+  "volume_estimate_ml": 4.8,
+  "density": 1.0,
+  "mass_g": 4.8,
+  "class_label": "unlisted food",
+  "class_confidence": 0.4965,
+  "depth_stability": 0.75,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.5998,
+  "prior_applied": false
+}

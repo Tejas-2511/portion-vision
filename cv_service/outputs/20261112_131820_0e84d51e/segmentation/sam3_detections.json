@@ -1,0 +1,343 @@
+{
+  "total_items": 7,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8426,
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        613,
+        204,
+        128,
+        232
+      ],
+      "area_pixels": 19845,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\00_green_salad_0.84.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8426,
+        "uncertainty": 0.1574,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 10,
+        "decision_reason": "FRAGMENT_GROUPED_10_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7678,
+      "identification_confidence": 0.7678,
+      "segmentation_confidence": 0.7678,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        203,
+        185,
+        188
+      ],
+      "area_pixels": 6643,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7678,
+          "raw_similarity": 0.7678
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\01_green_salad_0.77.png",
+      "sam3_raw_query": "sliced cucumber",
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7678,
+        "uncertainty": 0.2322,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 9,
+        "decision_reason": "FRAGMENT_GROUPED_9_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7277,
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        360,
+        11,
+        225,
+        184
+      ],
+      "area_pixels": 24394,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\02_dal_0.73.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 4,
+        "decision_reason": "FRAGMENT_GROUPED_4_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5098,
+      "identification_confidence": 0.5098,
+      "segmentation_confidence": 0.5098,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        218,
+        74,
+        142,
+        96
+      ],
+      "area_pixels": 4903,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.5098,
+          "raw_similarity": 0.5098
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\03_UNKNOWN_0.51.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.5098,
+        "uncertainty": 0.4902,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 3,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8433,
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        217,
+        215,
+        243,
+        233
+      ],
+      "area_pixels": 39423,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\04_steamed_rice_0.84.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.7044,
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        210,
+        33,
+        162,
+        151
+      ],
+      "area_pixels": 14212,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\05_palak_paneer_0.70.png",
+      "sam3_raw_query": "palak paneer",
+      "diagnostics": {
+        "original_sam3_query": "palak paneer",
+        "candidate_labels": [
+          "palak paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.7955,
+      "identification_confidence": 0.7955,
+      "segmentation_confidence": 0.7955,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        199,
+        171,
+        234
+      ],
+      "area_pixels": 6102,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7955,
+          "raw_similarity": 0.7955
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_131820_0e84d51e\\segmentation\\crops\\06_UNKNOWN_0.80.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7955,
+        "uncertainty": 0.2045,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 28.936,
+  "timestamp": "2026-11-12T13:19:14.406445"
+}

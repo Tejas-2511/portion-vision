@@ -1,0 +1,14 @@
+{
+  "item_id": "steamed rice_1",
+  "area_pixels": 39423,
+  "estimated_height_cm": 3.989,
+  "volume_estimate_ml": 262.8,
+  "density": 1.033,
+  "mass_g": 271.4,
+  "class_label": "steamed rice",
+  "class_confidence": 0.8433,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.84,
+  "prior_applied": true
+}

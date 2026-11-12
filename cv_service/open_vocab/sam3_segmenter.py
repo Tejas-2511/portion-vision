@@ -366,21 +366,38 @@ class Sam3FoodSegmenter:
              - Parent menu items & visual aliases > Synonym-matched staples > Generic staples > 'food'.
           3. Deduplicates redundant detections of the same physical item with menu coverage balancing.
         """
-        # Step 1: Reject masks heavily overlapping non-food items (e.g. spoons, cutlery)
+        # Step 1: Reject low-confidence hallucinations and tableware/cutlery overlap
         valid_food: List[Dict[str, Any]] = []
         for f_det in food_detections:
             f_mask = f_det["mask"]
-            is_non_food = False
+            q = f_det["query"].lower()
+            score = f_det["score"]
 
+            # Filter 1a: Confidence cutoff
+            # Generic fallback 'food' needs higher confidence (>= 0.48) to avoid capturing empty trays/tables.
+            # Specific food items require >= 0.42 to reject spurious reflections on bare plate rims.
+            min_score = 0.48 if q == GENERIC_FALLBACK_QUERY else 0.42
+            if score < min_score:
+                logger.info(
+                    "[SAM3 Filter] Rejected '%s' (conf=%.2f < min=%.2f) — below confidence threshold",
+                    f_det["query"], score, min_score,
+                )
+                continue
+
+            # Filter 1b: Overlap with non-food anchors (spoons, cutlery)
+            is_non_food = False
             for nf_det in non_food_detections:
                 nf_mask = nf_det["mask"]
                 iou = _mask_iou(f_mask, nf_mask)
-                overlap = _mask_overlap_ratio(f_mask, nf_mask)
+                overlap_f_in_nf = _mask_overlap_ratio(f_mask, nf_mask)
+                overlap_nf_in_f = _mask_overlap_ratio(nf_mask, f_mask)
 
-                if iou >= _NON_FOOD_IOU_THRESH or overlap >= _NON_FOOD_CONTAINMENT_THRESH:
+                if (iou >= _NON_FOOD_IOU_THRESH or 
+                    overlap_f_in_nf >= _NON_FOOD_CONTAINMENT_THRESH or 
+                    (overlap_nf_in_f >= 0.60 and q == GENERIC_FALLBACK_QUERY)):
                     logger.info(
-                        "[SAM3 Filter] Rejected '%s' (conf=%.2f) — overlaps non-food '%s' (IoU=%.2f, overlap=%.2f)",
-                        f_det["query"], f_det["score"], nf_det["query"], iou, overlap,
+                        "[SAM3 Filter] Rejected '%s' (conf=%.2f) — overlaps non-food '%s' (IoU=%.2f, f_in_nf=%.2f, nf_in_f=%.2f)",
+                        f_det["query"], f_det["score"], nf_det["query"], iou, overlap_f_in_nf, overlap_nf_in_f,
                     )
                     is_non_food = True
                     break
@@ -395,6 +412,40 @@ class Sam3FoodSegmenter:
         #   2 = Specific Indian staple (unlisted)
         #   1 = Generic umbrella term ('food')
         menu_set = {m.strip().lower() for m in (menu_items or [])}
+
+        # Step 2b: Ingredient-to-dish container binding (e.g., paneer cubes inside a curry bowl)
+        # If a bowl/container is claimed by generic dal/curry, but physically contains specific ingredients
+        # (e.g. paneer cubes whose parent menu item is 'palak paneer' or 'paneer butter masala'),
+        # rebind the container to that specific dish so the curry is not mislabeled as dal.
+        for cand in valid_food:
+            cand_area = cand.get("area", 0)
+            if cand_area < 10000:
+                continue
+            cand_mask = cand["mask"]
+            cand_parent = (cand.get("parent_menu_item") or find_menu_match(cand["query"], menu_items) or "").lower()
+
+            contained_dish_counts: Dict[str, int] = {}
+            for other in valid_food:
+                other_area = other.get("area", 0)
+                if other is cand or other_area >= cand_area * 0.40:
+                    continue
+                if _mask_overlap_ratio(other["mask"], cand_mask) >= 0.70:
+                    other_parent = other.get("parent_menu_item") or find_menu_match(other["query"], menu_items)
+                    if other_parent:
+                        op_clean = other_parent.strip().lower()
+                        # If child is paneer/chicken/kofta ingredient matching a menu dish
+                        if any(k in op_clean for k in ["paneer", "chicken", "kofta", "egg", "chana", "rajma"]):
+                            contained_dish_counts[op_clean] = contained_dish_counts.get(op_clean, 0) + 1
+
+            if contained_dish_counts:
+                best_dish = max(contained_dish_counts, key=contained_dish_counts.get)
+                if best_dish != cand_parent and ("dal" in cand_parent or "curry" in cand["query"].lower()):
+                    logger.info(
+                        "[SAM3 Binding] Container '%s' contains %d ingredient(s) of '%s' — rebinding bowl from '%s' to '%s'",
+                        cand["query"], contained_dish_counts[best_dish], best_dish, cand_parent or cand["query"], best_dish,
+                    )
+                    cand["parent_menu_item"] = best_dish
+                    cand["query"] = best_dish
 
         def get_priority(det: Dict[str, Any]) -> int:
             if det.get("parent_menu_item") is not None:
@@ -445,6 +496,22 @@ class Sam3FoodSegmenter:
                 if iou >= _DEDUP_IOU_THRESH:
                     duplicate = True
                     break
+
+                # Subsumption: If cand is a small internal ingredient (e.g. paneer cube, chicken chunk)
+                # sitting entirely inside an already-kept container bowl of the same parent dish,
+                # subsume it into the container dish so the bowl is measured as one unified portion.
+                if cand.get("area", 0) < existing.get("area", 0) * 0.40:
+                    cand_in_exist = _mask_overlap_ratio(cand_mask, exist_mask)
+                    if cand_in_exist >= 0.75:
+                        exist_parent = existing.get("parent_menu_item") or find_menu_match(existing["query"], menu_items)
+                        exist_key = exist_parent.lower() if exist_parent else None
+                        if (exist_key and parent_key and exist_key == parent_key) or existing["query"] == cand["query"]:
+                            logger.info(
+                                "[SAM3 Subsumption] Subsuming internal ingredient '%s' (area=%d) into container dish '%s'",
+                                cand["query"], cand.get("area", 0), existing["query"],
+                            )
+                            duplicate = True
+                            break
 
             if not duplicate:
                 kept.append(cand)
@@ -558,6 +625,17 @@ class Sam3FoodSegmenter:
             menu_items=menu_items,
         )
 
+        # ── Intelligent Food-Instance Grouping (Fragments & Disconnected Blobs) ──
+        # Combines multiple fragments of the same food portion (e.g. cucumber slices in salad,
+        # scattered rice grains) while guaranteeing that genuinely different touching foods
+        # (rice vs dal) remain strictly separated without duplicate boundary mass.
+        from open_vocab.instance_grouper import group_food_fragments
+        final_detections = group_food_fragments(
+            detections=final_detections,
+            image_shape=(img_h, img_w),
+            spatial_proximity_px=75.0,
+        )
+
         # ── Resolve Output Directory (Universal Timestamped Output Folder) ──
         if output_dir:
             norm_path = os.path.normpath(output_dir)
@@ -584,26 +662,38 @@ class Sam3FoodSegmenter:
             raw_label: str = det["query"]
             parent_menu: Optional[str] = det.get("parent_menu_item")
             box_xywh = _mask_to_xywh(mask)
-            area_px = int(det["area"])
+            area_px = int(det.get("area_pixels", det.get("area", 0)))
             is_small = area_px < (total_pixels * 0.015)
 
-            # Resolve menu match: parent_menu > synonym cluster match > exact match
-            matched_menu_str = parent_menu or find_menu_match(raw_label, menu_items)
+            # ── Strictly Evidence-Based Menu Matching & Open-Set Classification ──
+            # The menu acts as contextual guidance, NEVER a forced classification mandate.
+            matched_menu_str = parent_menu or find_menu_match(raw_label, menu_items, min_confidence=0.50)
             is_menu_match = matched_menu_str is not None
 
-            # Handle generic "food" label into readable uncertain label
-            if raw_label == GENERIC_FALLBACK_QUERY and not is_menu_match:
-                display_label = "unlisted food"
-                id_status = "uncertain"
-            elif is_menu_match:
+            if is_menu_match and score >= 0.45:
                 display_label = matched_menu_str
                 id_status = "recognized"
-            elif score >= 0.50:
+                decision_reason = det.get("decision_reason") or "MENU_EVIDENCE_MATCH"
+            elif raw_label in {"food", GENERIC_FALLBACK_QUERY, "unlisted food"} or score < 0.45:
+                # Explicit UNKNOWN / UNRECOGNIZED category — abstain rather than force-classify!
+                display_label = "UNKNOWN"
+                id_status = "unknown"
+                matched_menu_str = None
+                is_menu_match = False
+                decision_reason = "ABSTAINED_INSUFFICIENT_EVIDENCE"
+            elif score >= 0.52:
+                # Strong open-set recognition: dish absent from menu, but visual evidence supports it!
                 display_label = raw_label
-                id_status = "unlisted"
+                id_status = "open_set"
+                matched_menu_str = None
+                is_menu_match = False
+                decision_reason = "OPEN_SET_VISUAL_RECOGNITION"
             else:
-                display_label = raw_label
-                id_status = "uncertain"
+                display_label = "UNKNOWN"
+                id_status = "unknown"
+                matched_menu_str = None
+                is_menu_match = False
+                decision_reason = "ABSTAINED_LOW_CONFIDENCE"
 
             crop_path = None
             if save_crops and crops_dir:
@@ -615,8 +705,21 @@ class Sam3FoodSegmenter:
                     logger.warning("[SAM3] Failed to write crop: %s", exc)
                     crop_path = None
 
-            # Confidence fields compliant with PortionVision output contract
+            # Diagnostics for development tracing and explainability
             composite_conf = round(score, 4)
+            diagnostics = {
+                "original_sam3_query":  raw_label,
+                "candidate_labels":     [raw_label],
+                "menu_matching_result": matched_menu_str,
+                "final_food_label":     display_label,
+                "confidence":           composite_conf,
+                "uncertainty":          round(1.0 - composite_conf, 4),
+                "original_mask_id":     f"mask_{idx:02d}",
+                "grouped_instance_id":  det.get("grouped_instance_id", f"inst_{idx:02d}"),
+                "fragment_count":       det.get("fragment_count", 1),
+                "decision_reason":      decision_reason,
+            }
+
             item_entry = {
                 "name":                      display_label,
                 "food_name":                 display_label,
@@ -641,6 +744,7 @@ class Sam3FoodSegmenter:
                 "is_small_item":             is_small,
                 "crop_path":                 crop_path,
                 "sam3_raw_query":            raw_label,
+                "diagnostics":               diagnostics,
             }
             output_items.append(item_entry)
 

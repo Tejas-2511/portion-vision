@@ -41,6 +41,7 @@ class Database {
         try {
             if (!(await this.exists(MENU_PATH))) return null;
             const data = await fs.readFile(MENU_PATH, 'utf8');
+            if (!data || !data.trim()) return null;
             return JSON.parse(data);
         } catch (err) {
             console.error('Database Error (getMenu):', err);

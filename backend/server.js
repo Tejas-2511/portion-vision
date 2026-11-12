@@ -13,9 +13,19 @@ const { normalizeFoodName } = require("./utils/normalize");
 const { findBestFoodMatch, calculateSimilarity } = require("./utils/fuzzyMatch");
 const { recommendPlate, getFallbackDetails } = require("./portion_recommender");
 
-// Global configuration: whether OCR auto-updates foodDatabase.json
-// Can be controlled via environment variable ALLOW_OCR_DB_UPDATE (default: false to preserve database integrity)
-let globalAllowOcrDbUpdate = process.env.ALLOW_OCR_DB_UPDATE === 'true';
+// ============================================================================
+// BACKEND CONFIGURATION
+// Whether OCR menu scans automatically insert unrecognized dishes into foodDatabase.json:
+//   • true  -> Auto-save new dishes permanently to foodDatabase.json
+//   • false -> Keep database read-only (uses fallback nutrition for unrecognized items)
+// Change the boolean below to `true` or `false` whenever you want,
+// or set the environment variable: ALLOW_OCR_DB_UPDATE=true|false
+// ============================================================================
+const CONFIG_ALLOW_OCR_DB_UPDATE = false; // <--- EDIT HERE: true or false
+
+let globalAllowOcrDbUpdate = process.env.ALLOW_OCR_DB_UPDATE !== undefined
+    ? process.env.ALLOW_OCR_DB_UPDATE === 'true'
+    : CONFIG_ALLOW_OCR_DB_UPDATE;
 
 const app = express();
 
@@ -407,13 +417,18 @@ app.post("/api/analyze-plate", upload.single("image"), async (req, res) => {
             : [];
 
         let menuItems = [];
-        try {
-            const menuData = await Database.getMenu();
-            if (menuData && Array.isArray(menuData.items)) {
-                menuItems = menuData.items.map(s => s.trim().toLowerCase()).filter(Boolean);
+        const shouldIgnoreMenu = req.body.ignoreMenu === 'true' || req.body.ignoreMenu === true ||
+            req.body.openVocabulary === 'true' || req.body.openVocabulary === true;
+
+        if (!shouldIgnoreMenu) {
+            try {
+                const menuData = await Database.getMenu();
+                if (menuData && Array.isArray(menuData.items)) {
+                    menuItems = menuData.items.map(s => s.trim().toLowerCase()).filter(Boolean);
+                }
+            } catch (menuErr) {
+                console.warn('[analyze-plate] Could not load menu for CV constraint:', menuErr.message);
             }
-        } catch (menuErr) {
-            console.warn('[analyze-plate] Could not load menu for CV constraint:', menuErr.message);
         }
 
         // Union of menu items and any recommendation items sent by the client
@@ -484,4 +499,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Backend running on http://localhost:${PORT}`);
+    console.log(`⚙️ OCR Database Auto-Update: ${globalAllowOcrDbUpdate ? 'ENABLED (auto-saves dishes)' : 'DISABLED (read-only)'}`);
 });

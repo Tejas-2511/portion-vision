@@ -17,17 +17,6 @@ export default function MenuUpload() {
   const [preview, setPreview] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [updateDatabase, setUpdateDatabase] = useState(false);
-
-  useEffect(() => {
-    api.getOcrDbUpdateSetting()
-      .then(res => {
-        if (res && typeof res.allowOcrDbUpdate === 'boolean') {
-          setUpdateDatabase(res.allowOcrDbUpdate);
-        }
-      })
-      .catch(err => console.warn("Failed to fetch OCR DB setting:", err));
-  }, []);
   const [syncStatus, setSyncStatus] = useState(null);
 
   // Handle file selection from gallery or camera
@@ -50,7 +39,7 @@ export default function MenuUpload() {
   }
 
   // Process menu image with OCR to extract text
-  // 1. Uploads image to backend via API (with updateDatabase toggle)
+  // 1. Uploads image to backend via API
   // 2. Receives extracted menu items
   // 3. Updates global state (AppContext) with new menu
   async function handleOCR() {
@@ -62,7 +51,7 @@ export default function MenuUpload() {
     clearError();
 
     try {
-      const data = await api.uploadMenuImage(selectedFile, updateDatabase);
+      const data = await api.uploadMenuImage(selectedFile);
 
       if (!data.items) {
         throw new Error("Invalid response from backend");
@@ -157,42 +146,6 @@ export default function MenuUpload() {
           />
         </div>
       )}
-
-      {/* Database Auto-Update Toggle */}
-      <div className="mb-6 w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${updateDatabase ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-              </svg>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-semibold text-slate-800 text-sm">Update Food Database</span>
-                <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${updateDatabase ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>
-                  {updateDatabase ? "Auto-Save" : "Read-Only"}
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {updateDatabase 
-                  ? "Unrecognized menu items will be permanently added to the database."
-                  : "Database is protected. Unrecognized items will use fallback nutrition for this session."}
-              </p>
-            </div>
-          </div>
-
-          <label className="relative inline-flex items-center cursor-pointer ml-3">
-            <input 
-              type="checkbox" 
-              checked={updateDatabase}
-              onChange={(e) => setUpdateDatabase(e.target.checked)}
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
-          </label>
-        </div>
-      </div>
 
       <Button
         onClick={handleOCR}

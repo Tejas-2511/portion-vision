@@ -521,6 +521,8 @@ def estimate_food_mass(
             "segmentation_confidence": float(it.get("segmentation_confidence", 0.90)),
             "association_confidence": float(it.get("association_confidence", 0.0)),
             "menu_match_confidence": float(it.get("menu_match_confidence", 0.0)),
+            "diagnostics": it.get("diagnostics", {}),
+            "fragment_count": it.get("fragment_count", 1),
         }
         # Assign compartment overlap
         comp_label = "unknown"
@@ -544,6 +546,7 @@ def estimate_food_mass(
     t0         = time.perf_counter()
     food_items = []
     total_conf = 0.0
+    fused_height_map = np.zeros((img_h, img_w), dtype=np.float32)
 
     for f_idx, item in enumerate(food_masks):
         mask       = item["mask"]
@@ -551,12 +554,18 @@ def estimate_food_mass(
         food_name  = assigned_names[f_idx]
         class_conf = item.get("class_conf", 0.5)
 
-        # Raw per-pixel heights (normalised 0-1 from depth_to_cm)
-        # Note: well_depth_map is in cm; it is added AFTER the prior maps [0,1] to cm.
-        pixel_heights_rel = height_from_divider[mask]   # in [0, 1]
+        # In metric depth, preserve food relief above its physical base support
+        # to ensure compartment wells and camera tilt do not zero out internal variation.
+        raw_food_relief = height_relative[mask]
+        if np.percentile(raw_food_relief, 50) < 0:
+            local_base = float(np.percentile(raw_food_relief, 2))
+            pixel_heights_rel = raw_food_relief - local_base
+        else:
+            pixel_heights_rel = np.clip(raw_food_relief, 0.0, None)
 
         # #1 — Fuse with food-specific geometric prior; output is now in cm
         food_heights_cm = apply_food_height_prior(pixel_heights_rel, food_name)
+        fused_height_map[mask] = food_heights_cm
 
         # Add the physical well depth offset (how deep the compartment is)
         well_offset = float(np.mean(well_depth_map[mask])) if mask.any() else 0.0
@@ -675,6 +684,8 @@ def estimate_food_mass(
             "menu_match_confidence":     item.get("menu_match_confidence", 0.0),
             "depth_confidence":          depth_stability,
             "scale_confidence":          scale_confidence,
+            "diagnostics":               item.get("diagnostics", {}),
+            "fragment_count":            item.get("fragment_count", 1),
         }
         food_items.append(food_item)
 
@@ -692,6 +703,8 @@ def estimate_food_mass(
                 "scale_confidence":     scale_confidence,
                 "composite_confidence": round(conf, 4),
                 "prior_applied":        has_prior,
+                "diagnostics":          item.get("diagnostics", {}),
+                "fragment_count":       item.get("fragment_count", 1),
             })
 
     avg_confidence = total_conf / len(food_masks) if food_masks else 0.0
@@ -701,10 +714,19 @@ def estimate_food_mass(
 
     # ── Height map visualisation ──────────────────────────────────────────────
     if debug:
-        h_vis     = np.clip(height_from_divider, 0, 10)
-        h_norm    = cv2.normalize(h_vis, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-        h_colored = cv2.applyColorMap(h_norm, cv2.COLORMAP_TURBO)
         idx = ctx.next_index("volume")
+        ctx.save_npy("volume", f"{idx:02d}_fused_height_map.npy", fused_height_map)
+
+        # Render true fused 2D height map preserving food internal curvature
+        food_mask_all = (fused_height_map > 0)
+        h_colored = np.zeros((img_h, img_w, 3), dtype=np.uint8)
+        if food_mask_all.any():
+            h_vis = np.clip(fused_height_map, 0.0, 8.0)
+            h_norm = cv2.normalize(h_vis, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+            turbo = cv2.applyColorMap(h_norm, cv2.COLORMAP_TURBO)
+            h_colored[food_mask_all] = turbo[food_mask_all]
+            # Subtle dark tone for non-food background
+            h_colored[~food_mask_all] = [20, 20, 25]
         ctx.save_image("volume", f"{idx:02d}_height_map.png", h_colored)
 
     # ── Final annotated overlay ───────────────────────────────────────────────
@@ -751,6 +773,7 @@ def estimate_food_mass(
         key = it["name"].strip().lower()
         if key not in aggregated_items:
             item_copy = dict(it)
+            item_copy["food_name"] = it.get("name") or it.get("food_name", "Unknown")
             item_copy["instance_count"] = 1
             aggregated_items[key] = item_copy
         else:

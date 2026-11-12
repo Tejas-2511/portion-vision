@@ -1,0 +1,14 @@
+{
+  "resolution": "562x743",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "Chapati",
+    "Steamed Rice",
+    "Dal",
+    "Curry",
+    "Mix Veg"
+  ],
+  "plate_profile": null,
+  "debug": true
+}

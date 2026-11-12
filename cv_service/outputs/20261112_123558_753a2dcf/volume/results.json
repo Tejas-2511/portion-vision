@@ -1,0 +1,351 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 287.7,
+      "mass_g": 315.3,
+      "calories": 324.7,
+      "protein": 6.3,
+      "carbs": 70.9,
+      "fat": 0.0,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 112.9,
+      "mass_g": 89.2,
+      "calories": 232.0,
+      "protein": 6.7,
+      "carbs": 44.6,
+      "fat": 2.3,
+      "confidence": 0.8338,
+      "class_label": "chapati",
+      "class_confidence": 0.831,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.831,
+          "raw_similarity": 0.831
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.831,
+      "segmentation_confidence": 0.831,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "chapati",
+      "instance_count": 3
+    },
+    {
+      "name": "dal",
+      "volume_ml": 125.3,
+      "mass_g": 135.6,
+      "calories": 180.8,
+      "protein": 9.9,
+      "carbs": 27.1,
+      "fat": 3.6,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "dal",
+      "instance_count": 2
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 188.8,
+      "mass_g": 170.0,
+      "calories": 196.0,
+      "protein": 5.6,
+      "carbs": 20.4,
+      "fat": 10.2,
+      "confidence": 0.7093,
+      "class_label": "mix veg",
+      "class_confidence": 0.6013,
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.6013,
+          "raw_similarity": 0.6013
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "identification_confidence": 0.6013,
+      "segmentation_confidence": 0.6013,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "mix veg",
+      "instance_count": 2
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 287.7,
+      "mass_g": 315.3,
+      "calories": 324.7,
+      "protein": 6.3,
+      "carbs": 70.9,
+      "fat": 0.0,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 96.9,
+      "mass_g": 76.6,
+      "calories": 199.1,
+      "protein": 5.7,
+      "carbs": 38.3,
+      "fat": 1.9,
+      "confidence": 0.8338,
+      "class_label": "chapati",
+      "class_confidence": 0.831,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.831,
+          "raw_similarity": 0.831
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.831,
+      "segmentation_confidence": 0.831,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 61.4,
+      "mass_g": 67.0,
+      "calories": 89.3,
+      "protein": 4.9,
+      "carbs": 13.4,
+      "fat": 1.8,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 7.6,
+      "mass_g": 6.0,
+      "calories": 15.7,
+      "protein": 0.5,
+      "carbs": 3.0,
+      "fat": 0.2,
+      "confidence": 0.8081,
+      "class_label": "chapati",
+      "class_confidence": 0.7805,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.7805,
+          "raw_similarity": 0.7805
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.7805,
+      "segmentation_confidence": 0.7805,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 8.4,
+      "mass_g": 6.6,
+      "calories": 17.2,
+      "protein": 0.5,
+      "carbs": 3.3,
+      "fat": 0.2,
+      "confidence": 0.7106,
+      "class_label": "chapati",
+      "class_confidence": 0.6035,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.6035,
+          "raw_similarity": 0.6035
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.6035,
+      "segmentation_confidence": 0.6035,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 63.9,
+      "mass_g": 68.6,
+      "calories": 91.5,
+      "protein": 5.0,
+      "carbs": 13.7,
+      "fat": 1.8,
+      "confidence": 0.6456,
+      "class_label": "dal",
+      "class_confidence": 0.4981,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4981,
+          "raw_similarity": 0.4981
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4981,
+      "segmentation_confidence": 0.4981,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 87.3,
+      "mass_g": 78.6,
+      "calories": 90.6,
+      "protein": 2.6,
+      "carbs": 9.4,
+      "fat": 4.7,
+      "confidence": 0.7093,
+      "class_label": "mix veg",
+      "class_confidence": 0.6013,
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.6013,
+          "raw_similarity": 0.6013
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "identification_confidence": 0.6013,
+      "segmentation_confidence": 0.6013,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 101.5,
+      "mass_g": 91.4,
+      "calories": 105.4,
+      "protein": 3.0,
+      "carbs": 11.0,
+      "fat": 5.5,
+      "confidence": 0.6786,
+      "class_label": "mix veg",
+      "class_confidence": 0.5504,
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.5504,
+          "raw_similarity": 0.5504
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "identification_confidence": 0.5504,
+      "segmentation_confidence": 0.5504,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7613
+}

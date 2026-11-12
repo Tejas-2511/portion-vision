@@ -69,13 +69,15 @@ class ApiService {
     /**
      * Upload menu image for OCR processing
      * @param {File} file - Image file to upload
-     * @param {boolean} updateDatabase - Whether to update the food database with unrecognized items
+     * @param {boolean} [updateDatabase] - Optional override whether to update the food database
      * @returns {Promise<{items: string[], date: string, dbUpdateEnabled: boolean, dbUpdated: boolean, addedCount: number}>}
      */
-    async uploadMenuImage(file, updateDatabase = false) {
+    async uploadMenuImage(file, updateDatabase) {
         const formData = new FormData();
         formData.append('image', file);
-        formData.append('updateDatabase', String(Boolean(updateDatabase)));
+        if (updateDatabase !== undefined) {
+            formData.append('updateDatabase', String(Boolean(updateDatabase)));
+        }
 
         return this.request('/ocr', {
             method: 'POST',
@@ -156,8 +158,8 @@ class ApiService {
      * @param {string} expectedItems - Comma-separated list of expected items
      * @returns {Promise<{food_items: Array<{name: string, volume_ml: number, mass_g: number}>, confidence: number}>}
      */
-    async analyzePlate(file, expectedItems = '', plateProfile = '', mealType = '') {
-        const fileKey = file ? `${file.name}_${file.size}_${file.lastModified}_${expectedItems}_${plateProfile}_${mealType}` : null;
+    async analyzePlate(file, expectedItems = '', plateProfile = '', mealType = '', ignoreMenu = false) {
+        const fileKey = file ? `${file.name}_${file.size}_${file.lastModified}_${expectedItems}_${plateProfile}_${mealType}_${ignoreMenu}` : null;
 
         // 1. If we already have the completed result for this exact image and items, return it immediately
         if (fileKey && this._lastPlateKey === fileKey && this._lastPlateResult) {
@@ -181,6 +183,9 @@ class ApiService {
         }
         if (mealType) {
             formData.append('mealType', mealType);
+        }
+        if (ignoreMenu) {
+            formData.append('ignoreMenu', 'true');
         }
 
         const reqPromise = this.request('/api/analyze-plate', {

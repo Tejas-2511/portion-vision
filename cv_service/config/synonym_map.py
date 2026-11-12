@@ -1,32 +1,104 @@
 """
 Canonical Indian food synonym clusters for PortionVision.
 Used for matching detected items to OCR menu entries and canonical density keys.
-Expanded from backend/data/foodDatabase.json covering 460+ dishes.
-"""
-from typing import List, Optional
 
-SYNONYM_GROUPS: list[set[str]] = [
-    {'butter naan', 'bread toast', 'sev puri', 'garlic naan', 'pav', 'tandoori roti', 'chapati', 'methi thepla', 'veg paratha', 'bhel puri', 'bread butter', 'paneer paratha', 'palak poori', 'kulcha', 'bhature', 'chapati bread', 'bread jam', 'puri bhaji', 'phulka', 'puri', 'thepla', 'papad', 'poori', 'pani poori', 'luchi', 'naan', 'roti', 'veg kolhapuri', 'pani puri', 'rumali roti', 'bread', 'missi roti', 'aloo paratha', 'aloo poori', 'roti bread', 'gobi paratha', 'bhatura', 'masala puri', 'paratha', 'flatbread'},
-    {'veg pulao', 'corn pulao', 'chole rice', 'masala bhat', 'boiled rice', 'fish curry rice', 'moti rice', 'vegetable pulao', 'biryani', 'tamarind rice', 'pilaf', 'rice kheer', 'veg pongal', 'bagara rice', 'methi rice', 'steamed rice', 'rice', 'green peas pulao', 'chicken fried rice', 'onion rice', 'lemon rice', 'bisi bele bath', 'veg biryani', 'masala rice', 'sabudana khichdi', 'ghee rice', 'jeera pulao', 'plain rice', 'egg biryani', 'curd rice', 'pongal', 'chawal', 'mutton biryani', 'veg fried rice', 'white rice', 'tomato rice', 'rajma chawal', 'pulihora', 'kadhi chawal', 'chitranna', 'jeera rice', 'steam rice', 'egg fried rice', 'chicken biryani', 'sada rice', 'coconut rice', 'khichdi', 'onion pulao', 'vangi bath', 'garlic khichdi', 'pulao', 'fried rice'},
-    {'green moong dal', 'methi dal', 'green moong dal khichdi', 'dal khichdi', 'lobia dal', 'dal vada curry', 'sweet daliya', 'dal dakshani', 'rasam', 'palak chana dal', 'sambar rice', 'dal tadka', 'dal palak', 'lahsuni dal', 'moong dal tadka', 'masoor dal', 'sambar', 'yellow moong dal', 'dal', 'dal panchmail', 'chilka moong dal', 'langarwali dal', 'arhar dal', 'moong dal khichdi', 'dal makhani', 'daal', 'dal banjara', 'sindhi dal', 'daliya', 'chana dal', 'dal panchratan', 'dal amritsari', 'dal fry', 'dal pakoda', 'green moong dal tadka', 'khatti dal', 'mix dal tadka', 'tomato pappu', 'lentil dal', 'smoked dal', 'dal rice', 'lentil curry', 'toor dal tadka', 'moong dal cheela', 'lentils', 'moong dal halwa', 'red masoor dal tadka', 'mix dal', 'black urad dal', 'dal curry', 'sambar vada', 'sambhar', 'palak dal', 'black masoor dal', 'lauki chana dal', 'masoor dal tadka', 'yellow dal', 'tomato dal fry', 'lentil soup', 'lentil', 'chana dal tadka', 'chana dal sabzi', 'chana dal burfi'},
-    {'aloo pyaaz', 'dum aloo kashmiri', 'egg curry', 'methi aloo', 'chicken momos', 'chicken chettinad', 'matar mushroom', 'cabbage carrot', 'sabzi', 'lauki sabzi', 'egg methi keema masala', 'cabbage matar', 'black chana', 'egg keema masala', 'paneer makhan wala', 'sem fhali', 'sabji', 'gajar matar sabzi', 'chicken korma', 'bhaji', 'chole', 'corn capsicum', 'paneer do payza', 'mixed vegetables', 'palak black chana', 'aloo capsicum', 'rajma masala', 'mushroom masala', 'chana curry', 'aloo matar', 'paneer tikka', 'bhindi fry', 'aloo bonda', 'carrot beans poriyal', 'paneer bhurji', 'lobiya masala', 'aloo bhujia', 'chana masala', 'malai kofta', 'paneer handi', 'methi matar chaman', 'corn palak', 'dum aloo', 'aloo jeera', 'kadhai paneer', 'kootu', 'veg kofta curry', 'chicken do pyaza', 'shimla mirch sabzi', 'tandoori chicken', 'biresra kadhi', 'curry', 'shahi paneer', 'rajma', 'kadhai chicken', 'chaap makhani', 'paneer do pyaza', 'karela fry', 'chilli paneer', 'white matar curry', 'keema masala', 'carrot capsicum', 'aloo papdi chaat', 'mutton curry', 'cabbage poriyal', 'soya chunk curry', 'mixed vegetable curry', 'mixed veg', 'paneer puff', 'chicken roll', 'karela masala', 'aloo methi', 'achari kaddu', 'gutta curry', 'tinda masala', 'mix veg', 'black chana masala', 'matar mushroom masala', 'aloo', 'rajasthani kadhi', 'avial', 'chicken tikka', 'bhindi', 'paneer butter masala', 'chicken curry', 'matar paneer', 'beans poriyal', 'masala chai', 'chole masala', 'gobhi masala', 'chicken', 'aloo gobi', 'tori sabzi', 'vegetable chettinad', 'soya chaap masala', 'paneer tikka masala', 'kadhi pakora', 'anda curry', 'masala dosa', 'patiyala murgh', 'paneer chat pata', 'baingan', 'gravy', 'sev tamatar sabzi', 'murgh adraki', 'butter chicken', 'gobhi aloo', 'gajar matar', 'palak paneer', 'murgh hydrabadi curry', 'kaddu sabzi', 'arbi masala', 'vegetable curry', 'baingan masala', 'kadai paneer', 'baingan bharta', 'cabbage sabzi', 'chaap masala', 'murgh saag wala', 'aloo palak', 'kadhai veg', 'matar sabzi', 'pumpkin sabzi', 'kadhi pakoda', 'chicken soup', 'aloo sem phali', 'soya masala', 'kabuli chana', 'gobi', 'veg hariyali', 'khatta meetha kaddu', 'paneer', 'sev tamatar', 'bhindi masala', 'onion kadhi', 'fish curry', 'lauki chana', 'aloo tamatar', 'lauki kofta curry', 'subzi miloni', 'aloo tikki', 'chilli chicken', 'parwal sabzi', 'palak sabzi', 'gobhi matar', 'chicken masala', 'egg masala'},
-    {'salad vegetables', 'cucumber', 'kabuli chana chaat', 'salad', 'cucumber salad', 'sprouts salad', 'beetroot', 'onion salad', 'fruit salad', 'green salad', 'sliced cucumber', 'kachumber', 'onion', 'tomato'},
-    {'green chutney', 'onion chutney', 'mango pickle', 'green chilli fry', 'fryum', 'lemon pickle', 'mint chutney', 'gunpowder podi', 'peanut chutney', 'tomato chilli chutney', 'tomato chutney', 'fried chilli', 'dip', 'pickle', 'ghee', 'jam', 'papad mangodi', 'papad', 'chutney', 'coconut chutney', 'butter', 'mixed pickle', 'garlic chutney', 'tamarind chutney', 'sauce', 'achar'},
-    {'plain curd', 'cucumber raita', 'veg raita', 'lauki raita', 'raita', 'dahi', 'curd', 'curd vada', 'boondi raita', 'yogurt'},
-    {'rasgulla', 'shrikhand', 'basundi', 'sabudana kheer', 'halwa', 'coconut laddu', 'sevai kheer', 'banana cake', 'dessert', 'jalebi', 'sandesh', 'sewai kheer', 'mysore pak', 'phirni', 'shakar para', 'kaju katli', 'barfi', 'kheer', 'rava kesari', 'laddu', 'pineapple halwa', 'sweet', 'pastry', 'kesari bhat', 'rabdi boondi', 'gujiya', 'malpua', 'badam halwa', 'fruit custard', 'kalakand', 'besan laddu', 'ras malai', 'sheera', 'coconut burfi', 'moti chur ke laddu', 'payasam', 'cake', 'gajar halwa', 'chocolate brownie', 'suji halwa', 'cupcake', 'gulab jamun', 'sakkara pongal', 'semiya payasam', 'ice cream', 'sponge cake', 'kesar phirni', 'custard', 'rabdi', 'brownie'},
-    {'egg roll', 'scrambled egg', 'boiled egg', 'egg curry', 'egg puff', 'egg bhurji', 'kesariya thandai', 'egg', 'omelette', 'thandai', 'anda', 'bread omelette', 'anda curry'},
-    {'medu vada', 'onion dosa', 'porridge', 'pesarattu', 'veg upma', 'mini idli', 'cheela', 'plain dosa', 'appam', 'idli', 'upma', 'set dosa', 'masala dosa', 'vada', 'dosa', 'oats porridge', 'rava idli', 'vada pav', 'semiya upma', 'rava dosa', 'rava upma', 'poha', 'uttapam'},
-    {'jaljeera', 'sweet lassi', 'mango lassi', 'badam milk', 'cornfalkes with hot milk', 'bornvita', 'tea/coffee', 'hot and sour soup', 'beverage', 'mixed veg soup', 'nimbu pani', 'manchow soup', 'sweet corn soup', 'tomato soup', 'chaas', 'lemon water', 'butter milk', 'rooh afza', 'banana milkshake', 'aam panna', 'bournvita milk', 'flavored milk', 'milk', 'drink', 'jal jeera', 'coffee', 'cornflakes with hot milk', 'ice tea', 'cold milk', 'tea', 'lassi', 'hot milk'},
+STRICT PRINCIPLE:
+The menu provides contextual guidance, NEVER forced labels.
+Generic umbrella words ('curry', 'sabzi', 'gravy', 'food', 'vegetables') must NEVER
+force an unidentified dish to match an arbitrary menu item.
+"""
+from __future__ import annotations
+import re
+from typing import List, Optional, Set
+
+# Generic category stop-words that can never serve as the sole basis for a menu match
+GENERIC_FOOD_STOPWORDS: Set[str] = {
+    "curry", "gravy", "sabzi", "sabji", "bhaji", "dish", "food",
+    "bowl", "fried", "mix", "mixed", "special", "plate", "item", "dry"
+}
+
+# Strict, tight culinary equivalence groups.
+# Dishes in the same set are genuinely interchangeable names for the exact same preparation.
+EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
+    # Breads
+    {"chapati", "roti", "phulka", "flatbread", "chapati bread", "roti bread"},
+    {"paratha", "plain paratha", "tawa paratha"},
+    {"naan", "butter naan", "plain naan", "garlic naan"},
+    {"poori", "puri", "luchi"},
+    {"bhatura", "bhature"},
+
+    # Rice
+    {"steamed rice", "white rice", "plain rice", "boiled rice", "chawal", "steam rice", "rice", "sada rice"},
+    {"jeera rice", "cumin rice"},
+    {"curd rice", "dahi chawal"},
+    {"veg pulao", "vegetable pulao", "pulao", "pilaf"},
+    {"veg biryani", "biryani"},
+    {"khichdi", "dal khichdi", "khichuri"},
+
+    # Dals & Lentils (Strictly separated by lentil type)
+    {"dal", "daal", "dal tadka", "yellow dal", "toor dal", "arhar dal", "dal fry", "lentil dal", "lentil soup"},
+    {"moong dal", "yellow moong dal", "green moong dal", "moong dal tadka"},
+    {"masoor dal", "red lentil dal", "masoor dal tadka"},
+    {"chana dal", "chana dal tadka"},
+    {"dal makhani", "black dal", "urad dal", "maa ki dal"},
+    {"sambar", "sambhar", "sambar soup"},
+    {"rasam", "rasam soup"},
+
+    # Specific Curries & Gravies (NEVER lump distinct curries together!)
+    {"palak paneer", "saag paneer", "spinach cottage cheese", "palak curry", "spinach curry"},
+    {"paneer butter masala", "paneer makhani", "shahi paneer", "paneer lababdar"},
+    {"matar paneer", "mutter paneer"},
+    {"kadai paneer", "kadhai paneer"},
+    {"paneer bhurji", "scrambled paneer"},
+    {"chole", "chana masala", "chole masala", "kabuli chana", "chickpea curry"},
+    {"rajma", "rajma masala", "kidney bean curry"},
+    {"aloo gobi", "aloo gobhi", "potato cauliflower"},
+    {"aloo matar", "aloo mutter", "potato peas"},
+    {"aloo jeera", "jeera aloo", "cumin potatoes"},
+    {"dum aloo", "dum aloo kashmiri"},
+    {"baingan bharta", "roasted eggplant"},
+    {"bhindi masala", "bhindi fry", "okra sabzi", "bhindi"},
+    {"mix veg", "mixed veg", "mixed vegetable", "mixed vegetables", "mixed vegetable curry"},
+    {"kadhi pakora", "kadhi pakoda", "punjabi kadhi", "kadhi"},
+    {"malai kofta", "veg kofta"},
+
+    # Salads & Accompaniments
+    {"green salad", "cucumber salad", "sliced cucumber", "cucumber", "salad", "kachumber"},
+    {"onion salad", "sliced onion", "onion slices"},
+    {"curd", "dahi", "plain yogurt", "yogurt", "plain curd"},
+    {"raita", "boondi raita", "cucumber raita", "veg raita", "vegetable raita"},
+    {"pickle", "achar", "mango pickle", "mixed pickle", "spicy pickle"},
+    {"papad", "papadum", "roasted papad", "fried papad", "crispy papad"},
+    {"green chutney", "mint chutney", "coriander chutney", "pudina chutney", "chutney"},
+    {"coconut chutney", "white chutney"},
+
+    # Breakfast & Snacks
+    {"idli", "steamed idli", "rava idli", "mini idli"},
+    {"dosa", "plain dosa", "masala dosa", "crispy dosa"},
+    {"vada", "medu vada", "sambar vada"},
+    {"upma", "rava upma", "sooji upma"},
+    {"poha", "kanda poha", "flattened rice"},
+    {"samosa", "potato samosa"},
+
+    # Sweets & Desserts
+    {"gulab jamun", "sweet jamun"},
+    {"rasgulla", "roshogolla"},
+    {"kheer", "rice kheer", "payasam"},
+    {"halwa", "sooji halwa", "sheera", "gajar halwa"},
+    {"cake", "pastry", "sponge cake", "brownie", "chocolate brownie"},
 ]
 
+# Aliases for backward-compatibility with existing consumers
+SYNONYM_GROUPS = EQUIVALENT_DISH_SYNONYMS
+
 # Visual prompt aliases for Meta SAM 3 open-vocabulary text grounding.
-# Maps common menu dish names to phrases that activate SAM 3's visual features strongly.
+# Maps dish names to phrases that activate SAM 3's visual features strongly.
 SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "achar": ['achar', 'spicy pickle', 'pickle'],
     "aloo bonda": ['aloo bonda', 'potato bonda', 'fritter'],
     "aloo capsicum": ['aloo capsicum', 'potato bell pepper', 'sabzi'],
-    "aloo gobi": ['aloo gobi', 'potato cauliflower curry', 'vegetable curry'],
-    "aloo matar": ['aloo matar', 'potato pea curry', 'vegetable curry'],
+    "aloo gobi": ['aloo gobi', 'potato cauliflower curry', 'cauliflower'],
+    "aloo matar": ['aloo matar', 'potato pea curry', 'peas'],
     "aloo paratha": ['aloo paratha', 'stuffed flatbread', 'paratha'],
     "badam halwa": ['badam halwa', 'almond halwa', 'halwa'],
     "baingan bharta": ['baingan bharta', 'eggplant curry', 'roasted eggplant'],
@@ -48,7 +120,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "chicken biryani": ['chicken biryani', 'biryani', 'rice'],
     "chicken curry": ['chicken curry', 'butter chicken', 'chicken masala'],
     "chocolate brownie": ['chocolate brownie', 'brownie', 'cake'],
-    "chole": ['chole masala', 'chana masala', 'chickpea curry'],
+    "chole": ['chole masala', 'chana masala', 'chickpea curry', 'chickpeas'],
     "chutney": ['green chutney', 'mint chutney', 'coconut chutney', 'chutney'],
     "coconut chutney": ['coconut chutney', 'white chutney', 'chutney'],
     "cucumber": ['cucumber', 'sliced cucumber'],
@@ -58,34 +130,32 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "dal": ['dal tadka', 'yellow dal', 'lentil dal', 'daal', 'dal fry'],
     "dal fry": ['dal fry', 'dal tadka', 'yellow dal', 'dal'],
     "dal makhani": ['dal makhani', 'black dal', 'dal'],
-    "dal palak": ['dal palak', 'palak dal', 'dal tadka'],
-    "dal tadka": ['dal tadka', 'yellow dal', 'dal fry', 'dal'],
-    "dosa": ['masala dosa', 'plain dosa', 'crispy crepe'],
-    "egg bhurji": ['egg bhurji', 'scrambled egg', 'egg'],
-    "egg curry": ['egg curry', 'boiled egg curry', 'anda curry'],
-    "fried rice": ['fried rice', 'veg fried rice', 'rice'],
+    "dal palak": ['dal palak', 'spinach dal', 'green dal', 'dal'],
+    "dal tadka": ['dal tadka', 'yellow dal', 'toor dal', 'dal'],
+    "dosa": ['dosa', 'masala dosa', 'crispy crepe'],
+    "egg curry": ['egg curry', 'boiled egg curry', 'curry'],
+    "fruit salad": ['fruit salad', 'cut fruits', 'fruits'],
+    "gajar halwa": ['gajar halwa', 'carrot halwa', 'halwa'],
     "green chutney": ['green chutney', 'mint chutney', 'coriander chutney'],
-    "green salad": ['cucumber', 'sliced cucumber', 'green salad', 'salad'],
-    "gulab jamun": ['gulab jamun', 'sweet dumpling', 'dessert'],
-    "halwa": ['sooji halwa', 'halwa', 'gajar halwa'],
-    "idli": ['steamed idli', 'idli', 'rice cake'],
-    "jalebi": ['jalebi', 'crispy sweet'],
+    "green salad": ['green salad', 'sliced cucumber', 'cucumber', 'salad', 'tomato slice'],
+    "gulab jamun": ['gulab jamun', 'brown sweet ball', 'sweet'],
+    "idli": ['idli', 'steamed rice cake', 'idly'],
     "jeera rice": ['jeera rice', 'cumin rice', 'rice'],
-    "kheer": ['kheer', 'rice pudding', 'payasam'],
-    "khichdi": ['khichdi', 'dal khichdi', 'rice porridge'],
-    "laddu": ['motichoor laddu', 'besan laddu', 'laddu'],
-    "masala dosa": ['masala dosa', 'crispy dosa', 'dosa'],
-    "matar paneer": ['matar paneer', 'paneer pea curry', 'paneer curry'],
+    "kadhai paneer": ['kadai paneer', 'paneer capsicum', 'paneer curry'],
+    "kadhi pakora": ['kadhi pakora', 'kadhi pakoda', 'yellow yogurt curry'],
+    "khichdi": ['khichdi', 'dal khichdi', 'rice lentil porridge'],
+    "kheer": ['rice kheer', 'kheer', 'sweet rice pudding'],
+    "matar paneer": ['matar paneer', 'paneer peas curry', 'cottage cheese'],
     "mint chutney": ['mint chutney', 'green chutney', 'pudina chutney'],
-    "mix veg": ['vegetable curry', 'mixed vegetable curry', 'mixed vegetables', 'sabzi'],
-    "mixed veg": ['vegetable curry', 'mixed vegetable curry', 'mixed vegetables', 'sabzi'],
+    "mix veg": ['mixed vegetable curry', 'mix veg', 'vegetable curry', 'carrots peas beans'],
+    "mixed veg": ['mixed vegetable curry', 'mix veg', 'vegetable curry', 'carrots peas beans'],
     "moong dal": ['moong dal', 'yellow dal', 'dal tadka'],
     "naan": ['butter naan', 'naan', 'flatbread'],
     "omelette": ['omelette', 'egg omelette'],
     "onion salad": ['onion slices', 'sliced onion', 'salad'],
     "pakoda": ['onion pakoda', 'veg pakoda', 'fritter'],
-    "palak paneer": ['palak paneer', 'spinach cottage cheese', 'paneer curry'],
-    "paneer": ['paneer curry', 'paneer butter masala', 'cottage cheese'],
+    "palak paneer": ['palak paneer', 'green curry', 'spinach curry', 'palak curry', 'saag paneer', 'spinach cottage cheese', 'paneer curry'],
+    "paneer": ['paneer curry', 'paneer butter masala', 'cottage cheese', 'paneer cubes'],
     "paneer butter masala": ['paneer butter masala', 'paneer curry', 'cottage cheese curry'],
     "papad": ['papad', 'papadum', 'crispy papad'],
     "paratha": ['paratha', 'aloo paratha', 'flatbread'],
@@ -101,10 +171,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "rasgulla": ['rasgulla', 'sweet dumpling'],
     "rice": ['steamed rice', 'white rice', 'rice'],
     "roti": ['roti', 'chapati', 'flatbread', 'roti bread'],
-    "sabji": ['vegetable curry', 'mixed vegetables', 'curry', 'sabji'],
-    "sabzi": ['vegetable curry', 'mixed vegetables', 'curry', 'sabzi'],
-    "sada rice": ['steamed rice', 'white rice', 'rice'],
-    "salad": ['cucumber', 'sliced cucumber', 'green salad', 'salad'],
+    "sabji": ['mixed vegetable curry', 'mixed vegetables', 'sabzi'],
     "sambar": ['sambar soup', 'sambar', 'sambhar'],
     "sambhar": ['sambar soup', 'sambar', 'sambhar'],
     "samosa": ['samosa', 'potato samosa', 'snack'],
@@ -128,31 +195,60 @@ def get_visual_prompt_aliases(menu_item: str) -> list[str]:
     return aliases
 
 
-def find_menu_match(detected_label: str, menu_items: Optional[List[str]]) -> Optional[str]:
+def find_menu_match(
+    detected_label: str,
+    menu_items: Optional[List[str]],
+    min_confidence: float = 0.50,
+) -> Optional[str]:
     """
-    Find matching menu item for a detected food label using exact, substring,
-    and Indian food synonym cluster matching.
+    Find matching menu item for a detected food label with strict evidence requirements.
+
+    GUARANTEES:
+      1. Umbrella terms ('curry', 'sabzi', 'gravy', 'food', 'vegetable') NEVER force a match.
+      2. No substring false positives (e.g. 'tea' matching 'steamed rice').
+      3. Only exact matches, whole-word specific alignments, or tight culinary equivalents match.
+      4. If ambiguous or low evidence, returns None (caller will preserve visual identity or abstain).
     """
-    if not menu_items:
+    if not menu_items or not detected_label:
         return None
-    det_lower = detected_label.strip().lower()
 
-    # 1. Exact match
-    for m in menu_items:
-        if m.strip().lower() == det_lower:
-            return m.strip()
+    det_clean = detected_label.strip().lower()
 
-    # 2. Substring match
-    for m in menu_items:
-        m_lower = m.strip().lower()
-        if (len(m_lower) >= 3 and m_lower in det_lower) or (len(det_lower) >= 3 and det_lower in m_lower):
-            return m.strip()
+    # Rule 0: Umbrella / generic category terms must NEVER be forced into a menu dish!
+    if det_clean in GENERIC_FOOD_STOPWORDS or det_clean in {"food", "unlisted food", "unrecognized"}:
+        return None
 
-    # 3. Synonym cluster match
-    for group in SYNONYM_GROUPS:
-        if det_lower in group:
-            for m in menu_items:
-                if m.strip().lower() in group:
-                    return m.strip()
+    menu_clean = [m.strip() for m in menu_items if m and m.strip()]
+
+    # 1. Exact match (case-insensitive)
+    for m in menu_clean:
+        if m.lower() == det_clean:
+            return m
+
+    # 2. Strict Culinary Equivalence Cluster Match
+    for group in EQUIVALENT_DISH_SYNONYMS:
+        if det_clean in group:
+            for m in menu_clean:
+                if m.lower() in group:
+                    return m
+
+    # 3. Whole-Word Distinctive Token Match
+    # (e.g. "yellow dal" matching "dal", "steamed rice" matching "rice")
+    det_words = set(re.findall(r"\b[a-z]{3,}\b", det_clean)) - GENERIC_FOOD_STOPWORDS
+    if det_words:
+        best_match = None
+        best_overlap = 0
+
+        for m in menu_clean:
+            m_words = set(re.findall(r"\b[a-z]{3,}\b", m.lower())) - GENERIC_FOOD_STOPWORDS
+            overlap = det_words.intersection(m_words)
+            if overlap:
+                # Require that at least one NON-GENERIC keyword matches completely
+                if len(overlap) > best_overlap:
+                    best_overlap = len(overlap)
+                    best_match = m
+
+        if best_match and best_overlap >= 1:
+            return best_match
 
     return None

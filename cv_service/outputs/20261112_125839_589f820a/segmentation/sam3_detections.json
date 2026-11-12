@@ -1,0 +1,1061 @@
+{
+  "total_items": 31,
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8433,
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        217,
+        215,
+        243,
+        233
+      ],
+      "area_pixels": 39423,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\00_steamed_rice_0.84.png",
+      "sam3_raw_query": "rice",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8426,
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        620,
+        219,
+        72,
+        69
+      ],
+      "area_pixels": 3944,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\01_green_salad_0.84.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.814,
+      "identification_confidence": 0.814,
+      "segmentation_confidence": 0.814,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        613,
+        371,
+        59,
+        65
+      ],
+      "area_pixels": 2234,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.814,
+          "raw_similarity": 0.814
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\02_green_salad_0.81.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8089,
+      "identification_confidence": 0.8089,
+      "segmentation_confidence": 0.8089,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        615,
+        285,
+        52,
+        71
+      ],
+      "area_pixels": 2900,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8089,
+          "raw_similarity": 0.8089
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\03_green_salad_0.81.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8074,
+      "identification_confidence": 0.8074,
+      "segmentation_confidence": 0.8074,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        693,
+        218,
+        44,
+        48
+      ],
+      "area_pixels": 1823,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8074,
+          "raw_similarity": 0.8074
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\04_green_salad_0.81.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8048,
+      "identification_confidence": 0.8048,
+      "segmentation_confidence": 0.8048,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        679,
+        278,
+        59,
+        65
+      ],
+      "area_pixels": 2905,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8048,
+          "raw_similarity": 0.8048
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\05_green_salad_0.80.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7849,
+      "identification_confidence": 0.7849,
+      "segmentation_confidence": 0.7849,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        670,
+        359,
+        62,
+        52
+      ],
+      "area_pixels": 2409,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7849,
+          "raw_similarity": 0.7849
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\06_green_salad_0.78.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7678,
+      "identification_confidence": 0.7678,
+      "segmentation_confidence": 0.7678,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        695,
+        345,
+        44,
+        41
+      ],
+      "area_pixels": 878,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7678,
+          "raw_similarity": 0.7678
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\07_green_salad_0.77.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7604,
+      "identification_confidence": 0.7604,
+      "segmentation_confidence": 0.7604,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        267,
+        42,
+        42
+      ],
+      "area_pixels": 1203,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7604,
+          "raw_similarity": 0.7604
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\08_green_salad_0.76.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7352,
+      "identification_confidence": 0.7352,
+      "segmentation_confidence": 0.7352,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        621,
+        203,
+        46,
+        27
+      ],
+      "area_pixels": 526,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7352,
+          "raw_similarity": 0.7352
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\09_green_salad_0.74.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7277,
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        397,
+        23,
+        169,
+        162
+      ],
+      "area_pixels": 21771,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\10_dal_0.73.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7256,
+      "identification_confidence": 0.7256,
+      "segmentation_confidence": 0.7256,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        639,
+        372,
+        54,
+        49
+      ],
+      "area_pixels": 1386,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7256,
+          "raw_similarity": 0.7256
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\11_green_salad_0.73.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7076,
+      "identification_confidence": 0.7076,
+      "segmentation_confidence": 0.7076,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        734,
+        357,
+        26,
+        34
+      ],
+      "area_pixels": 601,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7076,
+          "raw_similarity": 0.7076
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\12_green_salad_0.71.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7044,
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        210,
+        33,
+        162,
+        151
+      ],
+      "area_pixels": 19113,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\13_dal_0.70.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.6996,
+      "identification_confidence": 0.6996,
+      "segmentation_confidence": 0.6996,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        679,
+        204,
+        56,
+        33
+      ],
+      "area_pixels": 885,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6996,
+          "raw_similarity": 0.6996
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\14_green_salad_0.70.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.6952,
+      "identification_confidence": 0.6952,
+      "segmentation_confidence": 0.6952,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        664,
+        336,
+        31,
+        35
+      ],
+      "area_pixels": 698,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6952,
+          "raw_similarity": 0.6952
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\15_green_salad_0.70.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.6706,
+      "identification_confidence": 0.6706,
+      "segmentation_confidence": 0.6706,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        719,
+        307,
+        42,
+        45
+      ],
+      "area_pixels": 988,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6706,
+          "raw_similarity": 0.6706
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\16_green_salad_0.67.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.6587,
+      "identification_confidence": 0.6587,
+      "segmentation_confidence": 0.6587,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        613,
+        332,
+        58,
+        30
+      ],
+      "area_pixels": 666,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6587,
+          "raw_similarity": 0.6587
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\17_green_salad_0.66.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.6512,
+      "identification_confidence": 0.6512,
+      "segmentation_confidence": 0.6512,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        681,
+        266,
+        60,
+        32
+      ],
+      "area_pixels": 818,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6512,
+          "raw_similarity": 0.6512
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\18_green_salad_0.65.png",
+      "sam3_raw_query": "cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.5341,
+      "identification_confidence": 0.5341,
+      "segmentation_confidence": 0.5341,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        708,
+        338,
+        53,
+        23
+      ],
+      "area_pixels": 638,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5341,
+          "raw_similarity": 0.5341
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\19_green_salad_0.53.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.5155,
+      "identification_confidence": 0.5155,
+      "segmentation_confidence": 0.5155,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        758,
+        358,
+        19,
+        33
+      ],
+      "area_pixels": 502,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5155,
+          "raw_similarity": 0.5155
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\20_green_salad_0.52.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.4932,
+      "identification_confidence": 0.4932,
+      "segmentation_confidence": 0.4932,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        371,
+        165,
+        33,
+        30
+      ],
+      "area_pixels": 850,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4932,
+          "raw_similarity": 0.4932
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\21_dal_0.49.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.4734,
+      "identification_confidence": 0.4734,
+      "segmentation_confidence": 0.4734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        547,
+        11,
+        38,
+        46
+      ],
+      "area_pixels": 1238,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4734,
+          "raw_similarity": 0.4734
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\22_dal_0.47.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.4564,
+      "identification_confidence": 0.4564,
+      "segmentation_confidence": 0.4564,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        735,
+        219,
+        24,
+        59
+      ],
+      "area_pixels": 720,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.4564,
+          "raw_similarity": 0.4564
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\23_green_salad_0.46.png",
+      "sam3_raw_query": "sliced cucumber",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.4513,
+      "identification_confidence": 0.4513,
+      "segmentation_confidence": 0.4513,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        360,
+        126,
+        27,
+        26
+      ],
+      "area_pixels": 535,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4513,
+          "raw_similarity": 0.4513
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\24_dal_0.45.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.852,
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        251,
+        115,
+        55,
+        55
+      ],
+      "area_pixels": 2020,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\25_palak_paneer_0.85.png",
+      "sam3_raw_query": "paneer",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.85,
+      "identification_confidence": 0.85,
+      "segmentation_confidence": 0.85,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        219,
+        74,
+        36,
+        46
+      ],
+      "area_pixels": 1384,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.85,
+          "raw_similarity": 0.85
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\26_palak_paneer_0.85.png",
+      "sam3_raw_query": "paneer",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.8429,
+      "identification_confidence": 0.8429,
+      "segmentation_confidence": 0.8429,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        276,
+        83,
+        46,
+        40
+      ],
+      "area_pixels": 1278,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8429,
+          "raw_similarity": 0.8429
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\27_palak_paneer_0.84.png",
+      "sam3_raw_query": "paneer",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.8392,
+      "identification_confidence": 0.8392,
+      "segmentation_confidence": 0.8392,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        313,
+        109,
+        45,
+        42
+      ],
+      "area_pixels": 1444,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8392,
+          "raw_similarity": 0.8392
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\28_palak_paneer_0.84.png",
+      "sam3_raw_query": "paneer",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.7676,
+      "identification_confidence": 0.7676,
+      "segmentation_confidence": 0.7676,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        253,
+        47,
+        30,
+        31
+      ],
+      "area_pixels": 648,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7676,
+          "raw_similarity": 0.7676
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\29_palak_paneer_0.77.png",
+      "sam3_raw_query": "paneer",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "unlisted food",
+      "food_name": "unlisted food",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.7955,
+      "identification_confidence": 0.7955,
+      "segmentation_confidence": 0.7955,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        199,
+        171,
+        236
+      ],
+      "area_pixels": 31929,
+      "identification_status": "uncertain",
+      "top_k": [
+        {
+          "label": "unlisted food",
+          "confidence": 0.7955,
+          "raw_similarity": 0.7955
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_125839_589f820a\\segmentation\\crops\\30_unlisted_food_0.80.png",
+      "sam3_raw_query": "food",
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 59.133,
+  "timestamp": "2026-11-12T12:59:41.770284"
+}

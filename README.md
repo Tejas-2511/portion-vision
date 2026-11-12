@@ -1,247 +1,210 @@
 # PortionVision — Smart Nutrition & Portion Estimation
 
-**PortionVision** is a full-stack, AI-powered nutrition assistant designed for hostel and college mess environments. A student photographs their plate; the system identifies every food item, estimates masses, calculates nutrition, and compares actual portions against a personalised recommendation.
+**PortionVision** is an AI-powered nutrition assistant designed for hostel and college mess environments. A user photographs their meal plate; the system identifies every food item with open-set recognition, groups visual fragments, reconstructs metric 3D heights, calculates physical mass, and compares actual intake against personalized macro targets.
 
 ---
 
-## How It Works
+## System Architecture
 
 ```
 User uploads mess menu
         │
         ▼
    OCR (Tesseract)
-   extracts menu items
+   extracts menu items (contextual hints)
         │
         ▼
 Recommendation Engine
-(TDEE + macros → ideal portions)
+(TDEE + Mifflin-St Jeor → ideal portions)
         │
         ▼
-User photographs plate
+User captures plate photo
         │
         ▼
- CV Pipeline (Python)
- ┌─────────────────────────────────────────────────────────────┐
- │ Meta SAM 3 Open-Vocabulary Grounding & Segmentation         │
- │   • Non-food rejection (spoons/cutlery/surfaces = 0 FP)     │
- │   • Prompt grounding (menu items + 37 Indian staples)       │
- │   • Specific-over-generic disambiguation cascade            │
- │   • High-precision binary masks & transparent RGBA crops    │
- └─────────────────────────────────────────────────────────────┘
+ CV Pipeline (Python FastAPI)
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │ 1. Meta SAM 3 Grounding & Open-Vocabulary Segmentation                  │
+ │    • ViT visual backbone encoding (1008×1008 CUDA)                      │
+ │    • Non-food rejection anchors (cutlery, dividers, napkins = 0% FP)    │
+ │    • Open-set recognition (dishes absent from menu accurately detected)  │
+ │    • Explicit UNKNOWN abstention (no forced menu classification)        │
+ └─────────────────────────────────────────────────────────────────────────┘
         │
         ▼
- ┌─────────────────────────────────────────────────────────────┐
- │ Depth Anything 3 Metric + 2D Planar Surface Normal Fitting  │
- │   • Physical Euclidean distance Z in meters (DA3METRIC)     │
- │   • Plane fitting Z_plate(x, y) = Ax + By + C (tilt-zero)   │
- │   • Continuous prior fusion H_fused = 0.7 H_meas + 0.3 H_mid│
- └─────────────────────────────────────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │ 2. Dish-Level Container-Component Binding & Fragment Grouping           │
+ │    • Binds solid ingredients (e.g. paneer chunks) with container bowls  │
+ │    • Subsumes components into unified dish mask (prevents double-count) │
+ │    • Minimum contour distance clustering for fragmented blobs (rice)    │
+ │    • Strict boundary isolation for distinct touching foods (rice / dal) │
+ └─────────────────────────────────────────────────────────────────────────┘
         │
         ▼
- ┌─────────────────────────────────────────────────────────────┐
- │ 5-Archetype Volumetric Metrology & Dynamic Density          │
- │   • Planar (rotis) & Salad Slices (0.55cm cucumber floor)   │
- │   • Liquid well frustum, granular dome & chunky suspensions │
- │   • Dynamic visual density ρ(HSV, Laplacian texture)        │
- │   • Multi-instance canonical aggregation (unified cards)    │
- └─────────────────────────────────────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │ 3. Depth Anything 3 Metric + Planar Surface Normal Fitting              │
+ │    • Dense metric depth in meters: Z(x, y) (DA3METRIC-LARGE)            │
+ │    • Robust plane fitting: Z_plate(x, y) = Ax + By + C                  │
+ │    • Tilt-free relative height: H_rel = max(0, Z_plate - Z)             │
+ │    • Prior fusion: H_fused = 0.70 H_meas + 0.30 H_mid (bounded)         │
+ └─────────────────────────────────────────────────────────────────────────┘
         │
         ▼
- Nutrition Calculation & Macro Propagation (Calories/Protein/Carbs/Fat)
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │ 4. 5-Archetype Volumetric Metrology & Dynamic Density                   │
+ │    • Planar (rotis), Salad Slices (cucumber), Liquid Well Frustum       │
+ │    • Granular Dome (rice), Chunky Suspensions (sabzi / curry)           │
+ │    • Dynamic density tuning ρ(HSV, Laplacian texture)                   │
+ └─────────────────────────────────────────────────────────────────────────┘
         │
         ▼
- Portion Gap Report shown to user (Actual vs Target)
+ Nutritional Calculation & Macro Propagation (Calories / Protein / Carbs / Fat)
+        │
+        ▼
+ Portion Gap Report shown to user (Actual vs Personalized Target)
 ```
 
 ---
 
-## Architecture
+## Tech Stack
 
-| Layer | Stack |
-|-------|-------|
-| **Frontend** | React 18 + Vite, Tailwind CSS, PWA |
-| **Backend** | Node.js / Express, Tesseract.js OCR |
-| **CV Service** | Python 3.12+, FastAPI, PyTorch |
-| **Models** | Meta SAM 3 (SAM 3.1), Depth Anything V3 (Metric) |
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 18, Vite, Tailwind CSS, PWA (Service Worker) |
+| **Backend** | Node.js, Express, Tesseract.js OCR, REST APIs |
+| **CV Service** | Python 3.12+, FastAPI, PyTorch (CUDA / TensorFloat-32) |
+| **AI Models** | Meta SAM 3 (SAM 3.1 Multiplex), Depth Anything 3 (`DA3METRIC-LARGE`) |
 
 ---
 
-## Repository Layout
+## Repository Structure
 
 ```
 portion-vision/
-├── frontend/           # React PWA — meal selector, plate capture, results
-├── backend/            # Node.js — OCR, portion recommender, food database proxy
-├── cv_service/         # Python FastAPI — full CV & nutrition pipeline
-│   ├── api/            #   FastAPI routes (/estimate-portion)
-│   ├── config/         #   Density map, macro map, plate profiles, synonym map
-│   ├── depth/          #   Depth Anything depth estimator
-│   ├── diagnostics/    #   RunContext — structured logging + HTML report
-│   ├── estimation/     #   Mass estimator (volume → grams → nutrients)
-│   ├── image_processing/  # Preprocessing, plate detection
-│   ├── open_vocab/     #   SAM 3 Unified Concept Grounding & Food Segmentation
-│   ├── outputs/        #   Timestamped CV run artifacts, segmentation crops & reports
-│   ├── weights/        #   Model weights (gitignored)
-│   ├── main.py         #   FastAPI entry point
-│   ├── test_open_vocab.py # Quick open-vocab pipeline smoke test
-│   ├── evaluate_pipeline.py  # Precision & architecture benchmark runner
-│   └── visualize_open_vocab.py  # Plain-Python visual inspection tool
-├── tools/              # One-shot utility / migration scripts
-├── technical.md        # Full technical deconstruction (principal-level)
-└── README.md           # This file
+├── frontend/                  # React PWA — plate capture, meal slot selector, results
+├── backend/                   # Node.js Express — OCR, portion recommender, DB sync
+├── cv_service/                # Python FastAPI — full CV & nutrition pipeline
+│   ├── api/                   #   FastAPI endpoint routes (/estimate-portion)
+│   ├── config/                #   Plate geometries, density map, macro map, synonyms
+│   ├── depth/                 #   Depth Anything 3 metric depth & plane normal fitting
+│   ├── diagnostics/           #   RunContext — structured JSON & visual HTML reports
+│   ├── estimation/            #   Mass estimator (voxel archetypes → mass → macros)
+│   ├── image_processing/      #   Quality gate (blur/tilt check) & homography warp
+│   ├── open_vocab/            #   SAM 3 segmentation, open-set, instance grouper
+│   │   ├── sam3_segmenter.py   #     ViT backbone, non-food anchors, container binding
+│   │   ├── instance_grouper.py #     Spatial contour clustering & boundary resolution
+│   │   └── pipeline.py        #     High-level orchestrator & transparent crop export
+│   ├── outputs/               #   Timestamped CV run logs, masks, crops & reports
+│   ├── main.py                #   FastAPI server entry point
+│   ├── visualize_open_vocab.py #  Visual inspection CLI tool
+│   └── evaluate_pipeline.py   #   Precision benchmark runner
+├── plate/                     # Reference plate dataset for testing & verification
+├── technical.md               # Full architecture & code-level deconstruction
+└── README.md                  # Project overview & documentation
 ```
 
 ---
 
 ## Quick Start
 
-Three terminals, from the repo root:
+Run the three services in separate terminals from the repository root:
 
-### 1 — CV Service (Python)
+### 1. CV Service (Python FastAPI)
+
 ```powershell
 cd cv_service
-# Recommended: Run with the sam3 Conda environment (CUDA & GPU accelerated)
-conda activate sam3
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-# Or invoke the sam3 Python executable directly:
-C:\Users\tejas\.conda\envs\sam3\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+# Activate the sam3 Conda environment (CUDA & GPU accelerated)
+conda activate sam3
+
+# Start the FastAPI service on port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 2 — Backend (Node.js)
+> **Direct binary execution:**
+> ```powershell
+> C:\Users\tejas\.conda\envs\sam3\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+> ```
+
+### 2. Backend (Node.js)
+
 ```powershell
 cd backend
 npm run dev
 ```
+Backend runs on `http://localhost:5000`.
 
-### 3 — Frontend (React/Vite)
+### 3. Frontend (React / Vite)
+
 ```powershell
 cd frontend
 npm run dev
 ```
-
-Open `http://localhost:5173` in a browser (or the network URL shown by Vite for mobile testing).
+Frontend runs on `http://localhost:5173`. Open in a browser or scan the network URL on mobile.
 
 ---
 
-## CV Pipeline Test Tools
+## Key Computer Vision Features
 
-All test output is saved under `cv_service/outputs/`.
+### 1. Grounded Open-Set Recognition & Unknown Abstention
+- The mess menu acts as **contextual guidance**, never as a mandatory classification list.
+- Identifies dishes absent from the menu (`identification_status: "open_set"`, `menu_match: false`).
+- Ambiguous regions with confidence $< 0.45$ receive an explicit `identification_status: "unknown"` abstention rather than being forced into an incorrect menu label.
 
-### Visual inspection — SAM 3 open-vocab pipeline
+### 2. Dish-Level Container-Component Binding
+- Prepared composite dishes (e.g. Palak Paneer) are recognized as complete items.
+- Solid ingredients (paneer cubes, chicken) contained within a bowl ($\ge 70\%$ inclusion) bind to the host dish's identity, preventing the green spinach gravy from being misclassified as Dal Tadka.
+- Contained solids are unified into the host dish mask, preventing mass double-counting.
+
+### 3. Spatial Instance Grouper
+- Groups fragmented masks (e.g. multiple cucumber slices in a salad or scattered rice clusters) using minimum Euclidean contour distance ($75\,\text{px}$ for rice, $112.5\,\text{px}$ for salads).
+- Disparate touching foods (e.g. rice and dal) are strictly preserved as separate items.
+- Overlapping boundary pixels are assigned via argmax confidence to prevent duplicate voxel calculations.
+
+---
+
+## CV Inspection & Verification Tools
+
+### Visual Pipeline Inspector
+Run open-vocabulary segmentation and mass estimation on any plate image:
+
 ```powershell
-# Ensure sam3 conda environment is active
 conda activate sam3
 
-# Auto-picks newest plate image, saves annotated PNG + transparent RGBA crops + results JSON
+# Automatically inspect the newest image in plate/
 python cv_service\visualize_open_vocab.py
 
-# Supply your own image and contextual menu
-python cv_service\visualize_open_vocab.py `
-    path\to\plate.jpg `
-    --menu "steamed rice, dal palak, chapati, salad"
-```
-Output lands in `cv_service/outputs/<timestamp>_vis/`:
-- `annotated.png` — mask overlay with labels, confidence percentages, and bounding boxes
-- `results.json` — full structured detection output
-- `segmentation/crops/` — transparent RGBA crops for each detected dish
-- `segmentation/01_sam3_segmentation_overlay.png` — segmentation mask overlay image
-
-Color convention:
-- **Green** masks = `recognized` (menu match)
-- **Amber/orange** masks = `unlisted` (detected but not on menu)
-- **Red** masks = `uncertain` (low confidence, descriptive label)
-
-### Quick smoke test
-```powershell
-conda activate sam3
-python cv_service\test_open_vocab.py
+# Or specify a target image and menu
+python cv_service\visualize_open_vocab.py plate\IMG-sample.jpg --menu "palak paneer, dal fry, steamed rice"
 ```
 
-### Run precision benchmark
-```powershell
-conda activate sam3
-python cv_service\evaluate_pipeline.py
-```
-Report saved to `cv_service/outputs/evaluation_report_<timestamp>.json`.
+Artifacts are saved under `cv_service/outputs/<timestamp>_vis/`:
+- `annotated.png` — bounding boxes, segment outlines, mass (g), and confidence
+- `results.json` — structured detection, diagnostics, and macro summaries
+- `segmentation/crops/` — isolated transparent RGBA crops for every detected dish
 
 ---
 
-## Open-Vocabulary Food Identification & Segmentation
+## Configuration & Settings
 
-The `cv_service/open_vocab/` module implements an open-world food identification and instance segmentation pipeline powered by **Meta SAM 3 (SAM 3.1)**. It identifies **all** visible food items, including unlisted dishes, side servings, and extras not present on the day's menu.
-
-| Component | Module | Responsibility |
-|-----------|--------|----------------|
-| **Pipeline Orchestrator** | `pipeline.py` | `OpenVocabFoodSegmenter.process_plate()` — Coordinates image loading, model execution, formatting, and disk crop export |
-| **SAM 3 Engine** | `sam3_segmenter.py` | `Sam3FoodSegmenter` — Unified concept grounding, 1008x1008 ViT visual backbone encoding, and pixel-accurate instance masks |
-| **Non-Food Rejection** | `sam3_segmenter.py` | Distinguishes edible foods from cutlery (spoons, forks), tray dividers, and napkins (0.0% false-positive rate) |
-| **Specific Disambiguation** | `sam3_segmenter.py` | Specific-over-generic ranking (e.g. cucumber correctly distinguished with 0.87–0.91 confidence, avoiding dal/curry misclassification) |
-
-Output contract per item:
-```json
-{
-  "food_name": "steamed rice",
-  "menu_match": true,
-  "confidence": 0.94,
-  "identification_confidence": 0.94,
-  "segmentation_confidence": 0.98,
-  "mask": "<bool ndarray HxW>",
-  "bounding_box": [100, 120, 350, 300],
-  "area_pixels": 24500,
-  "identification_status": "recognized"
-}
-```
-
-Possible `identification_status` values:
-- `recognized` — matched to a contextual menu item (confidence $\ge 0.35$ and menu match)
-- `unlisted` — detected food not present on today's menu (confidence $\ge 0.35$ and no menu match)
-- `uncertain` — low confidence ($< 0.35$) or ambiguous margin; labelled descriptively (e.g. `"unknown curry"`) without inventing labels
+| Variable / Setting | Default | Description |
+|---|---|---|
+| `ALLOW_OCR_DB_UPDATE` | `false` | Controls whether scanned menu items automatically add new stub entries to `foodDatabase.json`. Can be configured via environment variable or backend config. |
+| `QUALITY_BLUR_THRESHOLD` | `80` | Laplacian variance threshold for motion blur detection. |
+| `QUALITY_TILT_THRESHOLD` | `30°` | Maximum allowable plate tilt before triggering retake prompt. |
 
 ---
 
 ## Hardware Requirements
 
-| Component | Minimum | Tested On |
-|-----------|---------|-----------|
-| GPU VRAM | 4 GB | RTX 3050 Mobile 6 GB |
-| RAM | 8 GB | 24 GB |
-| CPU | Modern x86-64 | i5-13450HX |
-| OS | Windows 10 / Linux | Windows 11 |
-
-> **Note:** The `sam3` Conda environment is pre-configured with CUDA PyTorch (`2.10.0+cu128`), `iopath`, and Meta SAM 3 dependencies. Always activate `sam3` (`conda activate sam3`) or use `C:\Users\tejas\.conda\envs\sam3\python.exe` to run the CV service and vision scripts with GPU acceleration.
+| Component | Minimum | Recommended / Tested |
+|---|---|---|
+| **GPU** | NVIDIA GPU with 4 GB VRAM | NVIDIA RTX 3050 Laptop GPU (6 GB VRAM) |
+| **System RAM** | 8 GB | 16 GB+ |
+| **Storage** | 10 GB free space (model weights) | NVMe SSD |
+| **OS** | Windows 10/11 or Ubuntu 22.04+ | Windows 11 |
 
 ---
 
-## Model Weights
+## Documentation
 
-Model weights and checkpoints:
-
-| File | Size | Source |
-|------|------|--------|
-| `sam3.1_multiplex.pt` | ~3.2 GB | [Meta SAM 3](https://github.com/facebookresearch/sam3) / HuggingFace `facebook/sam3.1` |
-| `DA3METRIC-LARGE` (Depth Anything 3) | ~1.3 GB | [ByteDance Depth Anything 3](https://github.com/ByteDance-Seed/Depth-Anything-3) / HuggingFace `depth-anything/DA3METRIC-LARGE` |
-
----
-
-## Development Notes
-
-- **Do not modify** `estimation/mass_estimator.py`, `depth/depth_estimator.py`, or `backend/portion_recommender.js` without reading `technical.md` first — these have tightly coupled data contracts.
-- The `cv_service/outputs/` directory preserves timestamped run directories, segmentation crops, depth maps, and diagnostic reports across pipeline executions.
-- The `tools/` directory holds one-shot migration scripts; delete after use.
-- `technical.md` contains a full file-by-file, function-by-function deconstruction of the codebase.
-
----
-
-## Settings & Controls
-
-| Toggle | Effect |
-|--------|--------|
-| **Auto-Update Food Database** | Controls whether new dishes detected during menu scans are added to `foodDatabase.json` |
-
----
-
-## License
-
-Academic/research use. Model weights are subject to their respective upstream licences (Meta SAM 3: Apache 2.0, Depth Anything 3: Apache 2.0).
+For an in-depth, function-by-function architectural deconstruction, mathematical formulations, and validation metrics, refer to [`technical.md`](technical.md).

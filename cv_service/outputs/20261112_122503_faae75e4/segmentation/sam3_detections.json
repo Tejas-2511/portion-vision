@@ -1,0 +1,245 @@
+{
+  "total_items": 7,
+  "food_items": [
+    {
+      "name": "Steamed Rice",
+      "food_name": "Steamed Rice",
+      "menu_match": true,
+      "matched_menu_item": "Steamed Rice",
+      "confidence": 0.8972,
+      "identification_confidence": 0.8972,
+      "segmentation_confidence": 0.8972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        69,
+        367,
+        382,
+        281
+      ],
+      "area_pixels": 81969,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Steamed Rice",
+          "confidence": 0.8972,
+          "raw_similarity": 0.8972
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\00_Steamed_Rice_0.90.png",
+      "sam3_raw_query": "rice",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Chapati",
+      "food_name": "Chapati",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "confidence": 0.7019,
+      "identification_confidence": 0.7019,
+      "segmentation_confidence": 0.7019,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        45,
+        85,
+        349,
+        313
+      ],
+      "area_pixels": 89935,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.7019,
+          "raw_similarity": 0.7019
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\01_Chapati_0.70.png",
+      "sam3_raw_query": "chapati bread",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Dal",
+      "food_name": "Dal",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "confidence": 0.6972,
+      "identification_confidence": 0.6972,
+      "segmentation_confidence": 0.6972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        444,
+        136,
+        198,
+        223
+      ],
+      "area_pixels": 34816,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.6972,
+          "raw_similarity": 0.6972
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\02_Dal_0.70.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Dal",
+      "food_name": "Dal",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "confidence": 0.6566,
+      "identification_confidence": 0.6566,
+      "segmentation_confidence": 0.6566,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        455,
+        394,
+        208,
+        223
+      ],
+      "area_pixels": 36426,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.6566,
+          "raw_similarity": 0.6566
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\03_Dal_0.66.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Chapati",
+      "food_name": "Chapati",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "confidence": 0.6294,
+      "identification_confidence": 0.6294,
+      "segmentation_confidence": 0.6294,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        128,
+        221,
+        292,
+        197
+      ],
+      "area_pixels": 7028,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.6294,
+          "raw_similarity": 0.6294
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\04_Chapati_0.63.png",
+      "sam3_raw_query": "chapati bread",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Dal",
+      "food_name": "Dal",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "confidence": 0.5949,
+      "identification_confidence": 0.5949,
+      "segmentation_confidence": 0.5949,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        471,
+        648,
+        207,
+        223
+      ],
+      "area_pixels": 36421,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.5949,
+          "raw_similarity": 0.5949
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\05_Dal_0.59.png",
+      "sam3_raw_query": "dal tadka",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    },
+    {
+      "name": "Chapati",
+      "food_name": "Chapati",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "confidence": 0.4579,
+      "identification_confidence": 0.4579,
+      "segmentation_confidence": 0.4579,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        168,
+        66,
+        238,
+        212
+      ],
+      "area_pixels": 7848,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.4579,
+          "raw_similarity": 0.4579
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "c:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_122503_faae75e4\\segmentation\\crops\\06_Chapati_0.46.png",
+      "sam3_raw_query": "chapati bread",
+      "mask_shape": [
+        1024,
+        774
+      ]
+    }
+  ],
+  "elapsed_seconds": 42.091,
+  "timestamp": "2026-11-12T12:26:44.984202"
+}

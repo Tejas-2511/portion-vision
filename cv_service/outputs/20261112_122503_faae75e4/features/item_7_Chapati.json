@@ -1,0 +1,14 @@
+{
+  "item_id": "Chapati_7",
+  "area_pixels": 7848,
+  "estimated_height_cm": 1.618,
+  "volume_estimate_ml": 7.9,
+  "density": 0.823,
+  "mass_g": 6.5,
+  "class_label": "Chapati",
+  "class_confidence": 0.4579,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.619,
+  "prior_applied": true
+}

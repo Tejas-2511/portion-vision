@@ -1,0 +1,293 @@
+{
+  "food_items": [
+    {
+      "name": "Steamed Rice",
+      "volume_ml": 242.7,
+      "mass_g": 263.3,
+      "calories": 271.3,
+      "protein": 5.3,
+      "carbs": 59.3,
+      "fat": 0.0,
+      "confidence": 0.8664,
+      "class_label": "Steamed Rice",
+      "class_confidence": 0.8972,
+      "top_k": [
+        {
+          "label": "Steamed Rice",
+          "confidence": 0.8972,
+          "raw_similarity": 0.8972
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Steamed Rice",
+      "identification_confidence": 0.8972,
+      "segmentation_confidence": 0.8972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "Steamed Rice",
+      "instance_count": 1
+    },
+    {
+      "name": "Chapati",
+      "volume_ml": 105.9,
+      "mass_g": 87.9,
+      "calories": 228.7,
+      "protein": 6.6,
+      "carbs": 44.0,
+      "fat": 2.2,
+      "confidence": 0.7663,
+      "class_label": "Chapati",
+      "class_confidence": 0.7019,
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.7019,
+          "raw_similarity": 0.7019
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "identification_confidence": 0.7019,
+      "segmentation_confidence": 0.7019,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "Chapati",
+      "instance_count": 3
+    },
+    {
+      "name": "Dal",
+      "volume_ml": 186.0,
+      "mass_g": 201.1,
+      "calories": 268.1,
+      "protein": 14.8,
+      "carbs": 40.3,
+      "fat": 5.4,
+      "confidence": 0.7638,
+      "class_label": "Dal",
+      "class_confidence": 0.6972,
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.6972,
+          "raw_similarity": 0.6972
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "identification_confidence": 0.6972,
+      "segmentation_confidence": 0.6972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "Dal",
+      "instance_count": 3
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "Steamed Rice",
+      "volume_ml": 242.7,
+      "mass_g": 263.3,
+      "calories": 271.3,
+      "protein": 5.3,
+      "carbs": 59.3,
+      "fat": 0.0,
+      "confidence": 0.8664,
+      "class_label": "Steamed Rice",
+      "class_confidence": 0.8972,
+      "top_k": [
+        {
+          "label": "Steamed Rice",
+          "confidence": 0.8972,
+          "raw_similarity": 0.8972
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Steamed Rice",
+      "identification_confidence": 0.8972,
+      "segmentation_confidence": 0.8972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Chapati",
+      "volume_ml": 90.9,
+      "mass_g": 75.5,
+      "calories": 196.4,
+      "protein": 5.7,
+      "carbs": 37.8,
+      "fat": 1.9,
+      "confidence": 0.7663,
+      "class_label": "Chapati",
+      "class_confidence": 0.7019,
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.7019,
+          "raw_similarity": 0.7019
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "identification_confidence": 0.7019,
+      "segmentation_confidence": 0.7019,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Dal",
+      "volume_ml": 56.6,
+      "mass_g": 61.8,
+      "calories": 82.4,
+      "protein": 4.5,
+      "carbs": 12.4,
+      "fat": 1.7,
+      "confidence": 0.7638,
+      "class_label": "Dal",
+      "class_confidence": 0.6972,
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.6972,
+          "raw_similarity": 0.6972
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "identification_confidence": 0.6972,
+      "segmentation_confidence": 0.6972,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Dal",
+      "volume_ml": 60.3,
+      "mass_g": 64.9,
+      "calories": 86.5,
+      "protein": 4.8,
+      "carbs": 13.0,
+      "fat": 1.7,
+      "confidence": 0.7412,
+      "class_label": "Dal",
+      "class_confidence": 0.6566,
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.6566,
+          "raw_similarity": 0.6566
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "identification_confidence": 0.6566,
+      "segmentation_confidence": 0.6566,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Chapati",
+      "volume_ml": 7.1,
+      "mass_g": 5.9,
+      "calories": 15.3,
+      "protein": 0.4,
+      "carbs": 2.9,
+      "fat": 0.1,
+      "confidence": 0.7257,
+      "class_label": "Chapati",
+      "class_confidence": 0.6294,
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.6294,
+          "raw_similarity": 0.6294
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "identification_confidence": 0.6294,
+      "segmentation_confidence": 0.6294,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Dal",
+      "volume_ml": 69.1,
+      "mass_g": 74.4,
+      "calories": 99.2,
+      "protein": 5.5,
+      "carbs": 14.9,
+      "fat": 2.0,
+      "confidence": 0.7055,
+      "class_label": "Dal",
+      "class_confidence": 0.5949,
+      "top_k": [
+        {
+          "label": "Dal",
+          "confidence": 0.5949,
+          "raw_similarity": 0.5949
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Dal",
+      "identification_confidence": 0.5949,
+      "segmentation_confidence": 0.5949,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "Chapati",
+      "volume_ml": 7.9,
+      "mass_g": 6.5,
+      "calories": 17.0,
+      "protein": 0.5,
+      "carbs": 3.3,
+      "fat": 0.2,
+      "confidence": 0.619,
+      "class_label": "Chapati",
+      "class_confidence": 0.4579,
+      "top_k": [
+        {
+          "label": "Chapati",
+          "confidence": 0.4579,
+          "raw_similarity": 0.4579
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "Chapati",
+      "identification_confidence": 0.4579,
+      "segmentation_confidence": 0.4579,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7411
+}

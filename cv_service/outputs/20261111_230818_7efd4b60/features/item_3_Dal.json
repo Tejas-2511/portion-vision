@@ -1,0 +1,14 @@
+{
+  "item_id": "Dal_3",
+  "area_pixels": 34816,
+  "estimated_height_cm": 1.538,
+  "volume_estimate_ml": 51.7,
+  "density": 1.092,
+  "mass_g": 56.5,
+  "class_label": "Dal",
+  "class_confidence": 0.6972,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7638,
+  "prior_applied": true
+}

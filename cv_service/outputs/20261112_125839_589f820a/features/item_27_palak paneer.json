@@ -1,0 +1,14 @@
+{
+  "item_id": "palak paneer_27",
+  "area_pixels": 1384,
+  "estimated_height_cm": 2.259,
+  "volume_estimate_ml": 5.0,
+  "density": 1.09,
+  "mass_g": 5.5,
+  "class_label": "palak paneer",
+  "class_confidence": 0.85,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8433,
+  "prior_applied": true
+}

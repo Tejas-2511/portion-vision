@@ -1,0 +1,1025 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 262.8,
+      "mass_g": 271.4,
+      "calories": 279.6,
+      "protein": 5.4,
+      "carbs": 61.1,
+      "fat": 0.0,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 68.2,
+      "mass_g": 41.0,
+      "calories": 15.6,
+      "protein": 0.4,
+      "carbs": 1.8,
+      "fat": 0.1,
+      "confidence": 0.8396,
+      "class_label": "green salad",
+      "class_confidence": 0.8426,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "green salad",
+      "instance_count": 19
+    },
+    {
+      "name": "dal",
+      "volume_ml": 119.4,
+      "mass_g": 128.2,
+      "calories": 171.0,
+      "protein": 9.3,
+      "carbs": 25.7,
+      "fat": 3.4,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "dal",
+      "instance_count": 5
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 23.9,
+      "mass_g": 26.1,
+      "calories": 43.2,
+      "protein": 2.4,
+      "carbs": 2.0,
+      "fat": 2.9,
+      "confidence": 0.8443,
+      "class_label": "palak paneer",
+      "class_confidence": 0.852,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "food_name": "palak paneer",
+      "instance_count": 5
+    },
+    {
+      "name": "unlisted food",
+      "volume_ml": 185.2,
+      "mass_g": 185.2,
+      "calories": 185.2,
+      "protein": 5.6,
+      "carbs": 27.8,
+      "fat": 5.6,
+      "confidence": 0.7592,
+      "class_label": "unlisted food",
+      "class_confidence": 0.7955,
+      "top_k": [
+        {
+          "label": "unlisted food",
+          "confidence": 0.7955,
+          "raw_similarity": 0.7955
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7955,
+      "segmentation_confidence": 0.7955,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7,
+      "food_name": "unlisted food",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 262.8,
+      "mass_g": 271.4,
+      "calories": 279.6,
+      "protein": 5.4,
+      "carbs": 61.1,
+      "fat": 0.0,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 13.3,
+      "mass_g": 8.0,
+      "calories": 2.4,
+      "protein": 0.1,
+      "carbs": 0.4,
+      "fat": 0.1,
+      "confidence": 0.8396,
+      "class_label": "green salad",
+      "class_confidence": 0.8426,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 6.5,
+      "mass_g": 3.9,
+      "calories": 1.2,
+      "protein": 0.1,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.8253,
+      "class_label": "green salad",
+      "class_confidence": 0.814,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.814,
+          "raw_similarity": 0.814
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.814,
+      "segmentation_confidence": 0.814,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 7.7,
+      "mass_g": 4.6,
+      "calories": 1.4,
+      "protein": 0.1,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.8227,
+      "class_label": "green salad",
+      "class_confidence": 0.8089,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8089,
+          "raw_similarity": 0.8089
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8089,
+      "segmentation_confidence": 0.8089,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 3.3,
+      "mass_g": 2.0,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.8219,
+      "class_label": "green salad",
+      "class_confidence": 0.8074,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8074,
+          "raw_similarity": 0.8074
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8074,
+      "segmentation_confidence": 0.8074,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 9.1,
+      "mass_g": 5.5,
+      "calories": 1.6,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.8206,
+      "class_label": "green salad",
+      "class_confidence": 0.8048,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8048,
+          "raw_similarity": 0.8048
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8048,
+      "segmentation_confidence": 0.8048,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 4.3,
+      "mass_g": 2.6,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.8104,
+      "class_label": "green salad",
+      "class_confidence": 0.7849,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7849,
+          "raw_similarity": 0.7849
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7849,
+      "segmentation_confidence": 0.7849,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 2.3,
+      "mass_g": 1.4,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.8015,
+      "class_label": "green salad",
+      "class_confidence": 0.7678,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7678,
+          "raw_similarity": 0.7678
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7678,
+      "segmentation_confidence": 0.7678,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 2.8,
+      "mass_g": 1.7,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.7976,
+      "class_label": "green salad",
+      "class_confidence": 0.7604,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7604,
+          "raw_similarity": 0.7604
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7604,
+      "segmentation_confidence": 0.7604,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.5,
+      "mass_g": 0.9,
+      "calories": 0.3,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7843,
+      "class_label": "green salad",
+      "class_confidence": 0.7352,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7352,
+          "raw_similarity": 0.7352
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7352,
+      "segmentation_confidence": 0.7352,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 56.1,
+      "mass_g": 60.5,
+      "calories": 80.7,
+      "protein": 4.4,
+      "carbs": 12.1,
+      "fat": 1.6,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 3.4,
+      "mass_g": 2.0,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.7792,
+      "class_label": "green salad",
+      "class_confidence": 0.7256,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7256,
+          "raw_similarity": 0.7256
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7256,
+      "segmentation_confidence": 0.7256,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.1,
+      "mass_g": 0.6,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7694,
+      "class_label": "green salad",
+      "class_confidence": 0.7076,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7076,
+          "raw_similarity": 0.7076
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7076,
+      "segmentation_confidence": 0.7076,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 56.7,
+      "mass_g": 60.6,
+      "calories": 80.8,
+      "protein": 4.4,
+      "carbs": 12.1,
+      "fat": 1.6,
+      "confidence": 0.7677,
+      "class_label": "dal",
+      "class_confidence": 0.7044,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.6,
+      "mass_g": 1.0,
+      "calories": 0.3,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7651,
+      "class_label": "green salad",
+      "class_confidence": 0.6996,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6996,
+          "raw_similarity": 0.6996
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.6996,
+      "segmentation_confidence": 0.6996,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.4,
+      "mass_g": 0.8,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7627,
+      "class_label": "green salad",
+      "class_confidence": 0.6952,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6952,
+          "raw_similarity": 0.6952
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.6952,
+      "segmentation_confidence": 0.6952,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 2.6,
+      "mass_g": 1.6,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.749,
+      "class_label": "green salad",
+      "class_confidence": 0.6706,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6706,
+          "raw_similarity": 0.6706
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.6706,
+      "segmentation_confidence": 0.6706,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 2.3,
+      "mass_g": 1.4,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.7424,
+      "class_label": "green salad",
+      "class_confidence": 0.6587,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6587,
+          "raw_similarity": 0.6587
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.6587,
+      "segmentation_confidence": 0.6587,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.5,
+      "mass_g": 0.9,
+      "calories": 0.3,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.7381,
+      "class_label": "green salad",
+      "class_confidence": 0.6512,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.6512,
+          "raw_similarity": 0.6512
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.6512,
+      "segmentation_confidence": 0.6512,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.1,
+      "mass_g": 0.7,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6685,
+      "class_label": "green salad",
+      "class_confidence": 0.5341,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5341,
+          "raw_similarity": 0.5341
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.5341,
+      "segmentation_confidence": 0.5341,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 0.9,
+      "mass_g": 0.5,
+      "calories": 0.2,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6567,
+      "class_label": "green salad",
+      "class_confidence": 0.5155,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5155,
+          "raw_similarity": 0.5155
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.5155,
+      "segmentation_confidence": 0.5155,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 2.1,
+      "mass_g": 2.3,
+      "calories": 3.1,
+      "protein": 0.2,
+      "carbs": 0.5,
+      "fat": 0.1,
+      "confidence": 0.6424,
+      "class_label": "dal",
+      "class_confidence": 0.4932,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4932,
+          "raw_similarity": 0.4932
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4932,
+      "segmentation_confidence": 0.4932,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 3.1,
+      "mass_g": 3.4,
+      "calories": 4.5,
+      "protein": 0.2,
+      "carbs": 0.7,
+      "fat": 0.1,
+      "confidence": 0.6293,
+      "class_label": "dal",
+      "class_confidence": 0.4734,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4734,
+          "raw_similarity": 0.4734
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4734,
+      "segmentation_confidence": 0.4734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 1.5,
+      "mass_g": 0.9,
+      "calories": 0.3,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.6179,
+      "class_label": "green salad",
+      "class_confidence": 0.4564,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.4564,
+          "raw_similarity": 0.4564
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.4564,
+      "segmentation_confidence": 0.4564,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "dal",
+      "volume_ml": 1.4,
+      "mass_g": 1.4,
+      "calories": 1.9,
+      "protein": 0.1,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.6145,
+      "class_label": "dal",
+      "class_confidence": 0.4513,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4513,
+          "raw_similarity": 0.4513
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4513,
+      "segmentation_confidence": 0.4513,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 7.4,
+      "mass_g": 8.1,
+      "calories": 13.4,
+      "protein": 0.8,
+      "carbs": 0.6,
+      "fat": 0.9,
+      "confidence": 0.8443,
+      "class_label": "palak paneer",
+      "class_confidence": 0.852,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 5.0,
+      "mass_g": 5.5,
+      "calories": 9.1,
+      "protein": 0.5,
+      "carbs": 0.4,
+      "fat": 0.6,
+      "confidence": 0.8433,
+      "class_label": "palak paneer",
+      "class_confidence": 0.85,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.85,
+          "raw_similarity": 0.85
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.85,
+      "segmentation_confidence": 0.85,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 4.4,
+      "mass_g": 4.8,
+      "calories": 7.9,
+      "protein": 0.4,
+      "carbs": 0.4,
+      "fat": 0.5,
+      "confidence": 0.8398,
+      "class_label": "palak paneer",
+      "class_confidence": 0.8429,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8429,
+          "raw_similarity": 0.8429
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.8429,
+      "segmentation_confidence": 0.8429,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 4.9,
+      "mass_g": 5.3,
+      "calories": 8.8,
+      "protein": 0.5,
+      "carbs": 0.4,
+      "fat": 0.6,
+      "confidence": 0.8379,
+      "class_label": "palak paneer",
+      "class_confidence": 0.8392,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8392,
+          "raw_similarity": 0.8392
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.8392,
+      "segmentation_confidence": 0.8392,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 2.2,
+      "mass_g": 2.4,
+      "calories": 4.0,
+      "protein": 0.2,
+      "carbs": 0.2,
+      "fat": 0.3,
+      "confidence": 0.8014,
+      "class_label": "palak paneer",
+      "class_confidence": 0.7676,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7676,
+          "raw_similarity": 0.7676
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.7676,
+      "segmentation_confidence": 0.7676,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7
+    },
+    {
+      "name": "unlisted food",
+      "volume_ml": 185.2,
+      "mass_g": 185.2,
+      "calories": 185.2,
+      "protein": 5.6,
+      "carbs": 27.8,
+      "fat": 5.6,
+      "confidence": 0.7592,
+      "class_label": "unlisted food",
+      "class_confidence": 0.7955,
+      "top_k": [
+        {
+          "label": "unlisted food",
+          "confidence": 0.7955,
+          "raw_similarity": 0.7955
+        }
+      ],
+      "identification_status": "uncertain",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7955,
+      "segmentation_confidence": 0.7955,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7
+    }
+  ],
+  "confidence": 0.7669
+}

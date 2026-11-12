@@ -12,24 +12,6 @@ export default function Home() {
   const [recommendations, setRecommendations] = useState(null);
   const [loadingRecs, setLoadingRecs] = useState(false);
   const [mealType, setMealType] = useState(todaysMenu?.mealType || inferMealType());
-  const [dbUpdateEnabled, setDbUpdateEnabled] = useState(false);
-
-  useEffect(() => {
-    api.getOcrDbUpdateSetting()
-      .then(res => setDbUpdateEnabled(Boolean(res?.allowOcrDbUpdate)))
-      .catch(err => console.warn("Failed to load OCR DB setting:", err));
-  }, []);
-
-  async function handleToggleDbUpdate(e) {
-    const val = e.target.checked;
-    setDbUpdateEnabled(val);
-    try {
-      await api.setOcrDbUpdateSetting(val);
-    } catch (err) {
-      console.error("Failed to update DB setting:", err);
-      setDbUpdateEnabled(!val);
-    }
-  }
 
   const menuItems = Array.isArray(todaysMenu?.items) ? todaysMenu.items : [];
 
@@ -163,23 +145,6 @@ export default function Home() {
           >
             {todaysMenu ? "Update Menu" : "Upload Mess Menu"}
           </button>
-
-          {/* Database Auto-Update Toggle */}
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-semibold text-slate-700">Auto-Update Food Database</p>
-              <p className="text-[10px] text-slate-400">Save newly detected dishes during menu scans</p>
-            </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={dbUpdateEnabled}
-                onChange={handleToggleDbUpdate}
-                className="sr-only peer"
-              />
-              <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
-            </label>
-          </div>
         </div>
 
         {/* Meal Type Selector */}

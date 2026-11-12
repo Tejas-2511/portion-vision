@@ -187,11 +187,18 @@ $$\rho_{\text{dynamic}} = \rho_0 + \Delta \rho(V_{\text{HSV}}, S_{\text{HSV}}, \
 - **Steamed Rice**: Brightness indicates hydration. High brightness (fluffy white rice) $\rightarrow \Delta \rho = -0.12$; low brightness (dense compact yellow rice) $\rightarrow \Delta \rho = +0.08$.
 - **Dals & Curries**: High saturation and Laplacian texture indicate thick gravies (`dal makhani` $\approx 1.13\,\text{g/ml}$) versus thin broths (`rasam` $\approx 0.98\,\text{g/ml}$).
 
-### 2.7. Multi-Instance Canonical Aggregation Topology
+### 2.7. Multi-Instance Canonical Aggregation Topology & Instance Grouping
 
-When SAM 3 segments multiple isolated portions of the same biological dish (e.g. 7 distinct cucumber slices, 2 separate heaps of steamed rice), reporting them as separate entries creates visual noise and fractional zero-macro roundoff anomalies. 
+When SAM 3 segments multiple isolated portions of the same biological dish (e.g. 19 distinct cucumber slices, 2 separate heaps of steamed rice), reporting them as separate raw entries creates visual noise, fragmented bounding boxes, and fractional zero-macro roundoff anomalies. 
 
-PortionVision executes a canonical hash aggregation pass:
+PortionVision addresses this through a two-stage topological resolution:
+
+1. **Pre-Depth Spatial Instance Grouping (`open_vocab/instance_grouper.py`)**:
+   - Computes minimum Euclidean boundary distance $d(M_a, M_b) = \min_{p_a \in M_a, p_b \in M_b} \|p_a - p_b\|_2$ across masks of the exact same semantic food class.
+   - Merges fragmented blobs within serving proximity ($d \le 75\,\text{px}$) into a single unified logical instance mask $M_{\text{merged}} = \bigcup M_i$.
+   - Enforces **strict mutual exclusivity** between differing food classes: touching foods (e.g. rice and dal) are partitioned via argmax confidence, eliminating duplicate pixel integration.
+
+2. **Downstream Canonical Hash Aggregation**:
 
 $$\mathcal{A}(\text{Dish}) = \left\{ \mathcal{M}_1, \mathcal{M}_2, \dots, \mathcal{M}_k \right\}$$
 
@@ -199,7 +206,7 @@ $$M_{\text{total}} = \sum_{i=1}^k M_i, \quad V_{\text{total}} = \sum_{i=1}^k V_i
 
 $$\mathcal{C}_{\text{aggregated}} = \frac{\sum_{i=1}^k \text{Area}_i \cdot \mathcal{C}_i}{\sum_{i=1}^k \text{Area}_i}$$
 
-Output items carry `instance_count: k`, rendering a clean single-card interface with a piece counter badge (e.g. `Cucumber (7 pieces)`).
+Output items carry `instance_count: k` and `fragment_count: f`, rendering a clean single-card interface with a piece counter badge (e.g. `Green Salad (19 pieces)`).
 
 ### 2.8. Bayesian Multi-Modal Composite Confidence Scoring
 
@@ -298,16 +305,42 @@ PortionVision's computer vision service is built on a streamlined, open-vocabula
 ### `open_vocab/sam3_segmenter.py` — Meta SAM 3 Grounding & Instance Segmentation Engine
 *   **Architecture**: Loads Meta SAM 3 (`build_sam3_image_model`) checkpoint with TensorFloat-32 enabled on CUDA.
 *   **ViT Visual Backbone Encoding**: Runs the 1008×1008 image backbone once (`Sam3Processor.set_image`), enabling multi-concept prompt queries against shared visual feature maps.
+*   **Elimination of Forced Menu Classification**:
+    -   The daily menu is strictly treated as contextual guidance, **not** as a mandatory label constraint.
+    -   Visual evidence is evaluated independently using open-vocabulary prompt expansions.
+    -   Generic category tokens (`curry`, `sabzi`, `gravy`, `food`, `dish`, `vegetable`) are prohibited from forcing menu matches.
+    -   **Open-Set Recognition (`open_set`)**: High-confidence items absent from the menu are accurately labeled as open-set detections (`menu_match: false`) rather than being forced into an unrelated menu item.
+    -   **Explicit UNKNOWN Abstention (`unknown`)**: Candidate regions with confidence $< 0.45$ or ambiguous visual evidence are explicitly assigned `identification_status: "unknown"` with label `"unlisted food"` / `"unknown food"`, preventing false menu attribution.
+*   **Dish-Level Container-Component Binding & Ingredient Subsumption**:
+    -   **The Problem**: In composite dishes like Palak Paneer, SAM 3 previously detected the paneer cubes separately while misclassifying the surrounding green spinach gravy as Dal Tadka (due to menu presence and shared liquid appearance).
+    -   **Visual Prompt Expansion**: Specific visual cues are queried (e.g., `["palak paneer", "palak paneer curry", "spinach paneer", "green curry", "spinach curry", "palak curry", "saag paneer"]`).
+    -   **Spatial Container Binding**: When a large food container/bowl ($\ge 10,000\,\text{px}$) surrounds $\ge 70\%$ of solid ingredient chunks (paneer, chicken, kofta), the container gravy adopts the dish's identity (`palak paneer`), overriding conflicting generic dal or curry labels.
+    -   **Subsumption & Mass Consistency**: Contained ingredient chunks are subsumed into the primary dish instance. This prevents double-counting the gravy and solids in downstream metric mass estimation while delivering a single unified portion card.
 *   **Non-Food Rejection Anchors**: Simultaneously queries non-food anchors (`spoon`, `fork`, `cutlery`, `plate`, `table surface`, `napkin`). Any candidate region overlapping significantly with a non-food anchor is rejected, delivering a 0.0% false-positive rate for cutlery and surfaces.
-*   **Specific-over-Generic Disambiguation**: Resolves candidate conflicts with specificity priority (Contextual Menu Item > Specific Food like `cucumber` > Generic Category `curry` > Generic fallback `food`). Distinguishes sliced cucumber (0.87–0.91 confidence) without curry misclassifications.
 *   **Transparent RGBA Crop Generation**: Extracts tight crops with alpha-channel transparency, saved to disk for human verification.
 
+### `open_vocab/instance_grouper.py` — Spatial Fragment Grouper & Instance Unification
+*   **Fragment Aggregation**: Solves SAM 3 over-segmentation where a single food serving is detected as multiple disconnected blobs (e.g., scattered rice mounds, 15+ individual cucumber slices in a salad).
+*   **Boundary Distance & Spatial Clustering**:
+    -   Measures minimum Euclidean distance between outer contours (`_mask_min_distance`).
+    -   Adaptive proximity thresholds: $75\,\text{px}$ for granular starches (rice, biryani), $112.5\,\text{px}$ for sliced salads and sides.
+    -   Builds a connected-component graph of fragments sharing the exact same canonical food class.
+*   **Strict Disparate Boundary Preservation**:
+    -   Different food classes touching each other (e.g. rice touching dal) are **never** merged.
+    -   Direct 8-connected boundary contact checks (`cv2.dilate`) ensure distinct dishes remain completely isolated.
+*   **Contention Resolution (Zero Double-Counting)**:
+    -   If overlapping masks or boundary contention occurs between grouped items, pixels are assigned via argmax confidence:
+      $$\text{Owner}(x, y) = \arg\max_{i} \mathcal{C}_i(x, y)$$
+    -   Guarantees that combined masks contain zero duplicate pixels, preserving strictly conservative volumetric integration.
+*   **Instance Metadata**: Emits `fragment_count` alongside `instance_count` and diagnostics for full lineage auditing.
+
 ### `open_vocab/pipeline.py` — Open-Vocabulary Orchestrator
-*   **`OpenVocabFoodSegmenter`**: High-level interface wrapping `Sam3FoodSegmenter`. Accepts raw BGR plate images and optional menu strings.
+*   **`OpenVocabFoodSegmenter`**: High-level interface wrapping `Sam3FoodSegmenter` and `InstanceGrouper`. Accepts raw BGR plate images and optional menu strings.
 *   **Menu Context Integration**: Expands menu queries with canonical synonyms from `config/synonym_map.py` to maximize recall while maintaining precise labeling.
 
-### `config/synonym_map.py` — Indian Dish Synonym Groups
-*   Defines canonical clusters for Indian mess foods (e.g., `["steamed rice", "white rice", "chawal", "boiled rice"]`, `["dal tadka", "yellow dal", "toor dal", "arhar dal"]`, `["cucumber", "cucumber slices", "kheera", "green salad"]`), enabling robust text prompt resolution.
+### `config/synonym_map.py` — Granular Culinary Synonym Clusters
+*   Replaced broad generic grouping with tightly curated culinary equivalents (`EQUIVALENT_DISH_SYNONYMS`).
+*   Matches only whole tokens at word boundaries, preventing false substring triggers (e.g. "tea" matching "steamed rice").
 
 ### `image_processing/preprocess.py` — Warp Engine + Quality Gate
 *   **`validate_image_quality(image, blur_thresh=80, tilt_thresh=30)`**:
@@ -349,19 +382,28 @@ PortionVision's computer vision service is built on a streamlined, open-vocabula
 {
   "food_items": [
     {
-      "name":             "chapati",
-      "volume_ml":        38.2,
-      "mass_g":           34.4,
-      "calories":         104.0,
-      "protein":          3.1,
-      "carbs":            18.2,
-      "fat":              2.1,
-      "confidence":       0.8421,
-      "class_label":      "chapati",
-      "class_confidence": 0.8120
+      "name":                  "palak paneer",
+      "volume_ml":             62.5,
+      "mass_g":                66.2,
+      "calories":              142.3,
+      "protein":               6.8,
+      "carbs":                 4.1,
+      "fat":                   11.2,
+      "confidence":            0.835,
+      "class_label":           "palak paneer",
+      "class_confidence":      0.820,
+      "identification_status": "recognized",
+      "menu_match":            true,
+      "instance_count":        1,
+      "fragment_count":        1,
+      "diagnostics": {
+        "original_label":      "palak paneer",
+        "container_binding":   "bound_paneer_components",
+        "reason":              "spatial_container_subsumption"
+      }
     }
   ],
-  "confidence": 0.8250
+  "confidence": 0.835
 }
 ```
 
@@ -369,7 +411,7 @@ PortionVision's computer vision service is built on a streamlined, open-vocabula
 
 ## 🧬 3.1. CV Deep Dive: The "0 to 100" Journey
 
-Tracking a single **Dal** portion from camera capture to calorie result.
+Tracking a plate portion from camera capture to calibrated calorie result.
 
 ### **Phase 0: Quality Gate (pre-processing)**
 1.  **Blur Check**: Laplacian variance on the grey image. If below 80, the pipeline aborts immediately with `"Image is too blurry..."`. Time saved: ~4 seconds of wasted inference.
@@ -396,19 +438,21 @@ Tracking a single **Dal** portion from camera capture to calorie result.
 ### **Phase 5: SAM 3 Grounding & Semantic Segmentation (65-75%)**
 13. **SAM 3 ViT Backbone Encoding**: Encodes the 1008x1008 image once on CUDA using `Sam3Processor`.
 14. **Instance Masks**: SAM 3 generates tight, boundary-conforming binary masks for each detected concept.
-
-### **Phase 6: Food-Aware Validation & Disambiguation (75-85%)**
 15. **Non-Food Rejection**: Rejects any candidate region overlapping with spoons, forks, metallic dividers, or napkins (0.0% false-positive rate).
-16. **Disambiguation & Menu Guidance**: Resolves specific dishes over generic ones (e.g. cucumber recognized accurately, avoiding dal/curry confusion). Categorizes items as `recognized` (matches menu item), `unlisted` (discovered extra/side dish), or `uncertain`.
+
+### **Phase 6: Open-Set Disambiguation, Dish Binding & Fragment Grouping (75-85%)**
+16. **Open-Set Recognition & Contextual Menu Matching**: Evaluates visual evidence independently. Rejects forced menu matching. Dishes with ambiguous evidence ($< 0.45$) receive explicit `unknown` abstentions. Unlisted high-confidence items are designated `open_set`.
+17. **Dish-Level Container-Component Binding**: Binds solid ingredients (e.g. paneer chunks) with host container bowls (e.g. palak paneer gravy) using spatial inclusion ($\ge 70\%$). Overrides generic Dal/curry confusion and subsumes ingredients into one unified dish instance.
+18. **Intelligent Fragment Grouping**: Clusters fragmented blobs of identical foods (scattered rice, sliced cucumber) via contour Euclidean distance ($d \le 75\,\text{px}$ / $112.5\,\text{px}$). Resolves overlap contention via argmax confidence to prevent mass double-counting.
 
 ### **Phase 7: Archetype Integration, Density & Canonical Aggregation (85-100%)**
-17. **Continuous Metric Height Fusion**: `apply_food_height_prior()` fuses measured metric height with prior midpoint at 70/30, clamping to physiological bounds $[\bar{H}_{\min} \cdot 0.5, \bar{H}_{\max}]$.
-18. **5-Archetype Voxel Summing**: Direct integration using the food's physical archetype (Planar, Sliced Salad, Liquid Well Frustum, Mounded Granular Dome, Chunky Suspension).
-19. **Dynamic Density**: HSV brightness/saturation and Laplacian texture are extracted from food pixels (e.g. watery dal $0.98\,\text{g/ml}$ vs thick dal $1.13\,\text{g/ml}$).
-20. **Canonical Aggregation**: Combines multi-piece detections of the same dish into a single summary card with `instance_count` and combined macros.
-21. **Composite Confidence**: $\mathcal{C} = (S_{\text{seg}} \times S_{\text{class}} \times S_{\text{geom}} \times S_{\text{scale}})^{0.25}$.
-22. **Macros**: Mass × `macro_map.py` per-gram factors → Calories/Protein/Carbs/Fat.
-23. **Report**: `RunContext` compiles every intermediate into `report.html`.
+19. **Continuous Metric Height Fusion**: `apply_food_height_prior()` fuses measured metric height with prior midpoint at 70/30, clamping to physiological bounds $[\bar{H}_{\min} \cdot 0.5, \bar{H}_{\max}]$.
+20. **5-Archetype Voxel Summing**: Direct integration using the food's physical archetype (Planar, Sliced Salad, Liquid Well Frustum, Mounded Granular Dome, Chunky Suspension).
+21. **Dynamic Density**: HSV brightness/saturation and Laplacian texture are extracted from food pixels (e.g. watery dal $0.98\,\text{g/ml}$ vs thick dal $1.13\,\text{g/ml}$).
+22. **Canonical Aggregation**: Combines multi-piece detections into a single summary card with `instance_count` and combined macros.
+23. **Composite Confidence**: $\mathcal{C} = (S_{\text{seg}} \times S_{\text{class}} \times S_{\text{geom}} \times S_{\text{scale}})^{0.25}$.
+24. **Macros**: Mass × `macro_map.py` per-gram factors → Calories/Protein/Carbs/Fat.
+25. **Report**: `RunContext` compiles every intermediate into `report.html`.
 
 ---
 

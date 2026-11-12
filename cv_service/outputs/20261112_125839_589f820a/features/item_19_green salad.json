@@ -1,0 +1,14 @@
+{
+  "item_id": "green salad_19",
+  "area_pixels": 818,
+  "estimated_height_cm": 1.031,
+  "volume_estimate_ml": 1.5,
+  "density": 0.6,
+  "mass_g": 0.9,
+  "class_label": "green salad",
+  "class_confidence": 0.6512,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7381,
+  "prior_applied": true
+}
