@@ -73,6 +73,7 @@ COMMON_INDIAN_STAPLES: List[str] = [
     "tomato",
     "onion",
     "pickle",
+    "achar",
     "chutney",
     "curd",
     "raita",
@@ -299,6 +300,7 @@ class Sam3FoodSegmenter:
         image_pil: Image.Image,
         query_type: str = "food",
         parent_menu_item: Optional[str] = None,
+        canonical_staple: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
         """Run text grounding for a single query prompt."""
         import torch
@@ -340,6 +342,7 @@ class Sam3FoodSegmenter:
                     "query": query,
                     "query_type": query_type,
                     "parent_menu_item": parent_menu_item,
+                    "canonical_staple": canonical_staple,
                     "mask": mask_np,
                     "box_xyxy": box,
                     "score": score,
@@ -383,6 +386,30 @@ class Sam3FoodSegmenter:
                     f_det["query"], score, min_score,
                 )
                 continue
+
+            # Filter 1c: Area-semantic physiological filter for side condiments (pickle, achar, chutney)
+            # Pickles and relishes in Indian meals are small condiments (<= 8000 px / <= 2.0% of plate).
+            # A huge 25,000-pixel main bowl/katori of dal or curry must NEVER be classified as a pickle!
+            # Conversely, tiny random splatters/oil drops on the metal tray divider/rim (< 1500 px, or < 800 px if in menu)
+            # must NEVER be classified as an intentional food portion!
+            f_area = f_det.get("area", int(f_mask.sum()))
+            canon_staple = (f_det.get("canonical_staple") or "").lower()
+            if canon_staple in {"pickle", "achar", "chutney"} or any(w in q for w in ["pickle", "achar", "chutney"]):
+                is_menu_condiment = (f_det.get("parent_menu_item") is not None or 
+                                     any(m.lower() in {"pickle", "achar", "chutney"} for m in (menu_items or [])))
+                min_condiment_area = 800 if is_menu_condiment else 1500
+                if f_area > 8000:
+                    logger.info(
+                        "[SAM3 Filter] Rejected '%s' (area=%d > 8000px) — side condiment cannot be a main dish bowl",
+                        f_det["query"], f_area,
+                    )
+                    continue
+                if f_area < min_condiment_area:
+                    logger.info(
+                        "[SAM3 Filter] Rejected '%s' (area=%d < %d px) — spurious stain/splatter on tray",
+                        f_det["query"], f_area, min_condiment_area,
+                    )
+                    continue
 
             # Filter 1b: Overlap with non-food anchors (spoons, cutlery)
             is_non_food = False
@@ -447,20 +474,22 @@ class Sam3FoodSegmenter:
                     cand["parent_menu_item"] = best_dish
                     cand["query"] = best_dish
 
-        def get_priority(det: Dict[str, Any]) -> int:
-            if det.get("parent_menu_item") is not None:
-                return 4
+        def get_ranking_score(det: Dict[str, Any]) -> float:
+            score = float(det["score"])
             q = det["query"].lower()
-            if q in menu_set:
-                return 3
-            if find_menu_match(q, menu_items) is not None:
-                return 3
-            if q != GENERIC_FALLBACK_QUERY:
-                return 2
-            return 1
+            if q == GENERIC_FALLBACK_QUERY or q == "food":
+                return score - 0.20  # Umbrella fallback is deprioritized against specific foods
+            
+            # Specific food items:
+            # Menu match provides a small contextual boost (+0.05) to resolve ambiguous ties,
+            # but cannot override strong visual evidence of a different specific food.
+            is_menu = (det.get("parent_menu_item") is not None or 
+                       q in menu_set or 
+                       find_menu_match(q, menu_items) is not None)
+            return score + (0.05 if is_menu else 0.0)
 
-        # Sort primarily by specificity priority descending, secondarily by score descending
-        valid_food.sort(key=lambda d: (get_priority(d), d["score"]), reverse=True)
+        # Sort primarily by visual-grounded ranking score descending
+        valid_food.sort(key=get_ranking_score, reverse=True)
 
         # Step 3: Deduplication across overlapping masks with menu coverage awareness
         kept: List[Dict[str, Any]] = []
@@ -474,7 +503,7 @@ class Sam3FoodSegmenter:
 
             # If this menu item already claimed a primary bowl/compartment,
             # and another candidate for this exact mask belongs to an unassigned menu item,
-            # allow the unassigned menu item to take it.
+            # allow the unassigned menu item to take it ONLY IF it has comparable visual evidence.
             if parent_key and is_large and parent_key in assigned_menu_items:
                 has_alternative_menu_cand = False
                 for alt in valid_food:
@@ -482,11 +511,27 @@ class Sam3FoodSegmenter:
                         continue
                     alt_parent = alt.get("parent_menu_item") or find_menu_match(alt["query"], menu_items)
                     alt_key = alt_parent.lower() if alt_parent else None
-                    if alt_key and alt_key not in assigned_menu_items and _mask_iou(cand_mask, alt["mask"]) >= _DEDUP_IOU_THRESH:
+                    if (alt_key and alt_key not in assigned_menu_items and 
+                        _mask_iou(cand_mask, alt["mask"]) >= _DEDUP_IOU_THRESH and
+                        alt.get("score", 0) >= cand.get("score", 0) - 0.08):
                         has_alternative_menu_cand = True
                         break
                 if has_alternative_menu_cand:
                     continue
+
+            # If candidate is generic umbrella 'food' and already covered by specific food detections, drop it
+            if cand["query"].lower() in {"food", GENERIC_FALLBACK_QUERY}:
+                if kept:
+                    union_kept = np.zeros_like(cand_mask, dtype=bool)
+                    for ex in kept:
+                        union_kept |= ex["mask"]
+                    overlap_with_specific = float(np.logical_and(cand_mask, union_kept).sum()) / max(1.0, float(cand_mask.sum()))
+                    if overlap_with_specific >= 0.35:
+                        logger.info(
+                            "[SAM3 Dedup] Dropping generic fallback '%s' (conf=%.2f) — %.1f%% covered by specific food detections",
+                            cand["query"], cand["score"], overlap_with_specific * 100,
+                        )
+                        continue
 
             duplicate = False
             for existing in kept:
@@ -573,7 +618,7 @@ class Sam3FoodSegmenter:
         state = self._processor.set_image(image_pil)
 
         # ── Build Query Batches ──────────────────────────────────────────
-        food_queries: List[Tuple[str, str, Optional[str]]] = []  # (query, type, parent_menu_item)
+        food_queries: List[Tuple[str, str, Optional[str], Optional[str]]] = []  # (query, type, parent_menu_item, canonical_staple)
 
         # 1. Menu queries (with visual prompt expansion for SAM 3 text grounding)
         if menu_items:
@@ -583,16 +628,34 @@ class Sam3FoodSegmenter:
                     continue
                 aliases = get_visual_prompt_aliases(m_clean)
                 for alias in aliases:
-                    food_queries.append((alias, "menu", m_clean))
+                    food_queries.append((alias, "menu", m_clean, None))
 
-        # 2. Common Indian food staples
-        if generic_discovery:
+            # Composite dish inference: if menu contains both dal and rice, also query composite dal+rice
+            has_dal = any(any(d in m.lower() for d in ["dal", "daal", "sambar"]) for m in menu_items)
+            has_rice = any(any(r in m.lower() for r in ["rice", "chawal"]) for m in menu_items)
+            if has_dal and has_rice:
+                for alias in ["rice with yellow dal", "rice and dal"]:
+                    food_queries.append((alias, "menu", "dal rice", "dal rice"))
+
+        # 2. Common Indian food staples (targeted discovery for speed & precision)
+        if not menu_items:
+            # When no menu is provided, query the full Indian staple taxonomy
             for staple in COMMON_INDIAN_STAPLES:
-                if not any(staple.lower() == q.lower() for q, _, _ in food_queries):
-                    food_queries.append((staple, "staple", None))
+                aliases = get_visual_prompt_aliases(staple)
+                for alias in aliases:
+                    if not any(alias.lower() == q.lower() for q, _, _, _ in food_queries):
+                        food_queries.append((alias, "staple", None, staple))
+        elif generic_discovery:
+            # When menu is provided, query common unlisted accompaniments (pickle, papad, curd, salad, dal rice)
+            for side in ["pickle", "papad", "curd", "salad"]:
+                if not any(side in m.lower() for m in menu_items):
+                    aliases = get_visual_prompt_aliases(side)
+                    for alias in aliases:
+                        if not any(alias.lower() == q.lower() for q, _, _, _ in food_queries):
+                            food_queries.append((alias, "staple", None, side))
 
-            # 3. Generic fallback
-            food_queries.append((GENERIC_FALLBACK_QUERY, "generic", None))
+        # 3. Generic fallback
+        food_queries.append((GENERIC_FALLBACK_QUERY, "generic", None, None))
 
         # 4. Non-food rejection anchors
         non_food_queries = [(nf, "non_food", None) for nf in NON_FOOD_ANCHORS]
@@ -607,10 +670,15 @@ class Sam3FoodSegmenter:
 
         # ── Run Food Queries ─────────────────────────────────────────────
         raw_food: List[Dict[str, Any]] = []
-        for q, q_type, parent_m in food_queries:
-            dets = self._run_query(state, q, image_pil, query_type=q_type, parent_menu_item=parent_m)
+        for q, q_type, parent_m, canon_s in food_queries:
+            dets = self._run_query(
+                state, q, image_pil,
+                query_type=q_type,
+                parent_menu_item=parent_m,
+                canonical_staple=canon_s,
+            )
             if dets:
-                logger.debug("[SAM3 Food] Query '%s' (parent=%s) found %d instances", q, parent_m, len(dets))
+                logger.debug("[SAM3 Food] Query '%s' (parent=%s, staple=%s) found %d instances", q, parent_m, canon_s, len(dets))
                 raw_food.extend(dets)
 
         logger.info(
@@ -668,22 +736,27 @@ class Sam3FoodSegmenter:
             # ── Strictly Evidence-Based Menu Matching & Open-Set Classification ──
             # The menu acts as contextual guidance, NEVER a forced classification mandate.
             matched_menu_str = parent_menu or find_menu_match(raw_label, menu_items, min_confidence=0.50)
+            if matched_menu_str is None and det.get("canonical_staple"):
+                matched_menu_str = find_menu_match(det["canonical_staple"], menu_items, min_confidence=0.50)
             is_menu_match = matched_menu_str is not None
 
-            if is_menu_match and score >= 0.45:
+            canon_label = det.get("canonical_staple") or raw_label
+
+            if is_menu_match and score >= 0.38:
                 display_label = matched_menu_str
                 id_status = "recognized"
                 decision_reason = det.get("decision_reason") or "MENU_EVIDENCE_MATCH"
-            elif raw_label in {"food", GENERIC_FALLBACK_QUERY, "unlisted food"} or score < 0.45:
+            elif raw_label in {"food", GENERIC_FALLBACK_QUERY, "unlisted food"} or score < 0.38:
                 # Explicit UNKNOWN / UNRECOGNIZED category — abstain rather than force-classify!
                 display_label = "UNKNOWN"
                 id_status = "unknown"
                 matched_menu_str = None
                 is_menu_match = False
                 decision_reason = "ABSTAINED_INSUFFICIENT_EVIDENCE"
-            elif score >= 0.52:
+            elif score >= 0.40:
                 # Strong open-set recognition: dish absent from menu, but visual evidence supports it!
-                display_label = raw_label
+                # Prefer canonical food label (e.g. 'pickle') over raw visual grounding prompts
+                display_label = canon_label
                 id_status = "open_set"
                 matched_menu_str = None
                 is_menu_match = False

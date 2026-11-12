@@ -1,0 +1,43 @@
+[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "4080x1840"
+    },
+    "elapsed_s": 0.3298,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-12T15:31:35.406565"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T15:31:35.406565"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "FAIL — Image is too blurry. Please hold the camera steady and ensure the plate is in sharp focus before capturing.",
+    "params": {
+      "blur_score": 67.66,
+      "tilt_deg": 1.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T15:31:35.564020"
+  },
+  {
+    "step": "Pipeline",
+    "message": "❌ Quality gate rejected image: Image is too blurry. Please hold the camera steady and ensure the plate is in sharp focus before capturing.",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T15:31:35.564020"
+  }
+]

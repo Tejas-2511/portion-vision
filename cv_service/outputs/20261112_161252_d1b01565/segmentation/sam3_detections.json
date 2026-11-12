@@ -1,0 +1,103 @@
+{
+  "total_items": 2,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8679,
+      "identification_confidence": 0.8679,
+      "segmentation_confidence": 0.8679,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        569,
+        232,
+        156,
+        214
+      ],
+      "area_pixels": 21241,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8679,
+          "raw_similarity": 0.8679
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_161252_d1b01565\\segmentation\\crops\\00_green_salad_0.87.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8679,
+        "uncertainty": 0.1321,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "mix veg",
+      "food_name": "mix veg",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "confidence": 0.6734,
+      "identification_confidence": 0.6734,
+      "segmentation_confidence": 0.6734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        234,
+        240,
+        307,
+        215
+      ],
+      "area_pixels": 47614,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.6734,
+          "raw_similarity": 0.6734
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_161252_d1b01565\\segmentation\\crops\\01_mix_veg_0.67.png",
+      "sam3_raw_query": "veg biryani",
+      "diagnostics": {
+        "original_sam3_query": "veg biryani",
+        "candidate_labels": [
+          "veg biryani"
+        ],
+        "menu_matching_result": "mix veg",
+        "final_food_label": "mix veg",
+        "confidence": 0.6734,
+        "uncertainty": 0.3266,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 108.672,
+  "timestamp": "2026-11-12T16:14:43.943315"
+}

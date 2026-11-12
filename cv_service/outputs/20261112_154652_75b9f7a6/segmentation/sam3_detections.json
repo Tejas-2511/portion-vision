@@ -1,0 +1,199 @@
+{
+  "total_items": 4,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.9329,
+      "identification_confidence": 0.9329,
+      "segmentation_confidence": 0.9329,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        674,
+        78,
+        221,
+        226
+      ],
+      "area_pixels": 29155,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9329,
+          "raw_similarity": 0.9329
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_154652_75b9f7a6\\segmentation\\crops\\00_green_salad_0.93.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.9329,
+        "uncertainty": 0.0671,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 5,
+        "decision_reason": "FRAGMENT_GROUPED_5_PIECES"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    },
+    {
+      "name": "curry",
+      "food_name": "curry",
+      "menu_match": true,
+      "matched_menu_item": "curry",
+      "confidence": 0.8995,
+      "identification_confidence": 0.8995,
+      "segmentation_confidence": 0.8995,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        343,
+        73,
+        279,
+        246
+      ],
+      "area_pixels": 53805,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "curry",
+          "confidence": 0.8995,
+          "raw_similarity": 0.8995
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_154652_75b9f7a6\\segmentation\\crops\\01_curry_0.90.png",
+      "sam3_raw_query": "curry",
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "curry",
+        "final_food_label": "curry",
+        "confidence": 0.8995,
+        "uncertainty": 0.1005,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.8787,
+      "identification_confidence": 0.8787,
+      "segmentation_confidence": 0.8787,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        57,
+        68,
+        280,
+        245
+      ],
+      "area_pixels": 54418,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8787,
+          "raw_similarity": 0.8787
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_154652_75b9f7a6\\segmentation\\crops\\02_palak_paneer_0.88.png",
+      "sam3_raw_query": "palak curry",
+      "diagnostics": {
+        "original_sam3_query": "palak curry",
+        "candidate_labels": [
+          "palak curry"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.8787,
+        "uncertainty": 0.1213,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    },
+    {
+      "name": "pickle",
+      "food_name": "pickle",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.7847,
+      "identification_confidence": 0.7847,
+      "segmentation_confidence": 0.7847,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        619,
+        53,
+        47,
+        41
+      ],
+      "area_pixels": 1440,
+      "identification_status": "open_set",
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.7847,
+          "raw_similarity": 0.7847
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_154652_75b9f7a6\\segmentation\\crops\\03_pickle_0.78.png",
+      "sam3_raw_query": "indian pickle condiment",
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "pickle",
+        "confidence": 0.7847,
+        "uncertainty": 0.2153,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 55.615,
+  "timestamp": "2026-11-12T15:46:53.257053"
+}

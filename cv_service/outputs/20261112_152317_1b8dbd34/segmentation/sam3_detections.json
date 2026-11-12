@@ -1,0 +1,103 @@
+{
+  "total_items": 2,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.9174,
+      "identification_confidence": 0.9174,
+      "segmentation_confidence": 0.9174,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        674,
+        78,
+        221,
+        224
+      ],
+      "area_pixels": 30266,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_152317_1b8dbd34\\segmentation\\crops\\00_green_salad_0.92.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.9174,
+        "uncertainty": 0.0826,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 6,
+        "decision_reason": "FRAGMENT_GROUPED_6_PIECES"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    },
+    {
+      "name": "rajma",
+      "food_name": "rajma",
+      "menu_match": true,
+      "matched_menu_item": "rajma",
+      "confidence": 0.7663,
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        57,
+        68,
+        279,
+        244
+      ],
+      "area_pixels": 54250,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "rajma",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_152317_1b8dbd34\\segmentation\\crops\\01_rajma_0.77.png",
+      "sam3_raw_query": "curry",
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "rajma",
+        "final_food_label": "rajma",
+        "confidence": 0.7663,
+        "uncertainty": 0.2337,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        770,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 84.437,
+  "timestamp": "2026-11-12T15:25:31.270408"
+}

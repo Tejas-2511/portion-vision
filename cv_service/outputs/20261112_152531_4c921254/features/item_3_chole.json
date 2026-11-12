@@ -1,0 +1,29 @@
+{
+  "item_id": "chole_3",
+  "area_pixels": 24791,
+  "estimated_height_cm": 1.95,
+  "volume_estimate_ml": 66.0,
+  "density": 1.08,
+  "mass_g": 71.3,
+  "class_label": "chole",
+  "class_confidence": 0.7056,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7683,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "chickpea curry",
+    "candidate_labels": [
+      "chickpea curry"
+    ],
+    "menu_matching_result": "chole",
+    "final_food_label": "chole",
+    "confidence": 0.7056,
+    "uncertainty": 0.2944,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_6",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

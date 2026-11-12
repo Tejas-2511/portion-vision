@@ -826,16 +826,20 @@ def normalize_depth_to_plate(
 
     H, W = depth_map.shape[:2]
 
+    # Outer border 8% of the frame representing rim / tray boundary
+    rim_mask = np.zeros((H, W), dtype=bool)
+    rim_mask[:int(H * 0.08), :] = True
+    rim_mask[int(H * 0.92):, :] = True
+    rim_mask[:, :int(W * 0.08)] = True
+    rim_mask[:, int(W * 0.92):] = True
+
     # Identify candidate plate baseline pixels
-    if plate_mask is not None and plate_mask.any():
-        valid_mask = plate_mask.copy()
+    if plate_mask is not None and plate_mask.any() and float(np.mean(plate_mask)) <= 0.75:
+        # Valid plate mask (compartment wells excluded) combined with tray rim
+        valid_mask = plate_mask | rim_mask
     else:
-        # Fallback: outer border 8% of the frame representing rim / tray boundary
-        valid_mask = np.zeros((H, W), dtype=bool)
-        valid_mask[:int(H * 0.08), :] = True
-        valid_mask[int(H * 0.92):, :] = True
-        valid_mask[:, :int(W * 0.08)] = True
-        valid_mask[:, int(W * 0.92):] = True
+        # Fallback: outer rim when compartments are not detected or unmasked
+        valid_mask = rim_mask
 
     # Filter out extreme depth outliers on rim points (e.g. background reflections)
     pts_vals = depth_map[valid_mask]

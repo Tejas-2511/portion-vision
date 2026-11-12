@@ -1,0 +1,29 @@
+{
+  "item_id": "green salad_2",
+  "area_pixels": 8966,
+  "estimated_height_cm": 1.898,
+  "volume_estimate_ml": 22.5,
+  "density": 0.6,
+  "mass_g": 13.5,
+  "class_label": "green salad",
+  "class_confidence": 0.9135,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8742,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "sliced cucumber",
+    "candidate_labels": [
+      "sliced cucumber"
+    ],
+    "menu_matching_result": "green salad",
+    "final_food_label": "green salad",
+    "confidence": 0.9135,
+    "uncertainty": 0.0865,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 3,
+    "decision_reason": "FRAGMENT_GROUPED_3_PIECES"
+  },
+  "fragment_count": 1
+}

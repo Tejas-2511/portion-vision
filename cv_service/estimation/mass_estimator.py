@@ -459,17 +459,22 @@ def estimate_food_mass(
     t0 = time.perf_counter()
     raw_depth = estimate_depth(top_down, ctx=ctx)
 
-    plate_mask     = np.ones((img_h, img_w), dtype=bool)
-    well_depth_map = np.zeros((img_h, img_w), dtype=np.float32)
+    if compartments:
+        plate_mask     = np.ones((img_h, img_w), dtype=bool)
+        well_depth_map = np.zeros((img_h, img_w), dtype=np.float32)
 
-    for comp in compartments:
-        x, y, cw, ch = comp["bbox"]
-        depth_val     = comp.get("depth_cm", 2.0)
-        plate_mask[y:y+ch, x:x+cw] = False
-        if comp.get("contour") is not None:
-            cv2.drawContours(well_depth_map, [comp["contour"]], -1, depth_val, -1)
-        else:
-            well_depth_map[y:y+ch, x:x+cw] = depth_val
+        for comp in compartments:
+            x, y, cw, ch = comp["bbox"]
+            depth_val     = comp.get("depth_cm", 2.0)
+            plate_mask[y:y+ch, x:x+cw] = False
+            if comp.get("contour") is not None:
+                cv2.drawContours(well_depth_map, [comp["contour"]], -1, depth_val, -1)
+            else:
+                well_depth_map[y:y+ch, x:x+cw] = depth_val
+    else:
+        # Zero compartments detected: pass None so planar fitting uses outer tray rim
+        plate_mask     = None
+        well_depth_map = np.zeros((img_h, img_w), dtype=np.float32)
 
     height_relative    = normalize_depth_to_plate(raw_depth, plate_mask, ctx=ctx)
     height_from_divider = depth_to_cm(height_relative, raw_depth, cm_per_pixel, img_w, ctx=ctx)
@@ -554,22 +559,29 @@ def estimate_food_mass(
         food_name  = assigned_names[f_idx]
         class_conf = item.get("class_conf", 0.5)
 
-        # In metric depth, preserve food relief above its physical base support
-        # to ensure compartment wells and camera tilt do not zero out internal variation.
+        # Compute physical volume and mass for all segmented food masks
+        # (even if generic/unknown, estimate mass using standard food density so grams are never zero)
         raw_food_relief = height_relative[mask]
-        if np.percentile(raw_food_relief, 50) < 0:
-            local_base = float(np.percentile(raw_food_relief, 2))
-            pixel_heights_rel = raw_food_relief - local_base
+        well_offset = float(np.mean(well_depth_map[mask])) if (well_depth_map is not None and mask.any()) else 0.0
+        comp_depth = max(well_offset, 2.0)
+        # Any depth reading deeper than the physical well bottom is a shadow/reflection artifact.
+        clipped_relief = np.clip(raw_food_relief, -comp_depth, 6.0)
+
+        if len(clipped_relief) > 0 and np.percentile(clipped_relief, 50) < 0:
+            # If the food sits recessed inside the well, measure its relief relative to its local base
+            # (bounded by physical well depth, never deeper than -comp_depth)
+            local_base = max(float(np.percentile(clipped_relief, 5)), -comp_depth)
+            pixel_heights_rel = np.clip(clipped_relief - local_base, 0.0, 6.0)
         else:
-            pixel_heights_rel = np.clip(raw_food_relief, 0.0, None)
+            # Food sits at or above the rim
+            pixel_heights_rel = np.clip(clipped_relief, 0.0, 6.0)
 
         # #1 — Fuse with food-specific geometric prior; output is now in cm
         food_heights_cm = apply_food_height_prior(pixel_heights_rel, food_name)
         fused_height_map[mask] = food_heights_cm
 
         # Add the physical well depth offset (how deep the compartment is)
-        well_offset = float(np.mean(well_depth_map[mask])) if mask.any() else 0.0
-        pixel_heights = np.clip(food_heights_cm + well_offset, 0.05, 15.0)
+        pixel_heights = np.clip(food_heights_cm + well_offset, 0.05, 8.0)
 
         # Depth stability: 1.0 if prior was found, 0.75 otherwise
         food_key = food_name.strip().lower()
@@ -597,23 +609,26 @@ def estimate_food_mass(
             # Physical Volume = Area × Calibrated Slice Thickness (0.45 - 0.60 cm)
             slice_thickness = _get_salad_slice_thickness_cm(food_name)
             eff_height = max(slice_thickness, float(np.median(pixel_heights)))
-            eff_height = min(eff_height, 2.5)  # multi-slice stack cap
+            eff_height = min(eff_height, 1.5)  # realistic max cucumber stack on plate
             volume_ml = area_cm2 * eff_height
 
         elif _is_liquid_food(food_name):
             # Liquid archetype (dal/sambar/curd): conforms to compartment well
             # Liquid surface cannot rise significantly above the tray rim.
             well_depth = max(well_offset, 2.0)
-            avg_h = float(np.mean(food_heights_cm))
-            fill_ratio = float(np.clip(0.50 + 0.30 * (avg_h / well_depth), 0.40, 0.98))
+            # BUG 2 FIX: Cap avg_h to well_depth to prevent fill_ratio blow-up
+            avg_h = float(np.clip(np.mean(food_heights_cm), 0.0, well_depth))
+            fill_ratio = float(np.clip(0.50 + 0.30 * (avg_h / well_depth), 0.40, 0.90))
             # Frustum taper factor for molded circular/rectangular wells ≈ 0.88
             volume_ml = area_cm2 * (well_depth * fill_ratio) * 0.88
 
         elif _is_mound_food(food_name):
             # Mound archetype (rice/pulao): fills base well + curved dome above rim
+            # BUG 1 FIX: food_heights_cm is relative height above plate, NOT above well bottom.
+            # Only the actual mound above the well rim contributes to dome volume.
             base_vol = area_cm2 * (well_offset * 0.85)
-            # Smooth dome profile integration with bulk packing factor (0.85)
-            mound_vol = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.85
+            dome_heights = np.clip(food_heights_cm - well_offset, 0.0, None)
+            mound_vol = float(np.sum(dome_heights) * pixel_area_cm2) * 0.85
             volume_ml = base_vol + mound_vol
 
         else:

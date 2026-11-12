@@ -47,6 +47,16 @@ def _mask_min_distance(mask_a: np.ndarray, mask_b: np.ndarray) -> float:
     return float(np.sqrt(np.min(dist_sq)))
 
 
+def _get_item_area(item: Dict[str, Any]) -> int:
+    if "area_pixels" in item and item["area_pixels"] is not None:
+        return int(item["area_pixels"])
+    if "area" in item and item["area"] is not None:
+        return int(item["area"])
+    if "mask" in item and item["mask"] is not None:
+        return int(item["mask"].sum())
+    return 0
+
+
 def group_food_fragments(
     detections: List[Dict[str, Any]],
     image_shape: Tuple[int, int],
@@ -70,7 +80,7 @@ def group_food_fragments(
     # ── Group by Canonical Food Class ───────────────────────────────────────
     class_groups: Dict[str, List[Dict[str, Any]]] = {}
     for d in detections:
-        key = (d.get("name") or d.get("food_name") or d.get("query") or "unknown").strip().lower()
+        key = (d.get("parent_menu_item") or d.get("canonical_staple") or d.get("name") or d.get("food_name") or d.get("query") or "unknown").strip().lower()
         class_groups.setdefault(key, []).append(d)
 
     grouped_detections: List[Dict[str, Any]] = []
@@ -79,9 +89,12 @@ def group_food_fragments(
     for food_class, items in class_groups.items():
         if len(items) == 1:
             item = items[0].copy()
-            item_area = int(item.get("area_pixels", item.get("area", item["mask"].sum())))
+            item_area = _get_item_area(item)
+            item_conf = float(item.get("score", item.get("confidence", 0.70)))
             item["area"] = item_area
             item["area_pixels"] = item_area
+            item["confidence"] = item_conf
+            item["score"] = item_conf
             item["grouped_instance_id"] = f"inst_{group_counter}"
             item["fragment_count"] = 1
             item["decision_reason"] = item.get("decision_reason") or "SINGLE_INSTANCE"
@@ -111,9 +124,17 @@ def group_food_fragments(
                 mask_j = items[j]["mask"]
                 dist = _mask_min_distance(mask_i, mask_j)
 
-                # Salads & rice fragments cluster easily within a serving zone
-                is_salad = "salad" in food_class or "cucumber" in food_class
-                threshold = spatial_proximity_px * 1.5 if is_salad else spatial_proximity_px
+                # Only granular/mounded starches (rice, biryani, poha) and sliced salads (cucumber, tomato, onion)
+                # naturally fragment into multiple substantial blobs.
+                # Curries, dals, gravies, and condiments in separate wells must NEVER be grouped across compartments!
+                is_granular = any(k in food_class for k in ["rice", "biryani", "poha", "khichdi"])
+                is_salad = any(k in food_class for k in ["salad", "cucumber", "tomato", "onion"])
+
+                if not (is_granular or is_salad):
+                    # For curries, dals, sabzis, and sides: do not merge separate portions
+                    continue
+
+                threshold = spatial_proximity_px * 2.0 if is_salad else (spatial_proximity_px * 1.5 if is_granular else spatial_proximity_px)
 
                 if dist <= threshold:
                     union(i, j)
@@ -127,6 +148,12 @@ def group_food_fragments(
         for root, member_indices in clusters.items():
             if len(member_indices) == 1:
                 single_item = items[member_indices[0]].copy()
+                single_area = _get_item_area(single_item)
+                single_conf = float(single_item.get("score", single_item.get("confidence", 0.70)))
+                single_item["area"] = single_area
+                single_item["area_pixels"] = single_area
+                single_item["confidence"] = single_conf
+                single_item["score"] = single_conf
                 single_item["grouped_instance_id"] = f"inst_{group_counter}"
                 single_item["fragment_count"] = 1
                 single_item["decision_reason"] = single_item.get("decision_reason") or "SINGLE_INSTANCE"
@@ -144,7 +171,7 @@ def group_food_fragments(
                     m_mask = m_it["mask"]
                     merged_mask = np.logical_or(merged_mask, m_mask)
                     m_area = int(m_mask.sum())
-                    m_conf = float(m_it.get("confidence", 0.70))
+                    m_conf = float(m_it.get("score", m_it.get("confidence", 0.70)))
                     total_area += m_area
                     total_weighted_conf += m_conf * m_area
                     if "bounding_box" in m_it:
@@ -169,6 +196,7 @@ def group_food_fragments(
                 rep["area_pixels"] = int(merged_mask.sum())
                 rep["bounding_box"] = unified_box
                 rep["confidence"] = round(float(merged_conf), 4)
+                rep["score"] = round(float(merged_conf), 4)
                 rep["identification_confidence"] = round(float(merged_conf), 4)
                 rep["segmentation_confidence"] = round(float(merged_conf), 4)
                 rep["fragment_count"] = len(member_indices)
@@ -189,7 +217,7 @@ def group_food_fragments(
     occupied_mask = np.zeros((H, W), dtype=np.int32) - 1
 
     # Sort items by confidence descending
-    grouped_detections.sort(key=lambda d: float(d.get("confidence", 0.5)), reverse=True)
+    grouped_detections.sort(key=lambda d: float(d.get("score", d.get("confidence", 0.5))), reverse=True)
 
     for inst_idx, item in enumerate(grouped_detections):
         raw_mask = item["mask"]
@@ -201,11 +229,14 @@ def group_food_fragments(
             # Remove contested pixels from this lower-confidence item
             cleaned_mask = raw_mask & (~already_claimed)
             item["mask"] = cleaned_mask
-            item["area"] = int(cleaned_mask.sum())
-            item["area_pixels"] = int(cleaned_mask.sum())
+            cur_area = int(cleaned_mask.sum())
+        else:
+            cur_area = _get_item_area(item)
 
+        item["area"] = cur_area
+        item["area_pixels"] = cur_area
         occupied_mask[item["mask"]] = inst_idx
 
     # Discard any items that were completely starved by mutual exclusivity
-    valid_final = [d for d in grouped_detections if d.get("area_pixels", 0) > 50]
+    valid_final = [d for d in grouped_detections if _get_item_area(d) > 50]
     return valid_final

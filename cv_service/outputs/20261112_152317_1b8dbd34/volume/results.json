@@ -1,0 +1,183 @@
+{
+  "food_items": [
+    {
+      "name": "green salad",
+      "volume_ml": 35.1,
+      "mass_g": 21.0,
+      "calories": 6.3,
+      "protein": 0.3,
+      "carbs": 1.0,
+      "fat": 0.1,
+      "confidence": 0.8761,
+      "class_label": "green salad",
+      "class_confidence": 0.9174,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.9174,
+      "segmentation_confidence": 0.9174,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.9174,
+        "uncertainty": 0.0826,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 6,
+        "decision_reason": "FRAGMENT_GROUPED_6_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "rajma",
+      "volume_ml": 110.0,
+      "mass_g": 121.0,
+      "calories": 169.4,
+      "protein": 7.3,
+      "carbs": 25.8,
+      "fat": 4.0,
+      "confidence": 0.8007,
+      "class_label": "rajma",
+      "class_confidence": 0.7663,
+      "top_k": [
+        {
+          "label": "rajma",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "rajma",
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "rajma",
+        "final_food_label": "rajma",
+        "confidence": 0.7663,
+        "uncertainty": 0.2337,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "rajma",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "green salad",
+      "volume_ml": 35.1,
+      "mass_g": 21.0,
+      "calories": 6.3,
+      "protein": 0.3,
+      "carbs": 1.0,
+      "fat": 0.1,
+      "confidence": 0.8761,
+      "class_label": "green salad",
+      "class_confidence": 0.9174,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9174,
+          "raw_similarity": 0.9174
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.9174,
+      "segmentation_confidence": 0.9174,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.9174,
+        "uncertainty": 0.0826,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 6,
+        "decision_reason": "FRAGMENT_GROUPED_6_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "rajma",
+      "volume_ml": 110.0,
+      "mass_g": 121.0,
+      "calories": 169.4,
+      "protein": 7.3,
+      "carbs": 25.8,
+      "fat": 4.0,
+      "confidence": 0.8007,
+      "class_label": "rajma",
+      "class_confidence": 0.7663,
+      "top_k": [
+        {
+          "label": "rajma",
+          "confidence": 0.7663,
+          "raw_similarity": 0.7663
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "rajma",
+      "identification_confidence": 0.7663,
+      "segmentation_confidence": 0.7663,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "curry",
+        "candidate_labels": [
+          "curry"
+        ],
+        "menu_matching_result": "rajma",
+        "final_food_label": "rajma",
+        "confidence": 0.7663,
+        "uncertainty": 0.2337,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.8384
+}

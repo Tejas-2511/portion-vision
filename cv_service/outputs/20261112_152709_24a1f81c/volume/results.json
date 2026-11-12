@@ -1,0 +1,396 @@
+{
+  "food_items": [
+    {
+      "name": "green salad",
+      "volume_ml": 2.6,
+      "mass_g": 1.5,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6762,
+      "class_label": "green salad",
+      "class_confidence": 0.5465,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5465,
+          "raw_similarity": 0.5465
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.5465,
+      "segmentation_confidence": 0.5465,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.5465,
+        "uncertainty": 0.4535,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 2,
+        "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 91.3,
+      "mass_g": 82.2,
+      "calories": 94.8,
+      "protein": 2.7,
+      "carbs": 9.9,
+      "fat": 4.9,
+      "confidence": 0.8509,
+      "class_label": "mix veg",
+      "class_confidence": 0.8653,
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.8653,
+          "raw_similarity": 0.8653
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "identification_confidence": 0.8653,
+      "segmentation_confidence": 0.8653,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "veg biryani",
+        "candidate_labels": [
+          "veg biryani"
+        ],
+        "menu_matching_result": "mix veg",
+        "final_food_label": "mix veg",
+        "confidence": 0.8653,
+        "uncertainty": 0.1347,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "mix veg",
+      "instance_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 94.4,
+      "mass_g": 93.3,
+      "calories": 121.3,
+      "protein": 2.5,
+      "carbs": 26.1,
+      "fat": 0.3,
+      "confidence": 0.8482,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8598,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 5.3,
+      "mass_g": 5.3,
+      "calories": 10.5,
+      "protein": 0.1,
+      "carbs": 0.8,
+      "fat": 0.7,
+      "confidence": 0.7517,
+      "class_label": "pickle",
+      "class_confidence": 0.6754,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6754,
+          "raw_similarity": 0.6754
+        }
+      ],
+      "identification_status": "open_set",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.6754,
+      "segmentation_confidence": 0.6754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "pickle",
+        "confidence": 0.6754,
+        "uncertainty": 0.3246,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+      },
+      "fragment_count": 1,
+      "food_name": "pickle",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "green salad",
+      "volume_ml": 2.6,
+      "mass_g": 1.5,
+      "calories": 1.0,
+      "protein": 0.0,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6762,
+      "class_label": "green salad",
+      "class_confidence": 0.5465,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.5465,
+          "raw_similarity": 0.5465
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.5465,
+      "segmentation_confidence": 0.5465,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.5465,
+        "uncertainty": 0.4535,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 2,
+        "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "mix veg",
+      "volume_ml": 91.3,
+      "mass_g": 82.2,
+      "calories": 94.8,
+      "protein": 2.7,
+      "carbs": 9.9,
+      "fat": 4.9,
+      "confidence": 0.8509,
+      "class_label": "mix veg",
+      "class_confidence": 0.8653,
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.8653,
+          "raw_similarity": 0.8653
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "identification_confidence": 0.8653,
+      "segmentation_confidence": 0.8653,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "veg biryani",
+        "candidate_labels": [
+          "veg biryani"
+        ],
+        "menu_matching_result": "mix veg",
+        "final_food_label": "mix veg",
+        "confidence": 0.8653,
+        "uncertainty": 0.1347,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 94.4,
+      "mass_g": 93.3,
+      "calories": 121.3,
+      "protein": 2.5,
+      "carbs": 26.1,
+      "fat": 0.3,
+      "confidence": 0.8482,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8598,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 5.3,
+      "mass_g": 5.3,
+      "calories": 10.5,
+      "protein": 0.1,
+      "carbs": 0.8,
+      "fat": 0.7,
+      "confidence": 0.7517,
+      "class_label": "pickle",
+      "class_confidence": 0.6754,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6754,
+          "raw_similarity": 0.6754
+        }
+      ],
+      "identification_status": "open_set",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.6754,
+      "segmentation_confidence": 0.6754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "pickle",
+        "confidence": 0.6754,
+        "uncertainty": 0.3246,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "UNKNOWN",
+      "volume_ml": 0.0,
+      "mass_g": 0.0,
+      "calories": 0.0,
+      "protein": 0.0,
+      "carbs": 0.0,
+      "fat": 0.0,
+      "confidence": 0.0,
+      "class_label": "UNKNOWN",
+      "class_confidence": 0.0,
+      "top_k": [],
+      "identification_status": "unknown",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.0,
+      "segmentation_confidence": 0.8482,
+      "association_confidence": 0.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.8482,
+        "uncertainty": 0.1518,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.6254
+}

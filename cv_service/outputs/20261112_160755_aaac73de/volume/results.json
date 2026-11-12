@@ -1,0 +1,529 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 146.4,
+      "mass_g": 145.8,
+      "calories": 189.6,
+      "protein": 3.9,
+      "carbs": 40.8,
+      "fat": 0.4,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9365,
+        "uncertainty": 0.0635,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 68.3,
+      "mass_g": 54.1,
+      "calories": 171.5,
+      "protein": 4.3,
+      "carbs": 30.8,
+      "fat": 1.9,
+      "confidence": 0.8577,
+      "class_label": "chapati",
+      "class_confidence": 0.8793,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8793,
+          "raw_similarity": 0.8793
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8793,
+      "segmentation_confidence": 0.8793,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8793,
+        "uncertainty": 0.1207,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "chapati",
+      "instance_count": 4
+    },
+    {
+      "name": "dal",
+      "volume_ml": 202.4,
+      "mass_g": 220.4,
+      "calories": 157.7,
+      "protein": 15.3,
+      "carbs": 22.0,
+      "fat": 0.8,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8027,
+        "uncertainty": 0.1973,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 4
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 146.4,
+      "mass_g": 145.8,
+      "calories": 189.6,
+      "protein": 3.9,
+      "carbs": 40.8,
+      "fat": 0.4,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9365,
+        "uncertainty": 0.0635,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 55.2,
+      "mass_g": 43.7,
+      "calories": 138.6,
+      "protein": 3.5,
+      "carbs": 24.9,
+      "fat": 1.6,
+      "confidence": 0.8577,
+      "class_label": "chapati",
+      "class_confidence": 0.8793,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8793,
+          "raw_similarity": 0.8793
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8793,
+      "segmentation_confidence": 0.8793,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8793,
+        "uncertainty": 0.1207,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 4.3,
+      "mass_g": 3.4,
+      "calories": 10.8,
+      "protein": 0.3,
+      "carbs": 1.9,
+      "fat": 0.1,
+      "confidence": 0.8204,
+      "class_label": "chapati",
+      "class_confidence": 0.8044,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8044,
+          "raw_similarity": 0.8044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8044,
+      "segmentation_confidence": 0.8044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8044,
+        "uncertainty": 0.1956,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 56.8,
+      "mass_g": 62.0,
+      "calories": 44.4,
+      "protein": 4.3,
+      "carbs": 6.2,
+      "fat": 0.2,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8027,
+        "uncertainty": 0.1973,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 54.8,
+      "mass_g": 60.2,
+      "calories": 43.1,
+      "protein": 4.2,
+      "carbs": 6.0,
+      "fat": 0.2,
+      "confidence": 0.8178,
+      "class_label": "dal",
+      "class_confidence": 0.7994,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7994,
+          "raw_similarity": 0.7994
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7994,
+      "segmentation_confidence": 0.7994,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7994,
+        "uncertainty": 0.2006,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 58.1,
+      "mass_g": 63.2,
+      "calories": 45.2,
+      "protein": 4.4,
+      "carbs": 6.3,
+      "fat": 0.3,
+      "confidence": 0.802,
+      "class_label": "dal",
+      "class_confidence": 0.7688,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7688,
+          "raw_similarity": 0.7688
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7688,
+      "segmentation_confidence": 0.7688,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7688,
+        "uncertainty": 0.2312,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 8.4,
+      "mass_g": 6.6,
+      "calories": 21.0,
+      "protein": 0.5,
+      "carbs": 3.8,
+      "fat": 0.2,
+      "confidence": 0.7106,
+      "class_label": "chapati",
+      "class_confidence": 0.6035,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.6035,
+          "raw_similarity": 0.6035
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.6035,
+      "segmentation_confidence": 0.6035,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "chapati bread",
+        "candidate_labels": [
+          "chapati bread"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.6035,
+        "uncertainty": 0.3965,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 32.7,
+      "mass_g": 35.0,
+      "calories": 25.0,
+      "protein": 2.4,
+      "carbs": 3.5,
+      "fat": 0.1,
+      "confidence": 0.6456,
+      "class_label": "dal",
+      "class_confidence": 0.4981,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4981,
+          "raw_similarity": 0.4981
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4981,
+      "segmentation_confidence": 0.4981,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4981,
+        "uncertainty": 0.5019,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_8",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 0.4,
+      "mass_g": 0.4,
+      "calories": 1.1,
+      "protein": 0.0,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6201,
+      "class_label": "chapati",
+      "class_confidence": 0.4596,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.4596,
+          "raw_similarity": 0.4596
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.4596,
+      "segmentation_confidence": 0.4596,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian flatbread",
+        "candidate_labels": [
+          "indian flatbread"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.4596,
+        "uncertainty": 0.5404,
+        "original_mask_id": "mask_08",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7754
+}

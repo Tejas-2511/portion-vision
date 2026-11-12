@@ -1,0 +1,279 @@
+{
+  "source_image": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_133500_0db0cada\\input\\original.png",
+  "menu_items": [
+    "chapati",
+    "green salad",
+    "mix veg",
+    "steamed rice",
+    "cake",
+    "chutney",
+    "dal"
+  ],
+  "image_dimensions": [
+    4080,
+    1840
+  ],
+  "total_items": 5,
+  "recognized_count": 4,
+  "unlisted_count": 0,
+  "uncertain_count": 0,
+  "elapsed_seconds": 94.882,
+  "diagnostics": {
+    "pipeline": "sam3_streamlined",
+    "timings": {
+      "total_pipeline_s": 94.878
+    },
+    "vram_mb": {
+      "start": 0.0,
+      "end": 3418.76
+    },
+    "device": "cpu"
+  },
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8928,
+      "identification_confidence": 0.8928,
+      "segmentation_confidence": 0.8928,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        2610,
+        848,
+        451,
+        589
+      ],
+      "area_pixels": 101982,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8928,
+          "raw_similarity": 0.8928
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "segmentation\\crops\\item_01_green_salad.png",
+      "sam3_raw_query": "sliced cucumber",
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8928,
+        "uncertainty": 0.1072,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 4,
+        "decision_reason": "FRAGMENT_GROUPED_4_PIECES"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ],
+      "mask_nonzeros": 101982
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8932,
+      "identification_confidence": 0.8932,
+      "segmentation_confidence": 0.8932,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        2579,
+        783,
+        670,
+        894
+      ],
+      "area_pixels": 257500,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8932,
+          "raw_similarity": 0.8932
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "segmentation\\crops\\item_02_green_salad.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8932,
+        "uncertainty": 0.1068,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 8,
+        "decision_reason": "FRAGMENT_GROUPED_8_PIECES"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ],
+      "mask_nonzeros": 257500
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.9466,
+      "identification_confidence": 0.9466,
+      "segmentation_confidence": 0.9466,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        1698,
+        838,
+        832,
+        881
+      ],
+      "area_pixels": 558522,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9466,
+          "raw_similarity": 0.9466
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "segmentation\\crops\\item_03_steamed_rice.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9466,
+        "uncertainty": 0.0534,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ],
+      "mask_nonzeros": 558522
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8936,
+      "identification_confidence": 0.8936,
+      "segmentation_confidence": 0.8936,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        3022,
+        1407,
+        192,
+        228
+      ],
+      "area_pixels": 21130,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8936,
+          "raw_similarity": 0.8936
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "segmentation\\crops\\item_04_green_salad.png",
+      "sam3_raw_query": "sliced cucumber",
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8936,
+        "uncertainty": 0.1064,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ],
+      "mask_nonzeros": 21130
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.62,
+      "identification_confidence": 0.62,
+      "segmentation_confidence": 0.62,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        2626,
+        846,
+        590,
+        826
+      ],
+      "area_pixels": 13667,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.62,
+          "raw_similarity": 0.62
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "segmentation\\crops\\item_05_UNKNOWN.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.62,
+        "uncertainty": 0.38,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        1840,
+        4080
+      ],
+      "mask_nonzeros": 13667
+    }
+  ]
+}

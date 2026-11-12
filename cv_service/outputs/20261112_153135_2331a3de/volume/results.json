@@ -1,0 +1,6 @@
+{
+  "food_items": [],
+  "confidence": 0.0,
+  "error": "Image is too blurry. Please hold the camera steady and ensure the plate is in sharp focus before capturing.",
+  "error_type": "image_quality"
+}

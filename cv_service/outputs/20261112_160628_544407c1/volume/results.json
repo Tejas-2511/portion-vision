@@ -1,0 +1,703 @@
+{
+  "food_items": [
+    {
+      "name": "palak paneer",
+      "volume_ml": 65.7,
+      "mass_g": 71.7,
+      "calories": 118.5,
+      "protein": 6.6,
+      "carbs": 5.7,
+      "fat": 7.7,
+      "confidence": 0.8443,
+      "class_label": "palak paneer",
+      "class_confidence": 0.852,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.852,
+        "uncertainty": 0.148,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "palak paneer",
+      "instance_count": 6
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.7965,
+      "class_label": "green salad",
+      "class_confidence": 0.7582,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7582,
+          "raw_similarity": 0.7582
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7582,
+      "segmentation_confidence": 0.7582,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7582,
+        "uncertainty": 0.2418,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 62.7,
+      "mass_g": 67.5,
+      "calories": 48.3,
+      "protein": 4.7,
+      "carbs": 6.6,
+      "fat": 0.2,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 4
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "palak paneer",
+      "volume_ml": 6.9,
+      "mass_g": 7.6,
+      "calories": 12.5,
+      "protein": 0.7,
+      "carbs": 0.6,
+      "fat": 0.8,
+      "confidence": 0.8443,
+      "class_label": "palak paneer",
+      "class_confidence": 0.852,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.852,
+        "uncertainty": 0.148,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 4.8,
+      "mass_g": 5.2,
+      "calories": 8.6,
+      "protein": 0.5,
+      "carbs": 0.4,
+      "fat": 0.6,
+      "confidence": 0.8433,
+      "class_label": "palak paneer",
+      "class_confidence": 0.85,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.85,
+          "raw_similarity": 0.85
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.85,
+      "segmentation_confidence": 0.85,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.85,
+        "uncertainty": 0.15,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 4.4,
+      "mass_g": 4.8,
+      "calories": 7.9,
+      "protein": 0.4,
+      "carbs": 0.4,
+      "fat": 0.5,
+      "confidence": 0.8398,
+      "class_label": "palak paneer",
+      "class_confidence": 0.8429,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8429,
+          "raw_similarity": 0.8429
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.8429,
+      "segmentation_confidence": 0.8429,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.8429,
+        "uncertainty": 0.1571,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 5.0,
+      "mass_g": 5.4,
+      "calories": 9.0,
+      "protein": 0.5,
+      "carbs": 0.4,
+      "fat": 0.6,
+      "confidence": 0.8379,
+      "class_label": "palak paneer",
+      "class_confidence": 0.8392,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8392,
+          "raw_similarity": 0.8392
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.8392,
+      "segmentation_confidence": 0.8392,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.8392,
+        "uncertainty": 0.1608,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 2.2,
+      "mass_g": 2.4,
+      "calories": 4.0,
+      "protein": 0.2,
+      "carbs": 0.2,
+      "fat": 0.3,
+      "confidence": 0.8014,
+      "class_label": "palak paneer",
+      "class_confidence": 0.7676,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7676,
+          "raw_similarity": 0.7676
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.7676,
+      "segmentation_confidence": 0.7676,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7676,
+        "uncertainty": 0.2324,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.7965,
+      "class_label": "green salad",
+      "class_confidence": 0.7582,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7582,
+          "raw_similarity": 0.7582
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.7582,
+      "segmentation_confidence": 0.7582,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7582,
+        "uncertainty": 0.2418,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 55.9,
+      "mass_g": 60.3,
+      "calories": 43.2,
+      "protein": 4.2,
+      "carbs": 6.0,
+      "fat": 0.2,
+      "confidence": 0.7803,
+      "class_label": "dal",
+      "class_confidence": 0.7277,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 42.4,
+      "mass_g": 46.3,
+      "calories": 76.5,
+      "protein": 4.3,
+      "carbs": 3.7,
+      "fat": 4.9,
+      "confidence": 0.7677,
+      "class_label": "palak paneer",
+      "class_confidence": 0.7044,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "palak paneer",
+        "candidate_labels": [
+          "palak paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_08",
+        "grouped_instance_id": "inst_11",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 2.2,
+      "mass_g": 2.3,
+      "calories": 1.7,
+      "protein": 0.2,
+      "carbs": 0.2,
+      "fat": 0.0,
+      "confidence": 0.6424,
+      "class_label": "dal",
+      "class_confidence": 0.4932,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4932,
+          "raw_similarity": 0.4932
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4932,
+      "segmentation_confidence": 0.4932,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4932,
+        "uncertainty": 0.5068,
+        "original_mask_id": "mask_09",
+        "grouped_instance_id": "inst_8",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 3.2,
+      "mass_g": 3.4,
+      "calories": 2.4,
+      "protein": 0.2,
+      "carbs": 0.3,
+      "fat": 0.0,
+      "confidence": 0.6293,
+      "class_label": "dal",
+      "class_confidence": 0.4734,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4734,
+          "raw_similarity": 0.4734
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4734,
+      "segmentation_confidence": 0.4734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4734,
+        "uncertainty": 0.5266,
+        "original_mask_id": "mask_10",
+        "grouped_instance_id": "inst_9",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 1.4,
+      "mass_g": 1.5,
+      "calories": 1.0,
+      "protein": 0.1,
+      "carbs": 0.1,
+      "fat": 0.0,
+      "confidence": 0.6145,
+      "class_label": "dal",
+      "class_confidence": 0.4513,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4513,
+          "raw_similarity": 0.4513
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4513,
+      "segmentation_confidence": 0.4513,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4513,
+        "uncertainty": 0.5487,
+        "original_mask_id": "mask_11",
+        "grouped_instance_id": "inst_10",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7698
+}

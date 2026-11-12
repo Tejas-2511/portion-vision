@@ -1,0 +1,151 @@
+{
+  "total_items": 3,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.9107,
+      "identification_confidence": 0.9107,
+      "segmentation_confidence": 0.9107,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        569,
+        232,
+        156,
+        214
+      ],
+      "area_pixels": 21241,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.9107,
+          "raw_similarity": 0.9107
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_152833_daf5d56a\\segmentation\\crops\\00_green_salad_0.91.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.9107,
+        "uncertainty": 0.0893,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 14,
+        "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.6517,
+      "identification_confidence": 0.6517,
+      "segmentation_confidence": 0.6517,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        365,
+        339,
+        37,
+        96
+      ],
+      "area_pixels": 1408,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.6517,
+          "raw_similarity": 0.6517
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_152833_daf5d56a\\segmentation\\crops\\01_steamed_rice_0.65.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.6517,
+        "uncertainty": 0.3483,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 2,
+        "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "mix veg",
+      "food_name": "mix veg",
+      "menu_match": true,
+      "matched_menu_item": "mix veg",
+      "confidence": 0.6734,
+      "identification_confidence": 0.6734,
+      "segmentation_confidence": 0.6734,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        234,
+        240,
+        307,
+        215
+      ],
+      "area_pixels": 46206,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "mix veg",
+          "confidence": 0.6734,
+          "raw_similarity": 0.6734
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_152833_daf5d56a\\segmentation\\crops\\02_mix_veg_0.67.png",
+      "sam3_raw_query": "veg biryani",
+      "diagnostics": {
+        "original_sam3_query": "veg biryani",
+        "candidate_labels": [
+          "veg biryani"
+        ],
+        "menu_matching_result": "mix veg",
+        "final_food_label": "mix veg",
+        "confidence": 0.6734,
+        "uncertainty": 0.3266,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 81.944,
+  "timestamp": "2026-11-12T15:29:56.606269"
+}

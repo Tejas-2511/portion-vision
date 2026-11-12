@@ -1,0 +1,271 @@
+{
+  "food_items": [
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.8396,
+      "class_label": "green salad",
+      "class_confidence": 0.8426,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8426,
+        "uncertainty": 0.1574,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 42.4,
+      "mass_g": 46.3,
+      "calories": 76.5,
+      "protein": 4.3,
+      "carbs": 3.7,
+      "fat": 4.9,
+      "confidence": 0.7677,
+      "class_label": "palak paneer",
+      "class_confidence": 0.7044,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "palak paneer",
+        "candidate_labels": [
+          "palak paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_11",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "palak paneer",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "green salad",
+      "volume_ml": 48.4,
+      "mass_g": 29.0,
+      "calories": 8.7,
+      "protein": 0.4,
+      "carbs": 1.4,
+      "fat": 0.2,
+      "confidence": 0.8396,
+      "class_label": "green salad",
+      "class_confidence": 0.8426,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8426,
+          "raw_similarity": 0.8426
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8426,
+      "segmentation_confidence": 0.8426,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8426,
+        "uncertainty": 0.1574,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 113.0,
+      "mass_g": 105.4,
+      "calories": 137.0,
+      "protein": 2.8,
+      "carbs": 29.5,
+      "fat": 0.3,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "palak paneer",
+      "volume_ml": 42.4,
+      "mass_g": 46.3,
+      "calories": 76.5,
+      "protein": 4.3,
+      "carbs": 3.7,
+      "fat": 4.9,
+      "confidence": 0.7677,
+      "class_label": "palak paneer",
+      "class_confidence": 0.7044,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "palak paneer",
+        "candidate_labels": [
+          "palak paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_11",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.8158
+}

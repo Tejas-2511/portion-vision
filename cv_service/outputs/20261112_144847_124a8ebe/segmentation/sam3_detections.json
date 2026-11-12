@@ -1,0 +1,199 @@
+{
+  "total_items": 4,
+  "food_items": [
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.8694,
+      "identification_confidence": 0.8694,
+      "segmentation_confidence": 0.8694,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        647,
+        213,
+        168,
+        207
+      ],
+      "area_pixels": 21436,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8694,
+          "raw_similarity": 0.8694
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_144847_124a8ebe\\segmentation\\crops\\00_green_salad_0.87.png",
+      "sam3_raw_query": "sliced cucumber",
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8694,
+        "uncertainty": 0.1306,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 13,
+        "decision_reason": "FRAGMENT_GROUPED_13_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.9361,
+      "identification_confidence": 0.9361,
+      "segmentation_confidence": 0.9361,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        427,
+        210,
+        207,
+        219
+      ],
+      "area_pixels": 35140,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9361,
+          "raw_similarity": 0.9361
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_144847_124a8ebe\\segmentation\\crops\\01_steamed_rice_0.94.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9361,
+        "uncertainty": 0.0639,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.6354,
+      "identification_confidence": 0.6354,
+      "segmentation_confidence": 0.6354,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        465,
+        23,
+        190,
+        181
+      ],
+      "area_pixels": 25766,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.6354,
+          "raw_similarity": 0.6354
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_144847_124a8ebe\\segmentation\\crops\\02_dal_0.64.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.6354,
+        "uncertainty": 0.3646,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "pickle",
+      "food_name": "pickle",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.6029,
+      "identification_confidence": 0.6029,
+      "segmentation_confidence": 0.6029,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        683,
+        53,
+        93,
+        111
+      ],
+      "area_pixels": 6002,
+      "identification_status": "open_set",
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6029,
+          "raw_similarity": 0.6029
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261112_144847_124a8ebe\\segmentation\\crops\\03_pickle_0.60.png",
+      "sam3_raw_query": "indian pickle condiment",
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "pickle",
+        "confidence": 0.6029,
+        "uncertainty": 0.3971,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 74.848,
+  "timestamp": "2026-11-12T14:50:42.230192"
+}

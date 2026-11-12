@@ -1,0 +1,29 @@
+{
+  "item_id": "chapati_1",
+  "area_pixels": 71724,
+  "estimated_height_cm": 1.676,
+  "volume_estimate_ml": 109.7,
+  "density": 0.79,
+  "mass_g": 86.6,
+  "class_label": "chapati",
+  "class_confidence": 0.831,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8338,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "flatbread",
+    "candidate_labels": [
+      "flatbread"
+    ],
+    "menu_matching_result": "chapati",
+    "final_food_label": "chapati",
+    "confidence": 0.831,
+    "uncertainty": 0.169,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 2,
+    "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+  },
+  "fragment_count": 1
+}

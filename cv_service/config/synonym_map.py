@@ -21,7 +21,7 @@ GENERIC_FOOD_STOPWORDS: Set[str] = {
 # Dishes in the same set are genuinely interchangeable names for the exact same preparation.
 EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
     # Breads
-    {"chapati", "roti", "phulka", "flatbread", "chapati bread", "roti bread"},
+    {"chapati", "roti", "phulka", "flatbread", "chapati bread", "roti bread", "whole wheat roti", "indian flatbread", "round flatbread"},
     {"paratha", "plain paratha", "tawa paratha"},
     {"naan", "butter naan", "plain naan", "garlic naan"},
     {"poori", "puri", "luchi"},
@@ -29,6 +29,7 @@ EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
 
     # Rice
     {"steamed rice", "white rice", "plain rice", "boiled rice", "chawal", "steam rice", "rice", "sada rice"},
+    {"dal rice", "dal chawal", "rice with dal", "daal chawal", "daal rice", "dal + rice"},
     {"jeera rice", "cumin rice"},
     {"curd rice", "dahi chawal"},
     {"veg pulao", "vegetable pulao", "pulao", "pilaf"},
@@ -36,7 +37,7 @@ EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
     {"khichdi", "dal khichdi", "khichuri"},
 
     # Dals & Lentils (Strictly separated by lentil type)
-    {"dal", "daal", "dal tadka", "yellow dal", "toor dal", "arhar dal", "dal fry", "lentil dal", "lentil soup"},
+    {"dal", "daal", "dal tadka", "yellow dal", "toor dal", "arhar dal", "dal fry", "lentil dal", "lentil soup", "cooked lentils", "brown dal", "tadka dal", "plain dal"},
     {"moong dal", "yellow moong dal", "green moong dal", "moong dal tadka"},
     {"masoor dal", "red lentil dal", "masoor dal tadka"},
     {"chana dal", "chana dal tadka"},
@@ -45,6 +46,7 @@ EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
     {"rasam", "rasam soup"},
 
     # Specific Curries & Gravies (NEVER lump distinct curries together!)
+    {"curry", "sabzi", "gravy", "vegetable curry", "green curry"},
     {"palak paneer", "saag paneer", "spinach cottage cheese", "palak curry", "spinach curry"},
     {"paneer butter masala", "paneer makhani", "shahi paneer", "paneer lababdar"},
     {"matar paneer", "mutter paneer"},
@@ -64,10 +66,11 @@ EQUIVALENT_DISH_SYNONYMS: List[Set[str]] = [
 
     # Salads & Accompaniments
     {"green salad", "cucumber salad", "sliced cucumber", "cucumber", "salad", "kachumber"},
+    {"boiled lentil salad", "sprout salad", "sprouts salad", "sprouted salad", "sprouts", "moong sprout salad", "moong salad", "chana salad", "sundal", "lentil salad", "boiled sprouts", "sprouted moong salad"},
     {"onion salad", "sliced onion", "onion slices"},
     {"curd", "dahi", "plain yogurt", "yogurt", "plain curd"},
     {"raita", "boondi raita", "cucumber raita", "veg raita", "vegetable raita"},
-    {"pickle", "achar", "mango pickle", "mixed pickle", "spicy pickle"},
+    {"pickle", "achar", "mango pickle", "mixed pickle", "spicy pickle", "indian pickle", "indian pickle condiment", "spicy achar", "pickled condiment", "spicy condiment", "chilli pickle", "lemon pickle", "lime pickle"},
     {"papad", "papadum", "roasted papad", "fried papad", "crispy papad"},
     {"green chutney", "mint chutney", "coriander chutney", "pudina chutney", "chutney"},
     {"coconut chutney", "white chutney"},
@@ -94,7 +97,7 @@ SYNONYM_GROUPS = EQUIVALENT_DISH_SYNONYMS
 # Visual prompt aliases for Meta SAM 3 open-vocabulary text grounding.
 # Maps dish names to phrases that activate SAM 3's visual features strongly.
 SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
-    "achar": ['achar', 'spicy pickle', 'pickle'],
+    "achar": ['indian pickle condiment', 'spicy achar', 'pickled condiment', 'spicy condiment', 'achar', 'spicy pickle', 'pickle'],
     "aloo bonda": ['aloo bonda', 'potato bonda', 'fritter'],
     "aloo capsicum": ['aloo capsicum', 'potato bell pepper', 'sabzi'],
     "aloo gobi": ['aloo gobi', 'potato cauliflower curry', 'cauliflower'],
@@ -116,7 +119,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "cake": ['cake', 'pastry', 'sponge cake', 'dessert'],
     "chana dal": ['chana dal tadka', 'chana dal', 'dal tadka', 'yellow dal'],
     "chana dal tadka": ['chana dal tadka', 'dal tadka', 'yellow dal'],
-    "chapati": ['chapati', 'roti', 'flatbread', 'chapati bread'],
+    "chapati": ['whole wheat roti', 'indian flatbread', 'round flatbread', 'chapati', 'roti', 'flatbread', 'phulka', 'chapati bread'],
     "chicken biryani": ['chicken biryani', 'biryani', 'rice'],
     "chicken curry": ['chicken curry', 'butter chicken', 'chicken masala'],
     "chocolate brownie": ['chocolate brownie', 'brownie', 'cake'],
@@ -126,12 +129,18 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "cucumber": ['cucumber', 'sliced cucumber'],
     "cucumber salad": ['cucumber', 'sliced cucumber', 'salad'],
     "curd": ['curd', 'dahi', 'plain yogurt', 'yogurt'],
-    "daal": ['dal tadka', 'yellow dal', 'lentil dal'],
-    "dal": ['dal tadka', 'yellow dal', 'lentil dal', 'daal', 'dal fry'],
+    "daal": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'lentil soup', 'cooked lentils', 'lentil dal'],
+    "dal": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'lentil soup', 'cooked lentils', 'lentil dal', 'daal', 'dal fry', 'dal'],
     "dal fry": ['dal fry', 'dal tadka', 'yellow dal', 'dal'],
     "dal makhani": ['dal makhani', 'black dal', 'dal'],
     "dal palak": ['dal palak', 'spinach dal', 'green dal', 'dal'],
-    "dal tadka": ['dal tadka', 'yellow dal', 'toor dal', 'dal'],
+    "dal tadka": ['dal tadka', 'yellow dal', 'toor dal', 'brown dal', 'dal'],
+    "dal rice": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
+    "dal chawal": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
+    "dal + rice": ['rice with yellow dal', 'rice and dal', 'dal and rice', 'dal rice', 'dal chawal', 'yellow dal on rice', 'rice with curry'],
+    "boiled lentil salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad', 'boiled lentil salad'],
+    "sprout salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad'],
+    "sprouts salad": ['sprout salad', 'sprouted lentils', 'sprouts', 'moong salad', 'lentil salad', 'chana salad', 'sundal', 'salad'],
     "dosa": ['dosa', 'masala dosa', 'crispy crepe'],
     "egg curry": ['egg curry', 'boiled egg curry', 'curry'],
     "fruit salad": ['fruit salad', 'cut fruits', 'fruits'],
@@ -160,7 +169,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "papad": ['papad', 'papadum', 'crispy papad'],
     "paratha": ['paratha', 'aloo paratha', 'flatbread'],
     "phulka": ['phulka', 'roti', 'chapati', 'flatbread'],
-    "pickle": ['mango pickle', 'spicy pickle', 'achar'],
+    "pickle": ['indian pickle condiment', 'spicy achar', 'pickled condiment', 'spicy condiment', 'mango pickle', 'achar', 'pickle'],
     "poha": ['cooked poha', 'flattened rice', 'poha'],
     "poori": ['poori', 'puri', 'puffed fried bread'],
     "pulao": ['pulao', 'veg pulao', 'rice'],
@@ -170,7 +179,7 @@ SAM3_VISUAL_PROMPT_EXPANSIONS: dict[str, list[str]] = {
     "rasam": ['rasam soup', 'rasam'],
     "rasgulla": ['rasgulla', 'sweet dumpling'],
     "rice": ['steamed rice', 'white rice', 'rice'],
-    "roti": ['roti', 'chapati', 'flatbread', 'roti bread'],
+    "roti": ['whole wheat roti', 'indian flatbread', 'round flatbread', 'roti', 'chapati', 'flatbread', 'roti bread'],
     "sabji": ['mixed vegetable curry', 'mixed vegetables', 'sabzi'],
     "sambar": ['sambar soup', 'sambar', 'sambhar'],
     "sambhar": ['sambar soup', 'sambar', 'sambhar'],
@@ -231,6 +240,13 @@ def find_menu_match(
             for m in menu_clean:
                 if m.lower() in group:
                     return m
+
+    # 2b. Composite Dish Match (e.g. "dal rice" when menu lists both "dal" and "steamed rice")
+    if det_clean in {"dal rice", "dal chawal", "rice with dal", "dal + rice"}:
+        has_dal = any(any(d in m.lower() for d in ["dal", "daal", "sambar"]) for m in menu_clean)
+        has_rice = any(any(r in m.lower() for r in ["rice", "chawal"]) for m in menu_clean)
+        if has_dal and has_rice:
+            return "dal rice"
 
     # 3. Whole-Word Distinctive Token Match
     # (e.g. "yellow dal" matching "dal", "steamed rice" matching "rice")

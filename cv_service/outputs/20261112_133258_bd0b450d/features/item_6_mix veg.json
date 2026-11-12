@@ -1,0 +1,29 @@
+{
+  "item_id": "mix veg_6",
+  "area_pixels": 54175,
+  "estimated_height_cm": 3.162,
+  "volume_estimate_ml": 204.1,
+  "density": 0.9,
+  "mass_g": 183.7,
+  "class_label": "mix veg",
+  "class_confidence": 0.4696,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6268,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "vegetable curry",
+    "candidate_labels": [
+      "vegetable curry"
+    ],
+    "menu_matching_result": "mix veg",
+    "final_food_label": "mix veg",
+    "confidence": 0.4696,
+    "uncertainty": 0.5304,
+    "original_mask_id": "mask_05",
+    "grouped_instance_id": "inst_5",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

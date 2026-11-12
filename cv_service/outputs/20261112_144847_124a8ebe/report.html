@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261112_144847_124a8ebe</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261112_144847_124a8ebe</code> &nbsp;│&nbsp; Debug: <code>True</code> &nbsp;│&nbsp; Files saved: <code>27</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "1024x461",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "chapati",
+    "green salad",
+    "mix veg",
+    "steamed rice",
+    "cake",
+    "chutney",
+    "dal"
+  ],
+  "plate_profile": null,
+  "debug": true
+}</pre></div>
+<h2>📁 preprocessing</h2>
+<div class='card'><span class='fname'>01_resized.png</span><br><img src='preprocessing/01_resized.png' alt='01_resized.png'></div>
+<div class='card'><span class='fname'>02_denoised.png</span><br><img src='preprocessing/02_denoised.png' alt='02_denoised.png'></div>
+<div class='card'><span class='fname'>03_color_normalized.png</span><br><img src='preprocessing/03_color_normalized.png' alt='03_color_normalized.png'></div>
+<div class='card'><span class='fname'>04_contrast_enhanced.png</span><br><img src='preprocessing/04_contrast_enhanced.png' alt='04_contrast_enhanced.png'></div>
+<div class='card'><span class='fname'>05_edges.png</span><br><img src='preprocessing/05_edges.png' alt='05_edges.png'></div>
+<div class='card'><span class='fname'>06_perspective_warp.png</span><br><img src='preprocessing/06_perspective_warp.png' alt='06_perspective_warp.png'></div>
+<h2>📁 compartments</h2>
+<div class='card'><span class='fname'>01_adaptive_threshold.png</span><br><img src='compartments/01_adaptive_threshold.png' alt='01_adaptive_threshold.png'></div>
+<div class='card'><span class='fname'>02_combined_edges.png</span><br><img src='compartments/02_combined_edges.png' alt='02_combined_edges.png'></div>
+<div class='card'><span class='fname'>03_compartments_overlay.png</span><br><img src='compartments/03_compartments_overlay.png' alt='03_compartments_overlay.png'></div>
+<h2>📁 depth</h2>
+<div class='card'><span class='fname'>01_raw_depth.npy</span></div>
+<div class='card'><span class='fname'>02_depth_normalized.png</span><br><img src='depth/02_depth_normalized.png' alt='02_depth_normalized.png'></div>
+<div class='card'><span class='fname'>03_depth_colored.png</span><br><img src='depth/03_depth_colored.png' alt='03_depth_colored.png'></div>
+<div class='card'><span class='fname'>04_height_relative.npy</span></div>
+<div class='card'><span class='fname'>05_height_relative_colored.png</span><br><img src='depth/05_height_relative_colored.png' alt='05_height_relative_colored.png'></div>
+<div class='card'><span class='fname'>06_height_metric_cm.npy</span></div>
+<h2>📁 features</h2>
+<div class='card'><span class='fname'>compartments.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[]</pre></div>
+<div class='card'><span class='fname'>item_1_green salad.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "green salad_1",
+  "area_pixels": 21436,
+  "estimated_height_cm": 2.601,
+  "volume_estimate_ml": 64.2,
+  "density": 0.6,
+  "mass_g": 38.5,
+  "class_label": "green salad",
+  "class_confidence": 0.8694,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8529,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "sliced cucumber",
+    "candidate_labels": [
+      "sliced cucumber"
+    ],
+    "menu_matching_result": "green salad",
+    "final_food_label": "green salad",
+    "confidence": 0.8694,
+    "uncertainty": 0.1306,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 13,
+    "decision_reason": "FRAGMENT_GROUPED_13_PIECES"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_2_steamed rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "steamed rice_2",
+  "area_pixels": 35140,
+  "estimated_height_cm": 2.482,
+  "volume_estimate_ml": 148.1,
+  "density": 1.003,
+  "mass_g": 148.5,
+  "class_label": "steamed rice",
+  "class_confidence": 0.9361,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.885,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice",
+    "candidate_labels": [
+      "rice"
+    ],
+    "menu_matching_result": "steamed rice",
+    "final_food_label": "steamed rice",
+    "confidence": 0.9361,
+    "uncertainty": 0.0639,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_3_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_3",
+  "area_pixels": 25766,
+  "estimated_height_cm": 2.153,
+  "volume_estimate_ml": 72.5,
+  "density": 1.095,
+  "mass_g": 79.3,
+  "class_label": "dal",
+  "class_confidence": 0.6354,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7291,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.6354,
+    "uncertainty": 0.3646,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_4_pickle.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "pickle_4",
+  "area_pixels": 6002,
+  "estimated_height_cm": 1.682,
+  "volume_estimate_ml": 16.5,
+  "density": 1.0,
+  "mass_g": 16.5,
+  "class_label": "pickle",
+  "class_confidence": 0.6029,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7102,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "indian pickle condiment",
+    "candidate_labels": [
+      "indian pickle condiment"
+    ],
+    "menu_matching_result": null,
+    "final_food_label": "pickle",
+    "confidence": 0.6029,
+    "uncertainty": 0.3971,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_3",
+    "fragment_count": 1,
+    "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+  },
+  "fragment_count": 1
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_fused_height_map.npy</span></div>
+<div class='card'><span class='fname'>01_height_map.png</span><br><img src='volume/01_height_map.png' alt='01_height_map.png'></div>
+<div class='card'><span class='fname'>02_final_annotated.png</span><br><img src='volume/02_final_annotated.png' alt='02_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "green salad",
+      "volume_ml": 64.2,
+      "mass_g": 38.5,
+      "calories": 11.6,
+      "protein": 0.5,
+      "carbs": 1.8,
+      "fat": 0.3,
+      "confidence": 0.8529,
+      "class_label": "green salad",
+      "class_confidence": 0.8694,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8694,
+          "raw_similarity": 0.8694
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8694,
+      "segmentation_confidence": 0.8694,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8694,
+        "uncertainty": 0.1306,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 13,
+        "decision_reason": "FRAGMENT_GROUPED_13_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 148.1,
+      "mass_g": 148.5,
+      "calories": 193.1,
+      "protein": 4.0,
+      "carbs": 41.6,
+      "fat": 0.4,
+      "confidence": 0.885,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9361,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9361,
+          "raw_similarity": 0.9361
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9361,
+      "segmentation_confidence": 0.9361,
+      "association_confidence": 1.0,
+      "menu_match_confi</pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "1024x461"
+    },
+    "elapsed_s": 0.0268,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-12T14:48:47.493020"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T14:48:47.493020"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 5179.93,
+      "tilt_deg": 5.5
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-12T14:48:47.555075"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "1024x461",
+      "target_long_edge": 1024,
+      "scale": 1.0
+    },
+    "elapsed_s": 0.0012,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-11-12T14:48:47.582903"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0022,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-11-12T14:48:47.609057"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.1419,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-11-12T14:48:47.776528"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.0065,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-11-12T14:48:47.809225"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": 0.015</pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "1024x461"}</td><td>0.0268s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 5179.93, "tilt_deg": 5.5}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Resize applied</td><td>{"original": "1024x461", "target_long_edge": 1024, "scale": 1.0}</td><td>0.0012s</td></tr>
+<tr><td>Preprocessing</td><td>Gaussian blur applied</td><td>{"kernel": 5}</td><td>0.0022s</td></tr>
+<tr><td>Preprocessing</td><td>LAB color normalization applied</td><td>—</td><td>0.1419s</td></tr>
+<tr><td>Preprocessing</td><td>CLAHE contrast enhancement applied</td><td>{"clip_limit": 2.0, "tile_grid": "8x8"}</td><td>0.0065s</td></tr>
+<tr><td>Preprocessing</td><td>Canny edge detection</td><td>{"low": 50, "high": 150}</td><td>0.0158s</td></tr>
+<tr><td>Preprocessing</td><td>Warp skipped (no 4-pt contour)</td><td>{"warped": false}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x461"}</td><td>0.3643s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Detected 0 compartments</td><td>{"min_area_frac": 0.02, "max_area_frac": 0.9, "compartment_count": 0}</td><td>0.0086s</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.04469, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.04469, "pixel_area_cm2": 0.00199746, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0491s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Depth Anything depth map computed (smoothed)</td><td>{"device": "cuda", "is_metric": true, "shape": [461, 1024], "min": -89.763, "max": -57.059}</td><td>19.9230s</td></tr>
+<tr><td>Depth Normalization</td><td>Surface normal plane subtracted from depth</td><td>{"baseline": -70.406, "fitted_plane": true, "is_metric": true}</td><td>0.0404s</td></tr>
+<tr><td>Depth Metric [cm]</td><td>Metric depth height in cm directly computed</td><td>{"cm_per_pixel": 0.04469, "min_cm": 0.0, "max_cm": 15.0, "mean_cm": 3.63}</td><td>0.0033s</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>20.0417s</td></tr>
+<tr><td>Pipeline</td><td>Step 4–6 — SAM 3 Food Identification & Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>SAM3</td><td>Identified 4 food items (3 recognized, 0 unlisted, 0 uncertain)</td><td>—</td><td>94.2826s</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 4 items</td><td>{"total_items": 4}</td><td>0.0316s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 4, "avg_confidence": 0.7943, "scale_method": "bbox"}</td><td>114.9317s</td></tr>
+</table></body></html>

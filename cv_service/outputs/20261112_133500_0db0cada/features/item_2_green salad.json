@@ -1,0 +1,29 @@
+{
+  "item_id": "green salad_2",
+  "area_pixels": 3376,
+  "estimated_height_cm": 2.215,
+  "volume_estimate_ml": 14.9,
+  "density": 0.6,
+  "mass_g": 8.9,
+  "class_label": "green salad",
+  "class_confidence": 0.8596,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8481,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "cucumber",
+    "candidate_labels": [
+      "cucumber"
+    ],
+    "menu_matching_result": "green salad",
+    "final_food_label": "green salad",
+    "confidence": 0.8596,
+    "uncertainty": 0.1404,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 2,
+    "decision_reason": "FRAGMENT_GROUPED_2_PIECES"
+  },
+  "fragment_count": 1
+}

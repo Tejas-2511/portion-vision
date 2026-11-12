@@ -1,0 +1,10 @@
+2026-11-12 15:31:35,076 │ INFO │ Run started — debug=True, id=20261112_153135_2331a3de
+2026-11-12 15:31:35,405 │ INFO │ [input] Saved image → original.png
+2026-11-12 15:31:35,406 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-12 15:31:35,406 │ INFO │ [Input] Original image saved │ params={'resolution': '4080x1840'} │ time=0.3298s │ output=original.png
+2026-11-12 15:31:35,406 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-12 15:31:35,564 │ INFO │ [Quality Gate] FAIL — Image is too blurry. Please hold the camera steady and ensure the plate is in sharp focus before capturing. │ params={'blur_score': 67.66, 'tilt_deg': 1.0}
+2026-11-12 15:31:35,564 │ INFO │ [Pipeline] ❌ Quality gate rejected image: Image is too blurry. Please hold the camera steady and ensure the plate is in sharp focus before capturing.
+2026-11-12 15:31:35,566 │ INFO │ [volume] Saved JSON → results.json
+2026-11-12 15:31:35,567 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-12 15:31:35,609 │ INFO │ HTML report generated → report.html

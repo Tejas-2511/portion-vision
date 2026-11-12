@@ -1,0 +1,29 @@
+{
+  "item_id": "mix veg_3",
+  "area_pixels": 46206,
+  "estimated_height_cm": 2.056,
+  "volume_estimate_ml": 109.4,
+  "density": 0.9,
+  "mass_g": 98.4,
+  "class_label": "mix veg",
+  "class_confidence": 0.6734,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.8206,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "veg biryani",
+    "candidate_labels": [
+      "veg biryani"
+    ],
+    "menu_matching_result": "mix veg",
+    "final_food_label": "mix veg",
+    "confidence": 0.6734,
+    "uncertainty": 0.3266,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}
