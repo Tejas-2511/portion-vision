@@ -1,0 +1,56 @@
+2026-11-14 21:22:22,565 │ INFO │ Run started — debug=True, id=20261114_212222_465b96c6
+2026-11-14 21:22:22,657 │ INFO │ [input] Saved image → original.png
+2026-11-14 21:22:22,657 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-14 21:22:22,657 │ INFO │ [Input] Original image saved │ params={'resolution': '1600x1204'} │ time=0.0921s │ output=original.png
+2026-11-14 21:22:22,657 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-14 21:22:22,766 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 351.14, 'tilt_deg': 25.0}
+2026-11-14 21:22:22,808 │ INFO │ [preprocessing] Saved image → 01_resized.png
+2026-11-14 21:22:22,808 │ INFO │ [Preprocessing] Resize applied │ params={'original': '1600x1204', 'target_long_edge': 1024, 'scale': 0.64} │ time=0.0023s │ output=01_resized.png
+2026-11-14 21:22:22,848 │ INFO │ [preprocessing] Saved image → 02_denoised.png
+2026-11-14 21:22:22,848 │ INFO │ [Preprocessing] Gaussian blur applied │ params={'kernel': 5} │ time=0.0026s │ output=02_denoised.png
+2026-11-14 21:22:23,037 │ INFO │ [preprocessing] Saved image → 03_color_normalized.png
+2026-11-14 21:22:23,037 │ INFO │ [Preprocessing] LAB color normalization applied │ time=0.1510s │ output=03_color_normalized.png
+2026-11-14 21:22:23,084 │ INFO │ [preprocessing] Saved image → 04_contrast_enhanced.png
+2026-11-14 21:22:23,085 │ INFO │ [Preprocessing] CLAHE contrast enhancement applied │ params={'clip_limit': 2.0, 'tile_grid': '8x8'} │ time=0.0082s │ output=04_contrast_enhanced.png
+2026-11-14 21:22:23,108 │ INFO │ [preprocessing] Saved image → 05_edges.png
+2026-11-14 21:22:23,108 │ INFO │ [Preprocessing] Canny edge detection │ params={'low': 50, 'high': 150} │ time=0.0175s │ output=05_edges.png
+2026-11-14 21:22:23,147 │ INFO │ [preprocessing] Saved image → 06_perspective_warp.png
+2026-11-14 21:22:23,147 │ INFO │ [Preprocessing] Warp skipped (no 4-pt contour) │ params={'warped': False} │ output=06_perspective_warp.png
+2026-11-14 21:22:23,150 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x770'} │ time=0.4929s
+2026-11-14 21:22:23,150 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-14 21:22:23,168 │ INFO │ [compartments] Saved image → 01_adaptive_threshold.png
+2026-11-14 21:22:23,170 │ INFO │ [compartments] Saved image → 02_combined_edges.png
+2026-11-14 21:22:23,212 │ INFO │ [compartments] Saved image → 03_compartments_overlay.png
+2026-11-14 21:22:23,212 │ INFO │ [Compartment Detection] Detected 0 compartments │ params={'min_area_frac': 0.02, 'max_area_frac': 0.9, 'compartment_count': 0} │ time=0.0113s │ output=03_compartments_overlay.png
+2026-11-14 21:22:23,220 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.03559, 'method': 'bbox'}
+2026-11-14 21:22:23,220 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.03559, 'pixel_area_cm2': 0.00126671, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0697s
+2026-11-14 21:22:23,221 │ INFO │ [features] Saved JSON → compartments.json
+2026-11-14 21:22:23,221 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-11-14 21:22:39,259 │ INFO │ [depth] Saved npy → 01_raw_depth.npy
+2026-11-14 21:22:39,281 │ INFO │ [depth] Saved image → 02_depth_normalized.png
+2026-11-14 21:22:39,320 │ INFO │ [depth] Saved image → 03_depth_colored.png
+2026-11-14 21:22:39,321 │ INFO │ [Depth Estimation] Depth Anything depth map computed (smoothed) │ params={'device': 'cuda', 'is_metric': True, 'shape': [770, 1024], 'min': -90.211, 'max': -47.537} │ time=16.0340s │ output=03_depth_colored.png
+2026-11-14 21:22:39,368 │ INFO │ [depth] Saved npy → 04_height_relative.npy
+2026-11-14 21:22:39,411 │ INFO │ [depth] Saved image → 05_height_relative_colored.png
+2026-11-14 21:22:39,413 │ INFO │ [Depth Normalization] Surface normal plane subtracted from depth │ params={'baseline': -63.22, 'fitted_plane': True, 'is_metric': True} │ time=0.0426s │ output=05_height_relative_colored.png
+2026-11-14 21:22:39,418 │ INFO │ [depth] Saved npy → 06_height_metric_cm.npy
+2026-11-14 21:22:39,419 │ INFO │ [Depth Metric [cm]] Metric depth height in cm directly computed │ params={'cm_per_pixel': 0.03559, 'min_cm': 0.0, 'max_cm': 11.78, 'mean_cm': 0.68} │ time=0.0025s
+2026-11-14 21:22:39,419 │ INFO │ [Depth Estimation] Complete │ time=16.1975s
+2026-11-14 21:22:39,419 │ INFO │ [Pipeline] Step 4–6 — SAM 3 Food Identification & Segmentation
+2026-11-14 21:23:21,358 │ INFO │ [SAM3] Identified 6 food items (5 recognized, 0 unlisted, 0 uncertain) │ time=41.9381s │ output=segmentation/01_sam3_segmentation_overlay.png
+2026-11-14 21:23:21,358 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-11-14 21:23:21,369 │ INFO │ [features] Saved JSON → item_1_green salad.json
+2026-11-14 21:23:21,379 │ INFO │ [features] Saved JSON → item_2_dal.json
+2026-11-14 21:23:21,389 │ INFO │ [features] Saved JSON → item_3_dal.json
+2026-11-14 21:23:21,402 │ INFO │ [features] Saved JSON → item_4_steamed rice.json
+2026-11-14 21:23:21,409 │ INFO │ [features] Saved JSON → item_5_UNKNOWN.json
+2026-11-14 21:23:21,415 │ INFO │ [features] Saved JSON → item_6_steamed rice.json
+2026-11-14 21:23:21,415 │ INFO │ [Volume Estimation] Computed mass for 6 items │ params={'total_items': 6} │ time=0.0575s
+2026-11-14 21:23:21,418 │ INFO │ [volume] Saved npy → 01_fused_height_map.npy
+2026-11-14 21:23:21,450 │ INFO │ [volume] Saved image → 01_height_map.png
+2026-11-14 21:23:21,501 │ INFO │ [volume] Saved image → 02_volume_integration_regions.png
+2026-11-14 21:23:21,578 │ INFO │ [volume] Saved image → 03_final_annotated.png
+2026-11-14 21:23:21,581 │ INFO │ [volume] Saved JSON → results.json
+2026-11-14 21:23:21,581 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 6, 'avg_confidence': 0.8203, 'scale_method': 'bbox'} │ time=59.0188s
+2026-11-14 21:23:21,582 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-14 21:23:21,692 │ INFO │ HTML report generated → report.html

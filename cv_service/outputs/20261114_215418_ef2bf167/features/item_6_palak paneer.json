@@ -1,0 +1,57 @@
+{
+  "item_id": "palak paneer_6",
+  "area_pixels": 648,
+  "estimated_height_cm": 1.289,
+  "volume_estimate_ml": 1.7,
+  "density": 1.09,
+  "mass_g": 1.9,
+  "class_label": "palak paneer",
+  "class_confidence": 0.7676,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8014,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.7676,
+    "uncertainty": 0.2324,
+    "original_mask_id": "mask_05",
+    "grouped_instance_id": "inst_4",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "palak paneer",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 648,
+    "archetype": "chunky_suspension",
+    "archetype_justification": "Irregular 3D solids suspended in gravy within compartment (palak paneer)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.00199746317230165,
+    "food_surface_area_cm2": 1.29,
+    "valid_pixel_count": 648,
+    "clipped_pixel_count": 0,
+    "valid_pixel_ratio": 1.0,
+    "height_stats_cm": {
+      "min": -12.25,
+      "p5": -12.075,
+      "p25": -11.837,
+      "median": -11.551,
+      "mean": -11.552,
+      "p75": -11.26,
+      "p95": -11.046,
+      "max": -10.955,
+      "std": 0.332
+    },
+    "effective_well_depth_cm": 1.8,
+    "raw_integrated_vol_ml": 1.67,
+    "compartment_capped": false,
+    "final_volume_ml": 1.7
+  },
+  "fragment_count": 1
+}

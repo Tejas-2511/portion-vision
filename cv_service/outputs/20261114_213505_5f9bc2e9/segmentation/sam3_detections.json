@@ -1,0 +1,199 @@
+{
+  "total_items": 4,
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8598,
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        361,
+        244,
+        235,
+        247
+      ],
+      "area_pixels": 39510,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213505_5f9bc2e9\\segmentation\\crops\\00_steamed_rice_0.86.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7953,
+      "identification_confidence": 0.7953,
+      "segmentation_confidence": 0.7953,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        422,
+        30,
+        188,
+        183
+      ],
+      "area_pixels": 27440,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7953,
+          "raw_similarity": 0.7953
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213505_5f9bc2e9\\segmentation\\crops\\01_dal_0.80.png",
+      "sam3_raw_query": "brown dal",
+      "diagnostics": {
+        "original_sam3_query": "brown dal",
+        "candidate_labels": [
+          "brown dal"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7953,
+        "uncertainty": 0.2047,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal rice",
+      "food_name": "dal rice",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "confidence": 0.7621,
+      "identification_confidence": 0.7621,
+      "segmentation_confidence": 0.7621,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        639,
+        246,
+        198,
+        231
+      ],
+      "area_pixels": 34735,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.7621,
+          "raw_similarity": 0.7621
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213505_5f9bc2e9\\segmentation\\crops\\02_dal_rice_0.76.png",
+      "sam3_raw_query": "rice with yellow dal",
+      "diagnostics": {
+        "original_sam3_query": "rice with yellow dal",
+        "candidate_labels": [
+          "rice with yellow dal"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.7621,
+        "uncertainty": 0.2379,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "pickle",
+      "food_name": "pickle",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "confidence": 0.4964,
+      "identification_confidence": 0.4964,
+      "segmentation_confidence": 0.4964,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        666,
+        85,
+        109,
+        88
+      ],
+      "area_pixels": 6042,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.4964,
+          "raw_similarity": 0.4964
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213505_5f9bc2e9\\segmentation\\crops\\03_pickle_0.50.png",
+      "sam3_raw_query": "achar condiment",
+      "diagnostics": {
+        "original_sam3_query": "achar condiment",
+        "candidate_labels": [
+          "achar condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.4964,
+        "uncertainty": 0.5036,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 14.178,
+  "timestamp": "2026-11-14T21:35:20.811603"
+}

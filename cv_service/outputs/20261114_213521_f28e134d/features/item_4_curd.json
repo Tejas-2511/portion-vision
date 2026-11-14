@@ -1,0 +1,59 @@
+{
+  "item_id": "curd_4",
+  "area_pixels": 18055,
+  "estimated_height_cm": 1.704,
+  "volume_estimate_ml": 61.5,
+  "density": 1.03,
+  "mass_g": 63.3,
+  "class_label": "curd",
+  "class_confidence": 0.5479,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6771,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "yogurt",
+    "candidate_labels": [
+      "yogurt"
+    ],
+    "menu_matching_result": null,
+    "final_food_label": "curd",
+    "confidence": 0.5479,
+    "uncertainty": 0.4521,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_4",
+    "fragment_count": 1,
+    "decision_reason": "OPEN_SET_VISUAL_RECOGNITION"
+  },
+  "volume_diagnostics": {
+    "food_name": "curd",
+    "fallbacks_applied": [
+      "WELL_DEPTH_FLOORED_2.0CM"
+    ],
+    "raw_pixel_count": 18055,
+    "archetype": "liquid_in_well",
+    "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (curd)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.00199746317230165,
+    "food_surface_area_cm2": 36.06,
+    "valid_pixel_count": 18038,
+    "clipped_pixel_count": 17,
+    "valid_pixel_ratio": 0.9991,
+    "height_stats_cm": {
+      "min": -8.52,
+      "p5": -8.3,
+      "p25": -8.093,
+      "median": -7.666,
+      "mean": -7.429,
+      "p75": -6.946,
+      "p95": -5.785,
+      "max": -4.261,
+      "std": 0.805
+    },
+    "effective_well_depth_cm": 2.0,
+    "raw_integrated_vol_ml": 61.45,
+    "compartment_capped": false,
+    "final_volume_ml": 61.5
+  },
+  "fragment_count": 1
+}

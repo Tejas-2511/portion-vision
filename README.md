@@ -88,14 +88,15 @@ portion-vision/
 │   ├── depth/                 #   Depth Anything 3 metric depth & plane normal fitting
 │   ├── diagnostics/           #   RunContext — structured JSON & visual HTML reports
 │   ├── estimation/            #   Mass estimator (voxel archetypes → mass → macros)
+│   ├── volume/                #   Physics-informed pixel-level volume integration (V = Σ H_i × A_i)
 │   ├── image_processing/      #   Quality gate (blur/tilt check) & homography warp
 │   ├── open_vocab/            #   SAM 3 segmentation, open-set, instance grouper
 │   │   ├── sam3_segmenter.py   #     ViT backbone, non-food anchors, container binding
 │   │   ├── instance_grouper.py #     Spatial contour clustering & boundary resolution
 │   │   └── pipeline.py        #     High-level orchestrator & transparent crop export
 │   ├── outputs/               #   Timestamped CV run logs, masks, crops & reports
-│   ├── main.py                #   FastAPI server entry point
-│   ├── evaluate_example.py    #   Standalone CLI tool for plate evaluation & metrology guide
+│   └── main.py                #   FastAPI server entry point
+├── evaluate_example.py        # Standalone CLI tool for plate evaluation & testing
 ├── plate/                     # Reference plate dataset for testing & verification
 ├── technical.md               # Full architecture & code-level deconstruction
 └── README.md                  # Project overview & documentation
@@ -159,33 +160,46 @@ Frontend runs on `http://localhost:5173`. Open in a browser or scan the network 
 - Disparate touching foods (e.g. rice and dal) are strictly preserved as separate items.
 - Overlapping boundary pixels are assigned via argmax confidence to prevent duplicate voxel calculations.
 
+### 4. Physics-Informed Pixel-Level Voxel Integration ($V = \sum H_i \times A_i$)
+- Replaced scalar heuristic approximations with true pixel-level volume integration:
+  $$V = \sum_{i \in \mathcal{M}_{\text{valid}}} \left( H_i^{\text{eff}} \times A_i \right) \quad [\text{cm}^3 \equiv \text{ml}]$$
+- Grounds elevations to the local support base ($\Delta H_i = \max(0.0, H_i - p_5)$), eliminating baseline drift and perspective tilt artifacts.
+- Preserves the 5 physical archetypes: Planar Laminate (`chapati`), Sliced Salad (`cucumber`), Liquid Frustum (`dal`), Mounded Grain (`rice`), Chunky Suspension (`paneer`/`sabzi`), plus Condiment Dollops (`pickle`).
+- Strict inlier masking ($\mathcal{M}_{\text{valid}}$) rejects NaNs, non-finite values, and specular glare spikes.
+
 ---
 
 ## CV Inspection & Verification Tools
 
-### Visual Pipeline Inspector
-### Plate Evaluation & Metrology CLI Guide
-Run end-to-end portion estimation, 3D topographic relief mapping, and complete nutritional macronutrient calculation:
+### 1. Standalone Plate Evaluation CLI
+Run PortionVision's full pipeline on any custom plate image:
 
 ```powershell
 conda activate sam3
 
-# 1. Run on default example plate with a contextual mess menu:
-python cv_service/evaluate_example.py
+# Default plate with standard mess menu:
+python evaluate_example.py
 
-# 2. Run on a specific plate with a custom menu:
-python cv_service/evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --menu "palak paneer, dal, steamed rice, green salad"
+# Custom plate image with specific menu items:
+python evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --menu "palak paneer, dal, steamed rice, green salad"
 
-# 3. Pure open-world discovery mode (no menu hints):
-python cv_service/evaluate_example.py --image "plate/use/IMG20260402200840.jpg" --open-world
+# Open-world discovery mode (no menu provided):
+python evaluate_example.py --image "plate/use/IMG20260402200840.jpg" --open-world
 ```
 
-All generated visualization artifacts are saved under `cv_service/outputs/<timestamp>/`:
-- `volume/02_final_annotated.png` — bounding contours, food labels, portion masses (g), and confidence scores
-- `volume/01_height_map.png` — 3D Topographic fused relief map (Turbo colormap) showing dome curvatures
-- `depth/03_depth_colored.png` — dense continuous Depth Anything metric depth map
-- `depth/05_height_relative_colored.png` — tray-normalized relative height map
-- `volume/results.json` — machine-readable portion masses, volumes, and full nutritional macros (Calories, Protein, Carbs, Fat)
+### 2. Presentation & Benchmark Outputs
+Curated presentation artifacts for all 7 reference plates are available in:
+- `cv_service/outputs/temp/` (and root `outputs/temp/`, `output/temp/`)
+
+Each plate directory includes:
+- `01_original_photo.png` — raw top-down tray capture
+- `02_sam3_segmentation_overlay.png` — Meta SAM 3 open-vocabulary masks
+- `03_metric_depth_colored.png` — Depth Anything 3 metric depth map
+- `04_height_relative_colored.png` — tray-normalized relative elevation
+- `05_3D_topographic_relief_map.png` — 3D relief surface rendering
+- `06_voxel_volume_integration_regions.png` — calibrated pixel-level voxel integration
+- `07_final_annotated_portions.png` — portion labels, masses (g), and confidence scores
+- `report.html` & `results.json` — complete metrology metrics and macronutrient breakdown
 
 ---
 

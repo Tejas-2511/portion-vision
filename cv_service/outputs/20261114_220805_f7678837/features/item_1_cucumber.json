@@ -1,0 +1,57 @@
+{
+  "item_id": "cucumber_1",
+  "area_pixels": 23298,
+  "estimated_height_cm": 1.813,
+  "volume_estimate_ml": 84.4,
+  "density": 1.05,
+  "mass_g": 88.6,
+  "class_label": "cucumber",
+  "class_confidence": 0.8933,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8645,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "cucumber salad",
+    "candidate_labels": [
+      "cucumber salad"
+    ],
+    "menu_matching_result": "cucumber",
+    "final_food_label": "cucumber",
+    "confidence": 0.8933,
+    "uncertainty": 0.1067,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "cucumber",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 23298,
+    "archetype": "sliced_salad",
+    "archetype_justification": "Discrete planar vegetable slices with calibrated cut-thickness floor (cucumber)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.00199746317230165,
+    "food_surface_area_cm2": 46.54,
+    "valid_pixel_count": 23150,
+    "clipped_pixel_count": 148,
+    "valid_pixel_ratio": 0.9936,
+    "height_stats_cm": {
+      "min": -14.991,
+      "p5": -11.499,
+      "p25": -10.101,
+      "median": -9.11,
+      "mean": -8.628,
+      "p75": -7.522,
+      "p95": -3.271,
+      "max": -1.59,
+      "std": 2.299
+    },
+    "slice_thickness_floor_cm": 0.75,
+    "raw_integrated_vol_ml": 84.39,
+    "compartment_capped": false,
+    "final_volume_ml": 84.4
+  },
+  "fragment_count": 1
+}

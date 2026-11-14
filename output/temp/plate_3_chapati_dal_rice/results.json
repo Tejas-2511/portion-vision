@@ -1,0 +1,808 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 239.3,
+      "mass_g": 238.3,
+      "calories": 309.8,
+      "protein": 6.4,
+      "carbs": 66.7,
+      "fat": 0.7,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9365,
+        "uncertainty": 0.0635,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "steamed rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 61293,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (steamed rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653597122058272,
+        "food_surface_area_cm2": 102.07,
+        "valid_pixel_count": 61029,
+        "clipped_pixel_count": 264,
+        "valid_pixel_ratio": 0.9957,
+        "height_stats_cm": {
+          "min": -22.787,
+          "p5": -20.318,
+          "p25": -18.666,
+          "median": -17.026,
+          "mean": -17.071,
+          "p75": -15.323,
+          "p95": -14.147,
+          "max": -8.469,
+          "std": 1.996
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 239.34,
+        "compartment_capped": false,
+        "final_volume_ml": 239.3
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 106.8,
+      "mass_g": 84.6,
+      "calories": 268.2,
+      "protein": 6.7,
+      "carbs": 48.3,
+      "fat": 3.1,
+      "confidence": 0.8577,
+      "class_label": "chapati",
+      "class_confidence": 0.8793,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8793,
+          "raw_similarity": 0.8793
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8793,
+      "segmentation_confidence": 0.8793,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8793,
+        "uncertainty": 0.1207,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "chapati",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 66970,
+        "archetype": "planar_laminate",
+        "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653595957905054,
+        "food_surface_area_cm2": 111.53,
+        "valid_pixel_count": 66758,
+        "clipped_pixel_count": 212,
+        "valid_pixel_ratio": 0.9968,
+        "height_stats_cm": {
+          "min": -6.147,
+          "p5": -5.431,
+          "p25": -3.887,
+          "median": -2.516,
+          "mean": -2.008,
+          "p75": -0.489,
+          "p95": 2.848,
+          "max": 5.193,
+          "std": 2.528
+        },
+        "unit_sheet_thickness_cm": 0.25,
+        "raw_integrated_vol_ml": 91.59,
+        "compartment_capped": false,
+        "final_volume_ml": 91.6
+      },
+      "fragment_count": 1,
+      "food_name": "chapati",
+      "instance_count": 3
+    },
+    {
+      "name": "dal",
+      "volume_ml": 278.4,
+      "mass_g": 302.9,
+      "calories": 216.9,
+      "protein": 21.2,
+      "carbs": 30.3,
+      "fat": 1.1,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8027,
+        "uncertainty": 0.1973,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 26519,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.001665359828621149,
+        "food_surface_area_cm2": 44.16,
+        "valid_pixel_count": 26449,
+        "clipped_pixel_count": 70,
+        "valid_pixel_ratio": 0.9974,
+        "height_stats_cm": {
+          "min": -20.732,
+          "p5": -20.515,
+          "p25": -20.067,
+          "median": -19.471,
+          "mean": -19.357,
+          "p75": -18.807,
+          "p95": -17.68,
+          "max": -15.601,
+          "std": 0.892
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 77.17,
+        "compartment_capped": false,
+        "final_volume_ml": 77.2
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 4
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 239.3,
+      "mass_g": 238.3,
+      "calories": 309.8,
+      "protein": 6.4,
+      "carbs": 66.7,
+      "fat": 0.7,
+      "confidence": 0.8852,
+      "class_label": "steamed rice",
+      "class_confidence": 0.9365,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.9365,
+          "raw_similarity": 0.9365
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.9365,
+      "segmentation_confidence": 0.9365,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.9365,
+        "uncertainty": 0.0635,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "steamed rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 61293,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (steamed rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653597122058272,
+        "food_surface_area_cm2": 102.07,
+        "valid_pixel_count": 61029,
+        "clipped_pixel_count": 264,
+        "valid_pixel_ratio": 0.9957,
+        "height_stats_cm": {
+          "min": -22.787,
+          "p5": -20.318,
+          "p25": -18.666,
+          "median": -17.026,
+          "mean": -17.071,
+          "p75": -15.323,
+          "p95": -14.147,
+          "max": -8.469,
+          "std": 1.996
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 239.34,
+        "compartment_capped": false,
+        "final_volume_ml": 239.3
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 91.6,
+      "mass_g": 72.5,
+      "calories": 230.0,
+      "protein": 5.7,
+      "carbs": 41.4,
+      "fat": 2.7,
+      "confidence": 0.8577,
+      "class_label": "chapati",
+      "class_confidence": 0.8793,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8793,
+          "raw_similarity": 0.8793
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8793,
+      "segmentation_confidence": 0.8793,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8793,
+        "uncertainty": 0.1207,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "chapati",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 66970,
+        "archetype": "planar_laminate",
+        "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653595957905054,
+        "food_surface_area_cm2": 111.53,
+        "valid_pixel_count": 66758,
+        "clipped_pixel_count": 212,
+        "valid_pixel_ratio": 0.9968,
+        "height_stats_cm": {
+          "min": -6.147,
+          "p5": -5.431,
+          "p25": -3.887,
+          "median": -2.516,
+          "mean": -2.008,
+          "p75": -0.489,
+          "p95": 2.848,
+          "max": 5.193,
+          "std": 2.528
+        },
+        "unit_sheet_thickness_cm": 0.25,
+        "raw_integrated_vol_ml": 91.59,
+        "compartment_capped": false,
+        "final_volume_ml": 91.6
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 7.2,
+      "mass_g": 5.8,
+      "calories": 18.2,
+      "protein": 0.5,
+      "carbs": 3.3,
+      "fat": 0.2,
+      "confidence": 0.8204,
+      "class_label": "chapati",
+      "class_confidence": 0.8044,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.8044,
+          "raw_similarity": 0.8044
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.8044,
+      "segmentation_confidence": 0.8044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "whole wheat roti",
+        "candidate_labels": [
+          "whole wheat roti"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.8044,
+        "uncertainty": 0.1956,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "chapati",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 5180,
+        "archetype": "planar_laminate",
+        "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653600614517927,
+        "food_surface_area_cm2": 8.63,
+        "valid_pixel_count": 5154,
+        "clipped_pixel_count": 26,
+        "valid_pixel_ratio": 0.995,
+        "height_stats_cm": {
+          "min": -17.248,
+          "p5": -11.642,
+          "p25": -8.085,
+          "median": -7.205,
+          "mean": -7.443,
+          "p75": -6.082,
+          "p95": -4.765,
+          "max": -3.261,
+          "std": 2.019
+        },
+        "unit_sheet_thickness_cm": 0.25,
+        "raw_integrated_vol_ml": 7.22,
+        "compartment_capped": false,
+        "final_volume_ml": 7.2
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 77.2,
+      "mass_g": 84.2,
+      "calories": 60.3,
+      "protein": 5.9,
+      "carbs": 8.4,
+      "fat": 0.3,
+      "confidence": 0.8195,
+      "class_label": "dal",
+      "class_confidence": 0.8027,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.8027,
+          "raw_similarity": 0.8027
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.8027,
+      "segmentation_confidence": 0.8027,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.8027,
+        "uncertainty": 0.1973,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 26519,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.001665359828621149,
+        "food_surface_area_cm2": 44.16,
+        "valid_pixel_count": 26449,
+        "clipped_pixel_count": 70,
+        "valid_pixel_ratio": 0.9974,
+        "height_stats_cm": {
+          "min": -20.732,
+          "p5": -20.515,
+          "p25": -20.067,
+          "median": -19.471,
+          "mean": -19.357,
+          "p75": -18.807,
+          "p95": -17.68,
+          "max": -15.601,
+          "std": 0.892
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 77.17,
+        "compartment_capped": false,
+        "final_volume_ml": 77.2
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 76.0,
+      "mass_g": 83.4,
+      "calories": 59.7,
+      "protein": 5.8,
+      "carbs": 8.3,
+      "fat": 0.3,
+      "confidence": 0.8178,
+      "class_label": "dal",
+      "class_confidence": 0.7994,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7994,
+          "raw_similarity": 0.7994
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7994,
+      "segmentation_confidence": 0.7994,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7994,
+        "uncertainty": 0.2006,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 25612,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653597122058272,
+        "food_surface_area_cm2": 42.65,
+        "valid_pixel_count": 25577,
+        "clipped_pixel_count": 35,
+        "valid_pixel_ratio": 0.9986,
+        "height_stats_cm": {
+          "min": -17.7,
+          "p5": -17.405,
+          "p25": -16.649,
+          "median": -15.637,
+          "mean": -15.191,
+          "p75": -14.11,
+          "p95": -11.267,
+          "max": -9.127,
+          "std": 1.856
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 76.05,
+        "compartment_capped": false,
+        "final_volume_ml": 76.0
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 79.7,
+      "mass_g": 86.7,
+      "calories": 62.1,
+      "protein": 6.1,
+      "carbs": 8.7,
+      "fat": 0.3,
+      "confidence": 0.802,
+      "class_label": "dal",
+      "class_confidence": 0.7688,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7688,
+          "raw_similarity": 0.7688
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7688,
+      "segmentation_confidence": 0.7688,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7688,
+        "uncertainty": 0.2312,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 27108,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653599450364709,
+        "food_surface_area_cm2": 45.14,
+        "valid_pixel_count": 27029,
+        "clipped_pixel_count": 79,
+        "valid_pixel_ratio": 0.9971,
+        "height_stats_cm": {
+          "min": -17.225,
+          "p5": -16.863,
+          "p25": -16.27,
+          "median": -15.416,
+          "mean": -15.228,
+          "p75": -14.379,
+          "p95": -12.83,
+          "max": -10.822,
+          "std": 1.274
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 79.72,
+        "compartment_capped": false,
+        "final_volume_ml": 79.7
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "chapati",
+      "volume_ml": 8.0,
+      "mass_g": 6.3,
+      "calories": 20.0,
+      "protein": 0.5,
+      "carbs": 3.6,
+      "fat": 0.2,
+      "confidence": 0.7106,
+      "class_label": "chapati",
+      "class_confidence": 0.6035,
+      "top_k": [
+        {
+          "label": "chapati",
+          "confidence": 0.6035,
+          "raw_similarity": 0.6035
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "chapati",
+      "identification_confidence": 0.6035,
+      "segmentation_confidence": 0.6035,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "chapati bread",
+        "candidate_labels": [
+          "chapati bread"
+        ],
+        "menu_matching_result": "chapati",
+        "final_food_label": "chapati",
+        "confidence": 0.6035,
+        "uncertainty": 0.3965,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "chapati",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 5748,
+        "archetype": "planar_laminate",
+        "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0016653600614517927,
+        "food_surface_area_cm2": 9.57,
+        "valid_pixel_count": 5725,
+        "clipped_pixel_count": 23,
+        "valid_pixel_ratio": 0.996,
+        "height_stats_cm": {
+          "min": -6.802,
+          "p5": -3.061,
+          "p25": 0.329,
+          "median": 3.965,
+          "mean": 2.685,
+          "p75": 4.99,
+          "p95": 5.991,
+          "max": 6.502,
+          "std": 2.998
+        },
+        "unit_sheet_thickness_cm": 0.25,
+        "raw_integrated_vol_ml": 8.02,
+        "compartment_capped": false,
+        "final_volume_ml": 8.0
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 45.5,
+      "mass_g": 48.6,
+      "calories": 34.8,
+      "protein": 3.4,
+      "carbs": 4.9,
+      "fat": 0.2,
+      "confidence": 0.6456,
+      "class_label": "dal",
+      "class_confidence": 0.4981,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4981,
+          "raw_similarity": 0.4981
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.4981,
+      "segmentation_confidence": 0.4981,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4981,
+        "uncertainty": 0.5019,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 15289,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.001665359828621149,
+        "food_surface_area_cm2": 25.46,
+        "valid_pixel_count": 15182,
+        "clipped_pixel_count": 107,
+        "valid_pixel_ratio": 0.993,
+        "height_stats_cm": {
+          "min": -16.943,
+          "p5": -15.652,
+          "p25": -14.636,
+          "median": -13.094,
+          "mean": -12.532,
+          "p75": -10.707,
+          "p95": -8.121,
+          "max": -3.312,
+          "std": 2.489
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 45.48,
+        "compartment_capped": false,
+        "final_volume_ml": 45.5
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7948
+}

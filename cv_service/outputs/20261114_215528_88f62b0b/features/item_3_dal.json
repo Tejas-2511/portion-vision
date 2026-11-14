@@ -1,0 +1,59 @@
+{
+  "item_id": "dal_3",
+  "area_pixels": 27440,
+  "estimated_height_cm": 1.796,
+  "volume_estimate_ml": 82.1,
+  "density": 1.085,
+  "mass_g": 89.1,
+  "class_label": "dal",
+  "class_confidence": 0.7953,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8157,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "brown dal",
+    "candidate_labels": [
+      "brown dal"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.7953,
+    "uncertainty": 0.2047,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "dal",
+    "fallbacks_applied": [
+      "WELL_DEPTH_FLOORED_2.0CM"
+    ],
+    "raw_pixel_count": 27440,
+    "archetype": "liquid_in_well",
+    "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0016653599450364709,
+    "food_surface_area_cm2": 45.7,
+    "valid_pixel_count": 27396,
+    "clipped_pixel_count": 44,
+    "valid_pixel_ratio": 0.9984,
+    "height_stats_cm": {
+      "min": -8.587,
+      "p5": -8.341,
+      "p25": -7.125,
+      "median": -5.331,
+      "mean": -4.864,
+      "p75": -2.865,
+      "p95": -0.004,
+      "max": 1.936,
+      "std": 2.653
+    },
+    "effective_well_depth_cm": 2.0,
+    "raw_integrated_vol_ml": 82.07,
+    "compartment_capped": false,
+    "final_volume_ml": 82.1
+  },
+  "fragment_count": 1
+}

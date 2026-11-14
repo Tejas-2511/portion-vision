@@ -1,0 +1,739 @@
+{
+  "food_items": [
+    {
+      "name": "cucumber",
+      "volume_ml": 84.4,
+      "mass_g": 88.6,
+      "calories": 16.0,
+      "protein": 0.6,
+      "carbs": 3.2,
+      "fat": 0.1,
+      "confidence": 0.8645,
+      "class_label": "cucumber",
+      "class_confidence": 0.8933,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8933,
+          "raw_similarity": 0.8933
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "cucumber",
+      "identification_confidence": 0.8933,
+      "segmentation_confidence": 0.8933,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber salad",
+        "candidate_labels": [
+          "cucumber salad"
+        ],
+        "menu_matching_result": "cucumber",
+        "final_food_label": "cucumber",
+        "confidence": 0.8933,
+        "uncertainty": 0.1067,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "cucumber",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 23298,
+        "archetype": "sliced_salad",
+        "archetype_justification": "Discrete planar vegetable slices with calibrated cut-thickness floor (cucumber)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 46.54,
+        "valid_pixel_count": 23150,
+        "clipped_pixel_count": 148,
+        "valid_pixel_ratio": 0.9936,
+        "height_stats_cm": {
+          "min": -14.991,
+          "p5": -11.499,
+          "p25": -10.101,
+          "median": -9.11,
+          "mean": -8.628,
+          "p75": -7.522,
+          "p95": -3.271,
+          "max": -1.59,
+          "std": 2.299
+        },
+        "slice_thickness_floor_cm": 0.75,
+        "raw_integrated_vol_ml": 84.39,
+        "compartment_capped": false,
+        "final_volume_ml": 84.4
+      },
+      "fragment_count": 1,
+      "food_name": "cucumber",
+      "instance_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 134.7,
+      "mass_g": 133.6,
+      "calories": 173.7,
+      "protein": 3.6,
+      "carbs": 37.4,
+      "fat": 0.4,
+      "confidence": 0.8188,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8014,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8014,
+          "raw_similarity": 0.8014
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8014,
+      "segmentation_confidence": 0.8014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8014,
+        "uncertainty": 0.1986,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "steamed rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 32269,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (steamed rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 64.46,
+        "valid_pixel_count": 32184,
+        "clipped_pixel_count": 85,
+        "valid_pixel_ratio": 0.9974,
+        "height_stats_cm": {
+          "min": -22.601,
+          "p5": -19.644,
+          "p25": -16.827,
+          "median": -15.462,
+          "mean": -15.829,
+          "p75": -14.716,
+          "p95": -13.167,
+          "max": -12.022,
+          "std": 1.854
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 158.64,
+        "compartment_capped": true,
+        "cap_limit_ml": 134.7,
+        "final_volume_ml": 134.7
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "seviyan",
+      "volume_ml": 60.7,
+      "mass_g": 63.7,
+      "calories": 85.8,
+      "protein": 2.1,
+      "carbs": 13.6,
+      "fat": 2.5,
+      "confidence": 0.7103,
+      "class_label": "seviyan",
+      "class_confidence": 0.603,
+      "top_k": [
+        {
+          "label": "seviyan",
+          "confidence": 0.603,
+          "raw_similarity": 0.603
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "seviyan",
+      "identification_confidence": 0.603,
+      "segmentation_confidence": 0.603,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "white cream",
+        "candidate_labels": [
+          "white cream"
+        ],
+        "menu_matching_result": "seviyan",
+        "final_food_label": "seviyan",
+        "confidence": 0.603,
+        "uncertainty": 0.397,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "seviyan",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 17846,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (seviyan)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 35.65,
+        "valid_pixel_count": 17837,
+        "clipped_pixel_count": 9,
+        "valid_pixel_ratio": 0.9995,
+        "height_stats_cm": {
+          "min": -8.52,
+          "p5": -8.301,
+          "p25": -8.096,
+          "median": -7.68,
+          "mean": -7.44,
+          "p75": -6.962,
+          "p95": -5.808,
+          "max": -4.467,
+          "std": 0.797
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 60.73,
+        "compartment_capped": false,
+        "final_volume_ml": 60.7
+      },
+      "fragment_count": 1,
+      "food_name": "seviyan",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 71.6,
+      "mass_g": 78.0,
+      "calories": 55.8,
+      "protein": 5.5,
+      "carbs": 7.8,
+      "fat": 0.3,
+      "confidence": 0.6858,
+      "class_label": "dal",
+      "class_confidence": 0.5622,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.5622,
+          "raw_similarity": 0.5622
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.5622,
+      "segmentation_confidence": 0.5622,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.5622,
+        "uncertainty": 0.4378,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 20114,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 40.18,
+        "valid_pixel_count": 20045,
+        "clipped_pixel_count": 69,
+        "valid_pixel_ratio": 0.9966,
+        "height_stats_cm": {
+          "min": -11.752,
+          "p5": -11.463,
+          "p25": -10.64,
+          "median": -9.617,
+          "mean": -9.349,
+          "p75": -8.249,
+          "p95": -6.437,
+          "max": -3.535,
+          "std": 1.564
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 71.61,
+        "compartment_capped": false,
+        "final_volume_ml": 71.6
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 12.9,
+      "mass_g": 17.4,
+      "calories": 34.8,
+      "protein": 0.2,
+      "carbs": 2.6,
+      "fat": 2.4,
+      "confidence": 0.6589,
+      "class_label": "pickle",
+      "class_confidence": 0.5189,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.5189,
+          "raw_similarity": 0.5189
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.5189,
+      "segmentation_confidence": 0.5189,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "spicy achar",
+        "candidate_labels": [
+          "spicy achar"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.5189,
+        "uncertainty": 0.4811,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "pickle",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 5610,
+        "archetype": "condiment_dollop",
+        "archetype_justification": "Concentrated viscous dollop on plate surface (pickle)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 11.21,
+        "valid_pixel_count": 5578,
+        "clipped_pixel_count": 32,
+        "valid_pixel_ratio": 0.9943,
+        "height_stats_cm": {
+          "min": -16.984,
+          "p5": -12.777,
+          "p25": -11.66,
+          "median": -11.019,
+          "mean": -11.208,
+          "p75": -10.507,
+          "p95": -10.189,
+          "max": -9.933,
+          "std": 0.928
+        },
+        "raw_integrated_vol_ml": 12.9,
+        "compartment_capped": false,
+        "final_volume_ml": 12.9
+      },
+      "fragment_count": 1,
+      "food_name": "pickle",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "cucumber",
+      "volume_ml": 84.4,
+      "mass_g": 88.6,
+      "calories": 16.0,
+      "protein": 0.6,
+      "carbs": 3.2,
+      "fat": 0.1,
+      "confidence": 0.8645,
+      "class_label": "cucumber",
+      "class_confidence": 0.8933,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8933,
+          "raw_similarity": 0.8933
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "cucumber",
+      "identification_confidence": 0.8933,
+      "segmentation_confidence": 0.8933,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber salad",
+        "candidate_labels": [
+          "cucumber salad"
+        ],
+        "menu_matching_result": "cucumber",
+        "final_food_label": "cucumber",
+        "confidence": 0.8933,
+        "uncertainty": 0.1067,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "cucumber",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 23298,
+        "archetype": "sliced_salad",
+        "archetype_justification": "Discrete planar vegetable slices with calibrated cut-thickness floor (cucumber)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 46.54,
+        "valid_pixel_count": 23150,
+        "clipped_pixel_count": 148,
+        "valid_pixel_ratio": 0.9936,
+        "height_stats_cm": {
+          "min": -14.991,
+          "p5": -11.499,
+          "p25": -10.101,
+          "median": -9.11,
+          "mean": -8.628,
+          "p75": -7.522,
+          "p95": -3.271,
+          "max": -1.59,
+          "std": 2.299
+        },
+        "slice_thickness_floor_cm": 0.75,
+        "raw_integrated_vol_ml": 84.39,
+        "compartment_capped": false,
+        "final_volume_ml": 84.4
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 134.7,
+      "mass_g": 133.6,
+      "calories": 173.7,
+      "protein": 3.6,
+      "carbs": 37.4,
+      "fat": 0.4,
+      "confidence": 0.8188,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8014,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8014,
+          "raw_similarity": 0.8014
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8014,
+      "segmentation_confidence": 0.8014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8014,
+        "uncertainty": 0.1986,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "steamed rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 32269,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (steamed rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 64.46,
+        "valid_pixel_count": 32184,
+        "clipped_pixel_count": 85,
+        "valid_pixel_ratio": 0.9974,
+        "height_stats_cm": {
+          "min": -22.601,
+          "p5": -19.644,
+          "p25": -16.827,
+          "median": -15.462,
+          "mean": -15.829,
+          "p75": -14.716,
+          "p95": -13.167,
+          "max": -12.022,
+          "std": 1.854
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 158.64,
+        "compartment_capped": true,
+        "cap_limit_ml": 134.7,
+        "final_volume_ml": 134.7
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "seviyan",
+      "volume_ml": 60.7,
+      "mass_g": 63.7,
+      "calories": 85.8,
+      "protein": 2.1,
+      "carbs": 13.6,
+      "fat": 2.5,
+      "confidence": 0.7103,
+      "class_label": "seviyan",
+      "class_confidence": 0.603,
+      "top_k": [
+        {
+          "label": "seviyan",
+          "confidence": 0.603,
+          "raw_similarity": 0.603
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "seviyan",
+      "identification_confidence": 0.603,
+      "segmentation_confidence": 0.603,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "white cream",
+        "candidate_labels": [
+          "white cream"
+        ],
+        "menu_matching_result": "seviyan",
+        "final_food_label": "seviyan",
+        "confidence": 0.603,
+        "uncertainty": 0.397,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "seviyan",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 17846,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (seviyan)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 35.65,
+        "valid_pixel_count": 17837,
+        "clipped_pixel_count": 9,
+        "valid_pixel_ratio": 0.9995,
+        "height_stats_cm": {
+          "min": -8.52,
+          "p5": -8.301,
+          "p25": -8.096,
+          "median": -7.68,
+          "mean": -7.44,
+          "p75": -6.962,
+          "p95": -5.808,
+          "max": -4.467,
+          "std": 0.797
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 60.73,
+        "compartment_capped": false,
+        "final_volume_ml": 60.7
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 71.6,
+      "mass_g": 78.0,
+      "calories": 55.8,
+      "protein": 5.5,
+      "carbs": 7.8,
+      "fat": 0.3,
+      "confidence": 0.6858,
+      "class_label": "dal",
+      "class_confidence": 0.5622,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.5622,
+          "raw_similarity": 0.5622
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.5622,
+      "segmentation_confidence": 0.5622,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.5622,
+        "uncertainty": 0.4378,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal",
+        "fallbacks_applied": [
+          "WELL_DEPTH_FLOORED_2.0CM"
+        ],
+        "raw_pixel_count": 20114,
+        "archetype": "liquid_in_well",
+        "archetype_justification": "Conformal fluid filling molded compartment well; flat free surface (dal)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 40.18,
+        "valid_pixel_count": 20045,
+        "clipped_pixel_count": 69,
+        "valid_pixel_ratio": 0.9966,
+        "height_stats_cm": {
+          "min": -11.752,
+          "p5": -11.463,
+          "p25": -10.64,
+          "median": -9.617,
+          "mean": -9.349,
+          "p75": -8.249,
+          "p95": -6.437,
+          "max": -3.535,
+          "std": 1.564
+        },
+        "effective_well_depth_cm": 2.0,
+        "raw_integrated_vol_ml": 71.61,
+        "compartment_capped": false,
+        "final_volume_ml": 71.6
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 12.9,
+      "mass_g": 17.4,
+      "calories": 34.8,
+      "protein": 0.2,
+      "carbs": 2.6,
+      "fat": 2.4,
+      "confidence": 0.6589,
+      "class_label": "pickle",
+      "class_confidence": 0.5189,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.5189,
+          "raw_similarity": 0.5189
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.5189,
+      "segmentation_confidence": 0.5189,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "spicy achar",
+        "candidate_labels": [
+          "spicy achar"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.5189,
+        "uncertainty": 0.4811,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "pickle",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 5610,
+        "archetype": "condiment_dollop",
+        "archetype_justification": "Concentrated viscous dollop on plate surface (pickle)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.00199746317230165,
+        "food_surface_area_cm2": 11.21,
+        "valid_pixel_count": 5578,
+        "clipped_pixel_count": 32,
+        "valid_pixel_ratio": 0.9943,
+        "height_stats_cm": {
+          "min": -16.984,
+          "p5": -12.777,
+          "p25": -11.66,
+          "median": -11.019,
+          "mean": -11.208,
+          "p75": -10.507,
+          "p95": -10.189,
+          "max": -9.933,
+          "std": 0.928
+        },
+        "raw_integrated_vol_ml": 12.9,
+        "compartment_capped": false,
+        "final_volume_ml": 12.9
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7477
+}

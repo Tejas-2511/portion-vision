@@ -1,0 +1,56 @@
+{
+  "item_id": "pickle_4",
+  "area_pixels": 6042,
+  "estimated_height_cm": 1.044,
+  "volume_estimate_ml": 10.5,
+  "density": 1.35,
+  "mass_g": 14.2,
+  "class_label": "pickle",
+  "class_confidence": 0.4964,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6445,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "achar condiment",
+    "candidate_labels": [
+      "achar condiment"
+    ],
+    "menu_matching_result": "pickle",
+    "final_food_label": "pickle",
+    "confidence": 0.4964,
+    "uncertainty": 0.5036,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "pickle",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 6042,
+    "archetype": "condiment_dollop",
+    "archetype_justification": "Concentrated viscous dollop on plate surface (pickle)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0016653600614517927,
+    "food_surface_area_cm2": 10.06,
+    "valid_pixel_count": 6042,
+    "clipped_pixel_count": 0,
+    "valid_pixel_ratio": 1.0,
+    "height_stats_cm": {
+      "min": -7.297,
+      "p5": -6.535,
+      "p25": -5.583,
+      "median": -5.152,
+      "mean": -5.351,
+      "p75": -5.002,
+      "p95": -4.811,
+      "max": -4.146,
+      "std": 0.526
+    },
+    "raw_integrated_vol_ml": 10.5,
+    "compartment_capped": false,
+    "final_volume_ml": 10.5
+  },
+  "fragment_count": 1
+}

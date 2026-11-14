@@ -1,0 +1,60 @@
+{
+  "item_id": "dal rice_3",
+  "area_pixels": 34735,
+  "estimated_height_cm": 2.297,
+  "volume_estimate_ml": 120.9,
+  "density": 1.114,
+  "mass_g": 134.7,
+  "class_label": "dal rice",
+  "class_confidence": 0.7621,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7985,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice with yellow dal",
+    "candidate_labels": [
+      "rice with yellow dal"
+    ],
+    "menu_matching_result": "dal rice",
+    "final_food_label": "dal rice",
+    "confidence": 0.7621,
+    "uncertainty": 0.2379,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "dal rice",
+    "fallbacks_applied": [
+      "MOUND_WELL_FLOORED_1.8CM"
+    ],
+    "raw_pixel_count": 34735,
+    "archetype": "mounded_grain",
+    "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (dal rice)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.001665359828621149,
+    "food_surface_area_cm2": 57.85,
+    "valid_pixel_count": 34726,
+    "clipped_pixel_count": 9,
+    "valid_pixel_ratio": 0.9997,
+    "height_stats_cm": {
+      "min": -14.121,
+      "p5": -12.56,
+      "p25": -11.503,
+      "median": -10.556,
+      "mean": -10.446,
+      "p75": -9.333,
+      "p95": -8.249,
+      "max": -7.71,
+      "std": 1.368
+    },
+    "effective_well_depth_cm": 1.8,
+    "raw_integrated_vol_ml": 132.88,
+    "compartment_capped": true,
+    "cap_limit_ml": 120.9,
+    "final_volume_ml": 120.9
+  },
+  "fragment_count": 1
+}

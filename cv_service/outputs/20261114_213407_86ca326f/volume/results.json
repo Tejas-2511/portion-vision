@@ -1,0 +1,301 @@
+{
+  "food_items": [
+    {
+      "name": "dal rice",
+      "volume_ml": 140.8,
+      "mass_g": 161.8,
+      "calories": 200.6,
+      "protein": 7.8,
+      "carbs": 32.4,
+      "fat": 3.9,
+      "confidence": 0.937,
+      "class_label": "dal rice",
+      "class_confidence": 0.8779,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 47984,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (dal rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0014041037065908313,
+        "food_surface_area_cm2": 67.37,
+        "valid_pixel_count": 47849,
+        "clipped_pixel_count": 135,
+        "valid_pixel_ratio": 0.9972,
+        "height_stats_cm": {
+          "min": -7.783,
+          "p5": -7.541,
+          "p25": -6.535,
+          "median": -5.551,
+          "mean": -5.331,
+          "p75": -4.479,
+          "p95": -2.728,
+          "max": 3.236,
+          "std": 1.707
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 148.79,
+        "compartment_capped": true,
+        "cap_limit_ml": 140.8,
+        "final_volume_ml": 140.8
+      },
+      "fragment_count": 1,
+      "food_name": "dal rice",
+      "instance_count": 1
+    },
+    {
+      "name": "UNKNOWN",
+      "volume_ml": 70.8,
+      "mass_g": 70.8,
+      "calories": 70.8,
+      "protein": 2.1,
+      "carbs": 10.6,
+      "fat": 2.1,
+      "confidence": 0.7856,
+      "class_label": "UNKNOWN",
+      "class_confidence": 0.7127,
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7127,
+          "raw_similarity": 0.7127
+        }
+      ],
+      "identification_status": "unknown",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7127,
+      "segmentation_confidence": 0.7127,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7127,
+        "uncertainty": 0.2873,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "UNKNOWN",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 25292,
+        "archetype": "chunky_suspension",
+        "archetype_justification": "Irregular 3D solids suspended in gravy within compartment (UNKNOWN)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0014041034737601876,
+        "food_surface_area_cm2": 35.51,
+        "valid_pixel_count": 25162,
+        "clipped_pixel_count": 130,
+        "valid_pixel_ratio": 0.9949,
+        "height_stats_cm": {
+          "min": -11.178,
+          "p5": -9.623,
+          "p25": -7.548,
+          "median": -6.221,
+          "mean": -6.522,
+          "p75": -5.241,
+          "p95": -4.601,
+          "max": -1.329,
+          "std": 1.548
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 70.8,
+        "compartment_capped": false,
+        "final_volume_ml": 70.8
+      },
+      "fragment_count": 1,
+      "food_name": "UNKNOWN",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "dal rice",
+      "volume_ml": 140.8,
+      "mass_g": 161.8,
+      "calories": 200.6,
+      "protein": 7.8,
+      "carbs": 32.4,
+      "fat": 3.9,
+      "confidence": 0.937,
+      "class_label": "dal rice",
+      "class_confidence": 0.8779,
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "dal rice",
+        "fallbacks_applied": [
+          "MOUND_WELL_FLOORED_1.8CM"
+        ],
+        "raw_pixel_count": 47984,
+        "archetype": "mounded_grain",
+        "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (dal rice)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0014041037065908313,
+        "food_surface_area_cm2": 67.37,
+        "valid_pixel_count": 47849,
+        "clipped_pixel_count": 135,
+        "valid_pixel_ratio": 0.9972,
+        "height_stats_cm": {
+          "min": -7.783,
+          "p5": -7.541,
+          "p25": -6.535,
+          "median": -5.551,
+          "mean": -5.331,
+          "p75": -4.479,
+          "p95": -2.728,
+          "max": 3.236,
+          "std": 1.707
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 148.79,
+        "compartment_capped": true,
+        "cap_limit_ml": 140.8,
+        "final_volume_ml": 140.8
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "UNKNOWN",
+      "volume_ml": 70.8,
+      "mass_g": 70.8,
+      "calories": 70.8,
+      "protein": 2.1,
+      "carbs": 10.6,
+      "fat": 2.1,
+      "confidence": 0.7856,
+      "class_label": "UNKNOWN",
+      "class_confidence": 0.7127,
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7127,
+          "raw_similarity": 0.7127
+        }
+      ],
+      "identification_status": "unknown",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7127,
+      "segmentation_confidence": 0.7127,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 1.0,
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7127,
+        "uncertainty": 0.2873,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "volume_diagnostics": {
+        "food_name": "UNKNOWN",
+        "fallbacks_applied": [],
+        "raw_pixel_count": 25292,
+        "archetype": "chunky_suspension",
+        "archetype_justification": "Irregular 3D solids suspended in gravy within compartment (UNKNOWN)",
+        "pixel_area_method": "plate_calibrated_uniform",
+        "mean_pixel_area_cm2": 0.0014041034737601876,
+        "food_surface_area_cm2": 35.51,
+        "valid_pixel_count": 25162,
+        "clipped_pixel_count": 130,
+        "valid_pixel_ratio": 0.9949,
+        "height_stats_cm": {
+          "min": -11.178,
+          "p5": -9.623,
+          "p25": -7.548,
+          "median": -6.221,
+          "mean": -6.522,
+          "p75": -5.241,
+          "p95": -4.601,
+          "max": -1.329,
+          "std": 1.548
+        },
+        "effective_well_depth_cm": 1.8,
+        "raw_integrated_vol_ml": 70.8,
+        "compartment_capped": false,
+        "final_volume_ml": 70.8
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.8613
+}

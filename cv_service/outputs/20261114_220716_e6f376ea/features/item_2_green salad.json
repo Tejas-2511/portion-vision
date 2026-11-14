@@ -1,0 +1,57 @@
+{
+  "item_id": "green salad_2",
+  "area_pixels": 21241,
+  "estimated_height_cm": 1.842,
+  "volume_estimate_ml": 54.9,
+  "density": 1.05,
+  "mass_g": 57.6,
+  "class_label": "green salad",
+  "class_confidence": 0.8679,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.9316,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "cucumber",
+    "candidate_labels": [
+      "cucumber"
+    ],
+    "menu_matching_result": "green salad",
+    "final_food_label": "green salad",
+    "confidence": 0.8679,
+    "uncertainty": 0.1321,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 14,
+    "decision_reason": "FRAGMENT_GROUPED_14_PIECES"
+  },
+  "volume_diagnostics": {
+    "food_name": "green salad",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 21241,
+    "archetype": "sliced_salad",
+    "archetype_justification": "Discrete planar vegetable slices with calibrated cut-thickness floor (green salad)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0014041037065908313,
+    "food_surface_area_cm2": 29.82,
+    "valid_pixel_count": 21158,
+    "clipped_pixel_count": 83,
+    "valid_pixel_ratio": 0.9961,
+    "height_stats_cm": {
+      "min": -11.154,
+      "p5": -9.393,
+      "p25": -7.443,
+      "median": -6.158,
+      "mean": -6.413,
+      "p75": -5.201,
+      "p95": -4.59,
+      "max": -0.725,
+      "std": 1.511
+    },
+    "slice_thickness_floor_cm": 0.75,
+    "raw_integrated_vol_ml": 54.94,
+    "compartment_capped": false,
+    "final_volume_ml": 54.9
+  },
+  "fragment_count": 1
+}

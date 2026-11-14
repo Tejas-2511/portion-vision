@@ -497,12 +497,12 @@ class Sam3FoodSegmenter:
                 return score - 0.45  # Umbrella fallback is deprioritized against specific foods
 
             # Specific food items:
-            # Menu match provides a small contextual boost (+0.05) to resolve ambiguous ties,
-            # but cannot override strong visual evidence of a different specific food.
+            # Menu match provides a strong contextual boost (+0.20) because user-specified menu
+            # represents ground-truth contextual prior over generic unlisted staple guesses.
             is_menu = (det.get("parent_menu_item") is not None or 
                        q in menu_set or 
                        find_menu_match(q, menu_items) is not None)
-            base_rank = score + (0.05 if is_menu else 0.0)
+            base_rank = score + (0.20 if is_menu else 0.0)
 
             # Physical portion size plausibility (resolution-independent area ratio):
             # 1. Condiment / pickle is a small portion (< 2% of plate); an entire large bowl (>= 2.5% of plate) is not pickle.
@@ -664,10 +664,9 @@ class Sam3FoodSegmenter:
                 for alias in aliases:
                     food_queries.append((alias, "menu", m_clean, None))
 
-            # Composite dish inference: if menu contains both dal/curry and rice, also query composite dal+rice
-            has_dal = any(any(d in m.lower() for d in ["dal", "daal", "sambar", "curry"]) for m in menu_items)
-            has_rice = any(any(r in m.lower() for r in ["rice", "chawal"]) for m in menu_items)
-            if has_dal and has_rice:
+            # Composite dish inference: only query composite dal+rice if explicitly in menu
+            explicit_dal_rice = any("dal rice" in m.lower() or "dal chawal" in m.lower() or "curry rice" in m.lower() for m in menu_items)
+            if explicit_dal_rice:
                 for alias in ["curry and rice", "rice with yellow dal", "rice and dal"]:
                     if not any(alias.lower() == q.lower() for q, _, _, _ in food_queries):
                         food_queries.append((alias, "menu", "dal rice", "dal rice"))
@@ -681,8 +680,11 @@ class Sam3FoodSegmenter:
                     if not any(alias.lower() == q.lower() for q, _, _, _ in food_queries):
                         food_queries.append((alias, "staple", None, staple))
         elif generic_discovery:
-            # When menu is provided, query common unlisted accompaniments (pickle, papad, curd, salad, dal rice)
-            for side in ["pickle", "papad", "curd", "salad"]:
+            # When menu is provided, query common unlisted accompaniments (pickle, papad, curd, salad)
+            # Do NOT query curd if a dairy dessert like seviyan, kheer, halwa is explicitly in menu!
+            has_dessert = any(any(k in m.lower() for k in ["seviyan", "semiya", "kheer", "halwa", "curd", "dahi"]) for m in menu_items)
+            unlisted_sides = ["pickle", "papad", "salad"] if has_dessert else ["pickle", "papad", "curd", "salad"]
+            for side in unlisted_sides:
                 if not any(side in m.lower() for m in menu_items):
                     aliases = get_visual_prompt_aliases(side)
                     for alias in aliases:

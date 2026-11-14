@@ -1,0 +1,331 @@
+[
+  {
+    "plate_idx": 1,
+    "title": "Plate 1 \u2014 Dal, Steamed Rice, Green Salad",
+    "run_id": "20261114_220419_f90572f6",
+    "folder": "plate_1_dal_rice_salad",
+    "dishes": [
+      {
+        "name": "green salad",
+        "mass_g": 72.7,
+        "volume_ml": 69.2,
+        "calories": 21.8,
+        "confidence": 0.8583
+      },
+      {
+        "name": "dal",
+        "mass_g": 265.4,
+        "volume_ml": 243.9,
+        "calories": 189.9,
+        "confidence": 0.8578
+      },
+      {
+        "name": "steamed rice",
+        "mass_g": 346.9,
+        "volume_ml": 355.3,
+        "calories": 451.1,
+        "confidence": 0.8457
+      }
+    ],
+    "total_mass_g": 685.0,
+    "total_volume_ml": 668.4,
+    "total_calories": 662.8,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 2,
+    "title": "Plate 2 \u2014 Palak Paneer, Steamed Rice, Green Salad, Dal",
+    "run_id": "20261114_220534_d575e48a",
+    "folder": "plate_2_palak_paneer_rice_dal_salad",
+    "dishes": [
+      {
+        "name": "palak paneer",
+        "mass_g": 63.1,
+        "volume_ml": 58.0,
+        "calories": 104.6,
+        "confidence": 0.8443
+      },
+      {
+        "name": "steamed rice",
+        "mass_g": 153.6,
+        "volume_ml": 164.6,
+        "calories": 199.6,
+        "confidence": 0.84
+      },
+      {
+        "name": "green salad",
+        "mass_g": 102.0,
+        "volume_ml": 97.1,
+        "calories": 30.6,
+        "confidence": 0.7965
+      },
+      {
+        "name": "dal",
+        "mass_g": 90.7,
+        "volume_ml": 84.2,
+        "calories": 65.0,
+        "confidence": 0.7803
+      }
+    ],
+    "total_mass_g": 409.4,
+    "total_volume_ml": 403.9,
+    "total_calories": 399.8,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 3,
+    "title": "Plate 3 \u2014 Steamed Rice, Chapati, Dal",
+    "run_id": "20261114_220607_22b9eb5c",
+    "folder": "plate_3_chapati_dal_rice",
+    "dishes": [
+      {
+        "name": "steamed rice",
+        "mass_g": 238.3,
+        "volume_ml": 239.3,
+        "calories": 309.8,
+        "confidence": 0.8852
+      },
+      {
+        "name": "chapati",
+        "mass_g": 84.6,
+        "volume_ml": 106.8,
+        "calories": 268.2,
+        "confidence": 0.8577
+      },
+      {
+        "name": "dal",
+        "mass_g": 302.9,
+        "volume_ml": 278.4,
+        "calories": 216.9,
+        "confidence": 0.8195
+      }
+    ],
+    "total_mass_g": 625.8,
+    "total_volume_ml": 624.5,
+    "total_calories": 794.9,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 4,
+    "title": "Plate 4 \u2014 Steamed Rice, Boiled Lentil Salad, Dal, Pickle",
+    "run_id": "20261114_220648_7e866047",
+    "folder": "plate_4_dal_rice_lentils_pickle",
+    "dishes": [
+      {
+        "name": "steamed rice",
+        "mass_g": 136.0,
+        "volume_ml": 137.5,
+        "calories": 176.8,
+        "confidence": 0.8482
+      },
+      {
+        "name": "boiled lentil salad",
+        "mass_g": 72.7,
+        "volume_ml": 103.8,
+        "calories": 72.7,
+        "confidence": 0.8451
+      },
+      {
+        "name": "dal",
+        "mass_g": 89.2,
+        "volume_ml": 82.2,
+        "calories": 63.9,
+        "confidence": 0.6941
+      },
+      {
+        "name": "pickle",
+        "mass_g": 14.2,
+        "volume_ml": 10.5,
+        "calories": 28.4,
+        "confidence": 0.6445
+      }
+    ],
+    "total_mass_g": 312.1,
+    "total_volume_ml": 334.0,
+    "total_calories": 341.8,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 5,
+    "title": "Plate 5 \u2014 Dal Rice (Composite), Green Salad",
+    "run_id": "20261114_220716_e6f376ea",
+    "folder": "plate_5_dal_rice_salad",
+    "dishes": [
+      {
+        "name": "dal rice",
+        "mass_g": 161.8,
+        "volume_ml": 140.8,
+        "calories": 200.6,
+        "confidence": 0.937
+      },
+      {
+        "name": "green salad",
+        "mass_g": 57.6,
+        "volume_ml": 54.9,
+        "calories": 17.3,
+        "confidence": 0.9316
+      }
+    ],
+    "total_mass_g": 219.4,
+    "total_volume_ml": 195.7,
+    "total_calories": 217.9,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 6,
+    "title": "Plate 6 \u2014 Steamed Rice, Dal, Green Salad, Pickle",
+    "run_id": "20261114_220739_8db288ed",
+    "folder": "plate_6_steamed_rice_dal_salad_pickle",
+    "dishes": [
+      {
+        "name": "steamed rice",
+        "mass_g": 142.4,
+        "volume_ml": 146.8,
+        "calories": 185.1,
+        "confidence": 0.8864
+      },
+      {
+        "name": "green salad",
+        "mass_g": 82.0,
+        "volume_ml": 78.1,
+        "calories": 24.6,
+        "confidence": 0.8351
+      },
+      {
+        "name": "dal",
+        "mass_g": 101.4,
+        "volume_ml": 92.5,
+        "calories": 72.6,
+        "confidence": 0.7632
+      },
+      {
+        "name": "pickle",
+        "mass_g": 14.4,
+        "volume_ml": 10.7,
+        "calories": 28.9,
+        "confidence": 0.6585
+      }
+    ],
+    "total_mass_g": 340.2,
+    "total_volume_ml": 328.1,
+    "total_calories": 311.2,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  },
+  {
+    "plate_idx": 7,
+    "title": "Plate 7 \u2014 Seviyan Kheer, Steamed Rice, Dal, Cucumber, Pickle",
+    "run_id": "20261114_220805_f7678837",
+    "folder": "plate_7_seviyan_rice_dal_cucumber_pickle",
+    "dishes": [
+      {
+        "name": "cucumber",
+        "mass_g": 88.6,
+        "volume_ml": 84.4,
+        "calories": 16.0,
+        "confidence": 0.8645
+      },
+      {
+        "name": "steamed rice",
+        "mass_g": 133.6,
+        "volume_ml": 134.7,
+        "calories": 173.7,
+        "confidence": 0.8188
+      },
+      {
+        "name": "seviyan",
+        "mass_g": 63.7,
+        "volume_ml": 60.7,
+        "calories": 85.8,
+        "confidence": 0.7103
+      },
+      {
+        "name": "dal",
+        "mass_g": 78.0,
+        "volume_ml": 71.6,
+        "calories": 55.8,
+        "confidence": 0.6858
+      },
+      {
+        "name": "pickle",
+        "mass_g": 17.4,
+        "volume_ml": 12.9,
+        "calories": 34.8,
+        "confidence": 0.6589
+      }
+    ],
+    "total_mass_g": 381.3,
+    "total_volume_ml": 364.3,
+    "total_calories": 366.1,
+    "files": [
+      "01_original_photo.png",
+      "02_sam3_segmentation_overlay.png",
+      "03_metric_depth_colored.png",
+      "04_height_relative_colored.png",
+      "05_3D_topographic_relief_map.png",
+      "06_voxel_volume_integration_regions.png",
+      "07_final_annotated_portions.png",
+      "report.html",
+      "results.json"
+    ]
+  }
+]

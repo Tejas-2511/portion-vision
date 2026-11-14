@@ -1,0 +1,583 @@
+{
+  "total_items": 12,
+  "food_items": [
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.852,
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        251,
+        115,
+        55,
+        55
+      ],
+      "area_pixels": 2020,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\00_palak_paneer_0.85.png",
+      "sam3_raw_query": "paneer",
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.852,
+        "uncertainty": 0.148,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.85,
+      "identification_confidence": 0.85,
+      "segmentation_confidence": 0.85,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        219,
+        74,
+        36,
+        46
+      ],
+      "area_pixels": 1384,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.85,
+          "raw_similarity": 0.85
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\01_palak_paneer_0.85.png",
+      "sam3_raw_query": "paneer",
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.85,
+        "uncertainty": 0.15,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8433,
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        217,
+        215,
+        243,
+        233
+      ],
+      "area_pixels": 39423,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\02_steamed_rice_0.84.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8433,
+        "uncertainty": 0.1567,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_6",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.8429,
+      "identification_confidence": 0.8429,
+      "segmentation_confidence": 0.8429,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        276,
+        83,
+        46,
+        40
+      ],
+      "area_pixels": 1278,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8429,
+          "raw_similarity": 0.8429
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\03_palak_paneer_0.84.png",
+      "sam3_raw_query": "paneer",
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.8429,
+        "uncertainty": 0.1571,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.8392,
+      "identification_confidence": 0.8392,
+      "segmentation_confidence": 0.8392,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        313,
+        109,
+        45,
+        42
+      ],
+      "area_pixels": 1444,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.8392,
+          "raw_similarity": 0.8392
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\04_palak_paneer_0.84.png",
+      "sam3_raw_query": "paneer",
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.8392,
+        "uncertainty": 0.1608,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.7676,
+      "identification_confidence": 0.7676,
+      "segmentation_confidence": 0.7676,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        253,
+        47,
+        30,
+        31
+      ],
+      "area_pixels": 648,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7676,
+          "raw_similarity": 0.7676
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\05_palak_paneer_0.77.png",
+      "sam3_raw_query": "paneer",
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7676,
+        "uncertainty": 0.2324,
+        "original_mask_id": "mask_05",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "green salad",
+      "food_name": "green salad",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "confidence": 0.7582,
+      "identification_confidence": 0.7582,
+      "segmentation_confidence": 0.7582,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        592,
+        203,
+        185,
+        233
+      ],
+      "area_pixels": 26488,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.7582,
+          "raw_similarity": 0.7582
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\06_green_salad_0.76.png",
+      "sam3_raw_query": "cucumber",
+      "diagnostics": {
+        "original_sam3_query": "cucumber",
+        "candidate_labels": [
+          "cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.7582,
+        "uncertainty": 0.2418,
+        "original_mask_id": "mask_06",
+        "grouped_instance_id": "inst_7",
+        "fragment_count": 19,
+        "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7277,
+      "identification_confidence": 0.7277,
+      "segmentation_confidence": 0.7277,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        397,
+        23,
+        169,
+        162
+      ],
+      "area_pixels": 21771,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7277,
+          "raw_similarity": 0.7277
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\07_dal_0.73.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7277,
+        "uncertainty": 0.2723,
+        "original_mask_id": "mask_07",
+        "grouped_instance_id": "inst_8",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "palak paneer",
+      "food_name": "palak paneer",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "confidence": 0.7044,
+      "identification_confidence": 0.7044,
+      "segmentation_confidence": 0.7044,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        210,
+        33,
+        162,
+        151
+      ],
+      "area_pixels": 12340,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.7044,
+          "raw_similarity": 0.7044
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\08_palak_paneer_0.70.png",
+      "sam3_raw_query": "palak paneer",
+      "diagnostics": {
+        "original_sam3_query": "palak paneer",
+        "candidate_labels": [
+          "palak paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.7044,
+        "uncertainty": 0.2956,
+        "original_mask_id": "mask_08",
+        "grouped_instance_id": "inst_5",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.561,
+      "identification_confidence": 0.561,
+      "segmentation_confidence": 0.561,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        371,
+        165,
+        33,
+        30
+      ],
+      "area_pixels": 851,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.561,
+          "raw_similarity": 0.561
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\09_UNKNOWN_0.56.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.561,
+        "uncertainty": 0.439,
+        "original_mask_id": "mask_09",
+        "grouped_instance_id": "inst_10",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.5448,
+      "identification_confidence": 0.5448,
+      "segmentation_confidence": 0.5448,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        547,
+        11,
+        38,
+        46
+      ],
+      "area_pixels": 1242,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.5448,
+          "raw_similarity": 0.5448
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\10_UNKNOWN_0.54.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.5448,
+        "uncertainty": 0.4552,
+        "original_mask_id": "mask_10",
+        "grouped_instance_id": "inst_11",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.4513,
+      "identification_confidence": 0.4513,
+      "segmentation_confidence": 0.4513,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        360,
+        126,
+        27,
+        26
+      ],
+      "area_pixels": 535,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.4513,
+          "raw_similarity": 0.4513
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213224_3f233e97\\segmentation\\crops\\11_dal_0.45.png",
+      "sam3_raw_query": "dal tadka",
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.4513,
+        "uncertainty": 0.5487,
+        "original_mask_id": "mask_11",
+        "grouped_instance_id": "inst_9",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 48.945,
+  "timestamp": "2026-11-14T21:33:15.623337"
+}

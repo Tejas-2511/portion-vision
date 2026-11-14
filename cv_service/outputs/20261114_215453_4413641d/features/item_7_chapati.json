@@ -1,0 +1,57 @@
+{
+  "item_id": "chapati_7",
+  "area_pixels": 5748,
+  "estimated_height_cm": 0.838,
+  "volume_estimate_ml": 8.0,
+  "density": 0.79,
+  "mass_g": 6.3,
+  "class_label": "chapati",
+  "class_confidence": 0.6035,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7106,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "chapati bread",
+    "candidate_labels": [
+      "chapati bread"
+    ],
+    "menu_matching_result": "chapati",
+    "final_food_label": "chapati",
+    "confidence": 0.6035,
+    "uncertainty": 0.3965,
+    "original_mask_id": "mask_06",
+    "grouped_instance_id": "inst_3",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "chapati",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 5748,
+    "archetype": "planar_laminate",
+    "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0016653600614517927,
+    "food_surface_area_cm2": 9.57,
+    "valid_pixel_count": 5725,
+    "clipped_pixel_count": 23,
+    "valid_pixel_ratio": 0.996,
+    "height_stats_cm": {
+      "min": -6.802,
+      "p5": -3.061,
+      "p25": 0.329,
+      "median": 3.965,
+      "mean": 2.685,
+      "p75": 4.99,
+      "p95": 5.991,
+      "max": 6.502,
+      "std": 2.998
+    },
+    "unit_sheet_thickness_cm": 0.25,
+    "raw_integrated_vol_ml": 8.02,
+    "compartment_capped": false,
+    "final_volume_ml": 8.0
+  },
+  "fragment_count": 1
+}

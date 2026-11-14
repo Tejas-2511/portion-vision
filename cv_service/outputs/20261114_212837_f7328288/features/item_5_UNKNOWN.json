@@ -1,0 +1,57 @@
+{
+  "item_id": "UNKNOWN_5",
+  "area_pixels": 1465,
+  "estimated_height_cm": 1.78,
+  "volume_estimate_ml": 3.3,
+  "density": 1.0,
+  "mass_g": 3.3,
+  "class_label": "UNKNOWN",
+  "class_confidence": 0.7529,
+  "depth_stability": 0.75,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7386,
+  "prior_applied": false,
+  "diagnostics": {
+    "original_sam3_query": "food",
+    "candidate_labels": [
+      "food"
+    ],
+    "menu_matching_result": null,
+    "final_food_label": "UNKNOWN",
+    "confidence": 0.7529,
+    "uncertainty": 0.2471,
+    "original_mask_id": "mask_04",
+    "grouped_instance_id": "inst_5",
+    "fragment_count": 1,
+    "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "UNKNOWN",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 1465,
+    "archetype": "chunky_suspension",
+    "archetype_justification": "Irregular 3D solids suspended in gravy within compartment (UNKNOWN)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0012667096452787519,
+    "food_surface_area_cm2": 1.86,
+    "valid_pixel_count": 1465,
+    "clipped_pixel_count": 0,
+    "valid_pixel_ratio": 1.0,
+    "height_stats_cm": {
+      "min": -3.875,
+      "p5": -3.033,
+      "p25": -2.327,
+      "median": -1.903,
+      "mean": -1.942,
+      "p75": -1.486,
+      "p95": -0.976,
+      "max": -0.799,
+      "std": 0.601
+    },
+    "effective_well_depth_cm": 1.8,
+    "raw_integrated_vol_ml": 3.3,
+    "compartment_capped": false,
+    "final_volume_ml": 3.3
+  },
+  "fragment_count": 1
+}

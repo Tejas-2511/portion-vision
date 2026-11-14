@@ -1,0 +1,103 @@
+{
+  "total_items": 2,
+  "food_items": [
+    {
+      "name": "dal rice",
+      "food_name": "dal rice",
+      "menu_match": true,
+      "matched_menu_item": "dal rice",
+      "confidence": 0.8779,
+      "identification_confidence": 0.8779,
+      "segmentation_confidence": 0.8779,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        234,
+        239,
+        307,
+        216
+      ],
+      "area_pixels": 47984,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal rice",
+          "confidence": 0.8779,
+          "raw_similarity": 0.8779
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213407_86ca326f\\segmentation\\crops\\00_dal_rice_0.88.png",
+      "sam3_raw_query": "curry and rice",
+      "diagnostics": {
+        "original_sam3_query": "curry and rice",
+        "candidate_labels": [
+          "curry and rice"
+        ],
+        "menu_matching_result": "dal rice",
+        "final_food_label": "dal rice",
+        "confidence": 0.8779,
+        "uncertainty": 0.1221,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    },
+    {
+      "name": "UNKNOWN",
+      "food_name": "UNKNOWN",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "confidence": 0.7127,
+      "identification_confidence": 0.7127,
+      "segmentation_confidence": 0.7127,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "mask": null,
+      "bounding_box": [
+        564,
+        228,
+        161,
+        219
+      ],
+      "area_pixels": 25292,
+      "identification_status": "unknown",
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7127,
+          "raw_similarity": 0.7127
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_213407_86ca326f\\segmentation\\crops\\01_UNKNOWN_0.71.png",
+      "sam3_raw_query": "food",
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7127,
+        "uncertainty": 0.2873,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "mask_shape": [
+        461,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 41.529,
+  "timestamp": "2026-11-14T21:34:51.847551"
+}

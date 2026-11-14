@@ -1,0 +1,57 @@
+{
+  "item_id": "chapati_2",
+  "area_pixels": 66970,
+  "estimated_height_cm": 0.821,
+  "volume_estimate_ml": 91.6,
+  "density": 0.792,
+  "mass_g": 72.5,
+  "class_label": "chapati",
+  "class_confidence": 0.8793,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8577,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "whole wheat roti",
+    "candidate_labels": [
+      "whole wheat roti"
+    ],
+    "menu_matching_result": "chapati",
+    "final_food_label": "chapati",
+    "confidence": 0.8793,
+    "uncertainty": 0.1207,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "chapati",
+    "fallbacks_applied": [],
+    "raw_pixel_count": 66970,
+    "archetype": "planar_laminate",
+    "archetype_justification": "Thin approximately planar sheet structure; surface area dominates (chapati)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.0016653595957905054,
+    "food_surface_area_cm2": 111.53,
+    "valid_pixel_count": 66758,
+    "clipped_pixel_count": 212,
+    "valid_pixel_ratio": 0.9968,
+    "height_stats_cm": {
+      "min": -6.147,
+      "p5": -5.431,
+      "p25": -3.887,
+      "median": -2.516,
+      "mean": -2.008,
+      "p75": -0.489,
+      "p95": 2.848,
+      "max": 5.193,
+      "std": 2.528
+    },
+    "unit_sheet_thickness_cm": 0.25,
+    "raw_integrated_vol_ml": 91.59,
+    "compartment_capped": false,
+    "final_volume_ml": 91.6
+  },
+  "fragment_count": 1
+}

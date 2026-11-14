@@ -159,44 +159,82 @@ where $A_{\text{archetype}}$ represents the physical surface relief amplitude:
 
 This formulation guarantees that $\frac{1}{|\mathcal{M}|} \sum H_{\text{fused}} \equiv H_{\text{nominal}}$, achieving exact physical mass calibration (~208g rice, ~130g curry, ~97g dal) while producing rich 3D topographic relief with over $220,000$ unique floating-point elevations and $220+$ unique Turbo colormap colors.
 
-### 2.5. Physical Volumetric Archetypes & Voxel Integration
+### 2.5. Physical Volumetric Archetypes & Pixel-Level Voxel Integration
 
-Food items do not share identical physical packing behavior. PortionVision routes each segmented region $\mathcal{M}$ to its corresponding physical geometric archetype:
+Food items exhibit starkly divergent physical morphology, compliance, and fluid behavior. Rather than collapsing segmented regions into scalar heuristic approximations, PortionVision executes true pixel-level volume integration:
 
-$$\Delta A_{\text{px}} = (s_{\text{px}})^2 \quad [\text{cm}^2/\text{pixel}]$$
+$$V = \sum_{i \in \mathcal{M}_{\text{valid}}} \left( H_i^{\text{eff}} \times A_i \right) \quad [\text{cm}^3 \equiv \text{ml}]$$
 
-#### Archetype I: Planar & Layered Laminates (`roti`, `chapati`, `naan`, `papad`)
-Planar flatbreads bridge compartment dividers and do not conform to well depth. Volume is governed by calibrated sheet thickness $t_{\text{sheet}}$ and stack layer count $L$:
+Where:
+- $H_i^{\text{eff}}$ is the calibrated, physically grounded effective column height at pixel $i$ in centimeters.
+- $A_i$ is the physical surface area represented by pixel $i$ in $\text{cm}^2$, accounting for calibrated tray scale $A_{\text{base}} = (s_{\text{px}})^2$ and optional perspective depth scaling $A_i = A_{\text{base}} \cdot \left(\frac{Z_i}{Z_{\text{ref}}}\right)^2$.
+- $\mathcal{M}_{\text{valid}} = \mathcal{M}_{\text{food}} \land \text{isfinite}(H) \land (p_1 - 0.5 \le H \le p_{99} + 0.5)$ enforces strict inlier filtering, eliminating non-finite NaNs and specular boundary spikes.
+- Local food surface relief above its support base is defined as:
+  $$\Delta H_i = \max\left(0.0, \, H_i - p_5(\mathcal{M})\right) \quad [\text{cm}]$$
+  where $p_5(\mathcal{M})$ isolates the true support floor where the food meets the plate or well.
 
-$$L = \text{clip}\left( \frac{\text{median}_{(x, y) \in \mathcal{M}} H_{\text{fused}}(x, y)}{t_{\text{sheet}}}, \, 1.0, \, 3.5 \right)$$
+Each food dish routes to one of five physical geometric archetypes (plus concentrated condiments):
 
-$$V_{\text{planar}} = \left( \sum_{p \in \mathcal{M}} \Delta A_{\text{px}} \right) \times t_{\text{sheet}} \times L \quad [\text{ml}]$$
+#### Archetype I: Planar & Layered Laminates (`roti`, `chapati`, `naan`, `paratha`, `papad`)
+Thin, approximately planar flatbread sheets resting on the tray surface. Surface area dominates volume. Folds or overlapping pieces form continuous local thickness multiples:
+
+$$L_i = 1.0 + \text{clip}\left( \frac{\Delta H_i}{t_{\text{sheet}}}, \, 0.0, \, 2.5 \right)$$
+
+$$H_i^{\text{eff}} = t_{\text{sheet}} \times L_i \quad [\text{cm}]$$
+
+where calibrated single-sheet thickness $t_{\text{sheet}}$ is $0.25\,\text{cm}$ for chapati/phulka, $0.38\,\text{cm}$ for paratha/naan, and $0.15\,\text{cm}$ for papad. This guarantees flat regions never collapse below 1 sheet thickness while accurately integrating local folds.
 
 #### Archetype II: Sliced Salad Laminates (`cucumber`, `tomato`, `onion`, `beetroot`)
-Discrete circular/elliptical slices laid flat on the plate floor. Depth networks often perceive their thin profile as near-zero. Volume enforces calibrated physical slice thickness $t_{\text{slice}} = 0.55\,\text{cm}$:
+Discrete planar vegetable slices laid flat or overlapping in a compartment. Thin profiles are susceptible to grazing depth noise. Volume enforces physical cut-thickness floors:
 
-$$h_{\text{eff}} = \text{clip}\left( \max\left( t_{\text{slice}}, \, \text{median}_{p \in \mathcal{M}} H_{\text{fused}}(p) \right), \, t_{\text{slice}}, \, 1.5 \right)$$
+$$H_i^{\text{eff}} = t_{\text{slice}} + \text{clip}\left( \Delta H_i, \, 0.0, \, 1.20 \right) \quad [\text{cm}]$$
 
-$$V_{\text{salad}} = \left( \sum_{p \in \mathcal{M}} \Delta A_{\text{px}} \right) \times h_{\text{eff}} \quad [\text{ml}]$$
+where $t_{\text{slice}} = 0.75\,\text{cm}$ for cucumber/salad, $0.70\,\text{cm}$ for tomato, and $0.55\,\text{cm}$ for onion. Overlapping slices naturally increase effective height up to realistic salad stack bounds ($1.95\,\text{cm}$).
 
-#### Archetype III: Truncated Frustum Liquid Reservoirs (`dal`, `sambar`, `rasam`, `curd`)
-Liquids conform to molded tray well geometries. Surface cannot exceed the tray rim. Volume integrates well depth $d_{\text{well}}$ with fill ratio $f_{\text{fill}}$ and mold draft taper factor $\eta_{\text{taper}} = 0.88$:
+#### Archetype III: Truncated Frustum Liquid Reservoirs (`dal`, `sambar`, `rasam`, `curd`, `seviyan`)
+Fluids conform directly to the molded tray well frustum. Surface elevation reflects meniscus and container fill level:
 
-$$f_{\text{fill}} = \text{clip}\left( 0.50 + 0.30 \cdot \frac{\bar{H}_{\text{fused}}}{d_{\text{well}}}, \, 0.40, \, 0.90 \right)$$
+$$d_{\text{well}} = \max(well\_offset, \, 2.0\,\text{cm})$$
 
-$$V_{\text{liquid}} = A_{\text{surface}} \times (d_{\text{well}} \cdot f_{\text{fill}}) \times \eta_{\text{taper}} \quad [\text{ml}]$$
+$$h_{\text{fluid}}(i) = d_{\text{well}} \times 0.85 + \text{clip}\left( \Delta H_i, \, 0.0, \, 1.0 \right) \times 0.40 \quad [\text{cm}]$$
+
+$$H_i^{\text{eff}} = h_{\text{fluid}}(i) \times \eta_{\text{taper}} \quad [\text{cm}]$$
+
+where $\eta_{\text{taper}} = 0.88$ represents the average cross-sectional area taper factor of stamped mess tray wells.
 
 #### Archetype IV: Porous/Granular Mounded Hemispheroids (`rice`, `biryani`, `pulao`, `dal rice`)
-Combines well reservoir capacity with a dome profile above the rim, scaled by bulk granular packing factor $\phi_{\text{bulk}} = 0.85$. Composite single-compartment dishes (e.g. dal poured onto rice) form cohesive semi-solid mounds and route to this archetype rather than liquid frustums:
+Granular packed bed filling the compartment well up to the rim plus a true 3D continuous dome rising above the rim:
 
-$$V_{\text{mound}} = \left( A_{\text{surface}} \cdot d_{\text{well}} \cdot 0.85 \right) + \left( \sum_{p \in \mathcal{M}} \max\left(0, \, H_{\text{fused}}(p) - d_{\text{well}}\right) \cdot \Delta A_{\text{px}} \right) \times 0.85 \quad [\text{ml}]$$
+$$d_{\text{well}} = \max(well\_offset, \, 1.8\,\text{cm}), \quad H_{\text{base}} = d_{\text{well}} \times 0.82 \quad [\text{cm}]$$
+
+$$s_{\text{dome}} = \min\left(1.0, \, \frac{1.80}{\max(p_{95} - p_5, \, 0.05)}\right)$$
+
+$$h_{\text{dome}}(i) = \text{clip}\left( \Delta H_i \cdot s_{\text{dome}}, \, 0.0, \, 2.50 \right) \times 0.92 \quad [\text{cm}]$$
+
+$$H_i^{\text{eff}} = H_{\text{base}} + h_{\text{dome}}(i) \quad [\text{cm}]$$
+
+This preserves the true measured 3D topographic relief of the rice mound across every pixel without artificial shape cancellation, while smoothly bounding unrectified camera perspective tilt.
 
 #### Archetype V: Chunky Heterogeneous Suspensions (`curry`, `sabzi`, `paneer`, `chicken`)
-Solid vegetable/meat chunks suspended in gravy leaving inter-granular voids. When served in compartment bowls, the volume is strictly bounded by the physical well capacity:
+Solid vegetable/paneer chunks in gravy resting inside a well, with void spaces between chunks:
 
-$$V_{\text{chunk}} = \min\left( \left( \sum_{p \in \mathcal{M}} H_{\text{fused}}(p) \cdot \Delta A_{\text{px}} \right) \times 0.82, \, A_{\text{surface}} \cdot d_{\text{well}} \cdot 0.90 \right) \quad [\text{ml}]$$
+$$d_{\text{well}} = \max(well\_offset, \, 1.8\,\text{cm})$$
 
-For small circular wells ($A_{\text{surface}} \le 85\,\text{cm}^2$), the maximum container capacity is clamped to $A_{\text{surface}} \times 2.2 \times 0.95 \approx 150 - 170\,\text{ml}$, preventing runaway over-estimation.
+$$s_{\text{chunk}} = \min\left(1.0, \, \frac{2.20}{\max(p_{95} - p_5, \, 0.05)}\right)$$
+
+$$h_{\text{chunk}}(i) = d_{\text{well}} \times 0.55 + \text{clip}\left( \Delta H_i \cdot s_{\text{chunk}}, \, 0.0, \, 2.50 \right) \quad [\text{cm}]$$
+
+$$H_i^{\text{eff}} = h_{\text{chunk}}(i) \times 0.85 \quad [\text{cm}]$$
+
+where $0.85$ is the solid chunk packing fraction.
+
+#### Archetype VI: Viscous Condiment Dollops (`pickle`, `achar`, `chutney`)
+Small viscous dollops resting on the tray surface:
+
+$$H_i^{\text{eff}} = \text{clip}\left( 0.75 + \Delta H_i \times 0.40, \, 0.60, \, 1.60 \right) \times 0.85 \quad [\text{cm}]$$
+
+#### Containment Capacity Sanity Bounding:
+For small circular wells ($A_{\text{surface}} \le 85\,\text{cm}^2$), unconstrained capacity is capped to $A_{\text{surface}} \times 2.2 \times 0.95 \approx 150 - 175\,\text{ml}$, eliminating runaway extrapolation. Every run saves comprehensive per-item volume diagnostics in `features/item_*.json`.
 
 ### 2.6. Multi-Spectral Dynamic Density Modeling
 
@@ -243,6 +281,38 @@ where:
 - $S_{\text{class}} \in [0, 1]$: Concept grounding similarity score.
 - $S_{\text{geom}} \in \{0.75, 1.0\}$: $1.0$ if canonical height prior match exists; $0.75$ for generic unlisted fallbacks.
 - $S_{\text{scale}} \in \{0.70, 1.0\}$: $1.0$ for closed-form ellipse rim calibration; $0.70$ for bounding-box approximation.
+
+### 2.9. Standardized Volumetric & Mass Benchmark (All 7 Evaluation Plates)
+
+PortionVision was evaluated across the standard 7 evaluation plates in `plate/use/` comparing the original scalar heuristic baseline against the upgraded pixel-level voxel integrator:
+
+| Plate | Target Image | Dish Identified | Old Vol (ml) | New Vol (ml) | Change (%) | Estimated Mass | Confidence |
+| :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Plate 1** | `IMG-20260402-WA0047.jpg` | Green Salad | 53.4 | **69.2** | +29.6% | 72.7 g | 86% |
+| | | Dal | 194.2 | **243.9** | +25.6% | 265.4 g | 86% |
+| | | Steamed Rice | 211.0 | **355.3** | +68.4% | 346.9 g | 85% |
+| **Plate 2** | `IMG20260408201758.jpg` | Palak Paneer | 68.8 | **58.0** | -15.7% | 63.1 g | 84% |
+| | | Steamed Rice | 111.7 | **164.6** | +47.4% | 153.6 g | 84% |
+| | | Green Salad | 73.6 | **97.1** | +31.9% | 102.0 g | 80% |
+| | | Dal | 68.6 | **84.2** | +22.7% | 90.7 g | 78% |
+| **Plate 3** | `IMG-20260906-WA0000.jpg` | Steamed Rice | 145.0 | **239.3** | +65.0% | 238.3 g | 89% |
+| | | Chapati | 100.3 | **106.8** | +6.5% | 84.6 g | 86% |
+| | | Dal | 221.8 | **278.4** | +25.5% | 302.9 g | 82% |
+| **Plate 4** | `IMG-20261029-WA0022.jpeg` | Steamed Rice | 93.6 | **137.5** | +46.9% | 136.0 g | 85% |
+| | | Boiled Lentil Salad | 93.3 | **103.8** | +11.3% | 72.7 g | 85% |
+| | | Dal | 64.3 | **82.2** | +27.8% | 89.2 g | 82% |
+| | | Pickle | 10.8 | **10.5** | -2.8% | 14.2 g | 64% |
+| **Plate 5** | `IMG20260402200840.jpg` | Dal Rice | 95.5 | **140.8** | +47.4% | 161.8 g | 94% |
+| | | Green Salad | 42.0 | **54.9** | +30.7% | 57.6 g | 93% |
+| **Plate 6** | `IMG20261024204606.jpg` | Steamed Rice | 99.7 | **146.8** | +47.2% | 142.4 g | 89% |
+| | | Green Salad | 59.9 | **78.1** | +30.4% | 82.0 g | 84% |
+| | | Dal | 72.5 | **92.5** | +27.6% | 101.4 g | 76% |
+| | | Pickle | 9.6 | **10.7** | +11.5% | 14.4 g | 66% |
+| **Plate 7** | `IMG20261007120920.jpg` | Cucumber | 46.8 | **84.4** | +80.3% | 88.6 g | 86% |
+| | | Steamed Rice | 91.6 | **134.7** | +47.1% | 133.6 g | 82% |
+| | | Seviyan | — | **60.7** | New | 63.7 g | 71% |
+| | | Dal | — | **71.6** | New | 78.0 g | 69% |
+| | | Pickle | 53.5 | **12.9** | -75.9% | 17.4 g | 66% |
 
 ---
 
@@ -861,10 +931,10 @@ A standalone, production-ready utility to run PortionVision's full computer visi
 
 ```powershell
 # Run with contextual menu (recommended)
-python cv_service/evaluate_example.py --image "plate/use/IMG20261007120920.jpg" --menu "seviyan, dal, steamed rice, cucumber, pickle"
+python evaluate_example.py --image "plate/use/IMG20261007120920.jpg" --menu "seviyan, dal, steamed rice, cucumber, pickle"
 
 # Run in open-world discovery mode (no menu priors)
-python cv_service/evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --open-world
+python evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --open-world
 ```
 
 Outputs generated in `cv_service/outputs/<timestamp>/`:
@@ -882,8 +952,8 @@ Outputs generated in `cv_service/outputs/<timestamp>/`:
 
 | Mode | Purpose | Command / Path |
 |---|---|---|
-| **Frontend Web App** | Primary user experience, camera captures, real-time macro displays, daily logs | Start backend (`npm run dev` in `backend/`), start CV service (`python cv_service/main.py`), and launch frontend (`npm run dev` in `frontend/`) |
-| **`evaluate_example.py` CLI** | Developer metrology validation, single-plate inspection, headless terminal profiling | `python cv_service/evaluate_example.py --image <path> --menu "<menu>"` |
+| **Frontend Web App** | Primary user experience, camera captures, real-time macro displays, daily logs | Start backend (`node server.js` in `backend/`), start CV service (`python -m uvicorn main:app --app-dir cv_service --port 8000`), and launch frontend (`npm run dev` in `frontend/`) |
+| **`evaluate_example.py` CLI** | Developer metrology validation, single-plate inspection, headless terminal profiling | `python evaluate_example.py --image <path> --menu "<menu>"` |
 
 ---
 
