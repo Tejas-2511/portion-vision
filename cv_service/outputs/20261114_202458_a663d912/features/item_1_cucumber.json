@@ -1,0 +1,29 @@
+{
+  "item_id": "cucumber_1",
+  "area_pixels": 23298,
+  "estimated_height_cm": 1.02,
+  "volume_estimate_ml": 46.8,
+  "density": 1.05,
+  "mass_g": 49.1,
+  "class_label": "cucumber",
+  "class_confidence": 0.8933,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8645,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "cucumber salad",
+    "candidate_labels": [
+      "cucumber salad"
+    ],
+    "menu_matching_result": "cucumber",
+    "final_food_label": "cucumber",
+    "confidence": 0.8933,
+    "uncertainty": 0.1067,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

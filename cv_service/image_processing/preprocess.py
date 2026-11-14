@@ -15,7 +15,7 @@ import numpy as np
 
 
 # ── Quality gate thresholds (tune as needed) ─────────────────────────────────
-_BLUR_THRESHOLD  = 80.0    # Laplacian variance; below this = too blurry
+_BLUR_THRESHOLD  = 60.0    # Laplacian variance; below this = too blurry (tolerates slight indoor mess camera motion)
 _TILT_THRESHOLD  = 50.0    # degrees away from 0° / 90°; above this = too tilted
 
 

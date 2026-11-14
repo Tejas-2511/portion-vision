@@ -1,0 +1,29 @@
+{
+  "item_id": "dal_8",
+  "area_pixels": 15289,
+  "estimated_height_cm": 3.8,
+  "volume_estimate_ml": 35.9,
+  "density": 1.068,
+  "mass_g": 38.3,
+  "class_label": "dal",
+  "class_confidence": 0.4981,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6456,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.4981,
+    "uncertainty": 0.5019,
+    "original_mask_id": "mask_07",
+    "grouped_instance_id": "inst_7",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

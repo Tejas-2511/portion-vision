@@ -1,0 +1,359 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 99.7,
+      "mass_g": 96.7,
+      "calories": 125.8,
+      "protein": 2.6,
+      "carbs": 27.1,
+      "fat": 0.3,
+      "confidence": 0.8864,
+      "class_label": "steamed rice",
+      "class_confidence": 0.939,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.939,
+          "raw_similarity": 0.939
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.939,
+      "segmentation_confidence": 0.939,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.939,
+        "uncertainty": 0.061,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 59.9,
+      "mass_g": 62.9,
+      "calories": 18.9,
+      "protein": 0.8,
+      "carbs": 2.9,
+      "fat": 0.4,
+      "confidence": 0.8351,
+      "class_label": "green salad",
+      "class_confidence": 0.8335,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8335,
+          "raw_similarity": 0.8335
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8335,
+      "segmentation_confidence": 0.8335,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8335,
+        "uncertainty": 0.1665,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 11,
+        "decision_reason": "FRAGMENT_GROUPED_11_PIECES"
+      },
+      "fragment_count": 1,
+      "food_name": "green salad",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 72.5,
+      "mass_g": 79.5,
+      "calories": 56.9,
+      "protein": 5.6,
+      "carbs": 8.0,
+      "fat": 0.3,
+      "confidence": 0.7632,
+      "class_label": "dal",
+      "class_confidence": 0.6961,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.6961,
+          "raw_similarity": 0.6961
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.6961,
+      "segmentation_confidence": 0.6961,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.6961,
+        "uncertainty": 0.3039,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 9.6,
+      "mass_g": 12.9,
+      "calories": 25.8,
+      "protein": 0.1,
+      "carbs": 1.9,
+      "fat": 1.8,
+      "confidence": 0.7133,
+      "class_label": "pickle",
+      "class_confidence": 0.6081,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6081,
+          "raw_similarity": 0.6081
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6081,
+      "segmentation_confidence": 0.6081,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6081,
+        "uncertainty": 0.3919,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "pickle",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 99.7,
+      "mass_g": 96.7,
+      "calories": 125.8,
+      "protein": 2.6,
+      "carbs": 27.1,
+      "fat": 0.3,
+      "confidence": 0.8864,
+      "class_label": "steamed rice",
+      "class_confidence": 0.939,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.939,
+          "raw_similarity": 0.939
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.939,
+      "segmentation_confidence": 0.939,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.939,
+        "uncertainty": 0.061,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "green salad",
+      "volume_ml": 59.9,
+      "mass_g": 62.9,
+      "calories": 18.9,
+      "protein": 0.8,
+      "carbs": 2.9,
+      "fat": 0.4,
+      "confidence": 0.8351,
+      "class_label": "green salad",
+      "class_confidence": 0.8335,
+      "top_k": [
+        {
+          "label": "green salad",
+          "confidence": 0.8335,
+          "raw_similarity": 0.8335
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "green salad",
+      "identification_confidence": 0.8335,
+      "segmentation_confidence": 0.8335,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "sliced cucumber",
+        "candidate_labels": [
+          "sliced cucumber"
+        ],
+        "menu_matching_result": "green salad",
+        "final_food_label": "green salad",
+        "confidence": 0.8335,
+        "uncertainty": 0.1665,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 11,
+        "decision_reason": "FRAGMENT_GROUPED_11_PIECES"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 72.5,
+      "mass_g": 79.5,
+      "calories": 56.9,
+      "protein": 5.6,
+      "carbs": 8.0,
+      "fat": 0.3,
+      "confidence": 0.7632,
+      "class_label": "dal",
+      "class_confidence": 0.6961,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.6961,
+          "raw_similarity": 0.6961
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.6961,
+      "segmentation_confidence": 0.6961,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "dal tadka",
+        "candidate_labels": [
+          "dal tadka"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.6961,
+        "uncertainty": 0.3039,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 9.6,
+      "mass_g": 12.9,
+      "calories": 25.8,
+      "protein": 0.1,
+      "carbs": 1.9,
+      "fat": 1.8,
+      "confidence": 0.7133,
+      "class_label": "pickle",
+      "class_confidence": 0.6081,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6081,
+          "raw_similarity": 0.6081
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6081,
+      "segmentation_confidence": 0.6081,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6081,
+        "uncertainty": 0.3919,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7995
+}

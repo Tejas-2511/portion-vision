@@ -1,0 +1,29 @@
+{
+  "item_id": "pickle_4",
+  "area_pixels": 4543,
+  "estimated_height_cm": 1.225,
+  "volume_estimate_ml": 9.6,
+  "density": 1.35,
+  "mass_g": 12.9,
+  "class_label": "pickle",
+  "class_confidence": 0.6081,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7133,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "indian pickle condiment",
+    "candidate_labels": [
+      "indian pickle condiment"
+    ],
+    "menu_matching_result": "pickle",
+    "final_food_label": "pickle",
+    "confidence": 0.6081,
+    "uncertainty": 0.3919,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_3",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

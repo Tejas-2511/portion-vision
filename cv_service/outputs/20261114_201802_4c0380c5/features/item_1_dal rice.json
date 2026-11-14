@@ -1,0 +1,29 @@
+{
+  "item_id": "dal rice_1",
+  "area_pixels": 47984,
+  "estimated_height_cm": 0.2,
+  "volume_estimate_ml": 11.5,
+  "density": 1.149,
+  "mass_g": 13.2,
+  "class_label": "dal rice",
+  "class_confidence": 0.8779,
+  "depth_stability": 1.0,
+  "scale_confidence": 1.0,
+  "composite_confidence": 0.937,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "curry and rice",
+    "candidate_labels": [
+      "curry and rice"
+    ],
+    "menu_matching_result": "dal rice",
+    "final_food_label": "dal rice",
+    "confidence": 0.8779,
+    "uncertainty": 0.1221,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

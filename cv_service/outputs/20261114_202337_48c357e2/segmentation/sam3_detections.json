@@ -1,0 +1,199 @@
+{
+  "total_items": 4,
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "food_name": "steamed rice",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "confidence": 0.8598,
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        361,
+        244,
+        235,
+        247
+      ],
+      "area_pixels": 39510,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_202337_48c357e2\\segmentation\\crops\\00_steamed_rice_0.86.png",
+      "sam3_raw_query": "rice",
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "boiled lentil salad",
+      "food_name": "boiled lentil salad",
+      "menu_match": true,
+      "matched_menu_item": "boiled lentil salad",
+      "confidence": 0.8536,
+      "identification_confidence": 0.8536,
+      "segmentation_confidence": 0.8536,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        638,
+        246,
+        199,
+        231
+      ],
+      "area_pixels": 35015,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "boiled lentil salad",
+          "confidence": 0.8536,
+          "raw_similarity": 0.8536
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_202337_48c357e2\\segmentation\\crops\\01_boiled_lentil_salad_0.85.png",
+      "sam3_raw_query": "chana salad",
+      "diagnostics": {
+        "original_sam3_query": "chana salad",
+        "candidate_labels": [
+          "chana salad"
+        ],
+        "menu_matching_result": "boiled lentil salad",
+        "final_food_label": "boiled lentil salad",
+        "confidence": 0.8536,
+        "uncertainty": 0.1464,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "dal",
+      "food_name": "dal",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "confidence": 0.7953,
+      "identification_confidence": 0.7953,
+      "segmentation_confidence": 0.7953,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        422,
+        30,
+        188,
+        183
+      ],
+      "area_pixels": 27440,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7953,
+          "raw_similarity": 0.7953
+        }
+      ],
+      "is_small_item": false,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_202337_48c357e2\\segmentation\\crops\\02_dal_0.80.png",
+      "sam3_raw_query": "brown dal",
+      "diagnostics": {
+        "original_sam3_query": "brown dal",
+        "candidate_labels": [
+          "brown dal"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7953,
+        "uncertainty": 0.2047,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    },
+    {
+      "name": "pickle",
+      "food_name": "pickle",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "confidence": 0.6754,
+      "identification_confidence": 0.6754,
+      "segmentation_confidence": 0.6754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "mask": null,
+      "bounding_box": [
+        666,
+        85,
+        109,
+        87
+      ],
+      "area_pixels": 6047,
+      "identification_status": "recognized",
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6754,
+          "raw_similarity": 0.6754
+        }
+      ],
+      "is_small_item": true,
+      "crop_path": "C:\\Users\\tejas\\Documents\\tejas\\codin\\portion-vision\\cv_service\\outputs\\20261114_202337_48c357e2\\segmentation\\crops\\03_pickle_0.68.png",
+      "sam3_raw_query": "indian pickle condiment",
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6754,
+        "uncertainty": 0.3246,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "mask_shape": [
+        576,
+        1024
+      ]
+    }
+  ],
+  "elapsed_seconds": 24.362,
+  "timestamp": "2026-11-14T20:24:03.548194"
+}

@@ -49,7 +49,7 @@ class OpenVocabFoodSegmenter:
         self,
         weights_dir: Optional[str] = None,
         device: Optional[str] = None,
-        confidence_threshold: float = 0.35,
+        confidence_threshold: float = 0.28,
         **kwargs,
     ):
         self.device = device or "cuda"

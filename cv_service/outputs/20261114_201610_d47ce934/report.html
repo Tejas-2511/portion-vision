@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'>
+<title>Pipeline Report — 20261114_201610_d47ce934</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif;
+         background:#0f0f0f; color:#e0e0e0; padding:2rem; }
+  h1 { color:#80cbc4; margin-bottom:0.3rem; }
+  h2 { color:#4dd0e1; margin:2rem 0 0.8rem; border-bottom:1px solid #333; padding-bottom:0.4rem; }
+  .meta { color:#888; margin-bottom:2rem; }
+  .card { background:#1a1a1a; border-radius:8px; padding:1rem;
+          margin-bottom:1rem; border:1px solid #2a2a2a; }
+  .card img { max-width:100%; border-radius:4px; margin-top:0.5rem; }
+  .card .fname { color:#aed581; font-family:monospace; font-size:0.9rem; }
+  table { border-collapse:collapse; width:100%; margin-top:0.5rem; }
+  th, td { padding:6px 10px; text-align:left; border-bottom:1px solid #2a2a2a;
+           font-size:0.85rem; }
+  th { color:#4dd0e1; }
+  .log-table td { font-family:monospace; font-size:0.8rem; }
+</style></head><body>
+<h1>🔬 Pipeline Run Report</h1>
+<p class='meta'>Run ID: <code>20261114_201610_d47ce934</code> &nbsp;│&nbsp; Debug: <code>True</code> &nbsp;│&nbsp; Files saved: <code>35</code></p>
+<h2>📁 input</h2>
+<div class='card'><span class='fname'>original.png</span><br><img src='input/original.png' alt='original.png'></div>
+<div class='card'><span class='fname'>metadata.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "resolution": "4080x1840",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "palak paneer",
+    "dal",
+    "steamed rice",
+    "green salad"
+  ],
+  "plate_profile": null,
+  "debug": true
+}</pre></div>
+<h2>📁 preprocessing</h2>
+<div class='card'><span class='fname'>01_resized.png</span><br><img src='preprocessing/01_resized.png' alt='01_resized.png'></div>
+<div class='card'><span class='fname'>02_denoised.png</span><br><img src='preprocessing/02_denoised.png' alt='02_denoised.png'></div>
+<div class='card'><span class='fname'>03_color_normalized.png</span><br><img src='preprocessing/03_color_normalized.png' alt='03_color_normalized.png'></div>
+<div class='card'><span class='fname'>04_contrast_enhanced.png</span><br><img src='preprocessing/04_contrast_enhanced.png' alt='04_contrast_enhanced.png'></div>
+<div class='card'><span class='fname'>05_edges.png</span><br><img src='preprocessing/05_edges.png' alt='05_edges.png'></div>
+<div class='card'><span class='fname'>06_perspective_warp.png</span><br><img src='preprocessing/06_perspective_warp.png' alt='06_perspective_warp.png'></div>
+<h2>📁 compartments</h2>
+<div class='card'><span class='fname'>01_adaptive_threshold.png</span><br><img src='compartments/01_adaptive_threshold.png' alt='01_adaptive_threshold.png'></div>
+<div class='card'><span class='fname'>02_combined_edges.png</span><br><img src='compartments/02_combined_edges.png' alt='02_combined_edges.png'></div>
+<div class='card'><span class='fname'>03_compartments_overlay.png</span><br><img src='compartments/03_compartments_overlay.png' alt='03_compartments_overlay.png'></div>
+<h2>📁 depth</h2>
+<div class='card'><span class='fname'>01_raw_depth.npy</span></div>
+<div class='card'><span class='fname'>02_depth_normalized.png</span><br><img src='depth/02_depth_normalized.png' alt='02_depth_normalized.png'></div>
+<div class='card'><span class='fname'>03_depth_colored.png</span><br><img src='depth/03_depth_colored.png' alt='03_depth_colored.png'></div>
+<div class='card'><span class='fname'>04_height_relative.npy</span></div>
+<div class='card'><span class='fname'>05_height_relative_colored.png</span><br><img src='depth/05_height_relative_colored.png' alt='05_height_relative_colored.png'></div>
+<div class='card'><span class='fname'>06_height_metric_cm.npy</span></div>
+<h2>📁 features</h2>
+<div class='card'><span class='fname'>compartments.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[]</pre></div>
+<div class='card'><span class='fname'>item_1_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_1",
+  "area_pixels": 2020,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 7.3,
+  "density": 1.09,
+  "mass_g": 7.9,
+  "class_label": "palak paneer",
+  "class_confidence": 0.852,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8443,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.852,
+    "uncertainty": 0.148,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_2_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_2",
+  "area_pixels": 1384,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 5.0,
+  "density": 1.09,
+  "mass_g": 5.4,
+  "class_label": "palak paneer",
+  "class_confidence": 0.85,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8433,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.85,
+    "uncertainty": 0.15,
+    "original_mask_id": "mask_01",
+    "grouped_instance_id": "inst_1",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_3_steamed rice.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "steamed rice_3",
+  "area_pixels": 39423,
+  "estimated_height_cm": 0.201,
+  "volume_estimate_ml": 13.4,
+  "density": 0.933,
+  "mass_g": 12.5,
+  "class_label": "steamed rice",
+  "class_confidence": 0.8433,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.84,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice",
+    "candidate_labels": [
+      "rice"
+    ],
+    "menu_matching_result": "steamed rice",
+    "final_food_label": "steamed rice",
+    "confidence": 0.8433,
+    "uncertainty": 0.1567,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_6",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_4_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_4",
+  "area_pixels": 1278,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 4.6,
+  "density": 1.09,
+  "mass_g": 5.0,
+  "class_label": "palak paneer",
+  "class_confidence": 0.8429,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8398,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.8429,
+    "uncertainty": 0.1571,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_5_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_5",
+  "area_pixels": 1444,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 5.2,
+  "density": 1.09,
+  "mass_g": 5.7,
+  "class_label": "palak paneer",
+  "class_confidence": 0.8392,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8379,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.8392,
+    "uncertainty": 0.1608,
+    "original_mask_id": "mask_04",
+    "grouped_instance_id": "inst_3",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_6_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_6",
+  "area_pixels": 648,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 2.3,
+  "density": 1.09,
+  "mass_g": 2.5,
+  "class_label": "palak paneer",
+  "class_confidence": 0.7676,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8014,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "paneer",
+    "candidate_labels": [
+      "paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.7676,
+    "uncertainty": 0.2324,
+    "original_mask_id": "mask_05",
+    "grouped_instance_id": "inst_4",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_7_green salad.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "green salad_7",
+  "area_pixels": 26488,
+  "estimated_height_cm": 1.395,
+  "volume_estimate_ml": 73.6,
+  "density": 1.05,
+  "mass_g": 77.2,
+  "class_label": "green salad",
+  "class_confidence": 0.7582,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7965,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "cucumber",
+    "candidate_labels": [
+      "cucumber"
+    ],
+    "menu_matching_result": "green salad",
+    "final_food_label": "green salad",
+    "confidence": 0.7582,
+    "uncertainty": 0.2418,
+    "original_mask_id": "mask_06",
+    "grouped_instance_id": "inst_7",
+    "fragment_count": 19,
+    "decision_reason": "FRAGMENT_GROUPED_19_PIECES"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_8_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_8",
+  "area_pixels": 21771,
+  "estimated_height_cm": 2.2,
+  "volume_estimate_ml": 61.2,
+  "density": 1.078,
+  "mass_g": 66.0,
+  "class_label": "dal",
+  "class_confidence": 0.7277,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7803,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.7277,
+    "uncertainty": 0.2723,
+    "original_mask_id": "mask_07",
+    "grouped_instance_id": "inst_8",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_9_palak paneer.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "palak paneer_9",
+  "area_pixels": 12340,
+  "estimated_height_cm": 3.05,
+  "volume_estimate_ml": 44.4,
+  "density": 1.09,
+  "mass_g": 48.4,
+  "class_label": "palak paneer",
+  "class_confidence": 0.7044,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.7677,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "palak paneer",
+    "candidate_labels": [
+      "palak paneer"
+    ],
+    "menu_matching_result": "palak paneer",
+    "final_food_label": "palak paneer",
+    "confidence": 0.7044,
+    "uncertainty": 0.2956,
+    "original_mask_id": "mask_08",
+    "grouped_instance_id": "inst_5",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_10_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_10",
+  "area_pixels": 850,
+  "estimated_height_cm": 2.2,
+  "volume_estimate_ml": 2.4,
+  "density": 1.066,
+  "mass_g": 2.5,
+  "class_label": "dal",
+  "class_confidence": 0.4932,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6424,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.4932,
+    "uncertainty": 0.5068,
+    "original_mask_id": "mask_09",
+    "grouped_instance_id": "inst_9",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_11_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_11",
+  "area_pixels": 1238,
+  "estimated_height_cm": 2.2,
+  "volume_estimate_ml": 3.5,
+  "density": 1.07,
+  "mass_g": 3.7,
+  "class_label": "dal",
+  "class_confidence": 0.4734,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6293,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.4734,
+    "uncertainty": 0.5266,
+    "original_mask_id": "mask_10",
+    "grouped_instance_id": "inst_10",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<div class='card'><span class='fname'>item_12_dal.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "item_id": "dal_12",
+  "area_pixels": 535,
+  "estimated_height_cm": 2.2,
+  "volume_estimate_ml": 1.5,
+  "density": 1.065,
+  "mass_g": 1.6,
+  "class_label": "dal",
+  "class_confidence": 0.4513,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.6145,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "dal tadka",
+    "candidate_labels": [
+      "dal tadka"
+    ],
+    "menu_matching_result": "dal",
+    "final_food_label": "dal",
+    "confidence": 0.4513,
+    "uncertainty": 0.5487,
+    "original_mask_id": "mask_11",
+    "grouped_instance_id": "inst_11",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}</pre></div>
+<h2>📁 volume</h2>
+<div class='card'><span class='fname'>01_fused_height_map.npy</span></div>
+<div class='card'><span class='fname'>01_height_map.png</span><br><img src='volume/01_height_map.png' alt='01_height_map.png'></div>
+<div class='card'><span class='fname'>02_final_annotated.png</span><br><img src='volume/02_final_annotated.png' alt='02_final_annotated.png'></div>
+<div class='card'><span class='fname'>results.json</span><pre style='color:#ccc;margin-top:0.5rem;'>{
+  "food_items": [
+    {
+      "name": "palak paneer",
+      "volume_ml": 68.8,
+      "mass_g": 74.9,
+      "calories": 124.0,
+      "protein": 6.9,
+      "carbs": 6.0,
+      "fat": 8.0,
+      "confidence": 0.8443,
+      "class_label": "palak paneer",
+      "class_confidence": 0.852,
+      "top_k": [
+        {
+          "label": "palak paneer",
+          "confidence": 0.852,
+          "raw_similarity": 0.852
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "palak paneer",
+      "identification_confidence": 0.852,
+      "segmentation_confidence": 0.852,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "paneer",
+        "candidate_labels": [
+          "paneer"
+        ],
+        "menu_matching_result": "palak paneer",
+        "final_food_label": "palak paneer",
+        "confidence": 0.852,
+        "uncertainty": 0.148,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "palak paneer",
+      "instance_count": 6
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 13.4,
+      "mass_g": 12.5,
+      "calories": 16.3,
+      "protein": 0.3,
+      "carbs": 3.5,
+      "fat": 0.0,
+      "confidence": 0.84,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8433,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8433,
+          "raw_similarity": 0.8433
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8433,
+      "segmentation_confidence": 0.8433,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confiden</pre></div>
+<h2>📁 logs</h2>
+<div class='card'><span class='fname'>run_log.json</span><pre style='color:#ccc;margin-top:0.5rem;'>[
+  {
+    "step": "Input",
+    "message": "Original image saved",
+    "params": {
+      "resolution": "4080x1840"
+    },
+    "elapsed_s": 0.3348,
+    "input_file": null,
+    "output_file": "original.png",
+    "timestamp": "2026-11-14T20:16:10.988088"
+  },
+  {
+    "step": "Pipeline",
+    "message": "Step 1 — Preprocessing & Perspective Warp",
+    "params": {},
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-14T20:16:10.988658"
+  },
+  {
+    "step": "Quality Gate",
+    "message": "PASS",
+    "params": {
+      "blur_score": 111.85,
+      "tilt_deg": 3.0
+    },
+    "elapsed_s": null,
+    "input_file": null,
+    "output_file": null,
+    "timestamp": "2026-11-14T20:16:11.246676"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Resize applied",
+    "params": {
+      "original": "4080x1840",
+      "target_long_edge": 1024,
+      "scale": 0.251
+    },
+    "elapsed_s": 0.0014,
+    "input_file": null,
+    "output_file": "01_resized.png",
+    "timestamp": "2026-11-14T20:16:11.277233"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Gaussian blur applied",
+    "params": {
+      "kernel": 5
+    },
+    "elapsed_s": 0.0005,
+    "input_file": null,
+    "output_file": "02_denoised.png",
+    "timestamp": "2026-11-14T20:16:11.308160"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "LAB color normalization applied",
+    "params": {},
+    "elapsed_s": 0.0166,
+    "input_file": null,
+    "output_file": "03_color_normalized.png",
+    "timestamp": "2026-11-14T20:16:11.351264"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "CLAHE contrast enhancement applied",
+    "params": {
+      "clip_limit": 2.0,
+      "tile_grid": "8x8"
+    },
+    "elapsed_s": 0.0031,
+    "input_file": null,
+    "output_file": "04_contrast_enhanced.png",
+    "timestamp": "2026-11-14T20:16:11.380713"
+  },
+  {
+    "step": "Preprocessing",
+    "message": "Canny edge detection",
+    "params": {
+      "low": 50,
+      "high": 150
+    },
+    "elapsed_s": 0.</pre></div>
+<h2>📋 Execution Log</h2>
+<table class='log-table'><tr><th>Step</th><th>Message</th><th>Params</th><th>Time</th></tr>
+<tr><td>Input</td><td>Original image saved</td><td>{"resolution": "4080x1840"}</td><td>0.3348s</td></tr>
+<tr><td>Pipeline</td><td>Step 1 — Preprocessing & Perspective Warp</td><td>—</td><td>—</td></tr>
+<tr><td>Quality Gate</td><td>PASS</td><td>{"blur_score": 111.85, "tilt_deg": 3.0}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Resize applied</td><td>{"original": "4080x1840", "target_long_edge": 1024, "scale": 0.251}</td><td>0.0014s</td></tr>
+<tr><td>Preprocessing</td><td>Gaussian blur applied</td><td>{"kernel": 5}</td><td>0.0005s</td></tr>
+<tr><td>Preprocessing</td><td>LAB color normalization applied</td><td>—</td><td>0.0166s</td></tr>
+<tr><td>Preprocessing</td><td>CLAHE contrast enhancement applied</td><td>{"clip_limit": 2.0, "tile_grid": "8x8"}</td><td>0.0031s</td></tr>
+<tr><td>Preprocessing</td><td>Canny edge detection</td><td>{"low": 50, "high": 150}</td><td>0.0068s</td></tr>
+<tr><td>Preprocessing</td><td>Warp skipped (no 4-pt contour)</td><td>{"warped": false}</td><td>—</td></tr>
+<tr><td>Preprocessing</td><td>Complete</td><td>{"output_size": "1024x461"}</td><td>0.4298s</td></tr>
+<tr><td>Pipeline</td><td>Step 2 — Compartments & Scale</td><td>—</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Detected 0 compartments</td><td>{"min_area_frac": 0.02, "max_area_frac": 0.9, "compartment_count": 0}</td><td>0.0054s</td></tr>
+<tr><td>Scale Calibration</td><td>Fallback to bbox-based calibration</td><td>{"cm_per_pixel": 0.04469, "method": "bbox"}</td><td>—</td></tr>
+<tr><td>Compartment Detection</td><td>Scale computed</td><td>{"cm_per_pixel": 0.04469, "pixel_area_cm2": 0.00199746, "compartments": 0, "scale_confidence": 0.7}</td><td>0.0460s</td></tr>
+<tr><td>Pipeline</td><td>Step 3 — Depth Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Depth Estimation</td><td>Depth Anything depth map computed (smoothed)</td><td>{"device": "cuda", "is_metric": true, "shape": [461, 1024], "min": -87.642, "max": -44.308}</td><td>0.7101s</td></tr>
+<tr><td>Depth Normalization</td><td>Surface normal plane subtracted from depth</td><td>{"baseline": -67.429, "fitted_plane": true, "is_metric": true}</td><td>0.0221s</td></tr>
+<tr><td>Depth Metric [cm]</td><td>Metric depth height in cm directly computed</td><td>{"cm_per_pixel": 0.04469, "min_cm": 0.0, "max_cm": 15.0, "mean_cm": 1.2}</td><td>0.0026s</td></tr>
+<tr><td>Depth Estimation</td><td>Complete</td><td>—</td><td>0.7928s</td></tr>
+<tr><td>Pipeline</td><td>Step 4–6 — SAM 3 Food Identification & Segmentation</td><td>—</td><td>—</td></tr>
+<tr><td>SAM3</td><td>Identified 12 food items (12 recognized, 0 unlisted, 0 uncertain)</td><td>—</td><td>37.3602s</td></tr>
+<tr><td>Pipeline</td><td>Step 7 — Volume & Mass Estimation</td><td>—</td><td>—</td></tr>
+<tr><td>Volume Estimation</td><td>Computed mass for 12 items</td><td>{"total_items": 12}</td><td>0.0352s</td></tr>
+<tr><td>Pipeline</td><td>✅ Pipeline complete</td><td>{"total_food_items": 12, "avg_confidence": 0.7698, "scale_method": "bbox"}</td><td>39.1047s</td></tr>
+</table></body></html>

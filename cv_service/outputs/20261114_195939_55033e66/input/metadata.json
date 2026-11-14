@@ -1,0 +1,13 @@
+{
+  "resolution": "4080x1840",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "roti",
+    "dal",
+    "steamed rice",
+    "sabzi"
+  ],
+  "plate_profile": null,
+  "debug": false
+}

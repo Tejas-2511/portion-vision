@@ -1,0 +1,29 @@
+{
+  "item_id": "chapati_3",
+  "area_pixels": 5180,
+  "estimated_height_cm": 0.785,
+  "volume_estimate_ml": 6.8,
+  "density": 0.799,
+  "mass_g": 5.5,
+  "class_label": "chapati",
+  "class_confidence": 0.8044,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8204,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "whole wheat roti",
+    "candidate_labels": [
+      "whole wheat roti"
+    ],
+    "menu_matching_result": "chapati",
+    "final_food_label": "chapati",
+    "confidence": 0.8044,
+    "uncertainty": 0.1956,
+    "original_mask_id": "mask_02",
+    "grouped_instance_id": "inst_2",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

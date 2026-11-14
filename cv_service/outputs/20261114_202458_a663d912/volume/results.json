@@ -1,0 +1,402 @@
+{
+  "food_items": [
+    {
+      "name": "cucumber",
+      "volume_ml": 46.8,
+      "mass_g": 49.1,
+      "calories": 8.9,
+      "protein": 0.3,
+      "carbs": 1.8,
+      "fat": 0.0,
+      "confidence": 0.8645,
+      "class_label": "cucumber",
+      "class_confidence": 0.8933,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8933,
+          "raw_similarity": 0.8933
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "cucumber",
+      "identification_confidence": 0.8933,
+      "segmentation_confidence": 0.8933,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber salad",
+        "candidate_labels": [
+          "cucumber salad"
+        ],
+        "menu_matching_result": "cucumber",
+        "final_food_label": "cucumber",
+        "confidence": 0.8933,
+        "uncertainty": 0.1067,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "cucumber",
+      "instance_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 91.6,
+      "mass_g": 90.9,
+      "calories": 118.1,
+      "protein": 2.5,
+      "carbs": 25.4,
+      "fat": 0.3,
+      "confidence": 0.8188,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8014,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8014,
+          "raw_similarity": 0.8014
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8014,
+      "segmentation_confidence": 0.8014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8014,
+        "uncertainty": 0.1986,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "UNKNOWN",
+      "volume_ml": 44.1,
+      "mass_g": 44.1,
+      "calories": 44.1,
+      "protein": 1.3,
+      "carbs": 6.6,
+      "fat": 1.3,
+      "confidence": 0.7388,
+      "class_label": "UNKNOWN",
+      "class_confidence": 0.7534,
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7534,
+          "raw_similarity": 0.7534
+        }
+      ],
+      "identification_status": "unknown",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7534,
+      "segmentation_confidence": 0.7534,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7534,
+        "uncertainty": 0.2466,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "fragment_count": 1,
+      "food_name": "UNKNOWN",
+      "instance_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 53.5,
+      "mass_g": 72.1,
+      "calories": 144.4,
+      "protein": 0.8,
+      "carbs": 10.8,
+      "fat": 10.1,
+      "confidence": 0.763,
+      "class_label": "pickle",
+      "class_confidence": 0.6958,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6958,
+          "raw_similarity": 0.6958
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6958,
+      "segmentation_confidence": 0.6958,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "spicy condiment",
+        "candidate_labels": [
+          "spicy condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6958,
+        "uncertainty": 0.3042,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "pickle",
+      "instance_count": 2
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "cucumber",
+      "volume_ml": 46.8,
+      "mass_g": 49.1,
+      "calories": 8.9,
+      "protein": 0.3,
+      "carbs": 1.8,
+      "fat": 0.0,
+      "confidence": 0.8645,
+      "class_label": "cucumber",
+      "class_confidence": 0.8933,
+      "top_k": [
+        {
+          "label": "cucumber",
+          "confidence": 0.8933,
+          "raw_similarity": 0.8933
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "cucumber",
+      "identification_confidence": 0.8933,
+      "segmentation_confidence": 0.8933,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "cucumber salad",
+        "candidate_labels": [
+          "cucumber salad"
+        ],
+        "menu_matching_result": "cucumber",
+        "final_food_label": "cucumber",
+        "confidence": 0.8933,
+        "uncertainty": 0.1067,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "steamed rice",
+      "volume_ml": 91.6,
+      "mass_g": 90.9,
+      "calories": 118.1,
+      "protein": 2.5,
+      "carbs": 25.4,
+      "fat": 0.3,
+      "confidence": 0.8188,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8014,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8014,
+          "raw_similarity": 0.8014
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8014,
+      "segmentation_confidence": 0.8014,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8014,
+        "uncertainty": 0.1986,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "UNKNOWN",
+      "volume_ml": 44.1,
+      "mass_g": 44.1,
+      "calories": 44.1,
+      "protein": 1.3,
+      "carbs": 6.6,
+      "fat": 1.3,
+      "confidence": 0.7388,
+      "class_label": "UNKNOWN",
+      "class_confidence": 0.7534,
+      "top_k": [
+        {
+          "label": "UNKNOWN",
+          "confidence": 0.7534,
+          "raw_similarity": 0.7534
+        }
+      ],
+      "identification_status": "unknown",
+      "menu_match": false,
+      "matched_menu_item": null,
+      "identification_confidence": 0.7534,
+      "segmentation_confidence": 0.7534,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 0.0,
+      "depth_confidence": 0.75,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "food",
+        "candidate_labels": [
+          "food"
+        ],
+        "menu_matching_result": null,
+        "final_food_label": "UNKNOWN",
+        "confidence": 0.7534,
+        "uncertainty": 0.2466,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_4",
+        "fragment_count": 1,
+        "decision_reason": "ABSTAINED_INSUFFICIENT_EVIDENCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 11.8,
+      "mass_g": 15.9,
+      "calories": 31.9,
+      "protein": 0.2,
+      "carbs": 2.4,
+      "fat": 2.2,
+      "confidence": 0.763,
+      "class_label": "pickle",
+      "class_confidence": 0.6958,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6958,
+          "raw_similarity": 0.6958
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6958,
+      "segmentation_confidence": 0.6958,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "spicy condiment",
+        "candidate_labels": [
+          "spicy condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6958,
+        "uncertainty": 0.3042,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 41.7,
+      "mass_g": 56.2,
+      "calories": 112.5,
+      "protein": 0.6,
+      "carbs": 8.4,
+      "fat": 7.9,
+      "confidence": 0.7389,
+      "class_label": "pickle",
+      "class_confidence": 0.6525,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6525,
+          "raw_similarity": 0.6525
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6525,
+      "segmentation_confidence": 0.6525,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "spicy condiment",
+        "candidate_labels": [
+          "spicy condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6525,
+        "uncertainty": 0.3475,
+        "original_mask_id": "mask_04",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.7848
+}

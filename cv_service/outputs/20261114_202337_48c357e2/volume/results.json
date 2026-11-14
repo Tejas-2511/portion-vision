@@ -1,0 +1,359 @@
+{
+  "food_items": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 93.6,
+      "mass_g": 92.5,
+      "calories": 120.3,
+      "protein": 2.5,
+      "carbs": 25.9,
+      "fat": 0.3,
+      "confidence": 0.8482,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8598,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "steamed rice",
+      "instance_count": 1
+    },
+    {
+      "name": "boiled lentil salad",
+      "volume_ml": 93.3,
+      "mass_g": 65.3,
+      "calories": 65.3,
+      "protein": 4.6,
+      "carbs": 9.8,
+      "fat": 0.7,
+      "confidence": 0.8451,
+      "class_label": "boiled lentil salad",
+      "class_confidence": 0.8536,
+      "top_k": [
+        {
+          "label": "boiled lentil salad",
+          "confidence": 0.8536,
+          "raw_similarity": 0.8536
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "boiled lentil salad",
+      "identification_confidence": 0.8536,
+      "segmentation_confidence": 0.8536,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "chana salad",
+        "candidate_labels": [
+          "chana salad"
+        ],
+        "menu_matching_result": "boiled lentil salad",
+        "final_food_label": "boiled lentil salad",
+        "confidence": 0.8536,
+        "uncertainty": 0.1464,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "boiled lentil salad",
+      "instance_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 64.3,
+      "mass_g": 69.8,
+      "calories": 50.0,
+      "protein": 4.9,
+      "carbs": 7.0,
+      "fat": 0.3,
+      "confidence": 0.8157,
+      "class_label": "dal",
+      "class_confidence": 0.7953,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7953,
+          "raw_similarity": 0.7953
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7953,
+      "segmentation_confidence": 0.7953,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "brown dal",
+        "candidate_labels": [
+          "brown dal"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7953,
+        "uncertainty": 0.2047,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "dal",
+      "instance_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 10.8,
+      "mass_g": 14.5,
+      "calories": 29.1,
+      "protein": 0.1,
+      "carbs": 2.2,
+      "fat": 2.0,
+      "confidence": 0.7517,
+      "class_label": "pickle",
+      "class_confidence": 0.6754,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6754,
+          "raw_similarity": 0.6754
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6754,
+      "segmentation_confidence": 0.6754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6754,
+        "uncertainty": 0.3246,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1,
+      "food_name": "pickle",
+      "instance_count": 1
+    }
+  ],
+  "raw_detections": [
+    {
+      "name": "steamed rice",
+      "volume_ml": 93.6,
+      "mass_g": 92.5,
+      "calories": 120.3,
+      "protein": 2.5,
+      "carbs": 25.9,
+      "fat": 0.3,
+      "confidence": 0.8482,
+      "class_label": "steamed rice",
+      "class_confidence": 0.8598,
+      "top_k": [
+        {
+          "label": "steamed rice",
+          "confidence": 0.8598,
+          "raw_similarity": 0.8598
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "steamed rice",
+      "identification_confidence": 0.8598,
+      "segmentation_confidence": 0.8598,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "rice",
+        "candidate_labels": [
+          "rice"
+        ],
+        "menu_matching_result": "steamed rice",
+        "final_food_label": "steamed rice",
+        "confidence": 0.8598,
+        "uncertainty": 0.1402,
+        "original_mask_id": "mask_00",
+        "grouped_instance_id": "inst_0",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "boiled lentil salad",
+      "volume_ml": 93.3,
+      "mass_g": 65.3,
+      "calories": 65.3,
+      "protein": 4.6,
+      "carbs": 9.8,
+      "fat": 0.7,
+      "confidence": 0.8451,
+      "class_label": "boiled lentil salad",
+      "class_confidence": 0.8536,
+      "top_k": [
+        {
+          "label": "boiled lentil salad",
+          "confidence": 0.8536,
+          "raw_similarity": 0.8536
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "boiled lentil salad",
+      "identification_confidence": 0.8536,
+      "segmentation_confidence": 0.8536,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "chana salad",
+        "candidate_labels": [
+          "chana salad"
+        ],
+        "menu_matching_result": "boiled lentil salad",
+        "final_food_label": "boiled lentil salad",
+        "confidence": 0.8536,
+        "uncertainty": 0.1464,
+        "original_mask_id": "mask_01",
+        "grouped_instance_id": "inst_1",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "dal",
+      "volume_ml": 64.3,
+      "mass_g": 69.8,
+      "calories": 50.0,
+      "protein": 4.9,
+      "carbs": 7.0,
+      "fat": 0.3,
+      "confidence": 0.8157,
+      "class_label": "dal",
+      "class_confidence": 0.7953,
+      "top_k": [
+        {
+          "label": "dal",
+          "confidence": 0.7953,
+          "raw_similarity": 0.7953
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "dal",
+      "identification_confidence": 0.7953,
+      "segmentation_confidence": 0.7953,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "brown dal",
+        "candidate_labels": [
+          "brown dal"
+        ],
+        "menu_matching_result": "dal",
+        "final_food_label": "dal",
+        "confidence": 0.7953,
+        "uncertainty": 0.2047,
+        "original_mask_id": "mask_02",
+        "grouped_instance_id": "inst_2",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    },
+    {
+      "name": "pickle",
+      "volume_ml": 10.8,
+      "mass_g": 14.5,
+      "calories": 29.1,
+      "protein": 0.1,
+      "carbs": 2.2,
+      "fat": 2.0,
+      "confidence": 0.7517,
+      "class_label": "pickle",
+      "class_confidence": 0.6754,
+      "top_k": [
+        {
+          "label": "pickle",
+          "confidence": 0.6754,
+          "raw_similarity": 0.6754
+        }
+      ],
+      "identification_status": "recognized",
+      "menu_match": true,
+      "matched_menu_item": "pickle",
+      "identification_confidence": 0.6754,
+      "segmentation_confidence": 0.6754,
+      "association_confidence": 1.0,
+      "menu_match_confidence": 1.0,
+      "depth_confidence": 1.0,
+      "scale_confidence": 0.7,
+      "diagnostics": {
+        "original_sam3_query": "indian pickle condiment",
+        "candidate_labels": [
+          "indian pickle condiment"
+        ],
+        "menu_matching_result": "pickle",
+        "final_food_label": "pickle",
+        "confidence": 0.6754,
+        "uncertainty": 0.3246,
+        "original_mask_id": "mask_03",
+        "grouped_instance_id": "inst_3",
+        "fragment_count": 1,
+        "decision_reason": "SINGLE_INSTANCE"
+      },
+      "fragment_count": 1
+    }
+  ],
+  "confidence": 0.8152
+}

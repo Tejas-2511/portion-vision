@@ -1,0 +1,14 @@
+{
+  "resolution": "4080x1840",
+  "channels": 3,
+  "dtype": "uint8",
+  "expected_items": [
+    "seviyan",
+    "dal",
+    "steamed rice",
+    "cucumber",
+    "pickle"
+  ],
+  "plate_profile": null,
+  "debug": true
+}

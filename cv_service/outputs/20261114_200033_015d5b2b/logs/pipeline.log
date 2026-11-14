@@ -1,0 +1,21 @@
+2026-11-14 20:00:33,169 │ INFO │ Run started — debug=False, id=20261114_200033_015d5b2b
+2026-11-14 20:00:33,451 │ INFO │ [input] Saved image → original.png
+2026-11-14 20:00:33,452 │ INFO │ [input] Saved JSON → metadata.json
+2026-11-14 20:00:33,452 │ INFO │ [Input] Original image saved │ params={'resolution': '4080x1840'} │ time=0.2829s │ output=original.png
+2026-11-14 20:00:33,452 │ INFO │ [Pipeline] Step 1 — Preprocessing & Perspective Warp
+2026-11-14 20:00:33,608 │ INFO │ [Quality Gate] PASS │ params={'blur_score': 67.66, 'tilt_deg': 1.0}
+2026-11-14 20:00:33,774 │ INFO │ [Preprocessing] Complete │ params={'output_size': '1024x461'} │ time=0.3216s
+2026-11-14 20:00:33,774 │ INFO │ [Pipeline] Step 2 — Compartments & Scale
+2026-11-14 20:00:33,792 │ INFO │ [Scale Calibration] Fallback to bbox-based calibration │ params={'cm_per_pixel': 0.04469, 'method': 'bbox'}
+2026-11-14 20:00:33,792 │ INFO │ [Compartment Detection] Scale computed │ params={'cm_per_pixel': 0.04469, 'pixel_area_cm2': 0.00199746, 'compartments': 0, 'scale_confidence': 0.7} │ time=0.0170s
+2026-11-14 20:00:33,792 │ INFO │ [Pipeline] Step 3 — Depth Estimation
+2026-11-14 20:00:49,725 │ INFO │ [Depth Estimation] Complete │ time=15.9338s
+2026-11-14 20:00:49,725 │ INFO │ [Pipeline] Step 4–6 — SAM 3 Food Identification & Segmentation
+2026-11-14 20:01:38,744 │ INFO │ [SAM3] Identified 5 food items (2 recognized, 0 unlisted, 0 uncertain) │ time=49.0180s │ output=segmentation/01_sam3_segmentation_overlay.png
+2026-11-14 20:01:38,744 │ INFO │ [Pipeline] Step 7 — Volume & Mass Estimation
+2026-11-14 20:01:38,758 │ INFO │ [Volume Estimation] Computed mass for 5 items │ params={'total_items': 5} │ time=0.0131s
+2026-11-14 20:01:38,802 │ INFO │ [volume] Saved image → 01_final_annotated.png
+2026-11-14 20:01:38,804 │ INFO │ [volume] Saved JSON → results.json
+2026-11-14 20:01:38,804 │ INFO │ [Pipeline] ✅ Pipeline complete │ params={'total_food_items': 5, 'avg_confidence': 0.7457, 'scale_method': 'bbox'} │ time=65.6390s
+2026-11-14 20:01:38,805 │ INFO │ [logs] Saved JSON → run_log.json
+2026-11-14 20:01:38,856 │ INFO │ HTML report generated → report.html

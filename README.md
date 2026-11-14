@@ -95,8 +95,7 @@ portion-vision/
 │   │   └── pipeline.py        #     High-level orchestrator & transparent crop export
 │   ├── outputs/               #   Timestamped CV run logs, masks, crops & reports
 │   ├── main.py                #   FastAPI server entry point
-│   ├── visualize_open_vocab.py #  Visual inspection CLI tool
-│   └── evaluate_pipeline.py   #   Precision benchmark runner
+│   ├── evaluate_example.py    #   Standalone CLI tool for plate evaluation & metrology guide
 ├── plate/                     # Reference plate dataset for testing & verification
 ├── technical.md               # Full architecture & code-level deconstruction
 └── README.md                  # Project overview & documentation
@@ -165,22 +164,28 @@ Frontend runs on `http://localhost:5173`. Open in a browser or scan the network 
 ## CV Inspection & Verification Tools
 
 ### Visual Pipeline Inspector
-Run open-vocabulary segmentation and mass estimation on any plate image:
+### Plate Evaluation & Metrology CLI Guide
+Run end-to-end portion estimation, 3D topographic relief mapping, and complete nutritional macronutrient calculation:
 
 ```powershell
 conda activate sam3
 
-# Automatically inspect the newest image in plate/
-python cv_service\visualize_open_vocab.py
+# 1. Run on default example plate with a contextual mess menu:
+python cv_service/evaluate_example.py
 
-# Or specify a target image and menu
-python cv_service\visualize_open_vocab.py plate\IMG-sample.jpg --menu "palak paneer, dal fry, steamed rice"
+# 2. Run on a specific plate with a custom menu:
+python cv_service/evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --menu "palak paneer, dal, steamed rice, green salad"
+
+# 3. Pure open-world discovery mode (no menu hints):
+python cv_service/evaluate_example.py --image "plate/use/IMG20260402200840.jpg" --open-world
 ```
 
-Artifacts are saved under `cv_service/outputs/<timestamp>_vis/`:
-- `annotated.png` — bounding boxes, segment outlines, mass (g), and confidence
-- `results.json` — structured detection, diagnostics, and macro summaries
-- `segmentation/crops/` — isolated transparent RGBA crops for every detected dish
+All generated visualization artifacts are saved under `cv_service/outputs/<timestamp>/`:
+- `volume/02_final_annotated.png` — bounding contours, food labels, portion masses (g), and confidence scores
+- `volume/01_height_map.png` — 3D Topographic fused relief map (Turbo colormap) showing dome curvatures
+- `depth/03_depth_colored.png` — dense continuous Depth Anything metric depth map
+- `depth/05_height_relative_colored.png` — tray-normalized relative height map
+- `volume/results.json` — machine-readable portion masses, volumes, and full nutritional macros (Calories, Protein, Carbs, Fat)
 
 ---
 

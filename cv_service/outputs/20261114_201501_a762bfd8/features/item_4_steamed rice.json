@@ -1,0 +1,29 @@
+{
+  "item_id": "steamed rice_4",
+  "area_pixels": 115896,
+  "estimated_height_cm": 0.203,
+  "volume_estimate_ml": 25.4,
+  "density": 0.977,
+  "mass_g": 24.8,
+  "class_label": "steamed rice",
+  "class_confidence": 0.8549,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8457,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice",
+    "candidate_labels": [
+      "rice"
+    ],
+    "menu_matching_result": "steamed rice",
+    "final_food_label": "steamed rice",
+    "confidence": 0.8549,
+    "uncertainty": 0.1451,
+    "original_mask_id": "mask_03",
+    "grouped_instance_id": "inst_4",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "fragment_count": 1
+}

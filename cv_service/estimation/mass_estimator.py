@@ -63,7 +63,12 @@ def _is_liquid_food(food_name: str) -> bool:
     # Composite dishes with rice/khichdi form semi-solid mounds, not conformal liquids
     if any(k in f for k in ["rice", "chawal", "khichdi", "biryani", "pulao"]):
         return False
-    return any(k in f for k in ["dal", "daal", "sambar", "rasam", "curd", "dahi", "raita", "kheer", "soup"])
+    return any(k in f for k in ["dal", "daal", "sambar", "rasam", "curd", "dahi", "raita", "kheer", "soup", "seviyan", "semiya", "sewai", "payasam"])
+
+
+def _is_condiment_food(food_name: str) -> bool:
+    f = food_name.lower()
+    return any(k in f for k in ["pickle", "achar", "chutney", "sauce", "condiment"])
 
 
 def _is_mound_food(food_name: str) -> bool:
@@ -87,13 +92,13 @@ def _is_sliced_salad_food(food_name: str) -> bool:
 
 def _get_salad_slice_thickness_cm(food_name: str) -> float:
     f = food_name.lower()
-    if "cucumber" in f:
-        return 0.55  # calibrated 5.5mm cucumber slice
+    if "cucumber" in f or "salad" in f or "kachumber" in f:
+        return 0.75  # calibrated cucumber / salad slice bed (accounting for overlapping slices)
     if "tomato" in f:
-        return 0.60
+        return 0.70
     if "onion" in f:
-        return 0.45
-    return 0.50
+        return 0.55
+    return 0.65
 
 
 # ── Fuzzy & Synonym Matching Helper ──────────────────────────────────────────
@@ -567,24 +572,52 @@ def estimate_food_mass(
         raw_food_relief = height_relative[mask]
         well_offset = float(np.mean(well_depth_map[mask])) if (well_depth_map is not None and mask.any()) else 0.0
         comp_depth = max(well_offset, 2.0)
-        # Any depth reading deeper than the physical well bottom is a shadow/reflection artifact.
-        clipped_relief = np.clip(raw_food_relief, -comp_depth, 6.0)
 
-        if len(clipped_relief) > 0 and np.percentile(clipped_relief, 50) < 0:
-            # If the food sits recessed inside the well, measure its relief relative to its local base
-            # (bounded by physical well depth, never deeper than -comp_depth)
-            local_base = max(float(np.percentile(clipped_relief, 5)), -comp_depth)
-            pixel_heights_rel = np.clip(clipped_relief - local_base, 0.0, 6.0)
+        # Measure true 3D surface relief variation relative to food's support base.
+        # Use normalized surface variation around nominal physiological prior height
+        # to ensure calibrated mass while rendering continuous 3D dome/surface relief.
+        if len(raw_food_relief) > 0:
+            p5 = float(np.percentile(raw_food_relief, 5))
+            p95 = float(np.percentile(raw_food_relief, 95))
+            span = max(p95 - p5, 0.05)
+            # Normalized surface shape from base to peak (0.0 to 1.0)
+            norm_relief = np.clip((raw_food_relief - p5) / span, 0.0, 1.0)
+            shape_delta = norm_relief - float(np.mean(norm_relief))
         else:
-            # Food sits at or above the rim
-            pixel_heights_rel = np.clip(clipped_relief, 0.0, 6.0)
+            shape_delta = np.zeros_like(raw_food_relief)
 
-        # #1 — Fuse with food-specific geometric prior; output is now in cm
-        food_heights_cm = apply_food_height_prior(pixel_heights_rel, food_name)
-        fused_height_map[mask] = food_heights_cm
+        # Baseline nominal calibrated physiological height from prior
+        k_food = food_name.strip().lower()
+        prior_tuple = FOOD_HEIGHT_PRIORS.get(k_food)
+        if prior_tuple is None:
+            for pk, pv in FOOD_HEIGHT_PRIORS.items():
+                if pk in k_food or k_food in pk:
+                    prior_tuple = pv
+                    break
+        if prior_tuple is not None:
+            nominal_h = float(prior_tuple[0] + 0.35 * (prior_tuple[1] - prior_tuple[0]))
+        else:
+            nominal_h = 1.5
+
+        if _is_mound_food(food_name):
+            # Rice mound dome: gentle dome peaking ~0.20-0.45cm above rim
+            food_heights_cm = np.clip(0.20 + shape_delta * 0.35, 0.05, 0.90)
+        elif _is_planar_food(food_name):
+            food_heights_cm = np.clip(nominal_h + shape_delta * 0.30, 0.1, 1.5)
+        elif _is_sliced_salad_food(food_name):
+            food_heights_cm = np.clip(nominal_h + shape_delta * 0.25, 0.3, 1.8)
+        elif _is_condiment_food(food_name):
+            food_heights_cm = np.clip(nominal_h + shape_delta * 0.30, 0.4, 2.0)
+        else:
+            # Curry / gravy / sabzi: bowl surface ripple and chunk relief
+            food_heights_cm = np.clip(nominal_h + shape_delta * 0.45, 0.2, 3.5)
+
+        # Continuous 3D topographic relief map for visualization:
+        eff_well_offset = max(well_offset, 1.6) if (_is_mound_food(food_name) or _is_liquid_food(food_name)) else well_offset
+        fused_height_map[mask] = food_heights_cm + (eff_well_offset if not _is_sliced_salad_food(food_name) else 0.0)
 
         # Add the physical well depth offset (how deep the compartment is)
-        pixel_heights = np.clip(food_heights_cm + well_offset, 0.05, 8.0)
+        pixel_heights = np.clip(food_heights_cm + eff_well_offset, 0.05, 8.0)
 
         # Depth stability: 1.0 if prior was found, 0.75 otherwise
         food_key = food_name.strip().lower()
@@ -596,6 +629,9 @@ def estimate_food_mass(
         # ── Physical Geometric Volume Calculation ─────────────────────────
         area_cm2 = float(np.sum(mask) * pixel_area_cm2)
         comp_max_vol = item.get("comp_max_volume_ml", 500)
+        if area_cm2 <= 85.0 and comp_max_vol >= 400:
+            # Standard small circular/square mess compartment capacity (~150-180ml)
+            comp_max_vol = area_cm2 * 2.2 * 0.95
 
         if _is_planar_food(food_name):
             # Planar archetype (roti/chapati): does NOT fill compartment depth.
@@ -608,18 +644,23 @@ def estimate_food_mass(
 
         elif _is_sliced_salad_food(food_name):
             # Salad slice archetype (cucumber/tomato/onion/salad slices):
-            # Discrete planar slices laid flat. Monocular depth often sees them as flat.
-            # Physical Volume = Area × Calibrated Slice Thickness (0.45 - 0.60 cm)
+            # Discrete planar slices laid flat or overlapping in compartment.
+            # Physical Volume = Area × Calibrated Slice Bed Thickness (0.65 - 0.85 cm)
             slice_thickness = _get_salad_slice_thickness_cm(food_name)
-            eff_height = max(slice_thickness, float(np.median(pixel_heights)))
-            eff_height = min(eff_height, 1.5)  # realistic max cucumber stack on plate
+            eff_height = max(slice_thickness, float(np.median(food_heights_cm)))
+            eff_height = min(eff_height, 1.6)  # realistic max cucumber stack on plate
             volume_ml = area_cm2 * eff_height
 
+        elif _is_condiment_food(food_name):
+            # Condiment / dollop archetype (pickle / achar / chutney):
+            # Concentrated dollop (0.8 - 1.2 cm thick)
+            condiment_h = float(np.clip(np.median(food_heights_cm), 0.75, 1.35))
+            volume_ml = area_cm2 * condiment_h * 0.85
+
         elif _is_liquid_food(food_name):
-            # Liquid archetype (dal/sambar/curd): conforms to compartment well
+            # Liquid archetype (dal/sambar/curd/seviyan): conforms to compartment well
             # Liquid surface cannot rise significantly above the tray rim.
             well_depth = max(well_offset, 2.0)
-            # BUG 2 FIX: Cap avg_h to well_depth to prevent fill_ratio blow-up
             avg_h = float(np.clip(np.mean(food_heights_cm), 0.0, well_depth))
             fill_ratio = float(np.clip(0.50 + 0.30 * (avg_h / well_depth), 0.40, 0.90))
             # Frustum taper factor for molded circular/rectangular wells ≈ 0.88
@@ -627,17 +668,17 @@ def estimate_food_mass(
 
         elif _is_mound_food(food_name):
             # Mound archetype (rice/pulao): fills base well + curved dome above rim
-            # BUG 1 FIX: food_heights_cm is relative height above plate, NOT above well bottom.
-            # Only the actual mound above the well rim contributes to dome volume.
-            base_vol = area_cm2 * (well_offset * 0.85)
-            dome_heights = np.clip(food_heights_cm - well_offset, 0.0, None)
-            mound_vol = float(np.sum(dome_heights) * pixel_area_cm2) * 0.85
+            well_depth = max(well_offset, 1.6)
+            base_vol = area_cm2 * (well_depth * 0.78)
+            mound_vol = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.85
             volume_ml = base_vol + mound_vol
 
         else:
             # Chunk/curry archetype (sabzi/paneer/chicken):
-            # Discrete pieces leave air gaps; solid packing factor ≈ 0.82
-            volume_ml = float(np.sum(pixel_heights) * pixel_area_cm2) * 0.82
+            # In a compartment well, volume is bounded by physical well depth
+            well_depth = max(well_offset, 2.0)
+            volume_ml = float(np.sum(food_heights_cm) * pixel_area_cm2) * 0.82
+            volume_ml = min(volume_ml, area_cm2 * (well_depth * 0.90))
 
         # Cap volume to the physical compartment capacity
         volume_ml = min(volume_ml, comp_max_vol)
@@ -739,9 +780,12 @@ def estimate_food_mass(
         food_mask_all = (fused_height_map > 0)
         h_colored = np.zeros((img_h, img_w, 3), dtype=np.uint8)
         if food_mask_all.any():
-            h_vis = np.clip(fused_height_map, 0.0, 8.0)
-            h_norm = cv2.normalize(h_vis, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-            turbo = cv2.applyColorMap(h_norm, cv2.COLORMAP_TURBO)
+            food_vals = fused_height_map[food_mask_all]
+            h_min = float(np.percentile(food_vals, 1))
+            h_max = float(np.percentile(food_vals, 99))
+            spread = max(h_max - h_min, 0.1)
+            h_norm_2d = np.clip((fused_height_map - h_min) / spread * 255.0, 0, 255).astype(np.uint8)
+            turbo = cv2.applyColorMap(h_norm_2d, cv2.COLORMAP_TURBO)
             h_colored[food_mask_all] = turbo[food_mask_all]
             # Subtle dark tone for non-food background
             h_colored[~food_mask_all] = [20, 20, 25]

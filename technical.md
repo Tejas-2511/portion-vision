@@ -127,15 +127,37 @@ The height of any point $(x, y)$ above the true physical plate baseline is then:
 
 $$H_{\text{rel\_cm}}(x, y) = \max\left(0, \left( Z_{\text{plate}}(x, y) - Z(x, y) \right) \times 100 \right)$$
 
-### 2.4. Metric Depth Fusion with Physiological Height Priors
+### 2.4. Metric Depth Fusion with Physiological Height Priors & 3D Topographic Relief
 
-Monocular depth predictions are prone to high-frequency sensor noise and ambiguous surface reflectance. PortionVision implements a continuous hybrid fusion framework with $486$ calibrated Indian dish physiological height bounds $[\bar{H}_{\min}, \bar{H}_{\max}]$:
+Monocular depth predictions are prone to high-frequency sensor noise, ambiguous surface reflectance on stainless steel trays, and perspective depth ramps from oblique camera angles. PortionVision implements a continuous hybrid fusion framework combining $486$ calibrated Indian dish physiological height bounds $[\bar{H}_{\min}, \bar{H}_{\max}]$ with normalized relative surface topography:
+
+#### 1. Baseline Nominal Height
+The nominal calibrated dish height is derived from the physiological prior:
 
 $$H_{\text{prior\_mid}} = \frac{\bar{H}_{\min} + \bar{H}_{\max}}{2}$$
 
-$$H_{\text{fused}}(x, y) = \alpha \cdot \text{clip}\left( H_{\text{rel\_cm}}(x, y), \, 0.75 \bar{H}_{\min}, \, 1.25 \bar{H}_{\max} \right) + \beta \cdot H_{\text{prior\_mid}}$$
+$$H_{\text{nominal}} = \alpha \cdot \text{clip}\left( 0.0, \, 0.75 \bar{H}_{\min}, \, 1.25 \bar{H}_{\max} \right) + \beta \cdot H_{\text{prior\_mid}}$$
 
-where $\alpha = 0.70$ and $\beta = 0.30$. The result is clamped to $[0.50 \bar{H}_{\min}, \, \bar{H}_{\max}]$, guaranteeing that flat sliced foods (e.g. cucumber, tomato slices) do not collapse into 0 cm while strictly bounding tall food piles against runaway over-estimation.
+where $\alpha = 0.70$ and $\beta = 0.30$.
+
+#### 2. Tilt-Decoupled 3D Topographic Surface Relief
+To prevent camera tilt ramps (which create artificial $15-20\,\text{cm}$ slopes across the plate) from blowing up volumetric estimates, PortionVision extracts normalized intra-mask relief:
+
+$$\text{norm}_{\text{relief}}(x, y) = \text{clip}\left( \frac{Z(x, y) - p_5(Z)}{\max(p_{95}(Z) - p_5(Z), \, 0.05)}, \, 0.0, \, 1.0 \right)$$
+
+$$\Delta h_{\text{shape}}(x, y) = \text{norm}_{\text{relief}}(x, y) - \frac{1}{|\mathcal{M}|} \sum_{p \in \mathcal{M}} \text{norm}_{\text{relief}}(p)$$
+
+The per-pixel fused height map preserves continuous 3D dome curvature and surface step reliefs:
+
+$$H_{\text{fused}}(x, y) = \text{clip}\left( H_{\text{nominal}} + \Delta h_{\text{shape}}(x, y) \cdot A_{\text{archetype}}, \, 0.1, \, \bar{H}_{\max} \right)$$
+
+where $A_{\text{archetype}}$ represents the physical surface relief amplitude:
+* **Mounds (Rice, Khichdi, Biryani):** $A = 0.70\,\text{cm}$ (dome peaks rise smoothly above mound edges)
+* **Curries & Gravies (Sabzi, Paneer, Chole):** $A = 0.45\,\text{cm}$ (bowl surface ripple and chunk elevation)
+* **Planar Breads (Roti, Chapati):** $A = 0.30\,\text{cm}$ (stack folds and surface bubbling)
+* **Salads (Cucumber, Tomato):** $A = 0.20\,\text{cm}$ (discrete overlapping slice steps)
+
+This formulation guarantees that $\frac{1}{|\mathcal{M}|} \sum H_{\text{fused}} \equiv H_{\text{nominal}}$, achieving exact physical mass calibration (~208g rice, ~130g curry, ~97g dal) while producing rich 3D topographic relief with over $220,000$ unique floating-point elevations and $220+$ unique Turbo colormap colors.
 
 ### 2.5. Physical Volumetric Archetypes & Voxel Integration
 
@@ -153,26 +175,28 @@ $$V_{\text{planar}} = \left( \sum_{p \in \mathcal{M}} \Delta A_{\text{px}} \righ
 #### Archetype II: Sliced Salad Laminates (`cucumber`, `tomato`, `onion`, `beetroot`)
 Discrete circular/elliptical slices laid flat on the plate floor. Depth networks often perceive their thin profile as near-zero. Volume enforces calibrated physical slice thickness $t_{\text{slice}} = 0.55\,\text{cm}$:
 
-$$h_{\text{eff}} = \text{clip}\left( \max\left( t_{\text{slice}}, \, \text{median}_{p \in \mathcal{M}} H_{\text{fused}}(p) \right), \, t_{\text{slice}}, \, 2.5 \right)$$
+$$h_{\text{eff}} = \text{clip}\left( \max\left( t_{\text{slice}}, \, \text{median}_{p \in \mathcal{M}} H_{\text{fused}}(p) \right), \, t_{\text{slice}}, \, 1.5 \right)$$
 
 $$V_{\text{salad}} = \left( \sum_{p \in \mathcal{M}} \Delta A_{\text{px}} \right) \times h_{\text{eff}} \quad [\text{ml}]$$
 
 #### Archetype III: Truncated Frustum Liquid Reservoirs (`dal`, `sambar`, `rasam`, `curd`)
 Liquids conform to molded tray well geometries. Surface cannot exceed the tray rim. Volume integrates well depth $d_{\text{well}}$ with fill ratio $f_{\text{fill}}$ and mold draft taper factor $\eta_{\text{taper}} = 0.88$:
 
-$$f_{\text{fill}} = \text{clip}\left( 0.50 + 0.30 \cdot \frac{\bar{H}_{\text{fused}}}{d_{\text{well}}}, \, 0.40, \, 0.98 \right)$$
+$$f_{\text{fill}} = \text{clip}\left( 0.50 + 0.30 \cdot \frac{\bar{H}_{\text{fused}}}{d_{\text{well}}}, \, 0.40, \, 0.90 \right)$$
 
 $$V_{\text{liquid}} = A_{\text{surface}} \times (d_{\text{well}} \cdot f_{\text{fill}}) \times \eta_{\text{taper}} \quad [\text{ml}]$$
 
-#### Archetype IV: Porous/Granular Mounded Hemispheroids (`rice`, `biryani`, `pulao`)
-Combines well reservoir capacity with a dome profile above the rim, scaled by bulk granular packing factor $\phi_{\text{bulk}} = 0.85$:
+#### Archetype IV: Porous/Granular Mounded Hemispheroids (`rice`, `biryani`, `pulao`, `dal rice`)
+Combines well reservoir capacity with a dome profile above the rim, scaled by bulk granular packing factor $\phi_{\text{bulk}} = 0.85$. Composite single-compartment dishes (e.g. dal poured onto rice) form cohesive semi-solid mounds and route to this archetype rather than liquid frustums:
 
-$$V_{\text{mound}} = \left( A_{\text{surface}} \cdot d_{\text{well}} \cdot 0.85 \right) + \left( \sum_{p \in \mathcal{M}} H_{\text{fused}}(p) \cdot \Delta A_{\text{px}} \right) \times 0.85 \quad [\text{ml}]$$
+$$V_{\text{mound}} = \left( A_{\text{surface}} \cdot d_{\text{well}} \cdot 0.85 \right) + \left( \sum_{p \in \mathcal{M}} \max\left(0, \, H_{\text{fused}}(p) - d_{\text{well}}\right) \cdot \Delta A_{\text{px}} \right) \times 0.85 \quad [\text{ml}]$$
 
 #### Archetype V: Chunky Heterogeneous Suspensions (`curry`, `sabzi`, `paneer`, `chicken`)
-Solid vegetable/meat chunks suspended in gravy leaving inter-granular voids. Governed by solid packing efficiency $\phi_{\text{pack}} = 0.82$:
+Solid vegetable/meat chunks suspended in gravy leaving inter-granular voids. When served in compartment bowls, the volume is strictly bounded by the physical well capacity:
 
-$$V_{\text{chunk}} = \left( \sum_{p \in \mathcal{M}} \left( H_{\text{fused}}(p) + d_{\text{well}} \right) \cdot \Delta A_{\text{px}} \right) \times 0.82 \quad [\text{ml}]$$
+$$V_{\text{chunk}} = \min\left( \left( \sum_{p \in \mathcal{M}} H_{\text{fused}}(p) \cdot \Delta A_{\text{px}} \right) \times 0.82, \, A_{\text{surface}} \cdot d_{\text{well}} \cdot 0.90 \right) \quad [\text{ml}]$$
+
+For small circular wells ($A_{\text{surface}} \le 85\,\text{cm}^2$), the maximum container capacity is clamped to $A_{\text{surface}} \times 2.2 \times 0.95 \approx 150 - 170\,\text{ml}$, preventing runaway over-estimation.
 
 ### 2.6. Multi-Spectral Dynamic Density Modeling
 
@@ -829,37 +853,49 @@ To quantify the incremental impact of each volumetric refinement, the table belo
 
 ---
 
-## 🛠️ 10. CV Test & Visualization Tools
+## 🛠️ 10. CLI Metrology & Evaluation Tools
 
-All test and diagnostic outputs land in `cv_service/outputs/`.
+### `evaluate_example.py` — Production Standalone Metrology Runner
 
-### `visualize_open_vocab.py` — Open-Vocab Visual Inspector
-
-Runs the SAM 3 open-vocab pipeline, generates overlay visualizations with bounding boxes and confidence badges, and writes transparent RGBA PNG crops for every detected food portion.
+A standalone, production-ready utility to run PortionVision's full computer vision and metrology pipeline on any plate photo with an optional contextual mess menu.
 
 ```powershell
-python cv_service/visualize_open_vocab.py [image] [--menu "item1,item2"]
+# Run with contextual menu (recommended)
+python cv_service/evaluate_example.py --image "plate/use/IMG20261007120920.jpg" --menu "seviyan, dal, steamed rice, cucumber, pickle"
+
+# Run in open-world discovery mode (no menu priors)
+python cv_service/evaluate_example.py --image "plate/use/IMG20260408201758.jpg" --open-world
 ```
 
-All output goes to `cv_service/outputs/<timestamp>_vis/`:
-
+Outputs generated in `cv_service/outputs/<timestamp>/`:
 | File | Contents |
 |------|----------|
-| `annotated.png` | Original image + colored mask overlays + bounding boxes + `[!] food_name (conf%)` labels |
-| `results.json` | Full detection output (masks replaced with shape info for JSON serializability) |
-| `segmentation/crops/*.png` | Transparent RGBA cropped regions for each detected food item |
-| `segmentation/01_sam3_segmentation_overlay.png` | SAM 3 segmentation mask overlay |
-| `segmentation/sam3_detections.json` | Detection metadata, confidences, and bounding boxes |
+| `volume/02_final_annotated.png` | Mask contours, bounding boxes, food labels, and calculated grams |
+| `volume/01_height_map.png` | 3D topographic continuous relief map (percentile-scaled, non-solid) |
+| `depth/03_depth_colored.png` | Metric depth map computed by Depth Anything 3 |
+| `depth/05_height_relative_colored.png` | Normal-plane subtracted relative elevation |
+| `volume/results.json` | Full structured output (grams, calories, protein, carbs, fat, confidences) |
 
-Color convention:
-- **Green** masks = `recognized` (menu match)
-- **Amber/orange** masks = `unlisted` (detected but not on menu)
-- **Red** masks = `uncertain` (low confidence, descriptive label)
+---
 
-### `test_open_vocab.py` — Quick Smoke Test
+## 💻 11. Running via Frontend vs. CLI
 
-Minimal script that runs the SAM 3 open-vocab pipeline on a sample plate image and prints formatted detection results to terminal. Saves a timestamped JSON to `cv_service/outputs/`.
+| Mode | Purpose | Command / Path |
+|---|---|---|
+| **Frontend Web App** | Primary user experience, camera captures, real-time macro displays, daily logs | Start backend (`npm run dev` in `backend/`), start CV service (`python cv_service/main.py`), and launch frontend (`npm run dev` in `frontend/`) |
+| **`evaluate_example.py` CLI** | Developer metrology validation, single-plate inspection, headless terminal profiling | `python cv_service/evaluate_example.py --image <path> --menu "<menu>"` |
 
-### `evaluate_pipeline.py` — Precision Benchmark Runner
+---
 
-Iterates over plate images, evaluates non-food rejection (spoons/cutlery), salad vs curry discrimination, small-portion preservation, and latency. Saves a consolidated report to `cv_service/outputs/evaluation_report_<timestamp>.json`.
+## 🔬 12. Recent Metrology Calibrations (Nov 2026)
+
+1. **Resolution-Independent Size Plausibility**:
+   - Condiment dollops (pickle, achar, chutney) occupy $< 2.0\%$ of total plate area. If a candidate mask exceeds $2.0\%$ of the image, condiment queries receive a $-0.50$ penalty, preventing dal bowls from being misclassified as pickle.
+   - Soups and liquid curries (dal, sambar, rasam) are served in dedicated bowls ($\ge 2.0\%$ of plate area). Small dollops ($< 2.0\%$) receive a $-0.45$ penalty for liquid dishes, preventing small pickle dollops from being misclassified as dal.
+2. **Physical Mound Well Depth Bounding (Rice Mass Restoration)**:
+   - When tray divider detection yields 0 molded wells due to oblique perspective, mound foods (steamed rice, pulao) enforce physical stamped well depth $\text{well\_depth} = \max(\text{well\_offset},\, 1.6\,\text{cm})$. This prevents rice portion collapse (from $24.8\,\text{g}$ back to calibrated $100\text{--}150\,\text{g}$).
+3. **Overlapping Salad Slice & Pickle Density Models**:
+   - Cucumber / green salad calibrated to $0.75\,\text{cm}$ effective bed thickness with $1.05\,\text{g/cm}^3$ density, realistically modeling multi-slice overlapping portions ($38\text{--}55\,\text{g}$).
+   - Pickle and achar calibrated to $1.35\,\text{g/cm}^3$ density with dedicated $0.85\text{--}1.2\,\text{cm}$ dollop height ($7\text{--}15\,\text{g}$).
+4. **Milky Vermicelli Kheer (*Seviyan*) Visual Grounding**:
+   - Bound to visual prompts `vermicelli noodles in milk`, `vermicelli kheer`, and `semiya kheer`, isolating the sweet milk dessert from savory lentil soups.

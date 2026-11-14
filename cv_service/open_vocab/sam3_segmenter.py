@@ -198,7 +198,7 @@ class Sam3FoodSegmenter:
     def __init__(
         self,
         checkpoint_path: str = SAM3_CHECKPOINT,
-        confidence_threshold: float = 0.35,
+        confidence_threshold: float = 0.28,
         device: Optional[str] = None,
     ):
         import torch
@@ -485,19 +485,42 @@ class Sam3FoodSegmenter:
                     cand["parent_menu_item"] = best_dish
                     cand["query"] = best_dish
 
+        img_total_pixels = valid_food[0]["mask"].size if valid_food else (1000 * 1000)
+
         def get_ranking_score(det: Dict[str, Any]) -> float:
             score = float(det["score"])
             q = det["query"].lower()
+            area = det.get("area", 0)
+            area_ratio = float(area) / max(1.0, float(img_total_pixels))
+
             if q == GENERIC_FALLBACK_QUERY or q == "food":
-                return score - 0.20  # Umbrella fallback is deprioritized against specific foods
-            
+                return score - 0.45  # Umbrella fallback is deprioritized against specific foods
+
             # Specific food items:
             # Menu match provides a small contextual boost (+0.05) to resolve ambiguous ties,
             # but cannot override strong visual evidence of a different specific food.
             is_menu = (det.get("parent_menu_item") is not None or 
                        q in menu_set or 
                        find_menu_match(q, menu_items) is not None)
-            return score + (0.05 if is_menu else 0.0)
+            base_rank = score + (0.05 if is_menu else 0.0)
+
+            # Physical portion size plausibility (resolution-independent area ratio):
+            # 1. Condiment / pickle is a small portion (< 2% of plate); an entire large bowl (>= 2.5% of plate) is not pickle.
+            parent_dish = (det.get("parent_menu_item") or find_menu_match(q, menu_items) or "").lower()
+            if any(k in parent_dish or k in q for k in ["pickle", "achar", "chutney"]):
+                if area_ratio >= 0.020:
+                    base_rank -= 0.50  # Large soup/curry bowl is not a pickle dollop
+                else:
+                    base_rank += 0.15  # Authentic small condiment dollop
+
+            # 2. Dal / curry / soup is served in bowls (>= 2% of plate); a small dollop (< 2% of plate) is not dal.
+            if any(k in parent_dish or k in q for k in ["dal", "daal", "sambar", "curry"]):
+                if area_ratio < 0.020:
+                    base_rank -= 0.45  # Small dollop on plate is not a soup bowl of dal
+                else:
+                    base_rank += 0.05  # Authentic bowl of dal/curry
+
+            return base_rank
 
         # Sort primarily by visual-grounded ranking score descending
         valid_food.sort(key=get_ranking_score, reverse=True)
