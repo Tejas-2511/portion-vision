@@ -9,23 +9,22 @@
   - [2.1. Coordinate System & Camera Unprojection](#21-coordinate-system--camera-unprojection)
   - [2.2. Perspective Rectification & Homography](#22-perspective-rectification--homography)
   - [2.3. Robust 2D Planar Surface Normal Fitting (Tilt-Invariance)](#23-robust-2d-planar-surface-normal-fitting-tilt-invariance)
-  - [2.4. Metric Depth Fusion with Physiological Height Priors](#24-metric-depth-fusion-with-physiological-height-priors)
-  - [2.5. Physical Volumetric Archetypes & Voxel Integration](#25-physical-volumetric-archetypes--voxel-integration)
+  - [2.4. Metric Depth Fusion with Physiological Height Priors & 3D Topographic Relief](#24-metric-depth-fusion-with-physiological-height-priors--3d-topographic-relief)
+  - [2.5. Physical Volumetric Archetypes & Pixel-Level Voxel Integration](#25-physical-volumetric-archetypes--pixel-level-voxel-integration)
   - [2.6. Multi-Spectral Dynamic Density Modeling](#26-multi-spectral-dynamic-density-modeling)
-  - [2.7. Multi-Instance Canonical Aggregation Topology](#27-multi-instance-canonical-aggregation-topology)
+  - [2.7. Multi-Instance Canonical Aggregation Topology & Instance Grouping](#27-multi-instance-canonical-aggregation-topology--instance-grouping)
   - [2.8. Bayesian Multi-Modal Composite Confidence Scoring](#28-bayesian-multi-modal-composite-confidence-scoring)
+  - [2.9. Standardized Volumetric & Mass Benchmark (All 7 Evaluation Plates)](#29-standardized-volumetric--mass-benchmark-all-7-evaluation-plates)
 - [3. Computer Vision Engine (`cv_service/`)](#-3-computer-vision-engine-cv_service)
-  - [3.1. Meta SAM 3 Open-Vocabulary Grounding Engine (`open_vocab/`)](#31-meta-sam-3-open-vocabulary-grounding-engine-open_vocab)
-  - [3.2. Depth Anything 3 Metric Depth Estimator (`depth/`)](#32-depth-anything-3-metric-depth-estimator-depth)
-  - [3.3. Volumetric & Mass Estimator (`estimation/`)](#33-volumetric--mass-estimator-estimation)
-  - [3.4. Hardware VRAM Budget & Execution Mechanics](#34-hardware-vram-budget--execution-mechanics)
 - [4. Backend Orchestrator Deconstruction (`backend/`)](#️-4-backend-orchestrator-deconstruction-backend)
 - [5. Frontend Client System (`frontend/`)](#-5-frontend-client-system-frontend)
 - [6. Data Schema, Taxonomic Maps & Macro Propagation](#-6-data-schema-taxonomic-maps--macro-propagation)
-- [7. System Resilience & Anti-Duplication Quad-Shield](#-7-system-resilience--anti-duplication-quad-shield)
-- [8. Pipeline Diagnostics & Auditing Architecture](#-8-pipeline-diagnostics--auditing-architecture)
+- [7. System Resilience & Anti-Duplication Quad-Shield](#️-7-system-resilience--anti-duplication-quad-shield)
+- [8. Pipeline Diagnostics & Auditing Architecture (`RunContext`)](#-8-pipeline-diagnostics--auditing-architecture-runcontext)
 - [9. Empirical Benchmarks & Ablation Analysis](#-9-empirical-benchmarks--ablation-analysis)
-- [10. Developer Setup & Fast-Start Guide](#-10-developer-setup--fast-start-guide)
+- [10. CLI Metrology & Evaluation Tools (`evaluate_example.py`)](#️-10-cli-metrology--evaluation-tools-evaluate_examplepy)
+- [11. Developer Setup & Fast-Start Guide](#-11-developer-setup--fast-start-guide)
+- [12. Recent Metrology Calibrations (Nov 2026)](#-12-recent-metrology-calibrations-nov-2026)
 
 ---
 
@@ -316,75 +315,9 @@ PortionVision was evaluated across the standard 7 evaluation plates in `plate/us
 
 ---
 
-## 🛠️ 2. Backend Deconstruction (`backend/`)
-
-### `server.js` — Core Logic & Routing
-*   **Imports (Lines 1-13)**: 
-    *   `axios`: Used for proxying image data to the Python service.
-    *   `Tesseract.js`: Native WASM engine for local OCR.
-    *   `multer`: Middleware for `multipart/form-data`.
-*   **Multer Memory Management (Lines 30-52)**:
-    *   Uses `multer.diskStorage` to write uploads directly to `backend/uploads/`.
-    *   This pattern uses a **Node.js WriteStream**, which prevents large images from being loaded entirely into the Node.js V8 heap, avoiding `OutOfMemory` errors during high-concurrency windows.
-*   **OCR Parsing Logic `parseMenuText` (Lines 191-221)**:
-    *   `split(/[\n\t]/)`: Sanitizes by breaking on common OCR noise formats.
-    *   `OCR_BLACKLIST`: A `Set` (O(1) lookup) containing non-food keywords (Days, Times, "Price").
-    *   `norm.split(/[,/&|+]/)`: Sub-parses lines that contain multiple items (e.g., "Rice/Dal").
-    *   **Granular Steps**:
-        1.  **Splitting**: `rawText.split(/[\n\t]/)` converts the string into an array of lines.
-        2.  **Filtering**: `.filter(Boolean)` removes empty elements or pure whitespace lines.
-        3.  **Normalization**: `norm` uses regex `/[^a-z\s/,&\-]/g` to strip prices ($Rs$), dates ($2024$), and symbols ($*$), leaving only biological food characters.
-        4.  **Compound Splitting**: `part.split(/[,/&|+]/)` breaks lines like "Rice / Dal" into discrete array elements.
-        5.  **Deduplication**: Uses a `Set` to ensure "Rice" isn't returned twice from a menu.
-*   **OCR Endpoint `POST /ocr` (Lines 223-310)**:
-    *   **Workflow**: Save File $\rightarrow$ `Tesseract.recognize` $\rightarrow$ Parse Text $\rightarrow$ DB Sync $\rightarrow$ Cleanup.
-    *   **DB Sync Loop**: For each item, it checks `foodDatabase.json`. If missing, `getFallbackDetails` generates a nutritional stub.
-    *   **Memory Efficiency**: `fs.unlinkSync` clears the disk immediately after processing.
-*   **CV Proxy `POST /api/analyze-plate` (Lines 324-390)**:
-    *   **Streaming Strategy**: Uses `fs.createReadStream(originalPath)` to pipe the disk file directly into the `axios` POST request, minimizing intermediate memory allocation.
-    *   **SHA-256 Deduplication & Concurrency Guard**:
-        *   Calculates a SHA-256 hash of the uploaded image buffer concatenated with `expectedItems`.
-        *   **In-Flight Promise Sharing (`activeCvPromise`)**: If an analysis for the exact same image is currently running, incoming requests (e.g. from React 18 StrictMode double-mounting or rapid client triggers) await the active promise rather than sending a redundant request to FastAPI.
-        *   **15-Minute Result Cache (`cvResultCache`)**: Completed CV results are cached in a memory `Map` for 15 minutes. If a client retries or re-queries with the same image, it returns the complete JSON in 0ms without hitting the heavy Python engine.
-
-### `portion_recommender.js` — The Intelligence Engine
-*   **Reasoning Engine**: Maintains an internal `logicLogs` array to trace decision-making (filter logic, macro splits, calorie gap handling). These logs are exposed via `summary.logicLogs` in the API response for complete transparency.
-*   **Mifflin-St Jeor Engine `estimateDailyCalories` (Lines 204-233)**:
-    *   **The Math**: $BMR = (10 \times weight) + (6.25 \times height) - (5 \times age) + s$.
-    *   **The Logic**: Men ($s=5$), Women ($s=-161$). Result is then scaled by `activityMultipliers` (1.2 for sedentary to 1.725 for active).
-*   **Macro Target Logic `computeMacroTargets` (Lines 235-259)**:
-    *   Determines `mealFrac` (Breakfast 0.25, Lunch 0.35, Dinner 0.30, Snack 0.10).
-    *   Converts calorie targets to grams: Protein (4 kcal/g), Carbs (4 kcal/g), Fat (9 kcal/g).
-*   **Recommendation Loop `buildPlate` (Lines 292-384)**:
-    1.  **Partitioner**: Groups food into `mixed`, `proteins`, `carbs`, `sides`, `salads`.
-    2.  **Selection Logic**:
-        *   Checks `mixed` flag first (e.g., Biryani).
-        *   If not mixed, picks highest protein item $\rightarrow$ Fills carbs $\rightarrow$ Adds leafy salads.
-    3.  **Unit Snapping (`calcServings`) — Granular Steps**:
-        1.  **Base Calculation**: `raw = targetCalPerItem / food.calories`. This finds the raw float.
-        2.  **The Fat Ceiling**: If `(raw * food.fat) > maxFatPerItem`, the serving is scaled down to fit the fat limit, even if it leaves calories on the table.
-        3.  **Discrete Snapping**: If `unit_type` is `piece` (roti/paratha), it uses `Math.round(raw)`. This enforces whole-unit servings for solids.
-        4.  **The 0.5 Snapping Trick**: For bowls/glasses, it uses `Math.round(raw * 2) / 2`.
-            *   Example: $1.15 \rightarrow 2.3 \rightarrow 2.0 \rightarrow 1.0$ bowl.
-            *   Example: $1.35 \rightarrow 2.7 \rightarrow 3.0 \rightarrow 1.5$ bowls.
-*   **Diet Filtering `filterFoods` (Lines 154-198)**:
-    *   Implements **Jain** and **Vegan** logic.
-    *   Jain: Blocks items with `JAIN_AVOID_TAGS` (potatoes, onions, garlic).
-    *   Vegan: Blocks `isMeat`, `isEgg`, and `isDairy` tags.
-
-### `utils/db.js` — Internal Persistence
-*   **Pattern**: Atomic read-write using `fs.promises`.
-*   **Logic**: `ensureDataDir` ensures the `data/` directory exists. `getFoods` reads and parses JSON. `saveFoods` stringifies and overwrites.
-*   **Atomicity Warning**: This is not a transactional database; it is a JSON-store. It works because the data set is small and writes are infrequent (only during menu capture).
-*   **Corruption Recovery**: If `JSON.parse(data)` fails due to file corruption, the `catch` block (Lines 23-26) returns an empty array `[]` instead of throwing. This allows the system to self-heal and re-populate the database during the next menu scan.
-
-### `utils/fuzzyMatch.js` — OCR Correction
-*   **`levenshteinDistance`**: Computes the minimum number of single-character edits (insertions, deletions, substitutions) required to change one word into another.
-*   **`fuzzyMatchFood`**: Iterates through the database. If Distance $\le 2$, it is considered a match. This handles OCR errors like "Dai" instead of "Dal".
-
 ---
 
-## 🐍 3. CV Service Deconstruction (`cv_service/`)
+## 🐍 3. Computer Vision Engine (`cv_service/`)
 
 PortionVision's computer vision service is built on a streamlined, open-vocabulary architecture centered around **Meta SAM 3 (SAM 3.1)** as the sole primary food identification and instance segmentation engine. Downstream metric depth estimation is powered by **Depth Anything 3 (`DA3METRIC-LARGE`)**, and physical mass is calculated through calibrated geometric voxel integration.
 
@@ -410,7 +343,7 @@ PortionVision's computer vision service is built on a streamlined, open-vocabula
     -   **Visual Prompt Expansion**: Specific visual cues are queried (e.g., `["palak paneer", "palak paneer curry", "spinach paneer", "green curry", "spinach curry", "palak curry", "saag paneer"]`).
     -   **Spatial Container Binding**: When a large food container/bowl ($\ge 10,000\,\text{px}$) surrounds $\ge 70\%$ of solid ingredient chunks (paneer, chicken, kofta), the container gravy adopts the dish's identity (`palak paneer`), overriding conflicting generic dal or curry labels.
     -   **Subsumption & Mass Consistency**: Contained ingredient chunks are subsumed into the primary dish instance. This prevents double-counting the gravy and solids in downstream metric mass estimation while delivering a single unified portion card.
-*   **Non-Food Rejection Anchors**: Simultaneously queries non-food anchors (`spoon`, `fork`, `cutlery`, `plate`, `table surface`, `napkin`). Any candidate region overlapping significantly with a non-food anchor is rejected, delivering a 0.0% false-positive rate for cutlery and surfaces.
+*   **Non-Food Rejection Anchors**: Simultaneously queries non-food anchors (`spoon`, `fork`, `cutlery`, `plate`, `table surface`, `napkin`). Any candidate region overlapping significantly with a non-food anchor is rejected, eliminating cutlery and surface false-positive detections across the evaluation plates.
 *   **Transparent RGBA Crop Generation**: Extracts tight crops with alpha-channel transparency, saved to disk for human verification.
 
 ### `open_vocab/instance_grouper.py` — Spatial Fragment Grouper & Instance Unification
@@ -503,7 +436,7 @@ PortionVision's computer vision service is built on a streamlined, open-vocabula
 
 ---
 
-## 🧬 3.1. CV Deep Dive: The "0 to 100" Journey
+### 3.1. CV Deep Dive: The "0 to 100" Journey
 
 Tracking a plate portion from camera capture to calibrated calorie result.
 
@@ -532,7 +465,7 @@ Tracking a plate portion from camera capture to calibrated calorie result.
 ### **Phase 5: SAM 3 Grounding & Semantic Segmentation (65-75%)**
 13. **SAM 3 ViT Backbone Encoding**: Encodes the 1008x1008 image once on CUDA using `Sam3Processor`.
 14. **Instance Masks**: SAM 3 generates tight, boundary-conforming binary masks for each detected concept.
-15. **Non-Food Rejection**: Rejects any candidate region overlapping with spoons, forks, metallic dividers, or napkins (0.0% false-positive rate).
+15. **Non-Food Rejection**: Rejects any candidate region overlapping with spoons, forks, metallic dividers, or napkins, eliminating cutlery false-positive detections on the evaluation plates.
 
 ### **Phase 6: Open-Set Disambiguation, Dish Binding & Fragment Grouping (75-85%)**
 16. **Open-Set Recognition & Contextual Menu Matching**: Evaluates visual evidence independently. Rejects forced menu matching. Dishes with ambiguous evidence ($< 0.45$) receive explicit `unknown` abstentions. Unlisted high-confidence items are designated `open_set`.
@@ -550,7 +483,89 @@ Tracking a plate portion from camera capture to calibrated calorie result.
 
 ---
 
-## 📱 4. Frontend Deconstruction (`frontend/`)
+
+
+### 3.2. Hardware VRAM Budget & Execution Mechanics
+
+| Stage | Peak VRAM | Notes |
+|-------|-----------|-------|
+| SAM 3 ViT Backbone & Grounding | ~3.8 GB | Encodes 1008x1008 image once on CUDA (TF-32 enabled) |
+| Depth Anything 3 (`DA3METRIC-LARGE`) | ~1.3 GB | Physical metric depth estimation ($Z$ in meters), runs before SAM 3 with immediate cache release |
+| Peak Simultaneous | ~4.5 GB | Safely within 6 GB VRAM budget (RTX 3050 Laptop GPU) |
+
+---
+
+## 🛠️ 4. Backend Orchestrator Deconstruction (`backend/`)
+
+### `server.js` — Core Logic & Routing
+*   **Imports (Lines 1-16)**: 
+    *   `axios`: Used for proxying image data to the Python service.
+    *   `Tesseract.js`: Native WASM engine for local OCR.
+    *   `multer`: Middleware for `multipart/form-data`.
+*   **Multer Memory Management (Lines 42-60)**:
+    *   Uses `multer.diskStorage` to write uploads directly to `backend/uploads/`.
+    *   This pattern uses a **Node.js WriteStream**, which prevents large images from being loaded entirely into the Node.js V8 heap, avoiding `OutOfMemory` errors during high-concurrency windows.
+*   **OCR Parsing Logic `parseMenuText` (Lines 225-255)**:
+    *   `split(/[\n\t]/)`: Sanitizes by breaking on common OCR noise formats.
+    *   `OCR_BLACKLIST`: A `Set` (O(1) lookup) containing non-food keywords (Days, Times, "Price").
+    *   `norm.split(/[,/&|+]/)`: Sub-parses lines that contain multiple items (e.g., "Rice/Dal").
+    *   **Granular Steps**:
+        1.  **Splitting**: `rawText.split(/[\n\t]/)` converts the string into an array of lines.
+        2.  **Filtering**: `.filter(Boolean)` removes empty elements or pure whitespace lines.
+        3.  **Normalization**: `norm` uses regex `/[^a-z\s/,&\-]/g` to strip prices ($Rs$), dates ($2024$), and symbols ($*$), leaving only biological food characters.
+        4.  **Compound Splitting**: `part.split(/[,/&|+]/)` breaks lines like "Rice / Dal" into discrete array elements.
+        5.  **Deduplication**: Uses a `Set` to ensure "Rice" isn't returned twice from a menu.
+*   **OCR Endpoint `POST /ocr` (Lines 257-340)**:
+    *   **Workflow**: Save File $\rightarrow$ `Tesseract.recognize` $\rightarrow$ Parse Text $\rightarrow$ DB Sync $\rightarrow$ Cleanup.
+    *   **DB Sync Loop**: For each item, it checks `foodDatabase.json`. If missing, `getFallbackDetails` generates a nutritional stub.
+    *   **Memory Efficiency**: `fs.unlinkSync` clears the disk immediately after processing.
+*   **CV Proxy `POST /api/analyze-plate` (Lines 384-480)**:
+    *   **Streaming Strategy**: Uses `fs.createReadStream(originalPath)` to pipe the disk file directly into the `axios` POST request, minimizing intermediate memory allocation.
+    *   **SHA-256 Deduplication & Concurrency Guard**:
+        *   Calculates a SHA-256 hash of the uploaded image buffer concatenated with `expectedItems`.
+        *   **In-Flight Promise Sharing (`activeCvPromise`)**: If an analysis for the exact same image is currently running, incoming requests (e.g. from React 18 StrictMode double-mounting or rapid client triggers) await the active promise rather than sending a redundant request to FastAPI.
+        *   **15-Minute Result Cache (`cvResultCache`)**: Completed CV results are cached in a memory `Map` for 15 minutes. If a client retries or re-queries with the same image, it returns the complete JSON in 0ms without hitting the heavy Python engine.
+
+### `portion_recommender.js` — The Intelligence Engine
+*   **Reasoning Engine**: Maintains an internal `logicLogs` array to trace decision-making (filter logic, macro splits, calorie gap handling). These logs are exposed via `summary.logicLogs` in the API response for complete transparency.
+*   **Mifflin-St Jeor Engine `estimateDailyCalories` (Lines 210-239)**:
+    *   **The Math**: $BMR = (10 \times weight) + (6.25 \times height) - (5 \times age) + s$.
+    *   **The Logic**: Men ($s=5$), Women ($s=-161$). Result is then scaled by `activityMultipliers` (1.2 for sedentary to 1.725 for active).
+*   **Macro Target Logic `computeMacroTargets` (Lines 241-265)**:
+    *   Determines `mealFrac` (Breakfast 0.25, Lunch 0.35, Dinner 0.30, Snack 0.10).
+    *   Converts calorie targets to grams: Protein (4 kcal/g), Carbs (4 kcal/g), Fat (9 kcal/g).
+*   **Recommendation Loop `buildPlate` (Lines 318-400)**:
+    1.  **Partitioner**: Groups food into `mixed`, `proteins`, `carbs`, `sides`, `salads`.
+    2.  **Selection Logic**:
+        *   Checks `mixed` flag first (e.g., Biryani).
+        *   If not mixed, picks highest protein item $\rightarrow$ Fills carbs $\rightarrow$ Adds leafy salads.
+    3.  **Unit Snapping (`calcServings`) — Granular Steps**:
+        1.  **Base Calculation**: `raw = targetCalPerItem / food.calories`. This finds the raw float.
+        2.  **The Fat Ceiling**: If `(raw * food.fat) > maxFatPerItem`, the serving is scaled down to fit the fat limit, even if it leaves calories on the table.
+        3.  **Discrete Snapping**: If `unit_type` is `piece` (roti/paratha), it uses `Math.round(raw)`. This enforces whole-unit servings for solids.
+        4.  **The 0.5 Snapping Trick**: For bowls/glasses, it uses `Math.round(raw * 2) / 2`.
+            *   Example: $1.15 \rightarrow 2.3 \rightarrow 2.0 \rightarrow 1.0$ bowl.
+            *   Example: $1.35 \rightarrow 2.7 \rightarrow 3.0 \rightarrow 1.5$ bowls.
+*   **Diet Filtering `filterFoods` (Lines 163-208)**:
+    *   Implements **Jain** and **Vegan** logic.
+    *   Jain: Blocks items with `JAIN_AVOID_TAGS` (potatoes, onions, garlic).
+    *   Vegan: Blocks `isMeat`, `isEgg`, and `isDairy` tags.
+
+### `utils/db.js` — Internal Persistence
+*   **Pattern**: Atomic read-write using `fs.promises`.
+*   **Logic**: `ensureDataDir` ensures the `data/` directory exists. `getFoods` reads and parses JSON. `saveFoods` stringifies and overwrites.
+*   **Atomicity Warning**: This is not a transactional database; it is a JSON-store. It works because the data set is small and writes are infrequent (only during menu capture).
+*   **Corruption Recovery**: If `JSON.parse(data)` fails due to file corruption, the `catch` block (Lines 22-25) returns an empty array `[]` instead of throwing. This allows the system to self-heal and re-populate the database during the next menu scan.
+
+### `utils/fuzzyMatch.js` — OCR Correction
+*   **`levenshteinDistance`**: Computes the minimum number of single-character edits (insertions, deletions, substitutions) required to change one word into another.
+*   **`fuzzyMatchFood`**: Iterates through the database. If Distance $\le 2$, it is considered a match. This handles OCR errors like "Dai" instead of "Dal".
+
+---
+
+---
+
+## 📱 5. Frontend Client System (`frontend/`)
 
 ### `contexts/AppContext.jsx` — Global State
 *   **State Units**: `userProfile`, `todaysMenu`, `loading`.
@@ -577,7 +592,7 @@ Tracking a plate portion from camera capture to calibrated calorie result.
     2.  `loadRecommendation`: Fetches calculated portions based on user profile and selected meal.
     3.  `analyzeCapturedPlate`: Immediately triggers CV portion estimation passing active recommendation labels and active `mealType`.
     4.  **No Racing Timeouts**: Replaced legacy racing 5-second fallback timers with a unified sequential lifecycle, preventing duplicate calls across React 18 StrictMode unmount/remount cycles.
-*   **UI Logic (Lines 150-200)**: Calculates `totalDetectedCals` and compares it to `targetMealCals`. If $\Delta > 10\%$, it triggers the "Over-portioned" warning.
+*   **UI Logic (Lines 270-280)**: Calculates `totalDetectedCals` and compares it to `targetMealCals`. If $\Delta > 10\%$, it triggers the "Over-portioned" warning.
 
 ### `services/api.js` — The API Wrapper
 *   A singleton instance that wraps the browser `fetch` API.
@@ -597,24 +612,29 @@ Tracking a plate portion from camera capture to calibrated calorie result.
 
 ---
 
-## 📂 5. Data Schema & Models
+---
+
+## 📂 6. Data Schema, Taxonomic Maps & Macro Propagation
 
 ### `backend/data/foodDatabase.json`
 - **Schema**: `Array<{ id, name, calories, protein, carbs, fat, category, tags, veg }>`.
-- **Purpose**: Ground truth for all nutritional calculations. Updated automatically during menu scan.
+- **Purpose**: Ground truth for all nutritional calculations (463 dishes). Updated automatically during menu scan.
 
-### `cv_service/config/density_map.py`
-- **Schema**: Dictionary mapping names to float densities ($g/ml$).
+### `cv_service/config/density_map.py` (`FOOD_DENSITIES`)
+- **Schema**: Dictionary mapping 506 canonical dish names to float densities ($g/ml$).
 - **Fallback**: 1.0 (water-like). This ensures mass estimation never returns zero even if the food name is unrecognized.
+
+### `cv_service/config/macro_map.py` (`MACRO_MAP`)
+- **Schema**: Dictionary mapping 486 dishes to per-gram macronutrient ratios `{ calories, protein, carbs, fat }`.
 
 ### `cv_service/config/plate_config.py`
 - Defines the physical geometry of the "Indian Mess Thali".
 - `standard_mess_thali`: `37cm x 27cm`. 
-- Specifies the `depth_cm` of every well to bound volume integration.
+- Specifies the `depth_cm` of every well (2.0 to 2.5 cm) to bound volume integration.
 
 ---
 
-## 🏁 6. Internal Object Evolution (The "Dal" Life-Cycle)
+### 6.3. Internal Object Evolution (The "Dal" Life-Cycle)
 
 Tracking the transformation of a data object:
 1.  **OCR Stub**: `{ name: "Dal Tadka" }`.
@@ -625,7 +645,9 @@ Tracking the transformation of a data object:
 
 ---
 
-## 🔬 7. Global Runtime Mechanics & Resilience
+---
+
+## 🛡️ 7. System Resilience & Anti-Duplication Quad-Shield
 
 ### **The 4-Layer Anti-Duplication & Idempotency Shield**
 Because volumetric segmentation of deep-learning models (SAM, Depth Anything) is computationally intensive (60–100s per image), PortionVision implements a synchronized 4-layer defense against duplicate runs:
@@ -658,7 +680,9 @@ This "chunked" flow is why PortionVision can handle high-resolution 12MP photos 
 
 ---
 
-## 🔬 8. Pipeline Diagnostics & Logging System
+---
+
+## 🔬 8. Pipeline Diagnostics & Auditing Architecture (`RunContext`)
 
 ### Architecture Overview
 The diagnostics system is implemented in `cv_service/diagnostics/run_context.py` as the `RunContext` class. It is **not** a global singleton — it is instantiated per-request inside `mass_estimator.py` and passed explicitly via `ctx=` parameters to every stage function. This makes individual functions independently testable without hidden state.
@@ -771,132 +795,6 @@ The debug response includes:
 
 ---
 
-## 🚀 9. Developer Setup & Fast-Start
-
-The PortionVision ecosystem requires 3 distinct processes. To run locally, spawn three separate terminals from the repository root.
-
-### The 3-Terminal Execution
-**1. Terminal: CV Service (Python Engine with SAM 3 GPU Acceleration)**
-```powershell
-cd cv_service
-# Activate the sam3 Conda environment (configured with PyTorch CUDA + Meta SAM 3 dependencies)
-conda activate sam3
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-
-# Or invoke the sam3 environment executable directly:
-C:\Users\tejas\.conda\envs\sam3\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
-*Note: Binds to `0.0.0.0` so it can receive proxy calls originating from network interfaces.*
-
-**2. Terminal: Backend (Node.js/OCR)**
-```powershell
-cd backend
-npm run dev
-```
-*Note: Binds to `http://localhost:5000` but uses Express's default `0.0.0.0` allowing local intranet connections.*
-
-**3. Terminal: Frontend (React UI)**
-```powershell
-cd frontend
-npm run dev
-```
-
-### 📱 Mobile Device Testing Architecture
-Running the AI stack live on a mobile phone requires connecting to the Vite server via the Laptop's local network IP.
-npm run dev -- --host
-
-1. Locate the **Network URI** from Vite's startup log (e.g., `http://10.174.1.162:5173/`).
-2. Type this exact URI into the mobile Safari/Chrome browser. Both devices must be on the same WiFi.
-
-**Proxy Workflow**:
-Because of the setup in `frontend/vite.config.js`:
-* `host: true` broadcasts the front-end over the network.
-* `proxy: { '/api': { target: 'http://127.0.0.1:5000' } }` handles the CORS boundary. 
-When the phone (at `10.174.x.x`) sends an image, it posts to `/api/analyze-plate`. The laptop's Vite dev server intercepts this call, routes it directly into the `server.js` running on `localhost:5000`, which streams it via axios to `localhost:8000`. This entire chained proxy means the mobile browser requires NO configurations to communicate with the heavy backend engines.
-
----
-
-## 🔬 3.2. SAM 3 Unified Food Identification & Segmentation Engine (open_vocab/)
-
-Meta SAM 3 (SAM 3.1) serves as the sole primary food identification and instance segmentation engine. Features open-world concept grounding, food-aware validation, non-food rejection (spoons/cutlery), and transparent RGBA crop exports.
-
-### Architecture & Directory Structure
-
-```
-cv_service/open_vocab/
-├── __init__.py           # Package exports (OpenVocabFoodSegmenter, Sam3FoodSegmenter)
-├── pipeline.py           # Orchestrator — OpenVocabFoodSegmenter.process_plate()
-└── sam3_segmenter.py     # SAM 3 concept grounding + food-aware validation + RGBA crop export
-```
-
-### Pipeline Flow
-
-```
-Top-Down Plate Image (BGR)
-          │
-          ▼
-   Sam3Processor.set_image()  ──> Encodes 1008x1008 ViT Backbone once on CUDA (TF-32 enabled)
-          │
-          ├──> Non-food grounding: ['spoon', 'fork', 'cutlery', 'napkin']
-          ├──> Contextual Menu queries: ['steamed rice', 'dal palak', 'chapati', ...]
-          └──> Indian staple discovery: ['rice', 'dal', 'curry', 'sabzi', 'salad', 'cucumber', 'pickle', ...]
-          │
-          ▼
-   Food-Aware Validation & Disambiguation:
-     1. Discard any detection overlapping significantly with non-food anchors (0 spoon false-positives).
-     2. Specificity ranking: Menu Items > Specific Staples (e.g. cucumber) > Generic fallback ('food').
-     3. Deduplication: Suppress redundant multi-query overlaps for identical physical regions.
-          │
-          ▼
-   Pixel-Accurate Binary Masks & Transparent RGBA PNG Crops (outputs/<run_id>/segmentation/crops/)
-          │
-          ▼
-   Downstream Depth Anything 3 Metric Depth Map & Geometric Mass Estimation (g)
-```
-
-### Key Capabilities & Benchmarks
-
-1. **Non-Food Rejection**: Metal spoons, cutlery, and empty surfaces are detected and rejected (0.0% false-positive rate).
-2. **True Concept Discrimination**: Fresh sliced cucumbers and green salads are recognized as cucumber (0.87–0.91 confidence) without ever misclassifying as cooked dals or curries.
-3. **Hardware Efficiency**: Fits in **3.8 GB VRAM** (out of 6 GB on NVIDIA RTX 3050 Laptop GPU) with TensorFloat-32 acceleration.
-4. **Transparent RGBA Crop Export**: Saves tightly bounded PNG crops with alpha channels directly to disk for downstream verification.
-
-### Output Contract
-
-`OpenVocabFoodSegmenter.process_plate()` returns:
-
-```python
-{
-    "food_items": [
-        {
-            "food_name": str,           # e.g. "steamed rice"
-            "menu_match": bool,         # True if matches a menu item
-            "confidence": float,        # Calibrated detection confidence [0, 1]
-            "mask": np.ndarray,         # bool array, shape HxW
-            "bounding_box": [x, y, w, h],
-            "area_pixels": int,
-            "identification_status": "recognized" | "unlisted" | "uncertain"
-        }
-    ],
-    "image_dimensions": [width, height],
-    "total_items": int,
-    "recognized_count": int,
-    "unlisted_count": int,
-    "uncertain_count": int,
-    "elapsed_seconds": float
-}
-```
-
-This contract is stable and consumed directly by downstream mass estimation.
-
-### Hardware Behaviour
-
-| Stage | Peak VRAM | Notes |
-|-------|-----------|-------|
-| SAM 3 ViT Backbone & Grounding | ~3.8 GB | Encodes 1008x1008 image once on CUDA (TF-32 enabled) |
-| Depth Anything 3 (`DA3METRIC-LARGE`) | ~1.3 GB | Physical metric depth estimation ($Z$ in meters), runs before SAM 3 with immediate cache release |
-| Peak Simultaneous | ~4.5 GB | Safely within 6 GB VRAM budget (RTX 3050 Laptop GPU) |
-
 ---
 
 ## 📊 9. Empirical Benchmarks & Ablation Analysis
@@ -923,7 +821,9 @@ To quantify the incremental impact of each volumetric refinement, the table belo
 
 ---
 
-## 🛠️ 10. CLI Metrology & Evaluation Tools
+---
+
+## 🛠️ 10. CLI Metrology & Evaluation Tools (`evaluate_example.py`)
 
 ### `evaluate_example.py` — Production Standalone Metrology Runner
 
@@ -948,12 +848,63 @@ Outputs generated in `cv_service/outputs/<timestamp>/`:
 
 ---
 
-## 💻 11. Running via Frontend vs. CLI
+---
+
+## 🚀 11. Developer Setup & Fast-Start Guide
+
+The PortionVision ecosystem requires 3 distinct processes. To run locally, spawn three separate terminals from the repository root.
+
+### The 3-Terminal Execution
+**1. Terminal: CV Service (Python Engine with SAM 3 GPU Acceleration)**
+```powershell
+cd cv_service
+# Activate the sam3 Conda environment (configured with PyTorch CUDA + Meta SAM 3 dependencies)
+conda activate sam3
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# Or invoke the sam3 environment executable directly (PowerShell):
+& "C:\Users\tejas\.conda\envs\sam3\python.exe" -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+*Note: Binds to `0.0.0.0` so it can receive proxy calls originating from network interfaces.*
+
+**2. Terminal: Backend (Node.js/OCR)**
+```powershell
+cd backend
+npm run dev
+```
+*Note: Binds to `http://localhost:5000` but uses Express's default `0.0.0.0` allowing local intranet connections.*
+
+**3. Terminal: Frontend (React UI)**
+```powershell
+cd frontend
+npm run dev
+```
+
+### 📱 Mobile Device Testing Architecture
+Running the AI stack live on a mobile phone requires connecting to the Vite server via the Laptop's local network IP.
+```powershell
+npm run dev -- --host
+```
+
+1. Locate the **Network URI** from Vite's startup log (e.g., `http://10.174.1.162:5173/`).
+2. Type this exact URI into the mobile Safari/Chrome browser. Both devices must be on the same WiFi.
+
+**Proxy Workflow**:
+Because of the setup in `frontend/vite.config.js`:
+* `host: true` broadcasts the front-end over the network.
+* `proxy: { '/api': { target: 'http://127.0.0.1:5000' } }` handles the CORS boundary. 
+When the phone (at `10.174.x.x`) sends an image, it posts to `/api/analyze-plate`. The laptop's Vite dev server intercepts this call, routes it directly into the `server.js` running on `localhost:5000`, which streams it via axios to `localhost:8000`. This entire chained proxy means the mobile browser requires NO configurations to communicate with the heavy backend engines.
+
+---
+
+### Running via Frontend vs. CLI
 
 | Mode | Purpose | Command / Path |
 |---|---|---|
 | **Frontend Web App** | Primary user experience, camera captures, real-time macro displays, daily logs | Start backend (`node server.js` in `backend/`), start CV service (`python -m uvicorn main:app --app-dir cv_service --port 8000`), and launch frontend (`npm run dev` in `frontend/`) |
 | **`evaluate_example.py` CLI** | Developer metrology validation, single-plate inspection, headless terminal profiling | `python evaluate_example.py --image <path> --menu "<menu>"` |
+
+---
 
 ---
 

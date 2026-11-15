@@ -1,0 +1,60 @@
+{
+  "item_id": "steamed rice_1",
+  "area_pixels": 35174,
+  "estimated_height_cm": 2.308,
+  "volume_estimate_ml": 144.5,
+  "density": 0.97,
+  "mass_g": 140.2,
+  "class_label": "steamed rice",
+  "class_confidence": 0.939,
+  "depth_stability": 1.0,
+  "scale_confidence": 0.7,
+  "composite_confidence": 0.8864,
+  "prior_applied": true,
+  "diagnostics": {
+    "original_sam3_query": "rice",
+    "candidate_labels": [
+      "rice"
+    ],
+    "menu_matching_result": "steamed rice",
+    "final_food_label": "steamed rice",
+    "confidence": 0.939,
+    "uncertainty": 0.061,
+    "original_mask_id": "mask_00",
+    "grouped_instance_id": "inst_0",
+    "fragment_count": 1,
+    "decision_reason": "SINGLE_INSTANCE"
+  },
+  "volume_diagnostics": {
+    "food_name": "steamed rice",
+    "fallbacks_applied": [
+      "MOUND_WELL_FLOORED_1.8CM"
+    ],
+    "raw_pixel_count": 35174,
+    "archetype": "mounded_grain",
+    "archetype_justification": "Granular cohesive mound filling compartment bed + curved dome above rim (steamed rice)",
+    "pixel_area_method": "plate_calibrated_uniform",
+    "mean_pixel_area_cm2": 0.001965728122740984,
+    "food_surface_area_cm2": 69.14,
+    "valid_pixel_count": 35015,
+    "clipped_pixel_count": 159,
+    "valid_pixel_ratio": 0.9955,
+    "height_stats_cm": {
+      "min": -26.729,
+      "p5": -25.333,
+      "p25": -24.438,
+      "median": -23.513,
+      "mean": -23.621,
+      "p75": -22.931,
+      "p95": -21.979,
+      "max": -18.181,
+      "std": 1.037
+    },
+    "effective_well_depth_cm": 1.8,
+    "raw_integrated_vol_ml": 159.61,
+    "compartment_capped": true,
+    "cap_limit_ml": 144.5,
+    "final_volume_ml": 144.5
+  },
+  "fragment_count": 1
+}

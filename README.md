@@ -25,8 +25,10 @@ User captures plate photo
  ┌─────────────────────────────────────────────────────────────────────────┐
  │ 1. Meta SAM 3 Grounding & Open-Vocabulary Segmentation                  │
  │    • ViT visual backbone encoding (1008×1008 CUDA)                      │
- │    • Non-food rejection anchors (cutlery, dividers, napkins = 0% FP)    │
- │    • Open-set recognition (dishes absent from menu accurately detected)  │
+ │    • Non-food rejection anchors (spoon, fork, cutlery and napkin) reduce │
+ │      non-food detections; available small evaluation sample does not    │
+ │      establish a general false-positive rate                            │
+ │    • Open-set recognition (dishes absent from menu accurately detected) │
  │    • Explicit UNKNOWN abstention (no forced menu classification)        │
  └─────────────────────────────────────────────────────────────────────────┘
         │
@@ -50,7 +52,8 @@ User captures plate photo
         │
         ▼
  ┌─────────────────────────────────────────────────────────────────────────┐
- │ 4. 5-Archetype Volumetric Metrology & Dynamic Density                   │
+ │ 4. Five Principal Volumetric Archetypes, Separate Condiment Model       │
+ │    & Dynamic Density Tuning                                             │
  │    • Planar (rotis), Salad Slices (cucumber), Liquid Well Frustum       │
  │    • Granular Dome (rice), Chunky Suspensions (sabzi / curry)           │
  │    • Dynamic density tuning ρ(HSV, Laplacian texture)                   │
@@ -113,17 +116,13 @@ Run the three services in separate terminals from the repository root:
 ```powershell
 cd cv_service
 
-# Activate the sam3 Conda environment (CUDA & GPU accelerated)
+# Run directly with the sam3 environment Python (recommended on Windows):
+& "C:\Users\tejas\.conda\envs\sam3\python.exe" -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+
+# Alternatively, if conda is configured in your shell:
 conda activate sam3
-
-# Start the FastAPI service on port 8000
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
-
-> **Direct binary execution:**
-> ```powershell
-> C:\Users\tejas\.conda\envs\sam3\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-> ```
 
 ### 2. Backend (Node.js)
 
@@ -217,7 +216,7 @@ Each plate directory includes:
 
 | Component | Minimum | Recommended / Tested |
 |---|---|---|
-| **GPU** | NVIDIA GPU with 4 GB VRAM | NVIDIA RTX 3050 Laptop GPU (6 GB VRAM) |
+| **GPU** | Depends on model configuration and inference settings | Tested on NVIDIA RTX 3050 Laptop GPU (6 GB VRAM) |
 | **System RAM** | 8 GB | 16 GB+ |
 | **Storage** | 10 GB free space (model weights) | NVMe SSD |
 | **OS** | Windows 10/11 or Ubuntu 22.04+ | Windows 11 |
